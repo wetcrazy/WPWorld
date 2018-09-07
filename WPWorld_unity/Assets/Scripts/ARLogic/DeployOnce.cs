@@ -21,6 +21,10 @@ public class DeployOnce : MonoBehaviour
     /// </summary>
     private bool _isQuit = false;
 
+    /// <summary>
+    /// A list of planes ARCore
+    /// </summary>
+
 	// Use this for initialization
 	void Start ()
     {
