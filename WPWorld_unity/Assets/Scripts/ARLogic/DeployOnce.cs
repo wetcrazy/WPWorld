@@ -67,42 +67,40 @@ public class DeployOnce : MonoBehaviour
             return;
         }
 
-        // Check if the ground is spawn
-        if (!_isSpawn)
+
+        //RayCast from the player touch to the real world to find detected planes
+        TrackableHit _hit;
+        TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
+
+        // Draw a line out from the player touch postion to the surface of the real world
+        if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
         {
-            //RayCast from the player touch to the real world to find detected planes
-            TrackableHit _hit;
-            TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
-
-            // Draw a line out from the player touch postion to the surface of the real world
-            if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
+            // Check if it the raycast is hitting the back of the plane 
+            if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(MainCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
             {
-                // Check if it the raycast is hitting the back of the plane 
-                if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(MainCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
-                {
-                    Debug.Log("Hit at back of the current DetectedPlane");
-                }
-                else
-                {
-                    // Its a ground plane soo doesnt matter if its a point or a plane
-                    _prefab = GroundPlanePrefab;
+                Debug.Log("Hit at back of the current DetectedPlane");
+            }
+            else if( !_isSpawn)
+            {
+                // Its a ground plane soo doesnt matter if its a point or a plane
+                _prefab = GroundPlanePrefab;
 
-                    // Instantiate the object at where it is hit
-                    var GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
+                // Instantiate the object at where it is hit
+                var GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
 
-                    // Create an anchor for ARCore to track the point of the real world
-                    var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
+                // Create an anchor for ARCore to track the point of the real world
+                var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
 
-                    // Make the ground object the child of the anchor
-                    GroundObject.transform.parent = _anchor.transform;
+                // Make the ground object the child of the anchor
+                GroundObject.transform.parent = _anchor.transform;
 
-                    _isSpawn = true;
-                }
+                _isSpawn = true;
             }
         }
-        else
-        {    
-          if (!_prefab.active)
+
+        if(_isSpawn)
+        {
+            if(_prefab.activeSelf)
             {
                 _isSpawn = false;
             }
