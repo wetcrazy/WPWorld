@@ -22,24 +22,9 @@ public class DeployOnce : MonoBehaviour
     public GameObject CheckSpawnUI;
 
     /// <summary>
-    /// Check if the app is closing due to ARCore
-    /// </summary>
-    private bool _isQuit = false;
-
-    /// <summary>
     /// A list of planes ARCore
     /// </summary>
     private List<DetectedPlane> _AllPlanes = new List<DetectedPlane>();
-
-    /// <summary>
-    /// A list of gameobjects
-    /// </summary>
-    private GameObject _prefab;
-
-    ///<summary>
-    /// For Ground spawn
-    ///</summary>
-    private bool _isSpawn = false;
 
     /// <summary>
     /// Update is called once per frame
@@ -67,7 +52,6 @@ public class DeployOnce : MonoBehaviour
             return;
         }
 
-
         //RayCast from the player touch to the real world to find detected planes
         TrackableHit _hit;
         TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
@@ -80,29 +64,22 @@ public class DeployOnce : MonoBehaviour
             {
                 Debug.Log("Hit at back of the current DetectedPlane");
             }
-            else if( !_isSpawn)
+            else
             {
                 // Its a ground plane soo doesnt matter if its a point or a plane
-                _prefab = GroundPlanePrefab;
+                GameObject _prefab = GroundPlanePrefab;
 
                 // Instantiate the object at where it is hit
-                var GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
+                var _GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
+
+                //_GroundObject.transform.Rotate(0, 180, 0, Space.Self);
 
                 // Create an anchor for ARCore to track the point of the real world
                 var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
 
                 // Make the ground object the child of the anchor
-                GroundObject.transform.parent = _anchor.transform;
+                _GroundObject.transform.parent = _anchor.transform;
 
-                _isSpawn = true;
-            }
-        }
-
-        if(_isSpawn)
-        {
-            if(_prefab.activeSelf)
-            {
-                _isSpawn = false;
             }
         }
     }
