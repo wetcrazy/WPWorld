@@ -32,16 +32,26 @@ public class DeployOnce : MonoBehaviour
     private List<DetectedPlane> _AllPlanes = new List<DetectedPlane>();
 
     /// <summary>
+    /// A list of gameobjects
+    /// </summary>
+    private GameObject _prefab;
+
+    ///<summary>
+    /// For Ground spawn
+    ///</summary>
+    private bool _isSpawn = false;
+
+    /// <summary>
     /// Update is called once per frame
     /// </summary>
-    void Update ()
+    void Update()
     {
-        // Do not allow the player to spawn another plane for the game if there is already one
+        // Tracks if there is a plane to spawn
         Session.GetTrackables<DetectedPlane>(_AllPlanes);
         bool _isTracked = true;
-        for (int i = 0;i<_AllPlanes.Count;i++)
+        for (int i = 0; i < _AllPlanes.Count; i++)
         {
-            if(_AllPlanes[i].TrackingState == TrackingState.Tracking)
+            if (_AllPlanes[i].TrackingState == TrackingState.Tracking)
             {
                 _isTracked = false;
                 break;
@@ -52,29 +62,30 @@ public class DeployOnce : MonoBehaviour
 
         // Check player touch, if no touch just leave
         Touch _touch;
-        if(Input.touchCount< 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began )
+        if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
         {
             return;
         }
 
-        // Spawn one plane
-        if(!_isTracked)
+        // Check if the ground is spawn
+        if (!_isSpawn)
         {
+            //RayCast from the player touch to the real world to find detected planes
             TrackableHit _hit;
             TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
 
-            if(Frame.Raycast(_touch.position.x,_touch.position.y,_raycastFilter,out _hit))
+            // Draw a line out from the player touch postion to the surface of the real world
+            if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
             {
-                if ((_hit.Trackable is DetectedPlane) &&
-                    Vector3.Dot(MainCamera.transform.position - _hit.Pose.position,
-                        _hit.Pose.rotation * Vector3.up) < 0)
+                // Check if it the raycast is hitting the back of the plane 
+                if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(MainCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
                 {
                     Debug.Log("Hit at back of the current DetectedPlane");
                 }
                 else
                 {
                     // Its a ground plane soo doesnt matter if its a point or a plane
-                    GameObject _prefab = GroundPlanePrefab;
+                    _prefab = GroundPlanePrefab;
 
                     // Instantiate the object at where it is hit
                     var GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
@@ -84,8 +95,17 @@ public class DeployOnce : MonoBehaviour
 
                     // Make the ground object the child of the anchor
                     GroundObject.transform.parent = _anchor.transform;
+
+                    _isSpawn = true;
                 }
             }
         }
-	}
+        else
+        {    
+          if (!_prefab.active)
+            {
+                _isSpawn = false;
+            }
+        }
+    }
 }
