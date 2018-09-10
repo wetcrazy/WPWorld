@@ -21,22 +21,28 @@ public class RotateOnCollide : MonoBehaviour {
 	void Update () {
         if (isRotating)
         {
-            if (Vector3.Distance(this.transform.position, RotateAngle) > 0.1f)
+            if (Vector3.Distance(this.transform.eulerAngles, RotateAngle) > 0.1f)
             {
                 this.transform.eulerAngles = Vector3.Lerp(this.transform.eulerAngles, RotateAngle, Time.deltaTime * RotateSpeed);
             }
             else
             {
-                this.transform.position = RotateAngle;
+                this.transform.eulerAngles = RotateAngle;
+                isRotating = false;
             }
+
+            Debug.Log("Rotating!");
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            isRotating = true;
+            if(this.transform.eulerAngles != RotateAngle)
+            {
+                isRotating = true;
+            }
         }
     }
 }

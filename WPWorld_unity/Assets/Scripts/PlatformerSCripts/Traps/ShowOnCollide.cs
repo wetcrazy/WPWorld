@@ -9,6 +9,8 @@ public class ShowOnCollide : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
+
+        RenderRef.enabled = false;
 	}
 	
 	// Update is called once per frame

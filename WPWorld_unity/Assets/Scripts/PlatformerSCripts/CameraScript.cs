@@ -20,22 +20,33 @@ public class CameraScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(FocusTarget != null)
-        {
-            Vector3 NewPos = FocusTarget.transform.position;
-            NewPos.x = this.transform.position.x;
-            NewPos.z = this.transform.position.z;
-        }
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(Vector3.Distance(this.transform.position, FocusTarget.transform.position) > DistanceToWait)
         {
-            float Temp_Z = this.transform.position.z;
-            Vector3 NewPos = Vector3.Lerp(this.transform.position, FocusTarget.transform.position, Time.deltaTime * FollowSpeed);
-            NewPos.z = Temp_Z;
-            this.transform.position = NewPos;
+            if(RestrictMovement)
+            {
+                Vector3 NewPos = Vector3.Lerp(this.transform.position, FocusTarget.transform.position, Time.deltaTime * FollowSpeed);
+                NewPos.z = this.transform.position.z;
+                if(CurrRestriction == RESTRICTMOVE.X_Axis)
+                {
+                    NewPos.x = this.transform.position.x;
+                }
+                else if (CurrRestriction == RESTRICTMOVE.Y_Axis)
+                {
+                    NewPos.y = this.transform.position.y;
+                }
+                this.transform.position = NewPos;
+            }
+            else
+            {
+                Vector3 NewPos = Vector3.Lerp(this.transform.position, FocusTarget.transform.position, Time.deltaTime * FollowSpeed);
+                NewPos.z = this.transform.position.z;
+                this.transform.position = NewPos;
+            }
         }
 	}
 }

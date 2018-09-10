@@ -26,21 +26,16 @@ public class ItemPowerUp : MonoBehaviour {
                 break;
             case (POWERUPS.INVISIBILITY):
                 break;
+            case (POWERUPS.INSTANTDEATH):
+                break;
         }
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        switch (PowerUp)
+        if(other.tag == "Player")
         {
-            case (POWERUPS.SPEED):
-                break;
-            case (POWERUPS.FIREBALL):
-                break;
-            case (POWERUPS.SUPERJUMP):
-                break;
-            case (POWERUPS.INVISIBILITY):
-                break;
+            other.GetComponent<PlayerPowerUp>().SetPowerUp(PowerUp);
         }
     }
 }
