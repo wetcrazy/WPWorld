@@ -23,18 +23,22 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     private RESTRICTMOVE CurrRestriction;
 
-    Rigidbody RigidRef;
+    private Vector3 RespawnPoint;
+
+    private Rigidbody RigidRef;
 
     // Use this for initialization
     void Start () {
 		RigidRef = GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(0, -20.0f, 0);
+        Physics.gravity = new Vector3(0, -5.0f, 0);
+
+        RespawnPoint = this.transform.position;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        bool IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y + 0.5f);
-        Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y + 0.5f), Color.white);
+        bool IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y * 1.5f);
+        Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y * 1.5f), Color.white);
 
         if(IsGrounded)
         {
@@ -43,9 +47,9 @@ public class PlayerMovement : MonoBehaviour {
             if(RestrictMovement)
             {
                 if (CurrRestriction == RESTRICTMOVE.X_Axis)
-                    MovementDir.x = Input.GetAxis("Horizontal");
-                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
                     MovementDir.z = Input.GetAxis("Vertical");
+                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
+                    MovementDir.x = Input.GetAxis("Horizontal");
             }
             else
             {
@@ -65,14 +69,14 @@ public class PlayerMovement : MonoBehaviour {
             if (RestrictMovement)
             {
                 if (CurrRestriction == RESTRICTMOVE.X_Axis)
-                    MovementDir.x = Input.GetAxis("Horizontal") * 1.5f;
+                    MovementDir.z = Input.GetAxis("Vertical") * 0.75f;
                 else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
-                    MovementDir.z = Input.GetAxis("Vertical") * 1.5f;
+                    MovementDir.x = Input.GetAxis("Horizontal") * 0.75f;
             }
             else
             {
-                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
-                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
+                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 0.75f;
+                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 0.75f;
             }
         }
 	}
@@ -80,6 +84,15 @@ public class PlayerMovement : MonoBehaviour {
     void FixedUpdate()
     {
         RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Killbox")
+        {
+            Debug.Log("Reset!");
+            Respawn();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -102,5 +115,15 @@ public class PlayerMovement : MonoBehaviour {
     public float GetJumpSpeed()
     {
         return JumpSpeed;
+    }
+
+    public void SetRespawn(Vector3 n_Respawn)
+    {
+        RespawnPoint = n_Respawn;
+    }
+
+    public void Respawn()
+    {
+        this.transform.position = RespawnPoint;
     }
 }
