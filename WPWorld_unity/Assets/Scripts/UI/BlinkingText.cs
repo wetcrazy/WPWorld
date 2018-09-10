@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Makes text blink when attached to a gameobject with text
+/// </summary>
+
 public class BlinkingText : MonoBehaviour {
 
     private Text _text;
-    private const int _MAX_CD = 5;
+    public int _MAX_CD = 5;
     private float _curr_CD;
 
     void Start()
