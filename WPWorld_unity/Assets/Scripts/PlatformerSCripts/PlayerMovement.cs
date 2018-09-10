@@ -2,14 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum RESTRICTMOVE
+{
+    X_Axis,
+    Z_Axis
+}
+
 public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private float MovementSpeed;
+    private Vector3 MovementDir;
+
     [SerializeField]
     private float JumpSpeed;
-    private Vector3 MovementDir;
-    private bool m_isAxisInUse = false;
+
+    [SerializeField]
+    private bool RestrictMovement;
+    [SerializeField]
+    RESTRICTMOVE CurrRestrictions;
 
     Rigidbody RigidRef;
 
@@ -27,8 +38,19 @@ public class PlayerMovement : MonoBehaviour {
         if(IsGrounded)
         {
             MovementDir = Vector3.zero;
-            MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward;
-            MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right;
+
+            if(RestrictMovement)
+            {
+                if (CurrRestrictions == RESTRICTMOVE.X_Axis)
+                    MovementDir.x = Input.GetAxis("Horizontal");
+                else
+                    MovementDir.z = Input.GetAxis("Vertical");
+            }
+            else
+            {
+                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
+                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
+            }
 
             if(Input.GetKeyDown(KeyCode.Space))
             {
@@ -37,8 +59,20 @@ public class PlayerMovement : MonoBehaviour {
         }
         else
         {
-            MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
-            MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
+            MovementDir = Vector3.zero;
+
+            if (RestrictMovement)
+            {
+                if (CurrRestrictions == RESTRICTMOVE.X_Axis)
+                    MovementDir.x = Input.GetAxis("Horizontal");
+                else
+                    MovementDir.z = Input.GetAxis("Vertical");
+            }
+            else
+            {
+                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
+                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
+            }
         }
 	}
 
