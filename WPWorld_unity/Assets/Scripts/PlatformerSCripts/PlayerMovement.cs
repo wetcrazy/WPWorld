@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum RESTRICTMOVE
+public enum RESTRICTMOVE
 {
     X_Axis,
+    Y_Axis,
     Z_Axis
 }
 
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     private bool RestrictMovement;
     [SerializeField]
-    RESTRICTMOVE CurrRestrictions;
+    private RESTRICTMOVE CurrRestriction;
 
     Rigidbody RigidRef;
 
@@ -41,9 +42,9 @@ public class PlayerMovement : MonoBehaviour {
 
             if(RestrictMovement)
             {
-                if (CurrRestrictions == RESTRICTMOVE.X_Axis)
+                if (CurrRestriction == RESTRICTMOVE.X_Axis)
                     MovementDir.x = Input.GetAxis("Horizontal");
-                else
+                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
                     MovementDir.z = Input.GetAxis("Vertical");
             }
             else
@@ -63,10 +64,10 @@ public class PlayerMovement : MonoBehaviour {
 
             if (RestrictMovement)
             {
-                if (CurrRestrictions == RESTRICTMOVE.X_Axis)
-                    MovementDir.x = Input.GetAxis("Horizontal");
-                else
-                    MovementDir.z = Input.GetAxis("Vertical");
+                if (CurrRestriction == RESTRICTMOVE.X_Axis)
+                    MovementDir.x = Input.GetAxis("Horizontal") * 1.5f;
+                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
+                    MovementDir.z = Input.GetAxis("Vertical") * 1.5f;
             }
             else
             {

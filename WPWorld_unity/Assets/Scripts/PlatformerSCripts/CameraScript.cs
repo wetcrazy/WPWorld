@@ -13,6 +13,11 @@ public class CameraScript : MonoBehaviour {
     [SerializeField]
     private float FollowSpeed;
 
+    [SerializeField]
+    private bool RestrictMovement;
+    [SerializeField]
+    private RESTRICTMOVE CurrRestriction;
+
 	// Use this for initialization
 	void Start () {
 		if(FocusTarget != null)
