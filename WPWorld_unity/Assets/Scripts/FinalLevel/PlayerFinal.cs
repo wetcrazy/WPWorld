@@ -22,10 +22,10 @@ public class PlayerFinal : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (isFalling)
-        {
+        //if (isFalling)
+        //{
             PlayerFall();
-        }
+        //}
         
         KeyInput();
         
@@ -62,30 +62,26 @@ public class PlayerFinal : MonoBehaviour {
         ////Move the player towards the center of planet (gravity)
         //gameObject.transform.position -= (gameObject.transform.up * GRAVITY * Time.deltaTime);
 
-        GetComponent<Rigidbody>().AddForce((PlanetObject.transform.position - gameObject.transform.position).normalized * GRAVITY, ForceMode.Acceleration);
+        GetComponent<Rigidbody>().AddForce((PlanetObject.transform.position - gameObject.transform.position).normalized * GRAVITY);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == PlanetObject)
-        {
-            isFalling = false;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == PlanetObject)
-        {
-            isFalling = true;
-        }
-    }
-
-    //private void OnTriggerStay(Collider other)
+    //private void OnCollisionEnter(Collision collision)
     //{
-    //    if(other.gameObject == PlanetObject)
+    //    Debug.Log("Collision Enter");
+    //    if (collision.gameObject == PlanetObject)
     //    {
-            
+    //        isFalling = false;
+    //        Debug.Log("Player Has Stopped Falling");
+    //    }
+    //}
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    Debug.Log("Collision Exit");
+    //    if (collision.gameObject == PlanetObject)
+    //    {
+    //        isFalling = true;
+    //        Debug.Log("Player Has Started Falling");
     //    }
     //}
 }

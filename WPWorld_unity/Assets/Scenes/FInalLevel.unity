@@ -182,8 +182,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 702434689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 9.64, z: 0}
-  m_LocalScale: {x: 0.5332059, y: 1.0990222, z: 0.6978202}
+  m_LocalPosition: {x: 0, y: 5.285, z: 0}
+  m_LocalScale: {x: 0.0067973463, y: 0.014010414, z: 0.008895862}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -201,8 +201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlanetObject: {fileID: 730906229}
   PlanetPivot: {fileID: 0}
-  GRAVITY: 50
-  PlayerSpeed: 10
+  GRAVITY: 10
+  PlayerSpeed: 0.1
 --- !u!54 &702434695
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &702434696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -228,8 +228,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9999999, y: 0.34324738, z: 0.99999994}
-  m_Center: {x: 0, y: -0.3283763, z: 0}
+  m_Size: {x: 0.9999999, y: 0.34324738, z: 0.5457562}
+  m_Center: {x: 0, y: -0.32837632, z: 0.026911594}
 --- !u!1 &727560187
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,8 +349,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 730906229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
-  m_LocalScale: {x: 8.019415, y: 8.019406, z: 8.019406}
+  m_LocalPosition: {x: 0, y: 5.0758, z: 0}
+  m_LocalScale: {x: 0.102232054, y: 0.10223197, z: 0.10223197}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
