@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GoogleARCore;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class DeployOnce : MonoBehaviour
@@ -14,12 +15,17 @@ public class DeployOnce : MonoBehaviour
     /// <summary>
     /// A prefab to to summmon the ground plane for visualization
     /// </summary>
-    public GameObject GroundPlanePrefab;
+    public GameObject gameObjectPrefab;
 
     /// <summary>
-    /// A GameObject with Ui atttached
+    /// A Ui Text for tracking
     /// </summary>
-    public GameObject CheckSpawnUI;
+    public Text TrackingUI;
+
+    /// <summary>
+    /// A 2D Image with Text attached
+    /// </summary>
+    public Image SplashUI;
 
     /// <summary>
     /// A list of planes ARCore
@@ -38,7 +44,7 @@ public class DeployOnce : MonoBehaviour
 
     void Update()
     {
-        // Tracks if there is a plane to spawn
+        // Tracks if there is a plane to spawn (needs to be first)
         Session.GetTrackables<DetectedPlane>(AllPlanes);
         bool _isTracked = true;
         for (int i = 0; i < AllPlanes.Count; i++)
@@ -50,13 +56,17 @@ public class DeployOnce : MonoBehaviour
             }
         }
 
-        CheckSpawnUI.SetActive(_isTracked);
+        TrackingUI.enabled = _isTracked;
 
-        // Check player touch, if no touch just leave
+        // Check player touch, if no touch just leave  
         Touch _touch;
         if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
         {
             return;
+        }
+        else if(SplashUI.enabled)
+        {
+            SplashUI.enabled = false;
         }
 
         //RayCast from the player touch to the real world to find detected planes
@@ -76,7 +86,7 @@ public class DeployOnce : MonoBehaviour
                 else
                 {                   
                     // Its a ground plane soo doesnt matter if its a point or a plane
-                    GameObject _prefab = GroundPlanePrefab;
+                    GameObject _prefab = gameObjectPrefab;
 
                     // Instantiate the object at where it is hit
                     var _GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
@@ -88,12 +98,15 @@ public class DeployOnce : MonoBehaviour
                     // Make the ground object the child of the anchor
                     _GroundObject.transform.parent = _anchor.transform;
 
+                    // Save the spawned data
                     prefab = _prefab;
                     isPrefabSpawned = true;
                 }
             }        
         }
 
+
+        // Reset the spawn if it doesnt exist
         if (!prefab.activeSelf || prefab == null)
         {
             isPrefabSpawned = false;
