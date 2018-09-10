@@ -20,12 +20,12 @@ public class DeployOnce : MonoBehaviour
     /// <summary>
     /// A Ui Text for tracking
     /// </summary>
-    public Text TrackingUI;
+    public GameObject TrackingUI;
 
     /// <summary>
     /// A 2D Image with Text attached
     /// </summary>
-    public Image SplashUI;
+    public GameObject SplashUI;
 
     /// <summary>
     /// A list of planes ARCore
@@ -42,8 +42,20 @@ public class DeployOnce : MonoBehaviour
     /// </summary>
     private bool isPrefabSpawned = false;
 
+    public Text DEBUGING_SHIT;
+
     void Update()
     {
+        if (SplashUI.activeSelf)
+        {
+            Touch touch;
+            if (Input.touchCount > 0 || (touch = Input.GetTouch(0)).phase == TouchPhase.Moved)
+            {
+                SplashUI.SetActive(false);
+            }
+            return;
+        }
+
         // Tracks if there is a plane to spawn (needs to be first)
         Session.GetTrackables<DetectedPlane>(AllPlanes);
         bool _isTracked = true;
@@ -56,27 +68,26 @@ public class DeployOnce : MonoBehaviour
             }
         }
 
-        TrackingUI.enabled = _isTracked;
-
         // Check player touch, if no touch just leave  
         Touch _touch;
         if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
         {
             return;
         }
-        else if(SplashUI.enabled)
-        {
-            SplashUI.enabled = false;
-        }
+
+        TrackingUI.SetActive(_isTracked);
 
         //RayCast from the player touch to the real world to find detected planes
         TrackableHit _hit;
         TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
+        // Check if the prefab is spawned
+        isPrefabSpawned = CheckPlanetExistance();
+        DEBUGING_SHIT.text = isPrefabSpawned.ToString();
 
         // Draw a line out from the player touch postion to the surface of the real world
         if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
-        {      
-            if(!isPrefabSpawned)
+        {
+            if (!isPrefabSpawned)
             {
                 // Check if it the raycast is hitting the back of the plane 
                 if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(MainCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
@@ -84,13 +95,12 @@ public class DeployOnce : MonoBehaviour
                     Debug.Log("Hit at back of the current DetectedPlane");
                 }
                 else
-                {                   
+                {
                     // Its a ground plane soo doesnt matter if its a point or a plane
                     GameObject _prefab = gameObjectPrefab;
 
                     // Instantiate the object at where it is hit
                     var _GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
-             
 
                     // Create an anchor for ARCore to track the point of the real world
                     var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
@@ -99,17 +109,28 @@ public class DeployOnce : MonoBehaviour
                     _GroundObject.transform.parent = _anchor.transform;
 
                     // Save the spawned data
-                    prefab = _prefab;
-                    isPrefabSpawned = true;
+                    prefab = _prefab;                            
                 }
-            }        
+            }      
         }
 
 
         // Reset the spawn if it doesnt exist
-        if (!prefab.activeSelf || prefab == null)
-        {
-            isPrefabSpawned = false;
+        //if (!prefab.activeSelf || prefab == null)
+        //{
+        //    isPrefabSpawned = false;
+        //}      
+        
+    }
+
+    // Check if the spawn exist
+    private bool CheckPlanetExistance()
+    {
+        GameObject planetOBJ = GameObject.FindGameObjectWithTag("Stage Floor");
+        if (planetOBJ == null || !planetOBJ.activeSelf)
+        {         
+            return false;
         }
+        return true;
     }
 }
