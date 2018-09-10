@@ -42,10 +42,14 @@ public class DeployOnce : MonoBehaviour
     /// </summary>
     private bool isPrefabSpawned = false;
 
+    /// <summary>
+    /// For debug for this script
+    /// </summary>
     public Text DEBUGING_SHIT;
 
     void Update()
     {
+        // Splash page before the stage spawns
         if (SplashUI.activeSelf)
         {
             Touch touch;
@@ -68,14 +72,14 @@ public class DeployOnce : MonoBehaviour
             }
         }
 
+        TrackingUI.SetActive(_isTracked);
+
         // Check player touch, if no touch just leave  
         Touch _touch;
         if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
         {
             return;
         }
-
-        TrackingUI.SetActive(_isTracked);
 
         //RayCast from the player touch to the real world to find detected planes
         TrackableHit _hit;
@@ -112,15 +116,7 @@ public class DeployOnce : MonoBehaviour
                     prefab = _prefab;                            
                 }
             }      
-        }
-
-
-        // Reset the spawn if it doesnt exist
-        //if (!prefab.activeSelf || prefab == null)
-        //{
-        //    isPrefabSpawned = false;
-        //}      
-        
+        }     
     }
 
     // Check if the spawn exist
