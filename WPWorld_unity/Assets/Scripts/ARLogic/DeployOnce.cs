@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GoogleARCore;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class DeployOnce : MonoBehaviour
@@ -149,8 +150,8 @@ public class DeployOnce : MonoBehaviour
             {
                 case "Planet":
                     DEBUGING_SHIT.text = "Been Pressed!!";
+                    SceneManager.LoadScene("SampleScene2");
                     break;
-
                 default:
                     break;
             }
