@@ -86,7 +86,9 @@ public class DeployOnce : MonoBehaviour
         TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
         // Check if the prefab is spawned
         isPrefabSpawned = CheckPlanetExistance();
-        DEBUGING_SHIT.text = isPrefabSpawned.ToString();
+
+        // Debugger
+        // DEBUGING_SHIT.text = isPrefabSpawned.ToString();
 
         // Draw a line out from the player touch postion to the surface of the real world
         if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
@@ -115,7 +117,12 @@ public class DeployOnce : MonoBehaviour
                     // Save the spawned data
                     prefab = _prefab;                            
                 }
-            }      
+            }
+            else
+            {
+                // Planet Selection
+                PlanetSelection();
+            }
         }     
     }
 
@@ -128,5 +135,25 @@ public class DeployOnce : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    // Planet Select
+    private void PlanetSelection()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+        RaycastHit hit;
+        if(Physics.Raycast(ray,out hit))
+        {
+            var _name = hit.transform.name;
+            switch (_name)
+            {
+                case "Planet":
+                    DEBUGING_SHIT.text = "Been Pressed!!";
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }

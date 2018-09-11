@@ -580,48 +580,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &1337325428
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233008938081440, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: f71210dbff9e1504ea311e76ec429c1c, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1493078049
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1493078050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -942,13 +900,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 1616941778}
-  gameObjectPrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
+  gameObjectPrefab: {fileID: 1302592864868538, guid: f71210dbff9e1504ea311e76ec429c1c,
     type: 2}
   TrackingUI: {fileID: 845338651}
   SplashUI: {fileID: 654970445}
   DEBUGING_SHIT: {fileID: 486521478}
-  DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
-    type: 2}
 --- !u!1 &2052388973
 GameObject:
   m_ObjectHideFlags: 0
