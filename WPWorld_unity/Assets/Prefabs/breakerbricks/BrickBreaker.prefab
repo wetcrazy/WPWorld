@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 33173941940941994}
   - component: {fileID: 23766642604901694}
   - component: {fileID: 136492343303039236}
+  - component: {fileID: 114186393801636248}
   m_Layer: 0
   m_Name: Paddle
   m_TagString: Untagged
@@ -107,6 +108,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4135752285933108}
+  - component: {fileID: 114001349416292402}
   m_Layer: 0
   m_Name: BrickSpawner
   m_TagString: Untagged
@@ -612,6 +614,33 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114001349416292402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1328353407805664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12ef19a98334fcc44bd6d3bc611e33f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bricksPrefab: {fileID: 1934710980699002, guid: 44250907be7564146892ee5e5d36f923,
+    type: 2}
+--- !u!114 &114186393801636248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1155763151112314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c76bd9ea0942e428ab3dac3323e373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetPrefab: {fileID: 1704159819429958, guid: 5a495b9c74ae0e04c8ca0240aa7058f9,
+    type: 2}
+  speed: 1
 --- !u!114 &114660892837571792
 MonoBehaviour:
   m_ObjectHideFlags: 1

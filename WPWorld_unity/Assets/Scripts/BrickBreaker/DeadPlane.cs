@@ -8,7 +8,7 @@ using UnityEngine;
 /// 
 public class DeadPlane : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         Destroy(other.gameObject);
     }

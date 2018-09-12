@@ -15,7 +15,7 @@ public class BrickSpawner : MonoBehaviour
     private bool isCheckedExistanceBricks = false;
     private const float MAX_ROW = 3.3f, MAX_COL = 3.3f, OFFSET = 0.1f;
     private const int MAX_HEIGHT = 20;
-    private float brickOffset = 1.1f;
+    private float brickOffset = 1.2f;
 
     private void Update()
     {
