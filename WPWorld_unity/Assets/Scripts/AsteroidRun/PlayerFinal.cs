@@ -3,29 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFinal : MonoBehaviour {
-
-    [SerializeField]
-    GameObject PlanetObject = null;
-    [SerializeField]
-    GameObject PlanetPivot = null;
-    [SerializeField]
-    float GRAVITY = 9.8f;
+    
     [SerializeField]
     float PlayerSpeed = 70.0f;
-    
-    bool isFalling = true;
-    Vector3 PlayerForward, PlayerRight;
+
+    SceneControlFinal SceneControllerScript = null;
+    //bool isFalling = true;
 
 	// Use this for initialization
 	void Start () {
+        SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        //if (isFalling)
-        //{
-            PlayerFall();
-        //}
+        
+        PlayerFall();
         
         KeyInput();
         
@@ -34,10 +27,8 @@ public class PlayerFinal : MonoBehaviour {
     void KeyInput()
     {
         //NOTE: These are temporary controls for debugging purposes
-
         if(Input.GetKey(KeyCode.W))
         {
-            //gameObject.transform.RotateAround(PlanetObject.transform.position, PlanetObject.transform.right, PlayerSpeed * Time.deltaTime);
             gameObject.transform.position += gameObject.transform.forward * PlayerSpeed * Time.deltaTime;
         }
         else if (Input.GetKey(KeyCode.S))
@@ -56,13 +47,8 @@ public class PlayerFinal : MonoBehaviour {
 
     void PlayerFall()
     {
-        ////Point the player towards the center of the planet
-        //gameObject.transform.up = (gameObject.transform.position - PlanetObject.transform.position).normalized;
-
-        ////Move the player towards the center of planet (gravity)
-        //gameObject.transform.position -= (gameObject.transform.up * GRAVITY * Time.deltaTime);
-
-        GetComponent<Rigidbody>().AddForce((PlanetObject.transform.position - gameObject.transform.position).normalized * GRAVITY);
+        //Adds a constant force that pushes the player towards the center of the planet
+        GetComponent<Rigidbody>().AddForce((SceneControllerScript.PlanetObject.transform.position - gameObject.transform.position).normalized * SceneControllerScript.GRAVITY);
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -84,4 +70,13 @@ public class PlayerFinal : MonoBehaviour {
     //        Debug.Log("Player Has Started Falling");
     //    }
     //}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Asteroid")
+        {
+            //Removes the asteroid
+            Destroy(other.gameObject);
+        }
+    }
 }
