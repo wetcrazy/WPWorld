@@ -101,7 +101,21 @@ public class PaddleAi : MonoBehaviour
         //transform.Translate(_newPos * speed * Time.deltaTime);
     */
 
+        Transform _ClosestOBJ = null;
+        for (int n = 0; n < arr_TargetOBJ.Length; n++)
+        {
+            if(_ClosestOBJ == null)
+            {
+                _ClosestOBJ = arr_TargetOBJ[n].transform;                
+            }
 
+            else if (Vector3.Distance(_ClosestOBJ.transform.position, transform.position) > Vector3.Distance(arr_TargetOBJ[n].transform.position, transform.position))
+            {
+                _ClosestOBJ = arr_TargetOBJ[n].transform;
+            }
+        }
 
+        transform.localPosition.Set(_ClosestOBJ.transform.localPosition.x, transform.localPosition.y, _ClosestOBJ.transform.localPosition.z);
+        //Destroy(_ClosestOBJ);
     }
 }
