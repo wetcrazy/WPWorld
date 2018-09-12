@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneControlFinal : MonoBehaviour {
 
@@ -14,13 +15,16 @@ public class SceneControlFinal : MonoBehaviour {
     float MinimumAsteroidDistanceToPlanet;
     [SerializeField]
     float MaximumAsteroidDistanceToPlanet;
-    
+
+    int TimerMinute = 0, TimerSecond = 0;
 
     List<GameObject> AsteroidList = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
-		
+        string StartingTime = GameObject.Find("Timer").GetComponent<Text>().text;
+        TimerMinute = int.Parse(StartingTime.Substring(0, 2));
+        TimerSecond = int.Parse(StartingTime.Substring(2));
 	}
 	
 	// Update is called once per frame
