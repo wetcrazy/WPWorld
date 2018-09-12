@@ -11,10 +11,11 @@ public class BrickSpawner : MonoBehaviour
     /// Prefab of the bricks
     /// </summary>
     public GameObject bricksPrefab;
- 
+
     private bool isCheckedExistanceBricks = false;
-    private const float MAX_ROW = 4.4f, MAX_COL = 4.4f;
-    private const int MAX_HEIGHT = 20; 
+    private const float MAX_ROW = 3.3f, MAX_COL = 3.3f, OFFSET = 0.1f;
+    private const int MAX_HEIGHT = 20;
+    private float brickOffset = 1.1f;
 
     private void Update()
     {
@@ -33,39 +34,22 @@ public class BrickSpawner : MonoBehaviour
 
         // First time spawn / Reset Spawn
         if (!CheckBricKExistence())
-        {
-            /*
-            for (int height = (int)transform.position.y; height <= MAX_HEIGHT; height++)
-            {
-                for (float row = -MAX_ROW; row <= MAX_ROW;)
-                {
-                    for (float col = -MAX_COL; col <= MAX_COL;)
-                    {
-                        GameObject _temp = bricksPrefab;
-                        _temp.transform.position = new Vector3(col, height, row);
-                        Instantiate(_temp, _temp.transform);
-                        col += 1.1f;
-                    }
-                    row += 1.1f;
-                }
-            }
-            */
-            Debug.Log("SPAWNED");
+        {        
             for (float height = transform.localPosition.y; height <= MAX_HEIGHT;)
             {
-                for (float row = -MAX_ROW; row <= MAX_ROW;)
+                for (float row = -MAX_ROW; row <= MAX_ROW + OFFSET;)
                 {
-                    for (float col = -MAX_COL; col <= MAX_COL;)
+                    for (float col = -MAX_COL; col <= MAX_COL + OFFSET;)
                     {
-                        Vector3 _pos = new Vector3(col / 10, height / 10, row / 10);
+                        Debug.Log("SPAWNED");
+                        //Vector3 _pos = new Vector3(col / 10, height / 10, row / 10);
+                        Vector3 _pos = new Vector3(col * transform.parent.lossyScale.x, height * transform.parent.lossyScale.y, row * transform.parent.lossyScale.z);
                         var _newGameObject = Instantiate(bricksPrefab, _pos, Quaternion.identity, transform);
-                        col += 1.1f;
+                        col += brickOffset;
                     }
-                    row += 1.1f;
+                    row += brickOffset;
                 }
-
-                height += 1.1f;
-                //Instantiate(bricksPrefab, transform.localPosition,Quaternion.identity);
+                height += brickOffset;              
             }
 
             isCheckedExistanceBricks = true;
@@ -74,7 +58,6 @@ public class BrickSpawner : MonoBehaviour
         {
             DestoryBrickExistence();
         }
-
     }
     
     /// <summary>
