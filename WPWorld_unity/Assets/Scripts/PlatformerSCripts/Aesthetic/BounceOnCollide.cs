@@ -7,6 +7,9 @@ public class BounceOnCollide : MonoBehaviour {
     private Rigidbody RigidRef;
     private Vector3 OrgPos;
 
+    [SerializeField]
+    private AudioClip BounceSFX;
+
     private float TimeElapsed;
 
 	// Use this for initialization
@@ -24,7 +27,7 @@ public class BounceOnCollide : MonoBehaviour {
 
             if(TimeElapsed >= 0.1f)
             {
-                if (Vector3.Distance(this.transform.position, OrgPos) < 0.01f)
+                if (Vector3.Distance(this.transform.position, OrgPos) < 0.025f)
                 {
                     RigidRef.constraints = RigidbodyConstraints.FreezeAll;
                     RigidRef.useGravity = false;
@@ -34,20 +37,30 @@ public class BounceOnCollide : MonoBehaviour {
                 }
             }
         }
-
 	}
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
+        GameObject CollidedObject = collision.gameObject;
+
+        if(CollidedObject.tag == "Player")
         {
-            if (collision.gameObject.transform.position.y + collision.gameObject.transform.lossyScale.y / 2
-                <= transform.position.y - transform.lossyScale.y / 2)
+            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2
+                <= transform.position.y - transform.lossyScale.y / 2 && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
             {
-                // Push Up
-                RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                RigidRef.AddForce(new Vector3(0, 50, 0));
-                RigidRef.useGravity = true;
+                if (Vector3.Distance(this.transform.position, OrgPos) < 0.05f)
+                {
+                    if(!collision.gameObject.GetComponent<PlayerMovement>().GetGrounded())
+                    {
+                        // Push Up
+                        RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                        RigidRef.AddForce(new Vector3(0, 50, 0));
+                        RigidRef.useGravity = true;
+
+                        if(BounceSFX != null)
+                            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(BounceSFX);
+                    }
+                }
             }
         }
     }

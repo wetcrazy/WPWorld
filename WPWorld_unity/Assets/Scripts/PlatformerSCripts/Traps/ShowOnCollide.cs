@@ -6,6 +6,9 @@ public class ShowOnCollide : MonoBehaviour {
 
     private Renderer RenderRef;
 
+    [SerializeField]
+    private AudioClip ShowSFX;
+
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
@@ -15,30 +18,26 @@ public class ShowOnCollide : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject PlayerRef = GameObject.FindGameObjectWithTag("Player");
-
-        if(!RenderRef.isVisible)
-        {
-            if (PlayerRef.transform.position.y < transform.position.y)
-            {
-                Physics.IgnoreCollision(PlayerRef.GetComponent<Collider>(), GetComponent<Collider>(), false);
-            }
-            else
-            {
-                Physics.IgnoreCollision(PlayerRef.GetComponent<Collider>(), GetComponent<Collider>());
-            }
-        }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.tag == "Player")
+        if(other.tag == "Player")
         {
-            if(collision.gameObject.transform.position.y + collision.gameObject.transform.lossyScale.y / 2
-                <= transform.position.y - transform.lossyScale.y / 2)
+            if(!RenderRef.isVisible && !other.GetComponent<PlayerMovement>().GetGrounded())
             {
-                if(!RenderRef.isVisible)
+                if(other.transform.position.y < transform.position.y && Mathf.Abs(other.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
                 {
+                    GetComponent<Collider>().isTrigger = false;
+
+                    if (ShowSFX != null)
+                        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(ShowSFX);
+
+                    Vector3 N_Pos = other.transform.position;
+
+                    N_Pos.y = (transform.position.y - transform.lossyScale.y / 2) - other.transform.lossyScale.y;
+
+                    other.transform.position = N_Pos;
                     RenderRef.enabled = true;
                 }
             }

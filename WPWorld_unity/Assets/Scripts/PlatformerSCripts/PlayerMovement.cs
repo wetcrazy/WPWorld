@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private float JumpSpeed;
+    private bool IsGrounded = false;
 
     [SerializeField]
     private bool RestrictMovement;
@@ -37,7 +38,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        bool IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y * 1.5f);
+        IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y * 1.5f);
         Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y * 1.5f), Color.white);
 
         if(IsGrounded)
@@ -120,6 +121,11 @@ public class PlayerMovement : MonoBehaviour {
     public void SetRespawn(Vector3 n_Respawn)
     {
         RespawnPoint = n_Respawn;
+    }
+
+    public bool GetGrounded()
+    {
+        return IsGrounded;
     }
 
     public void Respawn()

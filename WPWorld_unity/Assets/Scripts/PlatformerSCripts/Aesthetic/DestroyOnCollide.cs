@@ -5,7 +5,13 @@ using UnityEngine;
 public class DestroyOnCollide : MonoBehaviour {
 
     [SerializeField]
+    private int AmountOfDebris;
+
+    [SerializeField]
     private GameObject Debris;
+
+    [SerializeField]
+    private AudioClip DestroySFX;
 
     private Renderer RenderRef;
 
@@ -16,28 +22,31 @@ public class DestroyOnCollide : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject PlayerRef = GameObject.FindGameObjectWithTag("Player");
-
         if (!RenderRef.isVisible)
         {
-            Physics.IgnoreCollision(PlayerRef.GetComponent<Collider>(), GetComponent<Collider>());
+            GetComponent<Collider>().enabled = false;
         }
         else
         {
-            Physics.IgnoreCollision(PlayerRef.GetComponent<Collider>(), GetComponent<Collider>(), false);
+            GetComponent<Collider>().enabled = true;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player" && RenderRef.isVisible)
+        GameObject CollidedObject = collision.gameObject;
+
+        if(CollidedObject.tag == "Player" && RenderRef.isVisible)
         {
-            if (collision.gameObject.transform.position.y + collision.gameObject.transform.lossyScale.y / 2
-                <= transform.position.y - transform.lossyScale.y / 2)
+            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2
+                <= transform.position.y - transform.lossyScale.y / 2 && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
             {
                 RenderRef.enabled = false;
 
-                for (int i = 0; i < 4; i++)
+                if (DestroySFX != null)
+                    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DestroySFX);
+
+                for (int i = 0; i < AmountOfDebris; i++)
                 {
                     GameObject n_Debris = Instantiate(Debris, this.transform);
                     Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();

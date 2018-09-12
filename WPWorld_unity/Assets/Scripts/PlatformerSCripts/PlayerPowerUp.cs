@@ -18,6 +18,9 @@ public class PlayerPowerUp : MonoBehaviour {
     private POWERUPS CurrPowerUp;
 
     [SerializeField]
+    private float SuperMovementSpeed;
+
+    [SerializeField]
     private float SuperJumpSpeed;
 
 	// Use this for initialization
@@ -33,7 +36,7 @@ public class PlayerPowerUp : MonoBehaviour {
 
                 break;
             case (POWERUPS.FIREBALL):
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.F))
                 {
 
                 }
@@ -42,10 +45,10 @@ public class PlayerPowerUp : MonoBehaviour {
                 GetComponent<PlayerMovement>().SetJumpSpeed(SuperJumpSpeed);
                 break;
             case (POWERUPS.INVISIBILITY):
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
+                Color ColorRef = GetComponent<MeshRenderer>().material.color;
+                ColorRef.a = Mathf.Lerp(ColorRef.a, 0, Time.deltaTime);
 
-                }
+                GetComponent<MeshRenderer>().material.color = ColorRef;
                 break;
             default:
                 break;
