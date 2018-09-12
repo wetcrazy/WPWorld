@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GoogleARCore;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class DeployOnce : MonoBehaviour
@@ -42,10 +43,14 @@ public class DeployOnce : MonoBehaviour
     /// </summary>
     private bool isPrefabSpawned = false;
 
+    /// <summary>
+    /// For debug for this script
+    /// </summary>
     public Text DEBUGING_SHIT;
 
     void Update()
     {
+        // Splash page before the stage spawns
         if (SplashUI.activeSelf)
         {
             Touch touch;
@@ -68,6 +73,8 @@ public class DeployOnce : MonoBehaviour
             }
         }
 
+        TrackingUI.SetActive(_isTracked);
+
         // Check player touch, if no touch just leave  
         Touch _touch;
         if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
@@ -75,14 +82,14 @@ public class DeployOnce : MonoBehaviour
             return;
         }
 
-        TrackingUI.SetActive(_isTracked);
-
         //RayCast from the player touch to the real world to find detected planes
         TrackableHit _hit;
         TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
         // Check if the prefab is spawned
         isPrefabSpawned = CheckPlanetExistance();
-        DEBUGING_SHIT.text = isPrefabSpawned.ToString();
+
+        // Debugger
+        // DEBUGING_SHIT.text = isPrefabSpawned.ToString();
 
         // Draw a line out from the player touch postion to the surface of the real world
         if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
@@ -111,16 +118,13 @@ public class DeployOnce : MonoBehaviour
                     // Save the spawned data
                     prefab = _prefab;                            
                 }
-            }      
-        }
-
-
-        // Reset the spawn if it doesnt exist
-        //if (!prefab.activeSelf || prefab == null)
-        //{
-        //    isPrefabSpawned = false;
-        //}      
-        
+            }
+            else
+            {
+                // Planet Selection
+                PlanetSelection();
+            }
+        }     
     }
 
     // Check if the spawn exist
@@ -132,5 +136,25 @@ public class DeployOnce : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    // Planet Select
+    private void PlanetSelection()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+        RaycastHit hit;
+        if(Physics.Raycast(ray,out hit))
+        {
+            var _name = hit.transform.name;
+            switch (_name)
+            {
+                case "Planet":
+                    DEBUGING_SHIT.text = "Been Pressed!!";
+                    SceneManager.LoadScene("SampleScene2");
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

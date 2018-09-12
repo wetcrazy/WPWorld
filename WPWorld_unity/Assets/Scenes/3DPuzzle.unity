@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6404,7 +6404,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 537378243}
-  - component: {fileID: 537378242}
+  - component: {fileID: 537378244}
   m_Layer: 0
   m_Name: PlatformManager
   m_TagString: Untagged
@@ -6412,24 +6412,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &537378242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 537378241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c6423486519b9b41b60e6a0488dd080, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovePlatform: {fileID: 492597983}
-  Startpos: {fileID: 2145365865}
-  EndPos: {fileID: 1380077165}
-  Newpos: {x: 0, y: 0, z: 0}
-  CurrState: 
-  time: 0.5
-  resettime: 5
 --- !u!4 &537378243
 Transform:
   m_ObjectHideFlags: 0
@@ -6443,6 +6425,24 @@ Transform:
   m_Father: {fileID: 439085193}
   m_RootOrder: 333
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &537378244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 537378241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be71f3735520ea64ebd730f330f555d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovePlatform: {fileID: 492597983}
+  Startpos: {fileID: 2145365865}
+  EndPos: {fileID: 1380077165}
+  Newpos: {x: 0, y: 0, z: 0}
+  CurrState: 
+  time: 2
+  resettime: 2
 --- !u!1001 &543197521
 Prefab:
   m_ObjectHideFlags: 0
@@ -9163,7 +9163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 0.5
-  JumpSpeed: 3
+  JumpSpeed: 2
   RestrictMovement: 0
   CurrRestriction: 0
 --- !u!54 &858987700
@@ -12737,7 +12737,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1187202102}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
@@ -20010,6 +20010,7 @@ GameObject:
   - component: {fileID: 1848835553}
   - component: {fileID: 1848835557}
   - component: {fileID: 1848835558}
+  - component: {fileID: 1848835559}
   m_Layer: 0
   m_Name: TROLLBLOCK2
   m_TagString: Untagged
@@ -20078,8 +20079,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1848835552}
   m_LocalRotation: {x: -0, y: -0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 3.35, y: 7.03, z: 4.98}
-  m_LocalScale: {x: 0.5, y: 6, z: 1}
+  m_LocalPosition: {x: 3.49, y: 6.87, z: 4.98}
+  m_LocalScale: {x: 0.5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 439085193}
   m_RootOrder: 312
@@ -20090,7 +20091,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1848835552}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24820d4d287718247bcf73a940f1afb0, type: 3}
   m_Name: 
@@ -20105,11 +20106,22 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1848835559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1848835552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a20d70403473b469898f59c296ae70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1852366873
 Prefab:
   m_ObjectHideFlags: 0

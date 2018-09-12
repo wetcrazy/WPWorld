@@ -56,7 +56,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4967042873925986}
   - component: {fileID: 54072046982830440}
-  - component: {fileID: 114431498843238874}
   m_Layer: 0
   m_Name: Reverse L
   m_TagString: Untagged
@@ -159,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1582476843933308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalPosition: {x: 0.051834065, y: 0.1, z: -0.3831881}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4140603245303266}
@@ -400,14 +399,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114431498843238874
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1582476843933308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93589a949df9584aa1a42f4a475954c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -38,7 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4172861700617070}
   - component: {fileID: 54705979459731668}
-  - component: {fileID: 114160263166188388}
   m_Layer: 0
   m_Name: Big T
   m_TagString: Untagged
@@ -125,7 +124,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1362833753834748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalPosition: {x: 0.17999037, y: 0.2, z: -0.06800799}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4382047085378692}
@@ -486,14 +485,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114160263166188388
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362833753834748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93589a949df9584aa1a42f4a475954c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

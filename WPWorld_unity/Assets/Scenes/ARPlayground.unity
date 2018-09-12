@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -265,10 +265,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -589,6 +589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1493078051}
   - component: {fileID: 1493078050}
+  - component: {fileID: 1493078052}
   m_Layer: 0
   m_Name: Plane Generator
   m_TagString: Untagged
@@ -622,6 +623,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1493078052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1493078049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d40441416d1404a8711a9f7ad5eacd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1616941777
 Prefab:
   m_ObjectHideFlags: 0
@@ -900,7 +912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 1616941778}
-  gameObjectPrefab: {fileID: 1321189558800584, guid: 1ba537696af4def4193f9b1a2387adcf,
+  gameObjectPrefab: {fileID: 1302592864868538, guid: f71210dbff9e1504ea311e76ec429c1c,
     type: 2}
   TrackingUI: {fileID: 845338651}
   SplashUI: {fileID: 654970445}
