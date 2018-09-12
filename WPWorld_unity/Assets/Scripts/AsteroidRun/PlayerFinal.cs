@@ -1,11 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerFinal : MonoBehaviour {
     
     [SerializeField]
     float PlayerSpeed = 70.0f;
+    [SerializeField]
+    Image PlayerHealthBar;
+    [SerializeField]
+    float CurrentHealth = 100;
+    [SerializeField]
+    float MaximumHealth = 100;
+    [SerializeField]
+    float PlayerLoseHealthSpeed = 5;
 
     SceneControlFinal SceneControllerScript = null;
     //bool isFalling = true;
@@ -19,9 +26,19 @@ public class PlayerFinal : MonoBehaviour {
 	void Update () {
         
         PlayerFall();
-        
         KeyInput();
-        
+
+        //Make player health gradually fall
+        if (CurrentHealth > 0)
+        {
+            CurrentHealth -= PlayerLoseHealthSpeed * Time.deltaTime;
+            PlayerHealthBar.rectTransform.localScale = new Vector3(CurrentHealth / MaximumHealth, 1, 1);
+        }
+        else if (CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+            PlayerHealthBar.rectTransform.localScale = new Vector3(0, 1, 1);
+        }
     }
 
     void KeyInput()
