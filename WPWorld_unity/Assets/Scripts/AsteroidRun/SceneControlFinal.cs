@@ -8,6 +8,10 @@ public class SceneControlFinal : MonoBehaviour {
     [SerializeField]
     public GameObject PlanetObject = null;
     [SerializeField]
+    GameObject HealthPowerupObject = null;
+    [SerializeField]
+    float HealthPowerupSpawnDuration = 5;
+    [SerializeField]
     public float GRAVITY = 10;
     [SerializeField]
     int MaximumAsteroidsInScene = 10;
@@ -16,10 +20,11 @@ public class SceneControlFinal : MonoBehaviour {
     [SerializeField]
     float MaximumAsteroidDistanceToPlanet;
     [SerializeField]
-    GameObject CanvasTimer;
+    GameObject CanvasTimer = null;
 
     int TimerMinute = 0, TimerSecond = 0;
     float SecondTimer = 0;
+    float HealthPowerupSpawnTimer;
     bool TimerIsCountingDown = true;
 
     List<GameObject> AsteroidList = new List<GameObject>();
@@ -29,7 +34,10 @@ public class SceneControlFinal : MonoBehaviour {
         string StartingTime = CanvasTimer.GetComponent<Text>().text;
         TimerMinute = int.Parse(StartingTime.Substring(0, 2));
         TimerSecond = int.Parse(StartingTime.Substring(3));
-	}
+
+        HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
+        SpawnHealthPowerup();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -53,6 +61,20 @@ public class SceneControlFinal : MonoBehaviour {
 
             //Move the asteroid towards the planet
             asteroid.transform.position += (PlanetObject.transform.position - asteroid.transform.position).normalized * asteroid.GetComponent<AsteroidScript>().AsteroidSpeed * Time.deltaTime;
+        }
+
+        if(!HealthPowerupObject.activeSelf)
+        {
+            //Countdown the spawn timer
+            HealthPowerupSpawnTimer -= Time.deltaTime;
+
+            if(HealthPowerupSpawnTimer <= 0)
+            {
+                //Spawn the powerup after timer is up
+                SpawnHealthPowerup();
+                //Reset the timer
+                HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
+            }
         }
 	}
 
@@ -134,6 +156,15 @@ public class SceneControlFinal : MonoBehaviour {
             //Reset the secondtimer
             SecondTimer = 0;
         }
+    }
+
+    void SpawnHealthPowerup()
+    {
+        //Set powerup to active
+        HealthPowerupObject.SetActive(true);
+
+        //Assign a random pos on planet to the health powerup
+        HealthPowerupObject.transform.position = (Random.onUnitSphere * 0.08f) + PlanetObject.transform.position;
     }
 
     void SpawnAsteroid()
