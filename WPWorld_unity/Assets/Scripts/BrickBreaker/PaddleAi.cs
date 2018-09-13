@@ -15,7 +15,7 @@ public class PaddleAi : MonoBehaviour
     /// <summary>
     /// Speed
     /// </summary>
-    private float speed = 0.1f;
+    private float speed = 1.0f;
     /// <summary>
     /// Array of targeted object
     /// </summary>
