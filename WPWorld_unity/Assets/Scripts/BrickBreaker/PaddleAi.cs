@@ -10,8 +10,9 @@ public class PaddleAi : MonoBehaviour
     public GameObject TargetPrefab;
     public float speed = 1;
 
+    [SerializeField]
     private GameObject[] arr_TargetOBJ;
-
+   
     private void Update()
     {
         arr_TargetOBJ = GameObject.FindGameObjectsWithTag(TargetPrefab.tag);
@@ -106,16 +107,24 @@ public class PaddleAi : MonoBehaviour
         {
             if(_ClosestOBJ == null)
             {
-                _ClosestOBJ = arr_TargetOBJ[n].transform;                
+                _ClosestOBJ = arr_TargetOBJ[n].transform;                   
             }
 
             else if (Vector3.Distance(_ClosestOBJ.transform.position, transform.position) > Vector3.Distance(arr_TargetOBJ[n].transform.position, transform.position))
             {
-                _ClosestOBJ = arr_TargetOBJ[n].transform;
+                _ClosestOBJ = arr_TargetOBJ[n].transform;             
             }
         }
 
-        transform.localPosition.Set(_ClosestOBJ.transform.localPosition.x, transform.localPosition.y, _ClosestOBJ.transform.localPosition.z);
-        //Destroy(_ClosestOBJ);
+        //transform.Translate(_ClosestOBJ.position * Time.deltaTime);
+        //Debug.Log(_ClosestOBJ.name + " He is closer to me " + _ClosestOBJ.localPosition);
+        //Debug.Log("my position is " + transform.localPosition);  
+        //Destroy(_ClosestOBJ); 
+
+
+        //transform.LookAt(_ClosestOBJ.transform);
+        Vector3 MoveToPos = _ClosestOBJ.position;
+        MoveToPos.y = this.transform.position.y;
+        GetComponent<Rigidbody>().MovePosition(Vector3.Lerp(this.transform.position, MoveToPos, Time.deltaTime * speed));
     }
 }
