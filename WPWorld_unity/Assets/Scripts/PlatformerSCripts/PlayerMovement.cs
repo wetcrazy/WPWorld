@@ -118,6 +118,16 @@ public class PlayerMovement : MonoBehaviour {
         return JumpSpeed;
     }
 
+    public void SetMovementSpeed(float n_MovementSpeed)
+    {
+        MovementSpeed = n_MovementSpeed;
+    }
+
+    public float GetMovementSpeed()
+    {
+        return MovementSpeed;
+    }
+
     public void SetRespawn(Vector3 n_Respawn)
     {
         RespawnPoint = n_Respawn;

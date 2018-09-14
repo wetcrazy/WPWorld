@@ -18,7 +18,7 @@ public class ItemPowerUp : MonoBehaviour {
 	void Update () {
 		switch(PowerUp)
         {
-            case (POWERUPS.SPEED):
+            case (POWERUPS.SUPERSPEED):
                 break;
             case (POWERUPS.FIREBALL):
                 break;

@@ -46,8 +46,8 @@ public class Enemy : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        bool IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y / 2 + 0.05f);
-        Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y / 2 + 0.05f), Color.white);
+        bool IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y / 2* 1.001f);
+        Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y / 2 * 1.001f), Color.white);
 
         switch (CurrType)
         {
@@ -88,11 +88,33 @@ public class Enemy : MonoBehaviour {
             case (ENEMYTYPES.PATROLJUMP):
                 if (PatrolToA)
                 {
-
+                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > 0.1f)
+                    {
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        if (IsGrounded)
+                        {
+                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+                        }
+                    }
+                    else
+                    {
+                        PatrolToA = false;
+                    }
                 }
                 else
                 {
-
+                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > 0.1f)
+                    {
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        if (IsGrounded)
+                        {
+                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+                        }
+                    }
+                    else
+                    {
+                        PatrolToA = true;
+                    }
                 }
                 break;
             case (ENEMYTYPES.HIDDENWALKJUMP):
@@ -108,13 +130,35 @@ public class Enemy : MonoBehaviour {
                 }
                 break;
             case (ENEMYTYPES.HIDDENPATROLJUMP):
-                if (Hidden)
+                if (PatrolToA)
                 {
-
+                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > 0.1f)
+                    {
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        if (IsGrounded && !Hidden)
+                        {
+                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+                        }
+                    }
+                    else
+                    {
+                        PatrolToA = false;
+                    }
                 }
                 else
                 {
-
+                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > 0.1f)
+                    {
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        if (IsGrounded && !Hidden)
+                        {
+                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+                        }
+                    }
+                    else
+                    {
+                        PatrolToA = true;
+                    }
                 }
                 break;
         }
@@ -126,16 +170,13 @@ public class Enemy : MonoBehaviour {
         {
             if (CurrType.ToString().Contains("HIDDEN"))
             {
-                Hidden = false;
-            }
-        }
-        else
-        {
-            if (CurrType.ToString().Contains("PATROL"))
-            {
-                if(other.gameObject == PatrolPointA || other.gameObject == PatrolPointB)
+                RaycastHit hit;
+                if(Physics.Raycast(transform.position, other.gameObject.transform.position - transform.position, out hit))
                 {
-
+                    if(hit.transform.tag == "Player")
+                    {
+                        Hidden = false;
+                    }
                 }
             }
         }
@@ -146,6 +187,11 @@ public class Enemy : MonoBehaviour {
         if(collision.gameObject.tag == "Killbox")
         {
 
+        }
+
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerMovement>().Respawn();
         }
 
         if (collision.gameObject.transform.position.y - collision.gameObject.transform.lossyScale.y / 2

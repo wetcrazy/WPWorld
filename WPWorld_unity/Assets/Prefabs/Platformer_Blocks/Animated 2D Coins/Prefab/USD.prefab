@@ -10,7 +10,6 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 21200000}
   - component: {fileID: 9500000}
-  - component: {fileID: 114017589271263784}
   - component: {fileID: 135517762075395098}
   - component: {fileID: 114741553289156658}
   m_Layer: 0
@@ -26,8 +25,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.45, y: -0.45, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.047098026, y: 0.063161194, z: -0.68321216}
   m_LocalScale: {x: 0.08, y: 0.08, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,18 +106,6 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
---- !u!114 &114017589271263784
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a571557078601614f9a7de56782d0dfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollectSFX: {fileID: 8300000, guid: 46dfb971b4353404dac309ed8b3c4c7e, type: 3}
 --- !u!114 &114741553289156658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a571557078601614f9a7de56782d0dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollectSFX: {fileID: 8300000, guid: 46dfb971b4353404dac309ed8b3c4c7e, type: 3}
+  CollectSFX: {fileID: 8300000, guid: a566faf07f7cc084db0f13aa90a3614f, type: 3}
 --- !u!135 &135517762075395098
 SphereCollider:
   m_ObjectHideFlags: 1
