@@ -49,7 +49,7 @@ public class PaddleAi : MonoBehaviour
 
         // Update the position
         Vector3 MoveToPos = _ClosestOBJ.position;
-        MoveToPos.y = this.transform.position.y;      
+        MoveToPos.y = transform.position.y;      
         float step = speed + Time.deltaTime;
         transform.position = Vector3.Lerp(transform.position, MoveToPos, step);
     }
