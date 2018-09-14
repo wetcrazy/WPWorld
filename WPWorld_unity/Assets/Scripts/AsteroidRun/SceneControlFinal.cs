@@ -20,6 +20,10 @@ public class SceneControlFinal : MonoBehaviour {
     [SerializeField]
     float MaximumAsteroidDistanceToPlanet;
     [SerializeField]
+    int NumOfObstacles = 4;
+    [SerializeField]
+    int MaxNumOfObstacles = 6;
+    [SerializeField]
     GameObject CanvasTimer = null;
 
     int TimerMinute = 0, TimerSecond = 0;
@@ -28,6 +32,7 @@ public class SceneControlFinal : MonoBehaviour {
     bool TimerIsCountingDown = true;
 
     List<GameObject> AsteroidList = new List<GameObject>();
+    List<GameObject> ObstacleList = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -37,6 +42,11 @@ public class SceneControlFinal : MonoBehaviour {
 
         HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
         SpawnHealthPowerup();
+
+        for (int i = NumOfObstacles; i > 0; --i)
+        {
+            SpawnObstacle();    
+        }
     }
 	
 	// Update is called once per frame
@@ -61,6 +71,16 @@ public class SceneControlFinal : MonoBehaviour {
 
             //Move the asteroid towards the planet
             asteroid.transform.position += (PlanetObject.transform.position - asteroid.transform.position).normalized * asteroid.GetComponent<AsteroidScript>().AsteroidSpeed * Time.deltaTime;
+        }
+
+        foreach (GameObject obstacle in ObstacleList)
+        {
+            if(!obstacle.activeSelf)
+            {
+                continue;
+            }
+
+            obstacle.GetComponent<ObstacleScript>().ObstacleUpdate(PlanetObject);
         }
 
         if(!HealthPowerupObject.activeSelf)
@@ -102,6 +122,13 @@ public class SceneControlFinal : MonoBehaviour {
                     TimerSecond = 59;
                     --TimerMinute;
 
+                    if (NumOfObstacles < MaxNumOfObstacles)
+                    {
+                        //Spawn an obstacle
+                        SpawnObstacle();
+                        ++NumOfObstacles;
+                    }
+
                     //Update the new minute value in temptime
                     if (TimerMinute <= 9)
                     {
@@ -124,6 +151,13 @@ public class SceneControlFinal : MonoBehaviour {
                 {
                     TimerSecond = 0;
                     ++TimerMinute;
+
+                    if (NumOfObstacles < MaxNumOfObstacles)
+                    {
+                        //Spawn an obstacle
+                        SpawnObstacle();
+                        ++NumOfObstacles;
+                    }
 
                     //Update the new minute value in temptime
                     if (TimerMinute <= 9)
@@ -156,6 +190,17 @@ public class SceneControlFinal : MonoBehaviour {
             //Reset the secondtimer
             SecondTimer = 0;
         }
+    }
+
+    void SpawnObstacle()
+    {
+        GameObject ObstacleObj = (GameObject)Instantiate(Resources.Load("Asteroid_Run/Obstacle"));
+        ObstacleObj.GetComponent<ObstacleScript>().ObstacleInit(PlanetObject);
+
+        //Assign a random pos on planet to the obstacle
+        ObstacleObj.transform.position = (Random.onUnitSphere * 0.05f) + PlanetObject.transform.position;
+
+        ObstacleList.Add(ObstacleObj);
     }
 
     void SpawnHealthPowerup()

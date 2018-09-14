@@ -30,17 +30,17 @@ public class PlayerFinal : MonoBehaviour {
     }
 
     public DEBUFF_EFFECT DebuffEffect;
+    private int PlayerSpeedMultiplier = 1;
 
     // Use this for initialization
     void Start () {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.01f, 0);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        
-        PlayerFall();
-        KeyInput();
+	void Update ()
+    {
 
         //Make player health gradually fall
         if (CurrentHealth > 0)
@@ -73,7 +73,7 @@ public class PlayerFinal : MonoBehaviour {
                         }
                     case DEBUFF_EFFECT.DEBUFF_INVERT:
                         {
-                            PlayerSpeed = -PlayerSpeed;
+                            PlayerSpeedMultiplier = 1;
                             break;
                         }
                     default:
@@ -84,6 +84,9 @@ public class PlayerFinal : MonoBehaviour {
                 DebuffEffect = DEBUFF_EFFECT.DEBUFF_NONE;
             }
         }
+
+        PlayerFall();
+        KeyInput();
     }
 
     void KeyInput()
@@ -91,19 +94,19 @@ public class PlayerFinal : MonoBehaviour {
         //NOTE: These are temporary controls for debugging purposes
         if(Input.GetKey(KeyCode.W))
         {
-            gameObject.transform.position += gameObject.transform.forward * PlayerSpeed * Time.deltaTime;
+            gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            gameObject.transform.position -= gameObject.transform.forward * PlayerSpeed * Time.deltaTime;
+            gameObject.transform.position -= (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            gameObject.transform.position -= gameObject.transform.right * PlayerSpeed * Time.deltaTime;
+            gameObject.transform.position -= (gameObject.transform.right * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            gameObject.transform.position += gameObject.transform.right * PlayerSpeed * Time.deltaTime;
+            gameObject.transform.position += (gameObject.transform.right * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
         }
     }
 
@@ -163,7 +166,7 @@ public class PlayerFinal : MonoBehaviour {
                     }
                 case DEBUFF_EFFECT.DEBUFF_INVERT:
                     {
-                        PlayerSpeed = -PlayerSpeed;
+                        PlayerSpeedMultiplier = -1;
                         break;
                     }
                 default:
