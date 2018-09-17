@@ -4,72 +4,107 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    public GameObject BrickPrefab;
+    public GameObject BrickPrefab; 
     public float speed, MAX_timer;
 
-    private Vector3 oldPos;
-    private Vector3 vel;
     private float curr_timer;
+    private Rigidbody rb;
+    private Vector3 gravity;
+    private float y;
+
+    private void Awake()
+    {     
+        rb = GetComponent<Rigidbody>();
+        gravity = -Vector3.up;
+    }
 
     private void Update()
     {
-        // Check if the ball is moving
-        if (transform.position != oldPos)
+        // Y checking (prevents the ball from staying in place)
+        if (y == transform.position.y)
         {
-            oldPos = transform.position;
-            return;
+            gravity = -gravity;
+        }
+        else
+        {
+            y = transform.position.y;
         }
 
-        Debug.Log("Ball: Time to move");
-        float _step = speed * Time.deltaTime;
+        // Update the velocity vector up 
+        rb.AddForce(gravity * speed * Time.deltaTime);
 
-        if(curr_timer > MAX_timer)
+        // X and Z randomizer 
+        if(curr_timer> MAX_timer)
         {
-            curr_timer = 0.0f;
-            int _rng = Random.Range(0, 8);
-            switch(_rng)
+            var _rand = Random.Range(0, 4);
+            switch (_rand)
             {
                 case 0:
-                    vel = Vector3.forward;
+                    rb.AddForce(-Vector3.right * speed * Time.deltaTime);
                     break;
                 case 1:
-                    vel = new Vector3(1.0f, 0.0f, 1.0f);
+                    rb.AddForce(Vector3.forward * speed * Time.deltaTime);
                     break;
                 case 2:
-                    vel = Vector3.right;
+                    rb.AddForce(Vector3.right * speed * Time.deltaTime);
                     break;
                 case 3:
-                    vel = new Vector3(1.0f, 0.0f, -1.0f);
-                    break;
-                case 4:
-                    vel = -Vector3.forward;
-                    break;
-                case 5:
-                    vel = new Vector3(-1.0f, 0.0f, -1.0f);
-                    break;
-                case 6:
-                    vel = -Vector3.right;
-                    break;
-                case 7:
-                    vel = new Vector3(-1.0f, 0.0f, 1.0f);
+                    rb.AddForce(-Vector3.forward * speed * Time.deltaTime);
                     break;
                 default:
                     break;
+                
             }
+            curr_timer = 0;
+        }
+        curr_timer += 1;
 
+        // Velocity limter
+        if (rb.velocity.y < -10)
+        {
+            rb.velocity.Set(rb.velocity.x, -10, rb.velocity.z);
+        }
+        else if (rb.velocity.y > 10)
+        {
+            rb.velocity.Set(rb.velocity.x, 10, rb.velocity.z);
         }
 
-        curr_timer += 0.1f;
-        transform.Translate(vel * _step);
+        if (rb.velocity.x < -10)
+        {
+            rb.velocity.Set(-10, rb.velocity.y, rb.velocity.z);
+        }
+        else if (rb.velocity.x > 10)
+        {
+            rb.velocity.Set(10, rb.velocity.y, rb.velocity.z);
+        }
+
+        if (rb.velocity.z < -10)
+        {
+            rb.velocity.Set(rb.velocity.x, rb.velocity.y, -10);
+        }
+        else if (rb.velocity.z > 10)
+        {
+            rb.velocity.Set(rb.velocity.x, rb.velocity.y, 10);
+        }
+
+        // Debug.Log(rb.velocity);
     }
 
     private void OnCollisionEnter(Collision _collision)
     {
         Debug.Log("Ball Touched");
+        gravity = -gravity;
         if (_collision.gameObject.tag == BrickPrefab.tag)
         {
             Destroy(_collision.gameObject);
         }
 
+    
+    }
+
+    private Vector3 NextPosition()
+    {
+        var _temp = Random.insideUnitSphere * transform.parent.localScale.x;
+        return _temp;
     }
 }
