@@ -12,15 +12,12 @@ public class PaddleAi : MonoBehaviour
     /// </summary>
     public GameObject TargetPrefab;
 
-    /// <summary>
-    /// Speed
-    /// </summary>
-    private float speed = 0.4f;
-    /// <summary>
+     /// <summary>
     /// Array of targeted object
     /// </summary>
     private GameObject[] arr_TargetOBJ;
-   
+    private float speed = 0.4f;
+
     private void Update()
     {
         // Find all the targets in the scene
