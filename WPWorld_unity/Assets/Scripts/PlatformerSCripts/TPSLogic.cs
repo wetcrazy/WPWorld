@@ -40,6 +40,11 @@ public class TPSLogic : MonoBehaviour {
         return Points;
     }
 
+    public int GetDeaths()
+    {
+        return DeathCounter;
+    }
+
     public void Death()
     {
         DeathCounter++;
