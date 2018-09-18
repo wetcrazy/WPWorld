@@ -13,7 +13,7 @@ public class Joystick : MonoBehaviour {
     public Vector3 JoystickDragDirection = Vector3.zero;
     bool isDraggingJoystick = false;
 
-    Vector3 JoystickBackgroundPosition;
+    
     Vector3 Up = new Vector3(0, 100, 0);
     public float FacingAngle;
 
@@ -25,13 +25,13 @@ public class Joystick : MonoBehaviour {
     public void OnJoyStickUp()
     {
         isDraggingJoystick = false;
-        JoystickBall.transform.position = JoystickBackgroundPosition;
+        JoystickBall.transform.position = JoystickBackground.transform.position;
         JoystickDragDirection = Vector3.zero;
     }
 
     private void Start()
     {
-        JoystickBackgroundPosition = JoystickBackground.transform.position;
+        
     }
 
     private void Update()
@@ -41,7 +41,9 @@ public class Joystick : MonoBehaviour {
             return;
         }
 
-        if(Application.platform == RuntimePlatform.Android)
+        Vector3 JoystickBackgroundPosition = JoystickBackground.transform.position;
+
+        if (Application.platform == RuntimePlatform.Android)
         {
         }
         else if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
