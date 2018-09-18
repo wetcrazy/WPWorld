@@ -92,19 +92,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public void GetDPadInput(Vector3 MoveDirection)
     {
-        //if(Axis == "Vertical")
-        //{
-        //    MovementDir = Vector3.forward;
-        //}
-        //else if (Axis == "Horizontal")
-        //{
-        //    MovementDir.x = Input.GetAxis("Horizontal");
-        //}
-        //else
-        //{
-        //    MovementDir = Vector3.zero;
-        //}
-
         MovementDir = MoveDirection;
     }
 

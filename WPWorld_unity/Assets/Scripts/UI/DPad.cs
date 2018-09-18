@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DPad : MonoBehaviour {
 
+    //For flat DPad surface movement
+    //Send the movement direction vectors to playermovement script
     public void OnMoveUp()
     {
         PlayerObject.SendMessage("GetDPadInput", Vector3.forward);
@@ -26,7 +28,35 @@ public class DPad : MonoBehaviour {
 
     public void OnDpadKeyUp()
     {
+        //Tell Player to stop moving
         PlayerObject.SendMessage("GetDPadInput", Vector3.zero);
+    }
+
+    //-----For sphere planet level only-----//
+    public void OnSphereMoveUp()
+    {
+        PlayerObject.SendMessage("GetDPadInput", "Up");
+    }
+
+    public void OnSphereMoveDown()
+    {
+        PlayerObject.SendMessage("GetDPadInput", "Down");
+    }
+
+    public void OnSphereMoveLeft()
+    {
+        PlayerObject.SendMessage("GetDPadInput", "Left");
+    }
+
+    public void OnSphereMoveRight()
+    {
+        PlayerObject.SendMessage("GetDPadInput", "Right");
+    }
+
+    public void OnSphereDpadKeyUp()
+    {
+        //Tell Player to stop moving
+        PlayerObject.SendMessage("GetDPadInput", "None");
     }
 
     GameObject PlayerObject;
@@ -34,9 +64,4 @@ public class DPad : MonoBehaviour {
     void Start () {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

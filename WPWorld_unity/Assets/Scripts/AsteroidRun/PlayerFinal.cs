@@ -25,6 +25,8 @@ public class PlayerFinal : MonoBehaviour {
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
     Joystick JoysticControls;
+    bool isMoving = false;
+    Vector3 PivotAxis;
 
     public enum DEBUFF_EFFECT
     {
@@ -42,11 +44,6 @@ public class PlayerFinal : MonoBehaviour {
     void Start () {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.01f, 0);
-        JoysticControls = JoystickObject.GetComponent<Joystick>();
-        PlayerPermanentNorth.transform.position = gameObject.transform.position;//gameObject.transform.position + gameObject.transform.forward * 0.05f;
-        //Vector3 newPos = PlayerPermanentNorth.transform.position;
-        //newPos.y = 5.1f;
-        //PlayerPermanentNorth.transform.position = newPos;
     }
 	
 	// Update is called once per frame
@@ -110,7 +107,6 @@ public class PlayerFinal : MonoBehaviour {
             //gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
 
             gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 50 * Time.deltaTime);
-            PlayerPermanentNorth.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 30 * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.S))
         {
@@ -125,19 +121,37 @@ public class PlayerFinal : MonoBehaviour {
             gameObject.transform.position += (gameObject.transform.right * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
         }
 
-        if (JoysticControls.JoystickDragDirection != Vector3.zero)
+        if(isMoving)
         {
-            //PlayerPermanentNorth.transform.position.Set(PlayerPermanentNorth.transform.position.x, gameObject.transform.position.y, PlayerPermanentNorth.transform.position.z);
-            Vector3 PlayerPermanentNorthDir = (PlayerPermanentNorth.transform.position - gameObject.transform.position).normalized;
-            Vector3 Angle = new Vector3(0, JoysticControls.FacingAngle, 0);
-
-            gameObject.transform.forward = PlayerPermanentNorthDir;
-            gameObject.transform.Rotate(Vector3.up, JoysticControls.FacingAngle,Space.Self);
-
-            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 30 * Time.deltaTime);
-            //gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
-            PlayerPermanentNorth.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 30 * Time.deltaTime);
+            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, PivotAxis, PlayerSpeed * Time.deltaTime);
         }
+    }
+
+    public void GetDPadInput(string MovementDirection)
+    {
+        switch (MovementDirection)
+        {
+            case "Up":
+                isMoving = true;
+                PivotAxis = gameObject.transform.right;
+                break;
+            case "Down":
+                isMoving = true;
+                PivotAxis = -gameObject.transform.right;
+                break;
+            case "Left":
+                isMoving = true;
+                PivotAxis = gameObject.transform.forward;
+                break;
+            case "Right":
+                isMoving = true;
+                PivotAxis = -gameObject.transform.forward;
+                break;
+            default:
+                isMoving = false;
+                break;
+        }
+
     }
 
     void PlayerFall()
@@ -145,27 +159,7 @@ public class PlayerFinal : MonoBehaviour {
         //Adds a constant force that pushes the player towards the center of the planet
         GetComponent<Rigidbody>().AddForce((SceneControllerScript.PlanetObject.transform.position - gameObject.transform.position).normalized * SceneControllerScript.GRAVITY);
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("Collision Enter");
-    //    if (collision.gameObject == PlanetObject)
-    //    {
-    //        isFalling = false;
-    //        Debug.Log("Player Has Stopped Falling");
-    //    }
-    //}
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    Debug.Log("Collision Exit");
-    //    if (collision.gameObject == PlanetObject)
-    //    {
-    //        isFalling = true;
-    //        Debug.Log("Player Has Started Falling");
-    //    }
-    //}
-
+ 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Asteroid")
@@ -175,9 +169,12 @@ public class PlayerFinal : MonoBehaviour {
         }
         else if (other.name == "HealthPowerup")
         {
+            //Add health to the health bar
             CurrentHealth += other.gameObject.GetComponent<HealthPowerup>().HealthRegenAmount;
+            //Set health powerup gameobject to false
             other.gameObject.SetActive(false);
 
+            //Prevent health overflow
             if(CurrentHealth > MaximumHealth)
             {
                 CurrentHealth = MaximumHealth;
@@ -187,6 +184,7 @@ public class PlayerFinal : MonoBehaviour {
             DebuffEffect = (DEBUFF_EFFECT)Random.Range((int)(DEBUFF_EFFECT.DEBUFF_NONE + 1), (int)(DEBUFF_EFFECT.TOTAL_DEBUFF_EFFECT));
             DebuffTimer = DebuffDuration;
 
+            //Change the values related to the debuff
             switch (DebuffEffect)
             {
                 case DEBUFF_EFFECT.DEBUFF_SLOW:

@@ -391,12 +391,12 @@ Prefab:
     - target: {fileID: 224068484965654892, guid: 927161cb46a07e149867b196f03cf0d1,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -371
       objectReference: {fileID: 0}
     - target: {fileID: 224068484965654892, guid: 927161cb46a07e149867b196f03cf0d1,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -494
       objectReference: {fileID: 0}
     - target: {fileID: 224068484965654892, guid: 927161cb46a07e149867b196f03cf0d1,
         type: 2}
@@ -437,6 +437,61 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224068484965654892, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2.5962265
+      objectReference: {fileID: 0}
+    - target: {fileID: 224068484965654892, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2.596228
+      objectReference: {fileID: 0}
+    - target: {fileID: 224068484965654892, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 2.596228
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541517387494298, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereMoveUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884509759719384, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereMoveDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541517387494298, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereDpadKeyUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884509759719384, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereDpadKeyUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 114812163306102002, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereMoveLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 114812163306102002, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereDpadKeyUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 114750797889587314, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereMoveRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 114750797889587314, guid: 927161cb46a07e149867b196f03cf0d1,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSphereDpadKeyUp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 927161cb46a07e149867b196f03cf0d1, type: 2}
