@@ -90,20 +90,22 @@ public class PlayerMovement : MonoBehaviour {
         //}
     }
 
-    public void GetDPadInput(string Axis)
+    public void GetDPadInput(Vector3 MoveDirection)
     {
-        if(Axis == "Vertical")
-        {
-            MovementDir.z = Input.GetAxis("Vertical");
-        }
-        else if (Axis == "Horizontal")
-        {
-            MovementDir.x = Input.GetAxis("Horizontal");
-        }
-        else
-        {
-            MovementDir = Vector3.zero;
-        }
+        //if(Axis == "Vertical")
+        //{
+        //    MovementDir = Vector3.forward;
+        //}
+        //else if (Axis == "Horizontal")
+        //{
+        //    MovementDir.x = Input.GetAxis("Horizontal");
+        //}
+        //else
+        //{
+        //    MovementDir = Vector3.zero;
+        //}
+
+        MovementDir = MoveDirection;
     }
 
     void FixedUpdate()

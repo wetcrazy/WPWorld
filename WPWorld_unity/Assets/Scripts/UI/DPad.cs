@@ -6,27 +6,27 @@ public class DPad : MonoBehaviour {
 
     public void OnMoveUp()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Vertical");
+        PlayerObject.SendMessage("GetDPadInput", Vector3.forward);
     }
 
     public void OnMoveDown()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Vertical");
+        PlayerObject.SendMessage("GetDPadInput", -Vector3.forward);
     }
 
     public void OnMoveLeft()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Horizontal");
+        PlayerObject.SendMessage("GetDPadInput", -Vector3.right);
     }
 
     public void OnMoveRight()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Horizontal");
+        PlayerObject.SendMessage("GetDPadInput", Vector3.right);
     }
 
     public void OnDpadKeyUp()
     {
-        PlayerObject.SendMessage("GetDPadInput", "None");
+        PlayerObject.SendMessage("GetDPadInput", Vector3.zero);
     }
 
     GameObject PlayerObject;
