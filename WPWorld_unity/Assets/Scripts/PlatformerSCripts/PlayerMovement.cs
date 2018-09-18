@@ -38,10 +38,24 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y * 1.5f);
-        Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y * 1.5f), Color.white);
+        RaycastHit hit;
 
-        if(IsGrounded)
+        Debug.DrawLine(transform.position, transform.position - transform.up, Color.white, transform.lossyScale.y);
+        Debug.DrawLine(transform.position, transform.position - transform.up + transform.right, Color.white, transform.lossyScale.x * 0.5f);
+        Debug.DrawLine(transform.position, transform.position - transform.up - transform.right, Color.white, transform.lossyScale.x * 0.5f);
+
+        if (Physics.Raycast(transform.position, -transform.up, out hit, transform.lossyScale.y) ||
+            Physics.Raycast(transform.position, -transform.up + transform.right, out hit, transform.lossyScale.x * 0.5f) ||
+            Physics.Raycast(transform.position, -transform.up - transform.right, out hit, transform.lossyScale.x * 0.5f))
+        {
+            IsGrounded = true;
+        }
+        else
+        {
+            IsGrounded = false;
+        }
+
+        if (IsGrounded)
         {
             MovementDir = Vector3.zero;
 
@@ -61,6 +75,7 @@ public class PlayerMovement : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.Space))
             {
                 RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+                IsGrounded = false;
             }
         }
         else
@@ -80,7 +95,7 @@ public class PlayerMovement : MonoBehaviour {
                 MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 0.75f;
             }
         }
-	}
+    }
 
     void FixedUpdate()
     {
@@ -99,12 +114,9 @@ public class PlayerMovement : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.transform.position.y - collision.gameObject.transform.lossyScale.y / 2
-            >= transform.position.y + transform.lossyScale.y / 2)
+            >= transform.position.y + transform.lossyScale.y / 2 && RigidRef.velocity.y > 0)
         {
-            Vector3 Knockback_Y = RigidRef.velocity;
-            Knockback_Y *= -2;
-
-            RigidRef.AddForce(Knockback_Y, ForceMode.VelocityChange);
+            Debug.Log(RigidRef.velocity.y);
         }
     }
 

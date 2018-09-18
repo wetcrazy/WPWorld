@@ -19,8 +19,15 @@ public class SpawnOnCollide : MonoBehaviour {
 
     [SerializeField]
     private AudioClip CoinSFX;
+
+    [SerializeField]
+    private GameObject BounceCoin;
+
     [SerializeField]
     private AudioClip ItemEnemySFX;
+
+    [SerializeField]
+    private GameObject Enemy;
 
     private Renderer RenderRef;
 
@@ -54,6 +61,7 @@ public class SpawnOnCollide : MonoBehaviour {
                         case (SPAWNTYPE.COIN):
                             if (CoinSFX != null)
                                 SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(CoinSFX);
+                            Instantiate(BounceCoin, this.transform.position, Quaternion.identity);
                             break;
                         case (SPAWNTYPE.ITEM):
                             if (ItemEnemySFX != null)

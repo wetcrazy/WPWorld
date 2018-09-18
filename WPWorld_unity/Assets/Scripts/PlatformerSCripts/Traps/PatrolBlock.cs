@@ -15,6 +15,11 @@ public class PatrolBlock : MonoBehaviour {
 
     private bool TravelToSecond = true;
 
+    [SerializeField]
+    private bool CollideToStart;
+
+    private bool HasCollided;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -22,7 +27,12 @@ public class PatrolBlock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(TravelToSecond)
+        if (CollideToStart && !HasCollided)
+        {
+            return;
+        }
+
+        if (TravelToSecond)
         {
             if(Vector3.Distance(transform.position, SecondPatrolPoint.transform.position) > 0.1f)
             {
@@ -49,7 +59,10 @@ public class PatrolBlock : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Player")
+        {
+            HasCollided = true;
             collision.gameObject.transform.parent = transform;
+        }
     }
 
     private void OnCollisionExit(Collision collision)

@@ -32,7 +32,7 @@ public class DestroyOnCollide : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         GameObject CollidedObject = collision.gameObject;
 
@@ -41,18 +41,21 @@ public class DestroyOnCollide : MonoBehaviour {
             if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2
                 <= transform.position.y - transform.lossyScale.y / 2 && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
             {
-                RenderRef.enabled = false;
-
-                if (DestroySFX != null)
-                    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DestroySFX);
-
-                for (int i = 0; i < AmountOfDebris; i++)
+                if(CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
                 {
-                    GameObject n_Debris = Instantiate(Debris, this.transform);
-                    Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
-                    RigidRef.AddForce(new Vector3(Random.Range(-50, 50),
-                        Random.Range(25, 50),
-                        Random.Range(-50, 50)));
+                    RenderRef.enabled = false;
+
+                    if (DestroySFX != null)
+                        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DestroySFX);
+
+                    for (int i = 0; i < AmountOfDebris; i++)
+                    {
+                        GameObject n_Debris = Instantiate(Debris, this.transform);
+                        Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
+                        RigidRef.AddForce(new Vector3(Random.Range(-50, 50),
+                            Random.Range(25, 50),
+                            Random.Range(-50, 50)));
+                    }
                 }
             }
         }

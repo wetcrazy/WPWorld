@@ -9,7 +9,8 @@ public enum ENEMYTYPES
     WALKJUMP,           // Jumps in one direction only
     PATROLJUMP,         // Jumps from one point to another point
     HIDDENWALKJUMP,     // Walks in one direction and jumps only when player is in it's detection radius
-    HIDDENPATROLJUMP    // Moves from one point to another point and jumps only when player is in it's detection radius
+    HIDDENPATROLJUMP,    // Moves from one point to another point and jumps only when player is in it's detection radius
+    DEAD
 }
 
 public class Enemy : MonoBehaviour {
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour {
 
     private bool Hidden = true;
 
-    Rigidbody RigidRef;
+    private Rigidbody RigidRef;
 
 	// Use this for initialization
 	void Start () {
@@ -180,15 +181,17 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
+
+        if (other.tag == "Killbox")
+        {
+            CurrType = ENEMYTYPES.DEAD;
+            RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+            GetComponent<Renderer>().enabled = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Killbox")
-        {
-
-        }
-
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<TPSLogic>().Death();
