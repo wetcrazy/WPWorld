@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the ball's behaviour
+/// </summary>
 public class BallBehaviour : MonoBehaviour
 {
+    // Brick Prefab
     public GameObject BrickPrefab; 
     public float speed, MAX_timer;
 

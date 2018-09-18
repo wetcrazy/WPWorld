@@ -11,14 +11,19 @@ public class BrickDeployer : MonoBehaviour
     public GameObject bricksPrefab;
     // Prefab for GoalBrick
     public GameObject goalbrickPrefab;
+    // Prefab for bomb 
+    public GameObject bombbrickPrefab;
+    // Max number of bomb
+    public int MAX_bombNUM;
 
     private float MAX_row, MAX_col, MAX_height, brickOffset;
-    private int GoalRNG, GoalSpawnNUM;
-    private bool is_spawn = false, is_goalSpawned = false;
+    private int GoalRNG, GoalSpawnNUM, currBombNUM;
+    private bool is_spawn = false, is_goalSpawned = false, is_BombAllowedSpawn = false;
 
     // Intialize 
     private void Awake()
     {
+        currBombNUM = 0;
         GoalRNG = 0;
         GoalSpawnNUM = 0;
         brickOffset = transform.parent.lossyScale.x;
@@ -28,7 +33,7 @@ public class BrickDeployer : MonoBehaviour
     }
 
     private void Update()
-    {
+    {    
         // If there is no prefab being used
         if (bricksPrefab == null)
         {
@@ -50,7 +55,7 @@ public class BrickDeployer : MonoBehaviour
             Debug.Log("Goal Randomed " + GoalRNG);
         }
 
-        // Spawns the bricks 
+        // Spawns the bricks (Huge code incoming)
         // Height
         for (float height = transform.position.y; height <= MAX_height; height += brickOffset)
         {
@@ -60,14 +65,39 @@ public class BrickDeployer : MonoBehaviour
                 // Col
                 for (float col = -MAX_col; col <= MAX_col; col += brickOffset)
                 {
-                    // Spawn POSITION                 
+                    // Limit the amount bomb summoned
+                    if (currBombNUM < MAX_bombNUM)
+                    {
+                        // Debug.Log("Limit has applied on BOMB");
+                        var _rng = Random.Range(0, 10);                      
+                        if (_rng == 1)
+                        {
+                            is_BombAllowedSpawn = true;
+                        }
+                    }
+
+                    /// <summary>
+                    /// OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+                    ///       SUMMOOOOOOON HAPPENS HERE!!!
+                    /// OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+                    /// </summary>
+
+                    // POSITION to Spawn                
                     var _newPos = new Vector3(col / 2, height / 2, row / 2);  
                     // Spawn GOAL
-                    if(GoalSpawnNUM == GoalRNG)
+                    if(GoalSpawnNUM == GoalRNG) // It will wait till it reach the number it is suppose to summon itself
                     {
                         GoalSpawnNUM++; // Offset the goalSpawnNUM by 1 to stop spawning
                         is_goalSpawned = true;
                         var _newOBJ = Instantiate(goalbrickPrefab, _newPos, Quaternion.identity, transform);
+                        Debug.Log("Spawned " + _newOBJ.name);
+                    }
+                    // Spawn BOMB
+                    else if(is_BombAllowedSpawn)
+                    {
+                        is_BombAllowedSpawn = false;
+                        currBombNUM++; // Update the bomb count
+                        var _newOBJ = Instantiate(bombbrickPrefab, _newPos, Quaternion.identity, transform);
                         Debug.Log("Spawned " + _newOBJ.name);
                     }
                     // Spawn BRICKS
@@ -80,6 +110,6 @@ public class BrickDeployer : MonoBehaviour
                 }
             }
         }
-        is_spawn = true;    
+        is_spawn = true;      
     }
 }

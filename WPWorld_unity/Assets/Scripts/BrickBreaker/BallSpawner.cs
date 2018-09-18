@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Does the spawning of the ball
+/// </summary>
 public class BallSpawner : MonoBehaviour
 {
-
     // Prefab for ball
     public GameObject ballPrefab;
     public int MAX_balls;
