@@ -27,7 +27,7 @@ public class BounceOnCollide : MonoBehaviour {
 
             if(TimeElapsed >= 0.1f)
             {
-                if (Vector3.Distance(this.transform.position, OrgPos) < 0.025f)
+                if (Vector3.Distance(this.transform.position, OrgPos) < 0.01f || this.transform.position.y < OrgPos.y)
                 {
                     RigidRef.constraints = RigidbodyConstraints.FreezeAll;
                     RigidRef.useGravity = false;

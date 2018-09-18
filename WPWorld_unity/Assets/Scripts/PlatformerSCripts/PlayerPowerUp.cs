@@ -107,14 +107,14 @@ public class PlayerPowerUp : MonoBehaviour {
             if (CollisionRef.transform.position.y + CollisionRef.transform.lossyScale.y / 2
                 >= transform.position.y - transform.lossyScale.y / 2 && !GetComponent<PlayerMovement>().GetGrounded())
             {
-                GetComponent<PlayerMovement>().Respawn();
+                GetComponent<TPSLogic>().Death();
             }
         }
         else if (CurrPowerUp == POWERUPS.SUPERSPEED)
         {
             if (Mathf.Abs(CollisionRef.transform.position.y - transform.position.y) < CollisionRef.transform.lossyScale.y / 2)
             {
-                GetComponent<PlayerMovement>().Respawn();
+                GetComponent<TPSLogic>().Death();
             }
         }
     }

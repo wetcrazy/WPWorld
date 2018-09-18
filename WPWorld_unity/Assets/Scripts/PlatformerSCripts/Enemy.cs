@@ -191,7 +191,7 @@ public class Enemy : MonoBehaviour {
 
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerMovement>().Respawn();
+            collision.gameObject.GetComponent<TPSLogic>().Death();
         }
 
         if (collision.gameObject.transform.position.y - collision.gameObject.transform.lossyScale.y / 2

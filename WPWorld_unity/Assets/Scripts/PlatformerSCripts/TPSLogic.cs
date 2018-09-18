@@ -7,6 +7,12 @@ public class TPSLogic : MonoBehaviour {
     [SerializeField]
     private AudioClip JumpSFX;
 
+    [SerializeField]
+    private int Points = 0;
+
+    [SerializeField]
+    private int DeathCounter = 0;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -23,4 +29,20 @@ public class TPSLogic : MonoBehaviour {
             }
         }
 	}
+
+    public void SetPoints(int n_Points)
+    {
+        Points = n_Points;
+    }
+
+    public int GetPoints()
+    {
+        return Points;
+    }
+
+    public void Death()
+    {
+        DeathCounter++;
+        GetComponent<PlayerMovement>().Respawn();
+    }
 }

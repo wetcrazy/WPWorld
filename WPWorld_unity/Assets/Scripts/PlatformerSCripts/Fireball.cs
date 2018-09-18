@@ -29,7 +29,7 @@ public class Fireball : MonoBehaviour {
         if(CollisionRef.tag == "Player")
         {
             Destroy(this.gameObject);
-            CollisionRef.GetComponent<PlayerMovement>().Respawn();
+            CollisionRef.GetComponent<TPSLogic>().Death();
             return;
         }
 
