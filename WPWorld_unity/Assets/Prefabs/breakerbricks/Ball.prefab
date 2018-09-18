@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33163747865076456}
   - component: {fileID: 23337321107252592}
   - component: {fileID: 135424448080898506}
-  - component: {fileID: 114307972497151670}
   - component: {fileID: 54542668466489452}
+  - component: {fileID: 114241611769893862}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Balls
@@ -101,7 +101,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114307972497151670
+--- !u!114 &114241611769893862
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -109,13 +109,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1704159819429958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e289b2cd906e8e4fa125a074c3950b7, type: 3}
+  m_Script: {fileID: 11500000, guid: f11535bc485004245aba415a3d8413b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BrickPrefab: {fileID: 1934710980699002, guid: 44250907be7564146892ee5e5d36f923,
+  BrickPrefab: {fileID: 1934710980699002, guid: 9b4b40969e1ac0542bdc723be1bb00f5,
     type: 2}
   speed: 200
-  MAX_timer: 20
+  MAX_timer: 15
 --- !u!135 &135424448080898506
 SphereCollider:
   m_ObjectHideFlags: 1
