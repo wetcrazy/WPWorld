@@ -15,10 +15,13 @@ public class PlayerFinal : MonoBehaviour {
     float PlayerLoseHealthSpeed = 5;
     [SerializeField]
     float DebuffDuration = 5;
+    [SerializeField]
+    GameObject JoystickObject;
 
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
-    //bool isFalling = true;
+    Joystick JoysticControls;
+    Vector3 InitialFacingDirection;
 
     public enum DEBUFF_EFFECT
     {
@@ -36,7 +39,9 @@ public class PlayerFinal : MonoBehaviour {
     void Start () {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.01f, 0);
-	}
+        JoysticControls = JoystickObject.GetComponent<Joystick>();
+        InitialFacingDirection = gameObject.transform.forward;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -92,9 +97,11 @@ public class PlayerFinal : MonoBehaviour {
     void KeyInput()
     {
         //NOTE: These are temporary controls for debugging purposes
-        if(Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
-            gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+            //gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+
+            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 50 * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.S))
         {
@@ -107,6 +114,17 @@ public class PlayerFinal : MonoBehaviour {
         else if (Input.GetKey(KeyCode.D))
         {
             gameObject.transform.position += (gameObject.transform.right * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+        }
+
+        if (JoysticControls.JoystickDragDirection != Vector3.zero)
+        {
+            Vector3 dir = new Vector3(JoysticControls.JoystickDragDirection.x, 0, JoysticControls.JoystickDragDirection.y);
+
+            //gameObject.transform.forward = Quaternion.AngleAxis(-JoysticControls.FacingAngle, gameObject.transform.up) * InitialFacingDirection;
+            gameObject.transform.forward = dir;
+
+            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 30 * Time.deltaTime);
+            //gameObject.transform.position += (dir * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
         }
     }
 
