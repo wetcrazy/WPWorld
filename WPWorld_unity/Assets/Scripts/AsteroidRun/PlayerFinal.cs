@@ -17,11 +17,14 @@ public class PlayerFinal : MonoBehaviour {
     float DebuffDuration = 5;
     [SerializeField]
     GameObject JoystickObject;
+    [SerializeField]
+    GameObject PlayerPermanentNorth;
+    [SerializeField]
+    GameObject ForwardCube;
 
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
     Joystick JoysticControls;
-    Vector3 InitialFacingDirection;
 
     public enum DEBUFF_EFFECT
     {
@@ -40,12 +43,17 @@ public class PlayerFinal : MonoBehaviour {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.01f, 0);
         JoysticControls = JoystickObject.GetComponent<Joystick>();
-        InitialFacingDirection = gameObject.transform.forward;
+        PlayerPermanentNorth.transform.position = gameObject.transform.position;//gameObject.transform.position + gameObject.transform.forward * 0.05f;
+        //Vector3 newPos = PlayerPermanentNorth.transform.position;
+        //newPos.y = 5.1f;
+        //PlayerPermanentNorth.transform.position = newPos;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+
+        ForwardCube.transform.position = gameObject.transform.position + gameObject.transform.forward * 0.1f;
 
         //Make player health gradually fall
         if (CurrentHealth > 0)
@@ -102,6 +110,7 @@ public class PlayerFinal : MonoBehaviour {
             //gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
 
             gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 50 * Time.deltaTime);
+            PlayerPermanentNorth.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 30 * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.S))
         {
@@ -118,13 +127,16 @@ public class PlayerFinal : MonoBehaviour {
 
         if (JoysticControls.JoystickDragDirection != Vector3.zero)
         {
-            Vector3 dir = new Vector3(JoysticControls.JoystickDragDirection.x, 0, JoysticControls.JoystickDragDirection.y);
+            //PlayerPermanentNorth.transform.position.Set(PlayerPermanentNorth.transform.position.x, gameObject.transform.position.y, PlayerPermanentNorth.transform.position.z);
+            Vector3 PlayerPermanentNorthDir = (PlayerPermanentNorth.transform.position - gameObject.transform.position).normalized;
+            Vector3 Angle = new Vector3(0, JoysticControls.FacingAngle, 0);
 
-            //gameObject.transform.forward = Quaternion.AngleAxis(-JoysticControls.FacingAngle, gameObject.transform.up) * InitialFacingDirection;
-            gameObject.transform.forward = dir;
+            gameObject.transform.forward = PlayerPermanentNorthDir;
+            gameObject.transform.Rotate(Vector3.up, JoysticControls.FacingAngle,Space.Self);
 
             gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 30 * Time.deltaTime);
-            //gameObject.transform.position += (dir * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+            //gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+            PlayerPermanentNorth.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 30 * Time.deltaTime);
         }
     }
 

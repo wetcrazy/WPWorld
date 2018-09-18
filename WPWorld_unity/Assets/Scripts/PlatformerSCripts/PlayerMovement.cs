@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private float MovementSpeed;
-    private Vector3 MovementDir;
+    private Vector3 MovementDir = Vector3.zero;
 
     [SerializeField]
     private float JumpSpeed;
@@ -38,49 +38,73 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //Check if player is on ground
         IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y * 1.5f);
         Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y * 1.5f), Color.white);
 
-        if(IsGrounded)
+        if (IsGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            MovementDir = Vector3.zero;
+            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+        }
 
-            if(RestrictMovement)
-            {
-                if (CurrRestriction == RESTRICTMOVE.X_Axis)
-                    MovementDir.z = Input.GetAxis("Vertical");
-                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
-                    MovementDir.x = Input.GetAxis("Horizontal");
-            }
-            else
-            {
-                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
-                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
-            }
+        //if(IsGrounded)
+        //{
+        //    MovementDir = Vector3.zero;
 
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-            }
+        //    if(RestrictMovement)
+        //    {
+        //        if (CurrRestriction == RESTRICTMOVE.X_Axis)
+        //            MovementDir.z = Input.GetAxis("Vertical");
+        //        else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
+        //            MovementDir.x = Input.GetAxis("Horizontal");
+        //    }
+        //    else
+        //    {
+        //        MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
+        //        MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
+        //    }
+
+        //    if(Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+        //    }
+        //}
+        //else
+        //{
+        //    MovementDir = Vector3.zero;
+
+        //if (RestrictMovement)
+        //{
+        //    if (CurrRestriction == RESTRICTMOVE.X_Axis)
+        //        MovementDir.z = Input.GetAxis("Vertical") * 0.75f;
+        //    else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
+        //        MovementDir.x = Input.GetAxis("Horizontal") * 0.75f;
+        //}
+        //else
+        //{
+        //    MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 0.75f;
+        //    MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 0.75f;
+        //}
+
+
+        //}
+    }
+
+    public void GetDPadInput(string Axis)
+    {
+        if(Axis == "Vertical")
+        {
+            MovementDir.z = Input.GetAxis("Vertical");
+        }
+        else if (Axis == "Horizontal")
+        {
+            MovementDir.x = Input.GetAxis("Horizontal");
         }
         else
         {
             MovementDir = Vector3.zero;
-
-            if (RestrictMovement)
-            {
-                if (CurrRestriction == RESTRICTMOVE.X_Axis)
-                    MovementDir.z = Input.GetAxis("Vertical") * 0.75f;
-                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
-                    MovementDir.x = Input.GetAxis("Horizontal") * 0.75f;
-            }
-            else
-            {
-                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 0.75f;
-                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 0.75f;
-            }
         }
-	}
+    }
 
     void FixedUpdate()
     {
