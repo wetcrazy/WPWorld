@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-<<<<<<< HEAD
         RaycastHit hit;
 
         Debug.DrawLine(transform.position, transform.position - transform.up, Color.white, transform.lossyScale.y);
@@ -96,7 +95,6 @@ public class PlayerMovement : MonoBehaviour {
                 MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 0.75f;
             }
         }
-=======
         //Check if player is on ground
         IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y * 1.5f);
         Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y * 1.5f), Color.white);
@@ -152,7 +150,6 @@ public class PlayerMovement : MonoBehaviour {
     public void GetDPadInput(Vector3 MoveDirection)
     {
         MovementDir = MoveDirection;
->>>>>>> 67cd65ad5e410c00eac7c5766b4bd00d7690a70a
     }
 
     void FixedUpdate()
