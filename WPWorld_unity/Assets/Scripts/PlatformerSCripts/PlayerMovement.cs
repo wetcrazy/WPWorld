@@ -2,27 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RESTRICTMOVE
-{
-    X_Axis,
-    Y_Axis,
-    Z_Axis
-}
-
 public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private float MovementSpeed;
     private Vector3 MovementDir = Vector3.zero;
-
-    [SerializeField]
-    private float JumpSpeed;
-    private bool IsGrounded = false;
-
-    [SerializeField]
-    private bool RestrictMovement;
-    [SerializeField]
-    private RESTRICTMOVE CurrRestriction;
 
     private Vector3 RespawnPoint;
 
@@ -38,113 +22,12 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        RaycastHit hit;
+        // Resets the acceleration of the gameobject to 0
+        MovementDir = Vector3.zero;
 
-        Debug.DrawLine(transform.position, transform.position - transform.up, Color.white, transform.lossyScale.y);
-        Debug.DrawLine(transform.position, transform.position - transform.up + transform.right, Color.white, transform.lossyScale.x * 0.5f);
-        Debug.DrawLine(transform.position, transform.position - transform.up - transform.right, Color.white, transform.lossyScale.x * 0.5f);
-
-        if (Physics.Raycast(transform.position, -transform.up, out hit, transform.lossyScale.y) ||
-            Physics.Raycast(transform.position, -transform.up + transform.right, out hit, transform.lossyScale.x * 0.5f) ||
-            Physics.Raycast(transform.position, -transform.up - transform.right, out hit, transform.lossyScale.x * 0.5f))
-        {
-            IsGrounded = true;
-        }
-        else
-        {
-            IsGrounded = false;
-        }
-
-        if (IsGrounded)
-        {
-            MovementDir = Vector3.zero;
-
-            if(RestrictMovement)
-            {
-                if (CurrRestriction == RESTRICTMOVE.X_Axis)
-                    MovementDir.z = Input.GetAxis("Vertical");
-                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
-                    MovementDir.x = Input.GetAxis("Horizontal");
-            }
-            else
-            {
-                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
-                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
-            }
-
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                IsGrounded = false;
-            }
-        }
-        else
-        {
-            MovementDir = Vector3.zero;
-
-            if (RestrictMovement)
-            {
-                if (CurrRestriction == RESTRICTMOVE.X_Axis)
-                    MovementDir.z = Input.GetAxis("Vertical") * 0.75f;
-                else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
-                    MovementDir.x = Input.GetAxis("Horizontal") * 0.75f;
-            }
-            else
-            {
-                MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 0.75f;
-                MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 0.75f;
-            }
-        }
-        //Check if player is on ground
-        IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y * 1.5f);
-        Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y * 1.5f), Color.white);
-
-        if (IsGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-        }
-
-        //if(IsGrounded)
-        //{
-        //    MovementDir = Vector3.zero;
-
-        //    if(RestrictMovement)
-        //    {
-        //        if (CurrRestriction == RESTRICTMOVE.X_Axis)
-        //            MovementDir.z = Input.GetAxis("Vertical");
-        //        else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
-        //            MovementDir.x = Input.GetAxis("Horizontal");
-        //    }
-        //    else
-        //    {
-        //        MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 1.5f;
-        //        MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 1.5f;
-        //    }
-
-        //    if(Input.GetKeyDown(KeyCode.Space))
-        //    {
-        //        RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-        //    }
-        //}
-        //else
-        //{
-        //    MovementDir = Vector3.zero;
-
-        //if (RestrictMovement)
-        //{
-        //    if (CurrRestriction == RESTRICTMOVE.X_Axis)
-        //        MovementDir.z = Input.GetAxis("Vertical") * 0.75f;
-        //    else if (CurrRestriction == RESTRICTMOVE.Z_Axis)
-        //        MovementDir.x = Input.GetAxis("Horizontal") * 0.75f;
-        //}
-        //else
-        //{
-        //    MovementDir = Input.GetAxis("Vertical") * Camera.main.transform.forward * 0.75f;
-        //    MovementDir += Input.GetAxis("Horizontal") * Camera.main.transform.right * 0.75f;
-        //}
-
-
-        //}
+        // Moves the player according to Key Input
+        MovementDir = Input.GetAxis("Vertical") * Vector3.forward; // Vertical = W, S, Up Arrow, Down Arrow
+        MovementDir += Input.GetAxis("Horizontal") * Vector3.right; // Horizontal = A, D, Left Arrow, Right Arrow
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
@@ -154,6 +37,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        // Actually moves the player according to the Movement Direction, Movement speed is attached here to prevent multiple movement speed from being multiplied in Update
         RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * Time.fixedDeltaTime);
     }
 
@@ -164,25 +48,6 @@ public class PlayerMovement : MonoBehaviour {
             Debug.Log("Reset!");
             Respawn();
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.transform.position.y - collision.gameObject.transform.lossyScale.y / 2
-            >= transform.position.y + transform.lossyScale.y / 2 && RigidRef.velocity.y > 0)
-        {
-            Debug.Log(RigidRef.velocity.y);
-        }
-    }
-
-    public void SetJumpSpeed(float n_JumpSpeed)
-    {
-        JumpSpeed = n_JumpSpeed;
-    }
-
-    public float GetJumpSpeed()
-    {
-        return JumpSpeed;
     }
 
     public void SetMovementSpeed(float n_MovementSpeed)
@@ -198,11 +63,6 @@ public class PlayerMovement : MonoBehaviour {
     public void SetRespawn(Vector3 n_Respawn)
     {
         RespawnPoint = n_Respawn;
-    }
-
-    public bool GetGrounded()
-    {
-        return IsGrounded;
     }
 
     public void Respawn()

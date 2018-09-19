@@ -24,7 +24,7 @@ public class ShowOnCollide : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            if(!RenderRef.isVisible && !other.GetComponent<PlayerMovement>().GetGrounded())
+            if(!RenderRef.isVisible && !other.GetComponent<TPSLogic>().GetGrounded())
             {
                 if(other.transform.position.y < transform.position.y && Mathf.Abs(other.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
                 {

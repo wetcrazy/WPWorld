@@ -39,9 +39,9 @@ public class DestroyOnCollide : MonoBehaviour {
         if(CollidedObject.tag == "Player" && RenderRef.isVisible)
         {
             if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2
-                <= transform.position.y - transform.lossyScale.y / 2 && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
+                <= transform.position.y - transform.lossyScale.y / 2 && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x)
             {
-                if(CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
+                if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded() && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
                 {
                     RenderRef.enabled = false;
 
@@ -56,6 +56,10 @@ public class DestroyOnCollide : MonoBehaviour {
                             Random.Range(25, 50),
                             Random.Range(-50, 50)));
                     }
+
+                    Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                    VelocityRef.y = -VelocityRef.y;
+                    CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
                 }
             }
         }

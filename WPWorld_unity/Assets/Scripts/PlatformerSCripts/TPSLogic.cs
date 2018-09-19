@@ -5,6 +5,9 @@ using UnityEngine;
 public class TPSLogic : MonoBehaviour {
 
     [SerializeField]
+    private float JumpSpeed;
+    private bool IsGrounded = false;
+    [SerializeField]
     private AudioClip JumpSFX;
 
     [SerializeField]
@@ -13,19 +16,49 @@ public class TPSLogic : MonoBehaviour {
     [SerializeField]
     private int DeathCounter = 0;
 
+    private Rigidbody RigidRef;
+
 	// Use this for initialization
 	void Start () {
-		
+        RigidRef = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space))
+        RaycastHit hit;
+
+        Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y, Color.white);
+        Debug.DrawRay(transform.position, (-transform.up + transform.right).normalized * transform.lossyScale.y * 1.5f, Color.white);
+        Debug.DrawRay(transform.position, (-transform.up - transform.right).normalized * transform.lossyScale.y * 1.5f, Color.white);
+
+        if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y) ||
+            Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f) ||
+            Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
         {
-            if(GetComponent<PlayerMovement>().GetGrounded())
+            if (hit.transform.GetComponent<Renderer>().isVisible && hit.transform.position.y < transform.position.y)
             {
-                if(JumpSFX != null)
+                IsGrounded = true;
+                if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y))
+                    Debug.Log("Straight down");
+                if (Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
+                    Debug.Log("Bottom Right");
+                if (Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
+                    Debug.Log("Bottom Left");
+            }
+        }
+        else
+        {
+            IsGrounded = false;
+        }
+
+        if (IsGrounded)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+                if (JumpSFX != null)
                     GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+                IsGrounded = false;
             }
         }
 	}
@@ -49,5 +82,10 @@ public class TPSLogic : MonoBehaviour {
     {
         DeathCounter++;
         GetComponent<PlayerMovement>().Respawn();
+    }
+
+    public bool GetGrounded()
+    {
+        return IsGrounded;
     }
 }

@@ -10,14 +10,17 @@ public class BallSpawner : MonoBehaviour
     // Prefab for ball
     public GameObject ballPrefab;
     public int MAX_balls;
+    public float MAX_TIMER;
 
     //private float MAX_row, MAX_col;
+    private float curr_Timer;
 
     // Intialize 
     private void Awake()
     {
-       // MAX_row = transform.parent.localScale.z;
+        // MAX_row = transform.parent.localScale.z;
         //MAX_col = transform.parent.localScale.x;
+        curr_Timer = 0;
     }
 
     private void Update()
@@ -31,10 +34,18 @@ public class BallSpawner : MonoBehaviour
 
         int _currballs = GameObject.FindGameObjectsWithTag(ballPrefab.tag).Length;
 
+        // Stop spawning when max balls
         if (_currballs >= MAX_balls)
         {
             return;
         }
+
+        if(curr_Timer < MAX_TIMER)
+        {
+            curr_Timer += 0.1f;
+            return;
+        }
+        curr_Timer = 0;
 
         // Spawns the ball
 
@@ -43,7 +54,7 @@ public class BallSpawner : MonoBehaviour
 
         //float _height = transform.localPosition.y;
 
-        var _newPos = Random.insideUnitSphere;
+        var _newPos = Random.insideUnitSphere * 1.0f;
         _newPos.y = transform.position.y;
 
         // var _newPos = new Vector3(_col/2, _height/2, _row/2);
