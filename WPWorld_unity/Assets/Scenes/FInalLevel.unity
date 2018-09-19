@@ -602,6 +602,7 @@ MonoBehaviour:
   MaximumHealth: 100
   PlayerLoseHealthSpeed: 2
   DebuffDuration: 5
+  TurnSpeed: 10
   JoystickObject: {fileID: 1569664418}
   PlayerPermanentNorth: {fileID: 0}
   ForwardCube: {fileID: 2119981631}
@@ -817,7 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1255,11 +1256,11 @@ GameObject:
   - component: {fileID: 1569664420}
   m_Layer: 0
   m_Name: Joystick
-  m_TagString: Untagged
+  m_TagString: Joystick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1569664419
 Transform:
   m_ObjectHideFlags: 0
@@ -1267,8 +1268,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1569664418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -948, y: -347, z: 0.42361}
-  m_LocalScale: {x: 6.8570275, y: 6.8570285, z: 6.8570285}
+  m_LocalPosition: {x: 505.42, y: -451, z: 0.49072}
+  m_LocalScale: {x: 7.9432917, y: 7.943294, z: 7.943294}
   m_Children:
   - {fileID: 1779098552}
   - {fileID: 842257685}
@@ -1288,8 +1289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JoystickBall: {fileID: 842257689}
   JoystickBackground: {fileID: 1779098553}
-  JoystickDragDirection: {x: 0, y: 0, z: 0}
-  FacingAngle: 0
+  JoystickBallDragLengthLimit: 70
 --- !u!1 &1601356270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,7 +1442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6037736, g: 0.253471, b: 0.253471, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

@@ -10,12 +10,9 @@ public class Joystick : MonoBehaviour {
     [SerializeField]
     Image JoystickBackground;
 
-    public Vector3 JoystickDragDirection = Vector3.zero;
     bool isDraggingJoystick = false;
 
-    
-    Vector3 Up = new Vector3(0, 100, 0);
-    public float FacingAngle;
+    public float JoystickBallDragLengthLimit = 70;
 
     public void OnJoystickDown()
     {
@@ -26,17 +23,18 @@ public class Joystick : MonoBehaviour {
     {
         isDraggingJoystick = false;
         JoystickBall.transform.position = JoystickBackground.transform.position;
-        JoystickDragDirection = Vector3.zero;
     }
 
-    private void Start()
+    GameObject PlayerObject;
+    // Use this for initialization
+    void Start()
     {
-        
+        PlayerObject = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()
     {
-        if(!isDraggingJoystick)
+        if (!isDraggingJoystick)
         {
             return;
         }
@@ -46,21 +44,19 @@ public class Joystick : MonoBehaviour {
         if (Application.platform == RuntimePlatform.Android)
         {
         }
-        else if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+        else if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
         {
             Vector3 MousePos = Input.mousePosition;
-            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) < 100)
-            {
-                JoystickBall.transform.position = MousePos;
-            }
-            else
-            {
-                JoystickDragDirection = (MousePos - JoystickBackgroundPosition).normalized;
-                FacingAngle = -Vector3.SignedAngle(JoystickDragDirection, Up, JoystickBall.transform.forward);
 
-                JoystickBall.transform.position = JoystickBackgroundPosition + (Quaternion.AngleAxis(
-                    FacingAngle, 
-                    Vector3.forward) * Up);
+            //Send the dragging direction to the player
+            PlayerObject.SendMessage("GetJoystickInput", MousePos - JoystickBackgroundPosition);
+
+            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
+            {
+                //Snap the joystick ball pos to the cursor if within the joystick background space
+                MousePos.y = JoystickBall.transform.position.y;
+                //Keep the joystick ball in the same y-pos
+                JoystickBall.transform.position = MousePos;
             }
         }
     }

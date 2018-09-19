@@ -35,28 +35,28 @@ public class DPad : MonoBehaviour {
     //-----For sphere planet level only-----//
     public void OnSphereMoveUp()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Up");
+        PlayerObject.SendMessage("GetDPadInput", PlayerObject.transform.right);
     }
 
     public void OnSphereMoveDown()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Down");
+        PlayerObject.SendMessage("GetDPadInput", -PlayerObject.transform.right);
     }
 
     public void OnSphereMoveLeft()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Left");
+        PlayerObject.SendMessage("GetDPadInput", PlayerObject.transform.forward);
     }
 
     public void OnSphereMoveRight()
     {
-        PlayerObject.SendMessage("GetDPadInput", "Right");
+        PlayerObject.SendMessage("GetDPadInput", -PlayerObject.transform.forward);
     }
 
     public void OnSphereDpadKeyUp()
     {
         //Tell Player to stop moving
-        PlayerObject.SendMessage("GetDPadInput", "None");
+        PlayerObject.SendMessage("GetDPadInput", Vector3.zero);
     }
 
     GameObject PlayerObject;

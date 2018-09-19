@@ -16,6 +16,8 @@ public class PlayerFinal : MonoBehaviour {
     [SerializeField]
     float DebuffDuration = 5;
     [SerializeField]
+    float TurnSpeed = 0.5f;
+    [SerializeField]
     GameObject JoystickObject;
     [SerializeField]
     GameObject PlayerPermanentNorth;
@@ -27,6 +29,7 @@ public class PlayerFinal : MonoBehaviour {
     Joystick JoysticControls;
     bool isMoving = false;
     Vector3 PivotAxis;
+    float NetAngleTurned = 0;
 
     public enum DEBUFF_EFFECT
     {
@@ -44,12 +47,12 @@ public class PlayerFinal : MonoBehaviour {
     void Start () {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
         GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.01f, 0);
+        JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-
         ForwardCube.transform.position = gameObject.transform.position + gameObject.transform.forward * 0.1f;
 
         //Make player health gradually fall
@@ -104,54 +107,67 @@ public class PlayerFinal : MonoBehaviour {
         //NOTE: These are temporary controls for debugging purposes
         if (Input.GetKey(KeyCode.W))
         {
-            //gameObject.transform.position += (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
-
-            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, 50 * Time.deltaTime);
+            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, PlayerSpeed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            gameObject.transform.position -= (gameObject.transform.forward * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, -gameObject.transform.right, PlayerSpeed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            gameObject.transform.position -= (gameObject.transform.right * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.forward, PlayerSpeed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            gameObject.transform.position += (gameObject.transform.right * PlayerSpeed * Time.deltaTime) * PlayerSpeedMultiplier;
+            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, -gameObject.transform.forward, PlayerSpeed * Time.deltaTime);
         }
 
         if(isMoving)
         {
+            //Rotate the player around the pivot axis to simulate movement on a sphere
             gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, PivotAxis, PlayerSpeed * Time.deltaTime);
         }
     }
 
-    public void GetDPadInput(string MovementDirection)
+    public void GetDPadInput(Vector3 newPivotAxis)
     {
-        switch (MovementDirection)
+        if(newPivotAxis.Equals(Vector3.zero))
         {
-            case "Up":
-                isMoving = true;
-                PivotAxis = gameObject.transform.right;
-                break;
-            case "Down":
-                isMoving = true;
-                PivotAxis = -gameObject.transform.right;
-                break;
-            case "Left":
-                isMoving = true;
-                PivotAxis = gameObject.transform.forward;
-                break;
-            case "Right":
-                isMoving = true;
-                PivotAxis = -gameObject.transform.forward;
-                break;
-            default:
-                isMoving = false;
-                break;
+            //Player has stopped holding down a DPad key, so stop moving the player
+            isMoving = false;
+        }
+        else
+        {
+            //Player is moving
+            isMoving = true;
+
+            //Check if the pivot is the same as before. If so, dont need to change it again
+            if(!PivotAxis.Equals(newPivotAxis))
+            {
+                PivotAxis = newPivotAxis;
+            }
+        }
+    }
+
+    void GetJoystickInput(Vector3 DragDirection)
+    {
+        float DragLength = DragDirection.magnitude;
+
+        if(DragLength > JoysticControls.JoystickBallDragLengthLimit)
+        {
+            DragLength = JoysticControls.JoystickBallDragLengthLimit;
         }
 
+        if (DragDirection.x < 0) //Dragged to the left
+        {
+            //Player turns leftwards
+            gameObject.transform.Rotate(gameObject.transform.up, -DragLength * TurnSpeed * Time.deltaTime, Space.Self);
+        }
+        else if (DragDirection.x > 0) //Dragged to the right
+        {
+            //Player turns rightwards
+            gameObject.transform.Rotate(gameObject.transform.up, DragLength * TurnSpeed * Time.deltaTime, Space.Self);
+        }
     }
 
     void PlayerFall()
