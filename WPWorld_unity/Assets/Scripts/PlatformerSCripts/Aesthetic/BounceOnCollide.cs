@@ -50,7 +50,7 @@ public class BounceOnCollide : MonoBehaviour {
             {
                 if (Vector3.Distance(this.transform.position, OrgPos) < 0.05f)
                 {
-                    if(!collision.gameObject.GetComponent<PlayerMovement>().GetGrounded())
+                    if(!collision.gameObject.GetComponent<TPSLogic>().GetGrounded())
                     {
                         // Push Up
                         RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
