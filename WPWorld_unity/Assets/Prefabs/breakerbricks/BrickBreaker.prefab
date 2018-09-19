@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 65945595435536576}
   - component: {fileID: 114389343287390414}
   - component: {fileID: 54961899384587400}
+  - component: {fileID: 114260517502372988}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -460,7 +461,7 @@ Transform:
   m_GameObject: {fileID: 1705002118211402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 16.48, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4929612795702042}
   m_RootOrder: 4
@@ -585,7 +586,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1c410139e43131f4883a063eb4d4be22, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -772,7 +773,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!64 &64011519538541574
 MeshCollider:
@@ -938,6 +939,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114260517502372988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705002118211402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d6c8f8175f988479c467315d64ca8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSpeed: 1
 --- !u!114 &114272366388434196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1147,9 +1160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 1
-  JumpSpeed: 3
-  RestrictMovement: 0
-  CurrRestriction: 1
 --- !u!114 &114399447376081696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1337,7 +1347,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1704159819429958, guid: 5a495b9c74ae0e04c8ca0240aa7058f9, type: 2}
-  MAX_balls: 20
+  MAX_balls: 1
+  MAX_TIMER: 10
 --- !u!114 &114904699776908628
 MonoBehaviour:
   m_ObjectHideFlags: 1
