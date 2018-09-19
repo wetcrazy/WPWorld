@@ -74,6 +74,10 @@ public class SpawnOnCollide : MonoBehaviour {
                     }
                 }
 
+                Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                VelocityRef.y = -VelocityRef.y * 0.5f;
+                CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
+
                 GetComponent<BounceOnCollide>().enabled = true;
                 GetComponent<SpawnOnCollide>().enabled = false;
             }
