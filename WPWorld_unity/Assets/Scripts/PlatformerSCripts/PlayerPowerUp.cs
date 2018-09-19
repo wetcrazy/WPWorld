@@ -75,7 +75,7 @@ public class PlayerPowerUp : MonoBehaviour {
                 }
                 break;
             case (POWERUPS.SUPERJUMP):
-                GetComponent<PlayerMovement>().SetJumpSpeed(SuperJumpSpeed);
+
                 break;
             case (POWERUPS.INVISIBILITY):
                 Color ColorRef = GetComponent<MeshRenderer>().material.color;
@@ -105,7 +105,7 @@ public class PlayerPowerUp : MonoBehaviour {
         if(CurrPowerUp == POWERUPS.SUPERJUMP)
         {
             if (CollisionRef.transform.position.y + CollisionRef.transform.lossyScale.y / 2
-                >= transform.position.y - transform.lossyScale.y / 2 && !GetComponent<PlayerMovement>().GetGrounded())
+                >= transform.position.y - transform.lossyScale.y / 2 && !GetComponent<TPSLogic>().GetGrounded())
             {
                 GetComponent<TPSLogic>().Death();
             }

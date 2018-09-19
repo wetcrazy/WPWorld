@@ -930,8 +930,6 @@ MonoBehaviour:
   FocusTarget: {fileID: 1169367415}
   DistanceToWait: 1
   FollowSpeed: 2.5
-  RestrictMovement: 1
-  CurrRestriction: 1
 --- !u!1001 &154860379
 Prefab:
   m_ObjectHideFlags: 0
@@ -4132,9 +4130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 0.75
-  JumpSpeed: 2.1
-  RestrictMovement: 1
-  CurrRestriction: 2
 --- !u!65 &1169367417
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4228,6 +4223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a2097c56ea0bc489bb81a040f64fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpSpeed: 2.1
   JumpSFX: {fileID: 8300000, guid: 8202677f984a41843a9741fa27f03e56, type: 3}
   Points: 0
   DeathCounter: 0
