@@ -723,8 +723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3782b4e1a99e610439b7cf2ccbe8599f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefab: {fileID: 0}
-  MAX_balls: 0
+  ballPrefab: {fileID: 1704159819429958, guid: 5a495b9c74ae0e04c8ca0240aa7058f9, type: 2}
+  MAX_balls: 10
 --- !u!114 &114904699776908628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -736,10 +736,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffdd3b919ffdee34aad90f5286833858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bricksPrefab: {fileID: 0}
-  goalbrickPrefab: {fileID: 0}
-  bombbrickPrefab: {fileID: 0}
-  MAX_bombNUM: 0
+  bricksPrefab: {fileID: 1934710980699002, guid: 01b6cedbb8ca6404da6fe5f1f65763eb,
+    type: 2}
+  goalbrickPrefab: {fileID: 1040305709583500, guid: 7832c6db10250f04dbfc99cb34669942,
+    type: 2}
+  bombbrickPrefab: {fileID: 1113586599050080, guid: 544e64643e28cf84ab0137142b65a0e5,
+    type: 2}
+  MAX_bombNUM: 100
 --- !u!223 &223912636401444928
 Canvas:
   m_ObjectHideFlags: 1
