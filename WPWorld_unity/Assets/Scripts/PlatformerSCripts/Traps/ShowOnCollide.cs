@@ -33,12 +33,32 @@ public class ShowOnCollide : MonoBehaviour {
                     if (ShowSFX != null)
                         GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(ShowSFX);
 
-                    Vector3 N_Pos = other.transform.position;
+                    Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
+                    VelocityRef.y = -VelocityRef.y * 0.5f;
+                    other.GetComponent<Rigidbody>().velocity = VelocityRef;
 
-                    N_Pos.y = (transform.position.y - transform.lossyScale.y / 2) - other.transform.lossyScale.y;
-
-                    other.transform.position = N_Pos;
                     RenderRef.enabled = true;
+                }
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject CollidedObject = collision.gameObject;
+
+        if (CollidedObject.tag == "Player" && RenderRef.isVisible)
+        {
+            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2 <= transform.position.y - transform.lossyScale.y / 2
+                && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x * 0.5f)
+            {
+                if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded() && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
+                {
+                    Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                    VelocityRef.y = -VelocityRef.y * 0.5f;
+                    CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
+
+                    Debug.Log("Bounce?");
                 }
             }
         }

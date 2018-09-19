@@ -25,16 +25,18 @@ public class TPSLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // Draws a raycast in three different directions to ensure that the player is grounded
         RaycastHit hit;
 
-        Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y, Color.white);
-        Debug.DrawRay(transform.position, (-transform.up + transform.right).normalized * transform.lossyScale.y * 1.5f, Color.white);
-        Debug.DrawRay(transform.position, (-transform.up - transform.right).normalized * transform.lossyScale.y * 1.5f, Color.white);
+        Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.1f, Color.white);
+        Debug.DrawRay(transform.position, (-transform.up + transform.right).normalized * transform.lossyScale.x * 0.75f, Color.white);
+        Debug.DrawRay(transform.position, (-transform.up - transform.right).normalized * transform.lossyScale.x * 0.75f, Color.white);
 
         if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y) ||
             Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f) ||
             Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
         {
+            // Checks if the raycasted hit only hits the ground and nothing else
             if (hit.transform.GetComponent<Renderer>().isVisible && hit.transform.position.y < transform.position.y)
             {
                 IsGrounded = true;

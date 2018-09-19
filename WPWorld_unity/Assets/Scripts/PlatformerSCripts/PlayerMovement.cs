@@ -35,6 +35,11 @@ public class PlayerMovement : MonoBehaviour {
         MovementDir = MoveDirection;
     }
 
+    public Vector3 GetMovementDir()
+    {
+        return MovementDir;
+    }
+
     void FixedUpdate()
     {
         // Actually moves the player according to the Movement Direction, Movement speed is attached here to prevent multiple movement speed from being multiplied in Update

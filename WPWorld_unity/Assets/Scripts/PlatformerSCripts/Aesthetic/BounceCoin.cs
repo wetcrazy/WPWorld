@@ -11,6 +11,9 @@ public class BounceCoin : MonoBehaviour {
     [SerializeField]
     private float UpwardForce;
 
+    [SerializeField]
+    private GameObject ParticleFX;
+
     private float TimeElapsed;
 
 	// Use this for initialization
@@ -29,6 +32,10 @@ public class BounceCoin : MonoBehaviour {
         {
             if(Vector3.Distance(OrgPos, transform.position) < 0.01f || OrgPos.y > transform.position.y)
             {
+                GameObject n_Particle = Instantiate(ParticleFX, transform);
+                n_Particle.transform.parent = null;
+                n_Particle.transform.localScale = new Vector3(1, 1, 1);
+                n_Particle.transform.position = this.transform.position;
                 Destroy(this.gameObject);
             }
         }
