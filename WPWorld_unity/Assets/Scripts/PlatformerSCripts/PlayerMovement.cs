@@ -21,18 +21,35 @@ public class PlayerMovement : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        /*
         // Resets the acceleration of the gameobject to 0
         MovementDir = Vector3.zero;
-
+    
         // Moves the player according to Key Input
         MovementDir = Input.GetAxis("Vertical") * Vector3.forward; // Vertical = W, S, Up Arrow, Down Arrow
         MovementDir += Input.GetAxis("Horizontal") * Vector3.right; // Horizontal = A, D, Left Arrow, Right Arrow
+        */
+
+        // RYAN (Checks for any Keyboard inputs, piority given to DPAD)
+        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            MovementDir = Vector3.zero;
+            MovementDir = Input.GetAxis("Vertical") * Vector3.forward; // Vertical = W, S, Up Arrow, Down Arrow
+            MovementDir += Input.GetAxis("Horizontal") * Vector3.right; // Horizontal = A, D, Left Arrow, Right Arrow
+        }
+        
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
     {
-        MovementDir = MoveDirection;
+        MovementDir = MoveDirection;      
+    }
+
+    public Vector3 GetMovementDir()
+    {
+        return MovementDir;
     }
 
     void FixedUpdate()

@@ -101,9 +101,7 @@ public class BallBehaviour : MonoBehaviour
         if (_collision.gameObject.tag == BrickPrefab.tag)
         {
             Destroy(_collision.gameObject);
-        }
-
-    
+        }   
     }
 
     private Vector3 NextPosition()

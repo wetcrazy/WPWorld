@@ -14,9 +14,9 @@ public class DeployOnce : MonoBehaviour
     public Camera MainCamera;
 
     /// <summary>
-    /// A prefab to to summmon the ground plane for visualization
+    /// A public array of levels
     /// </summary>
-    public GameObject gameObjectPrefab;
+    public GameObject[] Arr_Levels;
 
     /// <summary>
     /// A Ui Text for tracking
@@ -36,12 +36,17 @@ public class DeployOnce : MonoBehaviour
     /// <summary>
     /// Summoning prefab
     /// </summary>
-    private GameObject prefab;
+    // private GameObject prefab;
 
     /// <summary>
     /// Checking for prefab summoned
     /// </summary>
     private bool isPrefabSpawned = false;
+
+    /// <summary>
+    /// A prefab to to summmon 
+    /// </summary>
+    private GameObject gameObjectPrefab;
 
     /// <summary>
     /// For debug for this script
@@ -86,7 +91,8 @@ public class DeployOnce : MonoBehaviour
         TrackableHit _hit;
         TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
         // Check if the prefab is spawned
-        isPrefabSpawned = CheckPlanetExistance();
+        // isPrefabSpawned = CheckPlanetExistance();
+        isPrefabSpawned = CheckOBJSpawned();
 
         // Debugger
         // DEBUGING_SHIT.text = isPrefabSpawned.ToString();
@@ -103,7 +109,6 @@ public class DeployOnce : MonoBehaviour
                 }
                 else
                 {
-                    // Its a ground plane soo doesnt matter if its a point or a plane
                     GameObject _prefab = gameObjectPrefab;
 
                     // Instantiate the object at where it is hit
@@ -116,15 +121,26 @@ public class DeployOnce : MonoBehaviour
                     _GroundObject.transform.parent = _anchor.transform;
 
                     // Save the spawned data
-                    prefab = _prefab;                            
+                    //prefab = _prefab;                            
                 }
             }
             else
             {
                 // Planet Selection
-                PlanetSelection();
+                // PlanetSelection();
             }
         }     
+    }
+
+    // Check if any object has spawn in the scene
+    private bool CheckOBJSpawned()
+    {
+        var _temp = GameObject.FindGameObjectWithTag(gameObjectPrefab.tag);
+        if (_temp != null)
+        {
+            return true;
+        }
+        return false;
     }
 
     // Check if the spawn exist
@@ -156,5 +172,14 @@ public class DeployOnce : MonoBehaviour
                     break;
             }
         }
+    }
+
+    // Sets the next obj to summon
+    public void NextObj(string _ObjName)
+    {
+        for(int i = 0; i < Arr_Levels.Length;i++)
+        {
+            gameObjectPrefab = Arr_Levels[i];
+        }         
     }
 }
