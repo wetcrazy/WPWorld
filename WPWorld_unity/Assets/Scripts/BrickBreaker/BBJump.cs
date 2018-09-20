@@ -18,14 +18,20 @@ public class BBJump : MonoBehaviour
     private void Update()
     {
 #if UNITY_EDITOR
+        // JUMP
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            Debug.Log("JUMPING");
-            Rb.AddForce(Vector3.up * jumpSpeed, ForceMode.VelocityChange);
+        {          
+            Rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
             isGrounded = false;
         }
+        // Ground Pound
+        else if (Input.GetKeyDown(KeyCode.Space) && !isGrounded)
+        {
+            Debug.Log("Pounding");        
+            Rb.AddForce(-transform.up * jumpSpeed, ForceMode.Impulse);
+        }
 #endif
-        //Debug.Log(isGrounded);
+        Debug.Log(isGrounded);
     }
 
     private void OnCollisionStay()
