@@ -18,10 +18,6 @@ public class DeadPlane : MonoBehaviour
     {
         curr_timer = 0;
     }
-    private void Update()
-    {
-       
-    }
 
     private void OnCollisionEnter(Collision _col)
     {
