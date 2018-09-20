@@ -50,9 +50,9 @@ public class BrickDeployer : MonoBehaviour
         // Randoms at the start to find when the Goal should be place
         if(GoalRNG == 0)
         {
-            GoalRNG = (int)Random.Range(1, ((MAX_row * 2) * transform.localScale.z * 10) * ((MAX_col * 2) * transform.localScale.z * 10) * (MAX_height + transform.position.y - 1)); // Need to multiply 2 as this is position on the game space which includes negative and positive (except height) 
+            GoalRNG = (int)Random.Range(1, ((MAX_row * 2) * transform.localScale.z * 10) * ((MAX_col * 2) * transform.localScale.z * 10) * (MAX_height + transform.position.y - 2)); // Need to multiply 2 as this is position on the game space which includes negative and positive (except height) 
             // Do not want to spawn the goal at the top (cause i am a jerk)
-            Debug.Log("Goal Randomed " + GoalRNG);
+            // Debug.Log("Goal Randomed " + GoalRNG);
         }
 
         // Spawns the bricks (Huge code incoming)
@@ -90,7 +90,7 @@ public class BrickDeployer : MonoBehaviour
                         GoalSpawnNUM++; // Offset the goalSpawnNUM by 1 to stop spawning
                         is_goalSpawned = true;
                         var _newOBJ = Instantiate(goalbrickPrefab, _newPos, Quaternion.identity, transform);
-                        Debug.Log("Spawned " + _newOBJ.name);
+                        // Debug.Log("Spawned " + _newOBJ.name);
                     }
                     // Spawn BOMB
                     else if(is_BombAllowedSpawn)
@@ -98,14 +98,14 @@ public class BrickDeployer : MonoBehaviour
                         is_BombAllowedSpawn = false;
                         currBombNUM++; // Update the bomb count
                         var _newOBJ = Instantiate(bombbrickPrefab, _newPos, Quaternion.identity, transform);
-                        Debug.Log("Spawned " + _newOBJ.name);
+                        // Debug.Log("Spawned " + _newOBJ.name);
                     }
                     // Spawn BRICKS
                     else
                     {
                         GoalSpawnNUM++; // Updates the GoalSpawnNUM
                         var _newOBJ = Instantiate(bricksPrefab, _newPos, Quaternion.identity, transform);
-                        Debug.Log("Spawned " + _newOBJ.name);
+                        // Debug.Log("Spawned " + _newOBJ.name);
                     }               
                 }
             }
