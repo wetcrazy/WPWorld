@@ -71,5 +71,8 @@ public class objectpush : MonoBehaviour
             letmepush = false;
         }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        
+    }
 }
