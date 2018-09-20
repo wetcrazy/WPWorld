@@ -41,7 +41,7 @@ public class objectpush : MonoBehaviour
                     break;
             }
         }
-        else if (!stopme)
+        else if (!stopme && !letmepush)
         {
             this.gameObject.transform.Translate(Vector3.down * 0.01f, Space.World);
 
