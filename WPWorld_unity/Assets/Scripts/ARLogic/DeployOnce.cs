@@ -28,6 +28,8 @@ public class DeployOnce : MonoBehaviour
     /// </summary>
     public GameObject SplashUI;
 
+    public Canvas canvas;
+
     /// <summary>
     /// A list of planes ARCore
     /// </summary>
@@ -52,6 +54,7 @@ public class DeployOnce : MonoBehaviour
     /// For debug for this script
     /// </summary>
     public Text DEBUGING_SHIT;
+    public Text DEBUGING_SHIT2;
 
     void Update()
     {
@@ -111,8 +114,10 @@ public class DeployOnce : MonoBehaviour
                 {
                     GameObject _prefab = gameObjectPrefab;
 
+                    //canvas.enabled = false;
+
                     // Instantiate the object at where it is hit
-                    var _GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
+                    var _GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation,transform.parent);
 
                     // Create an anchor for ARCore to track the point of the real world
                     var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
@@ -128,6 +133,7 @@ public class DeployOnce : MonoBehaviour
             {
                 // Planet Selection
                 // PlanetSelection();
+                //canvas.enabled = true;
             }
         }     
     }
@@ -135,10 +141,20 @@ public class DeployOnce : MonoBehaviour
     // Check if any object has spawn in the scene
     private bool CheckOBJSpawned()
     {
-        var _temp = GameObject.FindGameObjectWithTag(gameObjectPrefab.tag);
-        if (_temp != null)
-        {
-            return true;
+        var _temp = GameObject.FindGameObjectsWithTag(gameObjectPrefab.tag);
+        //if (_temp != null)
+        //{
+        //    return true;
+        //}
+        //return false;
+
+        for (int i = 0; i < _temp.Length; i++)
+        {        
+            if (_temp[i] != null)
+            {
+                DEBUGING_SHIT2.text = _temp[i].name;
+                return true;
+            }
         }
         return false;
     }
@@ -177,9 +193,13 @@ public class DeployOnce : MonoBehaviour
     // Sets the next obj to summon
     public void NextObj(string _ObjName)
     {
-        for(int i = 0; i < Arr_Levels.Length;i++)
+        DEBUGING_SHIT.text = "Been Pressed!!";
+        for (int i = 0; i < Arr_Levels.Length; i++)
         {
-            gameObjectPrefab = Arr_Levels[i];
-        }         
+            if (Arr_Levels[i].name == _ObjName)
+            {
+                gameObjectPrefab = Arr_Levels[i];
+            }
+        }       
     }
 }
