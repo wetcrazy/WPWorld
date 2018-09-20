@@ -8,7 +8,7 @@ public class Manager : MonoBehaviour
 
     public void SendLevelInfoBrickBreaker()
     {
-        ARControllerOBJ.SendMessage("NextObj");
+        ARControllerOBJ.SendMessage("NextObj","BrickBreaker");
     }
 	
 }
