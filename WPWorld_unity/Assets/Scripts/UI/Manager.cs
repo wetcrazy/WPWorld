@@ -10,5 +10,9 @@ public class Manager : MonoBehaviour
     {
         ARControllerOBJ.SendMessage("NextObj","BrickBreaker");
     }
-	
+
+    public void SendLevelInfo3DPuzzle()
+    {
+        ARControllerOBJ.SendMessage("NextObj", "3DPuzzleStage1");
+    }
 }
