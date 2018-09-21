@@ -2,11 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MovementRestrict
+{
+    NONE,
+    X_ONLY,
+    Z_ONLY,
+    BOTH
+}
+
 public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private float MovementSpeed;
     private Vector3 MovementDir = Vector3.zero;
+
+    [SerializeField]
+    private MovementRestrict CurrRestriction;
 
     private Vector3 RespawnPoint;
 
@@ -15,19 +26,20 @@ public class PlayerMovement : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		RigidRef = GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(0, -5.0f, 0);
 
         RespawnPoint = this.transform.position;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        // Resets the acceleration of the gameobject to 0
+        // Resets the Movement Dir after each frame to prevent added force acceleration
         MovementDir = Vector3.zero;
 
         // Moves the player according to Key Input
-        MovementDir = Input.GetAxis("Vertical") * Vector3.forward; // Vertical = W, S, Up Arrow, Down Arrow
-        MovementDir += Input.GetAxis("Horizontal") * Vector3.right; // Horizontal = A, D, Left Arrow, Right Arrow
+        if(CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.X_ONLY)
+            MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
+        if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.Z_ONLY)
+            MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
     }
 
     public void GetDPadInput(Vector3 MoveDirection)

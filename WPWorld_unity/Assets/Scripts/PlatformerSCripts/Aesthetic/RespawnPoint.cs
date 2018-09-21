@@ -15,13 +15,13 @@ public class RespawnPoint : MonoBehaviour {
 	void Update () {
 		if(Interacted)
         {
-            if(Vector3.Distance(transform.GetChild(0).GetComponent<Cloth>().externalAcceleration, new Vector3(1, 0.1f, 0)) < 0.1f)
+            if(Vector3.Distance(transform.GetChild(0).GetComponent<Cloth>().externalAcceleration, new Vector3(1, 1, 1)) < 0.1f)
             {
-                transform.GetChild(0).GetComponent<Cloth>().externalAcceleration = new Vector3(1, 0.1f, 0);
+                transform.GetChild(0).GetComponent<Cloth>().externalAcceleration = new Vector3(1, 1, 1);
             }
             else
             {
-                transform.GetChild(0).GetComponent<Cloth>().externalAcceleration = Vector3.Lerp(transform.GetChild(0).GetComponent<Cloth>().externalAcceleration, new Vector3(1, 0.1f, 0), Time.deltaTime);
+                transform.GetChild(0).GetComponent<Cloth>().externalAcceleration = Vector3.Lerp(transform.GetChild(0).GetComponent<Cloth>().externalAcceleration, new Vector3(1, 1, 1), Time.deltaTime);
             }
             transform.GetChild(0).GetComponent<Cloth>().randomAcceleration = Vector3.zero;
         }

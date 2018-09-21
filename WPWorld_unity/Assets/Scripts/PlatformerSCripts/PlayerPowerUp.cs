@@ -38,15 +38,6 @@ public class PlayerPowerUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            transform.eulerAngles = Vector3.zero;
-        }
-
         switch (CurrPowerUp)
         {
             case (POWERUPS.SUPERSPEED):

@@ -21,6 +21,8 @@ public class TPSLogic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
+
+        Physics.gravity = new Vector3(0, -5, 0);
 	}
 	
 	// Update is called once per frame
