@@ -3860,7 +3860,7 @@ GameObject:
   - component: {fileID: 33534089643630128}
   - component: {fileID: 23102369116412010}
   - component: {fileID: 65930467203105256}
-  - component: {fileID: 114591693344822956}
+  - component: {fileID: 114016154206777192}
   m_Layer: 0
   m_Name: ITATRAP (2)
   m_TagString: Untagged
@@ -5371,7 +5371,7 @@ GameObject:
   - component: {fileID: 33199161909939598}
   - component: {fileID: 23676633056776862}
   - component: {fileID: 65759886392224072}
-  - component: {fileID: 114536343801463454}
+  - component: {fileID: 114056130146635424}
   m_Layer: 0
   m_Name: ITATRAP
   m_TagString: Untagged
@@ -7491,7 +7491,7 @@ GameObject:
   - component: {fileID: 33173206806109808}
   - component: {fileID: 23778116745548274}
   - component: {fileID: 65920502627505160}
-  - component: {fileID: 114789965964571996}
+  - component: {fileID: 114918454814637510}
   m_Layer: 0
   m_Name: ITATRAP (1)
   m_TagString: Untagged
@@ -12563,7 +12563,6 @@ GameObject:
   - component: {fileID: 33350533909307342}
   - component: {fileID: 23396722673321950}
   - component: {fileID: 65980995375634296}
-  - component: {fileID: 114740273387378236}
   - component: {fileID: 114650190204092208}
   m_Layer: 0
   m_Name: ITATRAP (3)
@@ -24194,7 +24193,7 @@ Transform:
   m_GameObject: {fileID: 1416227297668762}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.5, y: 0.5, z: -4.5}
-  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4591078748600472}
   - {fileID: 4883078033275960}
@@ -84971,6 +84970,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114016154206777192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210799880059572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd144b2d25cc7d244bfab9651438a881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1986166660967036}
+  Trap2: {fileID: 1298899814247316}
+  Trap3: {fileID: 1425548404726124}
+  Trap4: {fileID: 1705791160256730}
+  render: {fileID: 114472771541432840}
+  render2: {fileID: 114743440517942642}
+  render3: {fileID: 114924323209017354}
+  render4: {fileID: 114736267809678146}
+  rrender: {fileID: 0}
+  rrender2: {fileID: 0}
+  rrender3: {fileID: 0}
+  rrender4: {fileID: 0}
 --- !u!114 &114043614863778408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -84998,6 +85020,29 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114056130146635424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1298899814247316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd144b2d25cc7d244bfab9651438a881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1986166660967036}
+  Trap2: {fileID: 1425548404726124}
+  Trap3: {fileID: 1210799880059572}
+  Trap4: {fileID: 1705791160256730}
+  render: {fileID: 114743440517942642}
+  render2: {fileID: 114924323209017354}
+  render3: {fileID: 114472771541432840}
+  render4: {fileID: 114736267809678146}
+  rrender: {fileID: 0}
+  rrender2: {fileID: 0}
+  rrender3: {fileID: 0}
+  rrender4: {fileID: 0}
 --- !u!114 &114078428782307308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85287,9 +85332,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1062330785422874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 8bb97965c5e1e4b44b921beda453b7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Trap: {fileID: 1210799880059572}
+  renderout: {fileID: 23102369116412010}
+  speed: 0.5
 --- !u!114 &114508253335773468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85317,28 +85365,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114536343801463454
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1298899814247316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114591693344822956
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1210799880059572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114611731407269728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85377,14 +85403,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd144b2d25cc7d244bfab9651438a881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  Trap2: {fileID: 0}
-  Trap3: {fileID: 0}
-  Trap4: {fileID: 0}
-  render: {fileID: 0}
-  render2: {fileID: 0}
-  render3: {fileID: 0}
-  render4: {fileID: 0}
+  player: {fileID: 1986166660967036}
+  Trap2: {fileID: 1298899814247316}
+  Trap3: {fileID: 1425548404726124}
+  Trap4: {fileID: 1210799880059572}
+  render: {fileID: 114736267809678146}
+  render2: {fileID: 114743440517942642}
+  render3: {fileID: 114924323209017354}
+  render4: {fileID: 114472771541432840}
   rrender: {fileID: 0}
   rrender2: {fileID: 0}
   rrender3: {fileID: 0}
@@ -85459,20 +85485,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1855800928467534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 8bb97965c5e1e4b44b921beda453b7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114740273387378236
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1705791160256730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  Trap: {fileID: 1705791160256730}
+  renderout: {fileID: 23396722673321950}
+  speed: 0.5
 --- !u!114 &114743440517942642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85481,9 +85499,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1129295951713416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 8bb97965c5e1e4b44b921beda453b7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Trap: {fileID: 1298899814247316}
+  renderout: {fileID: 23676633056776862}
+  speed: 0.5
 --- !u!114 &114756168905886702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85525,17 +85546,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114789965964571996
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1425548404726124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114889204800067644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85594,6 +85604,29 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114918454814637510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1425548404726124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd144b2d25cc7d244bfab9651438a881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1986166660967036}
+  Trap2: {fileID: 1298899814247316}
+  Trap3: {fileID: 1210799880059572}
+  Trap4: {fileID: 1705791160256730}
+  render: {fileID: 114924323209017354}
+  render2: {fileID: 114743440517942642}
+  render3: {fileID: 114472771541432840}
+  render4: {fileID: 114736267809678146}
+  rrender: {fileID: 0}
+  rrender2: {fileID: 0}
+  rrender3: {fileID: 0}
+  rrender4: {fileID: 0}
 --- !u!114 &114924323209017354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85602,9 +85635,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1121418366456764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 8bb97965c5e1e4b44b921beda453b7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Trap: {fileID: 1425548404726124}
+  renderout: {fileID: 23778116745548274}
+  speed: 0.5
 --- !u!114 &114952512848382912
 MonoBehaviour:
   m_ObjectHideFlags: 1
