@@ -14,9 +14,9 @@ public class DeployOnce : MonoBehaviour
     public Camera MainCamera;
 
     /// <summary>
-    /// A prefab to to summmon the ground plane for visualization
+    /// A public array of levels
     /// </summary>
-    public GameObject gameObjectPrefab;
+    public GameObject[] Arr_Levels;
 
     /// <summary>
     /// A Ui Text for tracking
@@ -28,6 +28,8 @@ public class DeployOnce : MonoBehaviour
     /// </summary>
     public GameObject SplashUI;
 
+    public Canvas canvas;
+
     /// <summary>
     /// A list of planes ARCore
     /// </summary>
@@ -36,7 +38,7 @@ public class DeployOnce : MonoBehaviour
     /// <summary>
     /// Summoning prefab
     /// </summary>
-    private GameObject prefab;
+    // private GameObject prefab;
 
     /// <summary>
     /// Checking for prefab summoned
@@ -44,9 +46,15 @@ public class DeployOnce : MonoBehaviour
     private bool isPrefabSpawned = false;
 
     /// <summary>
+    /// A prefab to to summmon 
+    /// </summary>
+    private GameObject gameObjectPrefab;
+
+    /// <summary>
     /// For debug for this script
     /// </summary>
     public Text DEBUGING_SHIT;
+    public Text DEBUGING_SHIT2;
 
     void Update()
     {
@@ -86,7 +94,8 @@ public class DeployOnce : MonoBehaviour
         TrackableHit _hit;
         TrackableHitFlags _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
         // Check if the prefab is spawned
-        isPrefabSpawned = CheckPlanetExistance();
+        // isPrefabSpawned = CheckPlanetExistance();
+        isPrefabSpawned = CheckOBJSpawned();
 
         // Debugger
         // DEBUGING_SHIT.text = isPrefabSpawned.ToString();
@@ -103,11 +112,12 @@ public class DeployOnce : MonoBehaviour
                 }
                 else
                 {
-                    // Its a ground plane soo doesnt matter if its a point or a plane
                     GameObject _prefab = gameObjectPrefab;
 
+                    //canvas.enabled = false;
+
                     // Instantiate the object at where it is hit
-                    var _GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation);
+                    var _GroundObject = Instantiate(_prefab, _hit.Pose.position, _hit.Pose.rotation,transform.parent);
 
                     // Create an anchor for ARCore to track the point of the real world
                     var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
@@ -116,15 +126,37 @@ public class DeployOnce : MonoBehaviour
                     _GroundObject.transform.parent = _anchor.transform;
 
                     // Save the spawned data
-                    prefab = _prefab;                            
+                    //prefab = _prefab;                            
                 }
             }
             else
             {
                 // Planet Selection
-                PlanetSelection();
+                // PlanetSelection();
+                //canvas.enabled = true;
             }
         }     
+    }
+
+    // Check if any object has spawn in the scene
+    private bool CheckOBJSpawned()
+    {
+        var _temp = GameObject.FindGameObjectsWithTag(gameObjectPrefab.tag);
+        //if (_temp != null)
+        //{
+        //    return true;
+        //}
+        //return false;
+
+        for (int i = 0; i < _temp.Length; i++)
+        {        
+            if (_temp[i] != null)
+            {
+                DEBUGING_SHIT2.text = _temp[i].name;
+                return true;
+            }
+        }
+        return false;
     }
 
     // Check if the spawn exist
@@ -156,5 +188,18 @@ public class DeployOnce : MonoBehaviour
                     break;
             }
         }
+    }
+
+    // Sets the next obj to summon
+    public void NextObj(string _ObjName)
+    {
+        DEBUGING_SHIT.text = "Been Pressed!!";
+        for (int i = 0; i < Arr_Levels.Length; i++)
+        {
+            if (Arr_Levels[i].name == _ObjName)
+            {
+                gameObjectPrefab = Arr_Levels[i];
+            }
+        }       
     }
 }
