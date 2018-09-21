@@ -8,12 +8,14 @@ public class objectpush : MonoBehaviour
 
     bool letmepush;
     bool stopme;
+    bool falling;
     private int randnum;
     // Use this for initialization
     void Start()
     {
         letmepush = false;
         stopme = false;
+        falling = true;
     }
 
     // Update is called once per frame
@@ -21,6 +23,7 @@ public class objectpush : MonoBehaviour
     {
         if (letmepush)
         {
+            falling = false;
             switch (randnum)
             {
 
@@ -38,10 +41,12 @@ public class objectpush : MonoBehaviour
                     break;
                 case 5:
                     this.gameObject.transform.Translate(Vector3.down * 0.005f, Space.World);
+                    falling = true;
                     break;
             }
         }
-        else if (!stopme && !letmepush)
+
+        if (falling)
         {
             this.gameObject.transform.Translate(Vector3.down * 0.01f, Space.World);
 
@@ -58,10 +63,12 @@ public class objectpush : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //when tetris block entered a killzone,destroy object
         if (other.gameObject.CompareTag("Killbox"))
         {
             this.gameObject.SetActive(false);
         }
+        // 
         else if (!letmepush && other.gameObject.CompareTag("Block"))
         {
             stopme = true;
