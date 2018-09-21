@@ -6,10 +6,11 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private float MovementSpeed;
+    
+    Joystick JoysticControls;
     private Vector3 MovementDir = Vector3.zero;
-
     private Vector3 RespawnPoint;
-
+    private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
 
     // Use this for initialization
@@ -17,7 +18,10 @@ public class PlayerMovement : MonoBehaviour {
 		RigidRef = GetComponent<Rigidbody>();
         Physics.gravity = new Vector3(0, -5.0f, 0);
 
-        RespawnPoint = this.transform.position;
+        RespawnPoint = transform.position;
+
+        JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+        gameObject.transform.forward = Vector3.forward;
     }
 	
 	// Update is called once per frame
@@ -45,6 +49,26 @@ public class PlayerMovement : MonoBehaviour {
     public void GetDPadInput(Vector3 MoveDirection)
     {
         MovementDir = MoveDirection;      
+    }
+
+    public void GetJoystickInput(Vector4 DragInfo)
+    {
+        if(DragInfo.Equals(Vector4.zero))
+        {
+            MovementDir = Vector3.zero;
+            return;
+        }
+
+        float DragLength = new Vector3(DragInfo.x, DragInfo.y, DragInfo.z).magnitude;
+        float DragAngle = DragInfo.w;
+        if (DragLength > JoysticControls.JoystickBallDragLengthLimit)
+        {
+            DragLength = JoysticControls.JoystickBallDragLengthLimit;
+        }
+
+        
+        gameObject.transform.forward = Quaternion.AngleAxis(-DragAngle, gameObject.transform.up) * Vector3.forward;
+        MovementDir = gameObject.transform.forward;
     }
 
     public Vector3 GetMovementDir()

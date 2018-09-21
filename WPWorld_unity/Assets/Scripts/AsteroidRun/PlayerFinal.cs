@@ -27,7 +27,7 @@ public class PlayerFinal : MonoBehaviour {
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
     Joystick JoysticControls;
-    bool isMoving = false;
+    bool isMoving = false, isTurning = false;
     Vector3 PivotAxis;
     float NetAngleTurned = 0;
 
@@ -97,7 +97,10 @@ public class PlayerFinal : MonoBehaviour {
                 DebuffEffect = DEBUFF_EFFECT.DEBUFF_NONE;
             }
         }
+    }
 
+    private void FixedUpdate()
+    {
         PlayerFall();
         KeyInput();
     }
@@ -121,12 +124,6 @@ public class PlayerFinal : MonoBehaviour {
         {
             gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, -gameObject.transform.forward, PlayerSpeed * Time.deltaTime);
         }
-
-        if(isMoving)
-        {
-            //Rotate the player around the pivot axis to simulate movement on a sphere
-            gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, PivotAxis, PlayerSpeed * Time.deltaTime);
-        }
     }
 
     public void GetDPadInput(Vector3 newPivotAxis)
@@ -149,25 +146,76 @@ public class PlayerFinal : MonoBehaviour {
         }
     }
 
-    void GetJoystickInput(Vector3 DragDirection)
+    void GetJoystickInput(Vector4 DragInfo)
     {
-        float DragLength = DragDirection.magnitude;
+        if(DragInfo.Equals(Vector4.zero))
+        {
+            isMoving = false;
+            isTurning = false;
+            return;
+        }
 
-        if(DragLength > JoysticControls.JoystickBallDragLengthLimit)
+        float DragLength = new Vector3(DragInfo.x, DragInfo.y, DragInfo.z).magnitude;
+        float DragAngle = DragInfo.w, RefAxis;
+        if (DragLength > JoysticControls.JoystickBallDragLengthLimit)
         {
             DragLength = JoysticControls.JoystickBallDragLengthLimit;
         }
 
-        if (DragDirection.x < 0) //Dragged to the left
+        if(DragAngle <= 90)
+        {
+            RefAxis = 0;
+        }
+        else if(DragAngle <= 180)
+        {
+            RefAxis = 90;
+        }
+        else if(DragAngle <= 270)
+        {
+            RefAxis = 180;
+        }
+        else
+        {
+            RefAxis = 270;
+        }
+        
+        float Modifier = (DragAngle - RefAxis) / 90;
+        float TempTurn, TempMove;
+
+        if (RefAxis == 0 || RefAxis == 180)
+        {
+            TempTurn = TurnSpeed * Modifier;
+            TempMove = PlayerSpeed * (1 - Modifier);
+
+            if(RefAxis == 180)
+            {
+                TempMove = -TempMove;
+            }
+        }
+        else
+        {
+            TempTurn = TurnSpeed * (1 - Modifier);
+            TempMove = PlayerSpeed * Modifier;
+
+            if(RefAxis == 90)
+            {
+                TempMove = -TempMove;
+            }
+        }
+
+        if (DragAngle > 180) //Dragged to the left
         {
             //Player turns leftwards
-            gameObject.transform.Rotate(gameObject.transform.up, -DragLength * TurnSpeed * Time.deltaTime, Space.Self);
+            gameObject.transform.Rotate(gameObject.transform.up, -DragLength * TempTurn * Time.deltaTime, Space.Self);
         }
-        else if (DragDirection.x > 0) //Dragged to the right
+        else //Dragged to the right
         {
             //Player turns rightwards
-            gameObject.transform.Rotate(gameObject.transform.up, DragLength * TurnSpeed * Time.deltaTime, Space.Self);
+            gameObject.transform.Rotate(gameObject.transform.up, DragLength * TempTurn * Time.deltaTime, Space.Self);
         }
+
+        //Rotate the player around the pivot axis to simulate movement on a sphere
+        gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, TempMove * Time.deltaTime);
     }
 
     void PlayerFall()
