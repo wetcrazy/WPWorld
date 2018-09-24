@@ -101,6 +101,16 @@ public class PlayerMovement : MonoBehaviour {
         return MovementSpeed;
     }
 
+    public MovementRestrict GetRestriction()
+    {
+        return CurrRestriction;
+    }
+
+    public void SetRestriction(MovementRestrict n_Restrict)
+    {
+        CurrRestriction = n_Restrict;
+    }
+
     public void SetRespawn(Vector3 n_Respawn)
     {
         RespawnPoint = n_Respawn;
