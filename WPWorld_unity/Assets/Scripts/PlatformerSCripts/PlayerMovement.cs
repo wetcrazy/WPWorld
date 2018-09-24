@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MovementRestrict
+public enum MovementRestrict // For use with scripted events like disabling player movement and forcing the character to move
 {
-    NONE,
-    X_ONLY,
-    Z_ONLY,
-    BOTH
+    NONE, // NO RESTRICTIONS, ABOSLUTELY FREE MOVEMENT
+    X_ONLY, // MOVES ONLY ON X PLANE
+    Z_ONLY, // MOVES ONLY ON Z PLANE
+    BOTH // BOTH ARE NOT ALLOWED, FREEZE PLAYER
 }
 
 public class PlayerMovement : MonoBehaviour {
@@ -17,13 +17,9 @@ public class PlayerMovement : MonoBehaviour {
     
     Joystick JoysticControls;
     private Vector3 MovementDir = Vector3.zero;
-<<<<<<< HEAD
 
     [SerializeField]
     private MovementRestrict CurrRestriction;
-
-=======
->>>>>>> d30c9022dee4fd83076bb4290f92b3a94738c524
     private Vector3 RespawnPoint;
     private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
@@ -39,37 +35,15 @@ public class PlayerMovement : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-<<<<<<< HEAD
 	void Update () {
-        // Resets the Movement Dir after each frame to prevent added force acceleration
-=======
-	void Update ()
-    {
-        /*
         // Resets the acceleration of the gameobject to 0
->>>>>>> d30c9022dee4fd83076bb4290f92b3a94738c524
         MovementDir = Vector3.zero;
     
         // Moves the player according to Key Input
-<<<<<<< HEAD
-        if(CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.X_ONLY)
+        if(CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.X_ONLY)
             MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
-        if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.Z_ONLY)
+        if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.Z_ONLY)
             MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
-=======
-        MovementDir = Input.GetAxis("Vertical") * Vector3.forward; // Vertical = W, S, Up Arrow, Down Arrow
-        MovementDir += Input.GetAxis("Horizontal") * Vector3.right; // Horizontal = A, D, Left Arrow, Right Arrow
-        */
-
-        // RYAN (Checks for any Keyboard inputs, piority given to DPAD)
-        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
-        {
-            MovementDir = Vector3.zero;
-            MovementDir = Input.GetAxis("Vertical") * Vector3.forward; // Vertical = W, S, Up Arrow, Down Arrow
-            MovementDir += Input.GetAxis("Horizontal") * Vector3.right; // Horizontal = A, D, Left Arrow, Right Arrow
-        }
-        
->>>>>>> d30c9022dee4fd83076bb4290f92b3a94738c524
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
