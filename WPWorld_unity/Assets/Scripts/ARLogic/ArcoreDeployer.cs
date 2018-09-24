@@ -49,6 +49,10 @@ public class ArcoreDeployer : MonoBehaviour
             {
                 UI_TrackingText.enabled = false;
                 break;
+            }           
+            else if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+            {
+                UI_Canvas.enabled = true;
             }
             else
             {
@@ -63,17 +67,19 @@ public class ArcoreDeployer : MonoBehaviour
 
         if(!isSpawned)
         {
-            isSpawned = true;   
-            Spawner(_touch);
+            Spawner(_touch);          
+            isSpawned = true;
         }
         else
         {
             if(CheckGameObjects(GameObjPrefab) == false)
-            {
+            {              
                 isSpawned = false;
-            }
+                UI_Canvas.enabled = true;
+            }        
         }
-     
+      
+
         /*
         UI_Canvas.enabled = true;
 
@@ -153,7 +159,8 @@ public class ArcoreDeployer : MonoBehaviour
 
                 // Make the ground object the child of the anchor
                 _GroundObject.transform.parent = _anchor.transform;
-                                        
+
+                UI_Canvas.enabled = false;
             }
         }
     }
