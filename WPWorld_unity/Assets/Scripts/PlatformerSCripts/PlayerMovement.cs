@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour {
             DragLength = JoysticControls.JoystickBallDragLengthLimit;
         }
 
-        gameObject.transform.forward = Quaternion.AngleAxis(-DragAngle, gameObject.transform.up) * Vector3.forward;
+        gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Vector3.forward;
         MovementDir = gameObject.transform.forward;
     }
 
