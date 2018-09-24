@@ -17,16 +17,12 @@ public class ArcoreDeployer : MonoBehaviour
 
     private List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     private GameObject GameObjPrefab;
+    private bool isSpawned = false;
 
     // UI Objects
     public Canvas UI_Canvas;
     public GameObject UI_SpashLogoOBJ;
     public Text UI_TrackingText;
-
-    private void Awake()
-    {
-        SetNextObject("Planets"); // For starting the game
-    }
 
     private void Update()
     {
@@ -53,6 +49,10 @@ public class ArcoreDeployer : MonoBehaviour
             {
                 UI_TrackingText.enabled = false;
                 break;
+            }           
+            else if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+            {
+                UI_Canvas.enabled = true;
             }
             else
             {
@@ -60,41 +60,78 @@ public class ArcoreDeployer : MonoBehaviour
             }
         }
 
+        if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+        {
+            return;
+        }
+
+        if(!isSpawned)
+        {
+            Spawner(_touch);          
+            isSpawned = true;
+        }
+        else
+        {
+            if(CheckGameObjects(GameObjPrefab) == false)
+            {              
+                isSpawned = false;
+                UI_Canvas.enabled = true;
+            }        
+        }
+      
+
+        /*
+        UI_Canvas.enabled = true;
+
+        if (CheckGameObjects(GameObjPrefab) == false)
+        {                   
+            Spawner(_touch);
+            return;
+        }
+        else
+        {          
+            UI_Canvas.enabled = false;
+        }
+        */
+        /*
         // Check for NO Touch
         if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
         {
             return;
         }
 
+        // Just incase not enabled
+        UI_Canvas.enabled = true;
+
+        if(GameObjPrefab == null)
+        {
+            SetNextObject("Planets"); // For starting the game
+        }
+        
         // If the game object is active there is no need to update
         if (CheckGameObjects(GameObjPrefab)) 
         {
             UI_Canvas.enabled = false;
             return;
         }
-        else if(GameObjPrefab !=null) 
-        {
-            Spawner(_touch);
-        }
         else
         {
-            SetNextObject("Planets"); // For starting the game
-            SetDebuggingText("ERROR: OBJ NULL");
-        }
-
-        // Just incase not enabled
-        UI_Canvas.enabled = true;
+            Spawner(_touch);
+            return;
+        }            
+        */
     }
 
     // Checks for the game object game
     private bool CheckGameObjects(GameObject _OBJ)
     {
-        var _allOBJ = GameObject.Find(_OBJ.name);
-        if (_allOBJ == null)
+        var _allOBJ = GameObject.FindGameObjectsWithTag(_OBJ.tag);
+        if (_allOBJ.Length >= 1)
         {
-            return false;
+            SetDebuggingText(_allOBJ.Length.ToString());
+            return true;
         }
-        return true;
+        return false;
     }
 
     // Add a new Object using point on screen and ARCore
@@ -122,7 +159,8 @@ public class ArcoreDeployer : MonoBehaviour
 
                 // Make the ground object the child of the anchor
                 _GroundObject.transform.parent = _anchor.transform;
-                                        
+
+                UI_Canvas.enabled = false;
             }
         }
     }
@@ -140,7 +178,7 @@ public class ArcoreDeployer : MonoBehaviour
             if (Arr_LevelsOBJ[i].name == _ObjName)
             {
                 GameObjPrefab = Arr_LevelsOBJ[i];
-                SetDebuggingText("OBJ Selected = " + GameObjPrefab.name);
+                SetDebuggingText("OBJ= " + GameObjPrefab.name);
             }
         }
     }
