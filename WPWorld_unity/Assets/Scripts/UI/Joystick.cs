@@ -26,6 +26,7 @@ public class Joystick : MonoBehaviour {
         isDraggingJoystick = false;
         JoystickBall.transform.position = JoystickBackground.transform.position;
 
+        //Send a message to player that joystick input has stopped
         PlayerObject.SendMessage("GetJoystickInput", Vector4.zero);
     }
 
