@@ -148,6 +148,7 @@ public class PlayerFinal : MonoBehaviour {
 
     void GetJoystickInput(Vector4 DragInfo)
     {
+        //Joystick input has stopped
         if(DragInfo.Equals(Vector4.zero))
         {
             isMoving = false;
@@ -157,11 +158,14 @@ public class PlayerFinal : MonoBehaviour {
 
         float DragLength = new Vector3(DragInfo.x, DragInfo.y, DragInfo.z).magnitude;
         float DragAngle = DragInfo.w, RefAxis;
+
+        //Cap the drag length to that maximum length to player can drag
         if (DragLength > JoysticControls.JoystickBallDragLengthLimit)
         {
             DragLength = JoysticControls.JoystickBallDragLengthLimit;
         }
 
+        //Determine the reference axis based on the angle of joytsick is dragged at
         if(DragAngle <= 90)
         {
             RefAxis = 0;
@@ -179,26 +183,32 @@ public class PlayerFinal : MonoBehaviour {
             RefAxis = 270;
         }
         
+        //The fractional modifier that determines how much moving and turning
+        //based on the direction & angle of joystick ball
         float Modifier = (DragAngle - RefAxis) / 90;
         float TempTurn, TempMove;
 
         if (RefAxis == 0 || RefAxis == 180)
         {
+            //Assign the fractional modifier based on reference axis
             TempTurn = TurnSpeed * Modifier;
             TempMove = PlayerSpeed * (1 - Modifier);
 
             if(RefAxis == 180)
             {
+                //When there is 100% movement and no turning, just flip the movement speed
                 TempMove = -TempMove;
             }
         }
         else
         {
+            //Assign the fractional modifier based on reference axis
             TempTurn = TurnSpeed * (1 - Modifier);
             TempMove = PlayerSpeed * Modifier;
 
             if(RefAxis == 90)
             {
+                //When there is 100% movement and no turning, just flip the movement speed
                 TempMove = -TempMove;
             }
         }
