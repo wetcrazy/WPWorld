@@ -18,56 +18,49 @@ public class TPSLogic : MonoBehaviour {
     private int DeathCounter = 0;
 
     private Rigidbody RigidRef;
+    private PlayerMovement MovementRef;
+
+    [SerializeField]
+    private float AirborneMovementSpeed;
+    private float OrgSpeed;
 
     private bool HasBounced = false;
 
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
+        MovementRef = GetComponent<PlayerMovement>();
+
+        OrgSpeed = MovementRef.GetMovementSpeed();
 
         Physics.gravity = new Vector3(0, -5, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        // Draws a raycast in three different directions to ensure that the player is grounded
-        RaycastHit hit;
-
-        Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y, Color.white);
-        Debug.DrawRay(transform.position, (-transform.up + transform.right).normalized * transform.lossyScale.y * 1.5f, Color.white);
-        Debug.DrawRay(transform.position, (-transform.up - transform.right).normalized * transform.lossyScale.y * 1.5f, Color.white);
-
-        if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y) ||
-            Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f) ||
-            Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
-        {
-            // Checks if the raycasted hit only hits the ground and nothing else
-            if (hit.transform.GetComponent<Renderer>().isVisible && hit.transform.position.y < transform.position.y)
-            {
-                IsGrounded = true;
-                if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y))
-                    Debug.Log("Straight down");
-                if (Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
-                    Debug.Log("Bottom Right");
-                if (Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
-                    Debug.Log("Bottom Left");
-
-                HasBounced = false;
-            }
-        }
-        else
-        {
-            IsGrounded = false;
-        }
-
         if (IsGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump)
+            if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump && Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.1f)
             {
                 RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
                 if (JumpSFX != null)
                     GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
                 IsGrounded = false;
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        GameObject CollidedObject = collision.gameObject;
+
+        if (transform.position.y - transform.lossyScale.y * 0.5f >= CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y * 0.5f)
+        {
+            if (!IsGrounded && CollidedObject.GetComponent<Renderer>().isVisible)
+            {
+                Debug.Log(Mathf.Abs(transform.position.x - CollidedObject.transform.position.x) + " , " + transform.lossyScale.x);
+
+                IsGrounded = true;
             }
         }
     }

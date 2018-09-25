@@ -41,45 +41,57 @@ public class SpawnOnCollide : MonoBehaviour {
 		
 	}
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         GameObject CollidedObject = collision.gameObject;
 
-        if (CollidedObject.tag == "Player")
+        if (CollidedObject.tag == "Player" && !CollidedObject.GetComponent<TPSLogic>().GetGrounded())
         {
-            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2
-                <= transform.position.y - transform.lossyScale.y / 2 && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
+            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2 <= transform.position.y - transform.lossyScale.y / 2
+                && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
             {
-                GameObject SoundSystemRef = GameObject.Find("Sound System");
-
-                RenderRef.material = ChangedMaterial;
-
-                if(GetComponent<SpawnOnCollide>().enabled)
+                if(RenderRef.material.name.Contains(ChangedMaterial.name))
                 {
-                    switch (CurrSpawn)
+                    if(CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
                     {
-                        case (SPAWNTYPE.COIN):
-                            if (CoinSFX != null)
-                                SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(CoinSFX);
-                            Instantiate(BounceCoin, this.transform.position, Quaternion.identity);
-                            break;
-                        case (SPAWNTYPE.ITEM):
-                            if (ItemEnemySFX != null)
-                                SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
-                            break;
-                        case (SPAWNTYPE.ENEMY):
-                            if (ItemEnemySFX != null)
-                                SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
-                            break;
+                        Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                        VelocityRef.y = -VelocityRef.y * 0.5f;
+                        CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
                     }
                 }
+                else
+                {
+                    GameObject SoundSystemRef = GameObject.Find("Sound System");
 
-                Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
-                VelocityRef.y = -VelocityRef.y * 0.5f;
-                CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
+                    RenderRef.material = ChangedMaterial;
 
-                GetComponent<BounceOnCollide>().enabled = true;
-                GetComponent<SpawnOnCollide>().enabled = false;
+                    if (GetComponent<SpawnOnCollide>().enabled)
+                    {
+                        switch (CurrSpawn)
+                        {
+                            case (SPAWNTYPE.COIN):
+                                if (CoinSFX != null)
+                                    SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(CoinSFX);
+                                Instantiate(BounceCoin, this.transform.position, Quaternion.identity);
+                                break;
+                            case (SPAWNTYPE.ITEM):
+                                if (ItemEnemySFX != null)
+                                    SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
+                                break;
+                            case (SPAWNTYPE.ENEMY):
+                                if (ItemEnemySFX != null)
+                                    SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
+                                break;
+                        }
+                    }
+
+                    if (CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
+                    {
+                        Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                        VelocityRef.y = -VelocityRef.y * 0.5f;
+                        CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
+                    }
+                }
             }
         }
     }

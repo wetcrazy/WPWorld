@@ -39,18 +39,18 @@ public class BounceOnCollide : MonoBehaviour {
         }
 	}
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         GameObject CollidedObject = collision.gameObject;
 
-        if(CollidedObject.tag == "Player")
+        if(CollidedObject.tag == "Player" && !CollidedObject.GetComponent<TPSLogic>().GetGrounded())
         {
-            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2
-                <= transform.position.y - transform.lossyScale.y / 2 && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
+            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2 <= transform.position.y - transform.lossyScale.y / 2
+                && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
             {
-                if (Vector3.Distance(this.transform.position, OrgPos) < 0.05f)
+                if (Vector3.Distance(this.transform.position, OrgPos) < 0.05f && TimeElapsed == 0)
                 {
-                    if(!collision.gameObject.GetComponent<TPSLogic>().GetGrounded())
+                    if(!CollidedObject.GetComponent<TPSLogic>().GetGrounded() && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
                     {
                         // Push Up
                         RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;

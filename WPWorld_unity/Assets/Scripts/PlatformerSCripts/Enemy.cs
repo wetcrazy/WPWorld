@@ -33,6 +33,12 @@ public class Enemy : MonoBehaviour {
 
     private bool Hidden = true;
 
+    [SerializeField]
+    private GameObject ScorePopup;
+
+    [SerializeField]
+    private int Score;
+
     private Rigidbody RigidRef;
 
 	// Use this for initialization
@@ -187,17 +193,37 @@ public class Enemy : MonoBehaviour {
             CurrType = ENEMYTYPES.DEAD;
             RigidRef.constraints = RigidbodyConstraints.FreezeAll;
             GetComponent<Renderer>().enabled = false;
+            GetComponents<Collider>()[0].isTrigger = true;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
+        GameObject CollidedObject = collision.gameObject;
+
+        if(CollidedObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<TPSLogic>().Death();
+            if(CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
+            {
+                CurrType = ENEMYTYPES.DEAD;
+                RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+                GetComponent<Renderer>().enabled = false;
+                GetComponents<Collider>()[0].isTrigger = true;
+
+                GameObject n_Score = Instantiate(ScorePopup, transform);
+                n_Score.transform.parent = null;
+                n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                n_Score.transform.position = this.transform.position;
+
+                n_Score.GetComponent<TextMesh>().text = Score.ToString();
+            }
+            else
+            {
+                CollidedObject.GetComponent<TPSLogic>().Death();
+            }
         }
 
-        if (collision.gameObject.transform.position.y - collision.gameObject.transform.lossyScale.y / 2
+        if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2
             >= transform.position.y + transform.lossyScale.y / 2)
         {
             Vector3 Knockback_Y = RigidRef.velocity;

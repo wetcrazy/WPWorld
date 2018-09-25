@@ -14,6 +14,9 @@ public class BounceCoin : MonoBehaviour {
     [SerializeField]
     private GameObject ParticleFX;
 
+    [SerializeField]
+    private GameObject ScorePopup;
+
     private float TimeElapsed;
 
 	// Use this for initialization
@@ -36,6 +39,12 @@ public class BounceCoin : MonoBehaviour {
                 n_Particle.transform.parent = null;
                 n_Particle.transform.localScale = new Vector3(1, 1, 1);
                 n_Particle.transform.position = this.transform.position;
+
+                GameObject n_Score = Instantiate(ScorePopup, transform);
+                n_Score.transform.parent = null;
+                n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                n_Score.transform.position = this.transform.position;
+
                 Destroy(this.gameObject);
             }
         }

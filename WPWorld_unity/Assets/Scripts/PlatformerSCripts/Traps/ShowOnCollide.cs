@@ -20,13 +20,13 @@ public class ShowOnCollide : MonoBehaviour {
 	void Update () {
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Player")
         {
             if(!RenderRef.isVisible && !other.GetComponent<TPSLogic>().GetGrounded())
             {
-                if(other.transform.position.y < transform.position.y && Mathf.Abs(other.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
+                if(other.transform.position.y < transform.position.y && Mathf.Abs(other.transform.position.x - transform.position.x) < transform.lossyScale.x / 2 && other.GetComponent<Rigidbody>().velocity.y > 0)
                 {
                     GetComponent<Collider>().isTrigger = false;
 
@@ -43,7 +43,7 @@ public class ShowOnCollide : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         GameObject CollidedObject = collision.gameObject;
 
@@ -57,8 +57,6 @@ public class ShowOnCollide : MonoBehaviour {
                     Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
                     VelocityRef.y = -VelocityRef.y * 0.5f;
                     CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
-
-                    Debug.Log("Bounce?");
                 }
             }
         }

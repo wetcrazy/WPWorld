@@ -54,7 +54,7 @@ public class ConstantMove : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<PlayerMovement>().SetRestriction(MovementRestrict.NONE);
+            other.GetComponent<PlayerMovement>().SetRestriction(MovementRestrict.X_ONLY);
             other.GetComponent<TPSLogic>().SetJumpRestrict(false);
             GetComponent<Collider>().isTrigger = false;
         }
