@@ -59,16 +59,9 @@ public class PlayerMovement : MonoBehaviour {
             MovementDir = Vector3.zero;
             return;
         }
-
-        float DragLength = new Vector3(DragInfo.x, DragInfo.y, DragInfo.z).magnitude;
+        
         float DragAngle = DragInfo.w;
-
-        //Cap the drag length to that maximum length to player can drag
-        if (DragLength > JoysticControls.JoystickBallDragLengthLimit)
-        {
-            DragLength = JoysticControls.JoystickBallDragLengthLimit;
-        }
-
+        
         //Rotate the player object based on the dragged angle and using world's forward vector as reference axis
         gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Vector3.forward;
         //Move towards the new direction the player is facing
