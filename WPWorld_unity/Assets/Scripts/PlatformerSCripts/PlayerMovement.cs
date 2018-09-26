@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour {
 
         RespawnPoint = transform.position;
 
-        JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+        //JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         gameObject.transform.forward = Vector3.forward;
     }
 	
