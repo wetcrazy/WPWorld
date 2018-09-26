@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour {
 
-    GameManager gameManager = null;
+    //GameManager gameManager = null;
 
     private void Start()
     {
