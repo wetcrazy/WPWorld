@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockPara : MonoBehaviour
 {
     public BlockCounter.BlockType Block_Type;
-    private bool isDead = false;
+    private bool isTriggered = false;
 
     private void Awake()
     {                  
@@ -18,13 +18,13 @@ public class BlockPara : MonoBehaviour
     //              PUBLIC METHODO
     // 000000000000000000000000000000000000000000
 
-    public bool Get_isDead()
+    public bool Get_isTriggered()
     {
-        return isDead;
+        return isTriggered;
     }
-    public void Set_isDead(bool _bool)
+    public void Set_isTriggered(bool _bool)
     {
-        isDead = _bool;
+        isTriggered = _bool;
     }  
 
     public BlockCounter.BlockType Get_BlockType()

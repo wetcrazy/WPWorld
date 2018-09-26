@@ -29,18 +29,12 @@ public class BlockCounter : MonoBehaviour
 
     private void Update()
     {
-        // Only resets the materials on call
-        if (!isReset)
-        {
-            return;
-        }
-
-        // Block Setting
+        // Block Set up
         for (int i = 0; i < Arr_Blocks.Length; i++)
         {
-            // Block type setter
+            // Block type setting
             var _ScriptComponent = Arr_Blocks[i].GetComponent<BlockPara>();
-            if(_ScriptComponent.Get_BlockType() == BlockType.Zero) 
+            if (_ScriptComponent.Get_BlockType() == BlockType.Zero)
             {
                 var _typeRNG = Random.Range(1, (int)BlockType.Total_BlockType);
                 _ScriptComponent.Set_BlockType((BlockType)_typeRNG);
@@ -49,22 +43,18 @@ public class BlockCounter : MonoBehaviour
             // Block Material.maintexture setter
             var _MatComponent = Arr_Blocks[i].GetComponent<Renderer>().material;
             // On triggered
-            if (_ScriptComponent.Get_isDead())
-            {            
+            if (_ScriptComponent.Get_isTriggered())
+            {
                 // Switch to their textures
                 _MatComponent.mainTexture = Find_material((int)_ScriptComponent.Get_BlockType());
-                var _CollisionComponent = Arr_Blocks[i].GetComponent<Collider>();
-                _CollisionComponent.enabled = false;
             }
-            else
+            else if (_MatComponent.mainTexture != Find_material(0)) // Set into blank blocks
             {
                 // Default to bricks
-                _MatComponent.mainTexture = Find_material(1); // Hardcoded
+                _MatComponent.mainTexture = Find_material(0); // Hardcoded
             }
-                
+
         }
-            
-        isReset = false;
     }
 
     // 000000000000000000000000000000000000000000
