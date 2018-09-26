@@ -6,6 +6,7 @@ public class TPSLogic : MonoBehaviour {
 
     [SerializeField]
     private float JumpSpeed;
+    [SerializeField]
     private bool IsGrounded = false;
     private bool RestrictJump = false;
     [SerializeField]
@@ -38,29 +39,64 @@ public class TPSLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        RaycastHit hit;
+
         if (IsGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump && Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.1f)
+            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.875f, Color.red);
+            Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
+            Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.875f, Color.blue);
+
+            if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
+                || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.875f)
+                || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.875f))
             {
-                RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                if (JumpSFX != null)
-                    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+                if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump)
+                {
+                    RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+                    if (JumpSFX != null)
+                        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+                    IsGrounded = false;
+                }
+            }
+            else
+            {
                 IsGrounded = false;
             }
         }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        GameObject CollidedObject = collision.gameObject;
-
-        if (transform.position.y - transform.lossyScale.y * 0.5f >= CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y * 0.5f)
+        else
         {
-            if (!IsGrounded && CollidedObject.GetComponent<Renderer>().isVisible)
-            {
-                Debug.Log(Mathf.Abs(transform.position.x - CollidedObject.transform.position.x) + " , " + transform.lossyScale.x);
+            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.875f, Color.red);
+            Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
+            Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.875f, Color.blue);
 
-                IsGrounded = true;
+            Debug.DrawRay(transform.position, -transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
+            Debug.DrawRay(transform.position, transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
+
+            if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
+                || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.875f)
+                || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.875f))
+            {
+                if(Physics.Raycast(transform.position, -transform.right.normalized, out hit, transform.lossyScale.x * 1.25f) || Physics.Raycast(transform.position, transform.right.normalized, out hit, transform.lossyScale.x * 1.25f))
+                {
+                    // TO DO, CHECK FOR SPECIFIC ITEMS AND MAKE IT SO THAT THEY DON"T INTERFERE WITH JUMPING
+                    if(hit.transform.GetComponent<Renderer>().isVisible)
+                    {
+                        Debug.Log("Left and/or right is colliding with " + hit.transform.name);
+                        if (Vector3.Distance(RigidRef.velocity, Vector3.zero) > 0.01f)
+                            MovementRef.GetDPadInput(Vector3.zero);
+                    }
+                    else
+                    {
+                        if (Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.01f)
+                            IsGrounded = true;
+                    }
+                }
+                else
+                {
+                    if (Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.01f)
+                        IsGrounded = true;
+                }
             }
         }
     }

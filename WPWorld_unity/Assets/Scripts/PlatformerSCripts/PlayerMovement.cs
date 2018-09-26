@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour {
     private float MovementSpeed;
     
     Joystick JoysticControls;
+    [SerializeField]
     private Vector3 MovementDir = Vector3.zero;
 
     [SerializeField]

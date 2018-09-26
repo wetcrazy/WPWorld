@@ -39,7 +39,6 @@ public class SoundSystem : MonoBehaviour {
                 continue;
             SFXRef.GetComponent<AudioSource>().clip = n_SFX;
             SFXRef.GetComponent<AudioSource>().Play();
-            Debug.Log(SFXRef.name);
             return;
         }
 
