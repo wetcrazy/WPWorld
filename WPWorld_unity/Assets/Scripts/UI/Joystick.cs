@@ -18,7 +18,6 @@ public class Joystick : MonoBehaviour {
     public void OnJoystickDown()
     {
         isDraggingJoystick = true;
-        Debug.Log("ONI CHAN TOUCH ME!");
     }
 
     public void OnJoyStickUp()
