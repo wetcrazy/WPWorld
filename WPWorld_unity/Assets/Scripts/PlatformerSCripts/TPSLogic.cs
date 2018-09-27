@@ -161,6 +161,19 @@ public class TPSLogic : MonoBehaviour {
         RestrictJump = n_Restrict;
     }
 
+    //private void Jump()
+    //{
+    //    RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+    //    if (JumpSFX != null)
+    //        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+    //    IsGrounded = false;
+    //}
+
+    private void GetJumpButtonInput()
+    {
+        Jump();
+    }
+
     public bool GetGrounded()
     {
         return IsGrounded;
