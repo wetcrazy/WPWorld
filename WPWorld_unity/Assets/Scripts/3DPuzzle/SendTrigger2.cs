@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SendTrigger2 : MonoBehaviour {
+public class SendTrigger2 : MonoBehaviour
+{
     public GameObject Trap;
     public Renderer renderout;
     public float speed;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         renderout.enabled = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
+    //for pushing purposes.
+    // Update is called once per frame
+    void Update()
+    {
         if (renderout.enabled)
             Trap.transform.Translate(-speed * Time.deltaTime, 0, 0);
     }

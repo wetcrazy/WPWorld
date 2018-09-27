@@ -29,24 +29,8 @@ public class MSJump : MonoBehaviour
         // Jumping
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (isGrounded)
-            {
-                isGrounded = false;
-                isInAir = true;
-                Rb.velocity = Vector3.zero;
-                Rb.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
-            }
-            else
-            {
-                if (isInAir)
-                {
-                    Rb.velocity = Vector3.zero;
-                    Rb.AddForce(-Vector3.up * JumpSpeed, ForceMode.Impulse);
-                    isDoubleJUmp = true;
-                }
-            }
+            Jump();
         }
-
         
         if (isDoubleJUmp)
         {
@@ -84,6 +68,31 @@ public class MSJump : MonoBehaviour
         }
 
         //Debug.Log(Rb.velocity);
+    }
+
+    private void Jump()
+    {
+        if (isGrounded)
+        {
+            isGrounded = false;
+            isInAir = true;
+            Rb.velocity = Vector3.zero;
+            Rb.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
+        }
+        else
+        {
+            if (isInAir)
+            {
+                Rb.velocity = Vector3.zero;
+                Rb.AddForce(-Vector3.up * JumpSpeed, ForceMode.Impulse);
+                isDoubleJUmp = true;
+            }
+        }
+    }
+
+    private void GetJumpButtonInput()
+    {
+        Jump();
     }
 
     private void OnCollisionEnter(Collision col)

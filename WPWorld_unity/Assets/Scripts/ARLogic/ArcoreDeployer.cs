@@ -9,6 +9,16 @@ using GoogleARCore;
 /// </summary>
 public class ArcoreDeployer : MonoBehaviour
 {
+    enum STATE_SCREEN
+    {
+        SCREEN_SPLASH,
+        SCREEN_SELECTION,
+        SCREEN_GAME,
+        
+        SCREEN_TOTAL
+    }
+    STATE_SCREEN ScreenState = STATE_SCREEN.SCREEN_SPLASH;
+
     // Game Objects
     public Camera MainCamera;
     public GameObject[] Arr_LevelsOBJ;
@@ -16,122 +26,120 @@ public class ArcoreDeployer : MonoBehaviour
     public Text[] Arr_DEBUGGER; // Debugger
 
     private List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
-    private GameObject GameObjPrefab;
+    private GameObject GameObjPrefab = null;
     private bool isSpawned = false;
 
     // UI Objects
-    public Canvas UI_Canvas;
+    //public Canvas UI_Canvas;
     public GameObject UI_SpashLogoOBJ;
     public Text UI_TrackingText;
 
+    //Screens
+    [SerializeField]
+    GameObject SelectionScreen;
+    [SerializeField]
+    GameObject SplashScreen;
+    [SerializeField]
+    GameObject GameScreen;
+
     private void Update()
-    {
-        Touch _touch;
-
-        // Detect 1st Touch (for splash screen)
-        if (UI_SpashLogoOBJ.activeSelf)
+    {   
+        switch (ScreenState)
         {
-            if (Input.touchCount > 0 || (_touch = Input.GetTouch(0)).phase == TouchPhase.Moved)
-            {
-                UI_SpashLogoOBJ.SetActive(false);
-            }
-            else
-            {
-                return;
-            }
-        }
+            case STATE_SCREEN.SCREEN_SPLASH:
+                {
+                    if (!SplashScreen.activeSelf)
+                    {
+                        SplashScreen.SetActive(true);
+                    }
 
-        // Tracking for Planes
-        Session.GetTrackables<DetectedPlane>(List_AllPlanes);
-        for (int i = 0; i < List_AllPlanes.Count; i++)
-        {
-            if (List_AllPlanes[i].TrackingState == TrackingState.Tracking)
-            {
-                UI_TrackingText.enabled = false;
+                    if (Input.touchCount > 0 || Input.GetTouch(0).phase == TouchPhase.Moved)
+                    {
+                        ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+
+                        // Gets all Planes that are track and put it into the list
+                        Session.GetTrackables<DetectedPlane>(List_AllPlanes);
+                        break;
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    break;
+                }
+            case STATE_SCREEN.SCREEN_SELECTION:
+                {
+                    if(!SelectionScreen.activeSelf)
+                    {
+                        SelectionScreen.SetActive(true);
+                    }
+
+                    break;
+                }
+            case STATE_SCREEN.SCREEN_GAME:
+                {
+                    if (!GameScreen.activeSelf)
+                    {
+                        GameScreen.SetActive(true);
+                    }
+
+                    if (!isSpawned && Input.touchCount > 0)
+                    {
+                        Spawner(Input.GetTouch(0));
+                        isSpawned = true;
+                    }
+                    else if(GameObjPrefab == null)
+                    {
+                        isSpawned = false;
+                        ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+                        break;
+                    }
+
+                    for (int i = 0; i < List_AllPlanes.Count; i++)
+                    {
+                        //If tracking has stopped, return to selection screen
+                        if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+                        {
+                            DestroyCurrentLevel();
+                            ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            default:
                 break;
-            }           
-            else if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
-            {
-                UI_Canvas.enabled = true;
-            }
-            else
-            {
-                UI_TrackingText.enabled = true;
-            }
-        }
-
-        if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-        {
-            return;
-        }
-
-        if(!isSpawned)
-        {
-            Spawner(_touch);          
-            isSpawned = true;
-        }
-        else
-        {
-            if(CheckGameObjects(GameObjPrefab) == false)
-            {              
-                isSpawned = false;
-                UI_Canvas.enabled = true;
-            }        
-        }
-      
-
-        /*
-        UI_Canvas.enabled = true;
-
-        if (CheckGameObjects(GameObjPrefab) == false)
-        {                   
-            Spawner(_touch);
-            return;
-        }
-        else
-        {          
-            UI_Canvas.enabled = false;
-        }
-        */
-        /*
-        // Check for NO Touch
-        if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-        {
-            return;
-        }
-
-        // Just incase not enabled
-        UI_Canvas.enabled = true;
-
-        if(GameObjPrefab == null)
-        {
-            SetNextObject("Planets"); // For starting the game
         }
         
-        // If the game object is active there is no need to update
-        if (CheckGameObjects(GameObjPrefab)) 
-        {
-            UI_Canvas.enabled = false;
-            return;
-        }
-        else
-        {
-            Spawner(_touch);
-            return;
-        }            
-        */
-    }
+        //for (int i = 0; i < List_AllPlanes.Count; i++)
+        //{
+        //    //When the gameobject appears
+        //    if (List_AllPlanes[i].TrackingState == TrackingState.Tracking)
+        //    {
+        //        UI_TrackingText.enabled = false;
+        //        break;
+        //    }           
+        //    else if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+        //    {
+        //        //UI_Canvas.enabled = true;
+        //    }
+        //    else
+        //    {
+        //        UI_TrackingText.enabled = true;
+        //    }
+        //}
 
-    // Checks for the game object game
-    private bool CheckGameObjects(GameObject _OBJ)
+        //if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+        //{
+        //    return;
+        //}
+    }
+    
+    public void DestroyCurrentLevel()
     {
-        var _allOBJ = GameObject.FindGameObjectsWithTag(_OBJ.tag);
-        if (_allOBJ.Length >= 1)
-        {
-            SetDebuggingText(_allOBJ.Length.ToString());
-            return true;
-        }
-        return false;
+        Destroy(GameObjPrefab);
+        GameObjPrefab = null;
     }
 
     // Add a new Object using point on screen and ARCore
@@ -159,8 +167,8 @@ public class ArcoreDeployer : MonoBehaviour
 
                 // Make the ground object the child of the anchor
                 _GroundObject.transform.parent = _anchor.transform;
-
-                UI_Canvas.enabled = false;
+                
+                ScreenState = STATE_SCREEN.SCREEN_GAME;
             }
         }
     }
@@ -178,19 +186,6 @@ public class ArcoreDeployer : MonoBehaviour
             if (Arr_LevelsOBJ[i].name == _ObjName)
             {
                 GameObjPrefab = Arr_LevelsOBJ[i];
-                SetDebuggingText("OBJ= " + GameObjPrefab.name);
-            }
-        }
-    }
-
-    // My Debugging tool for Arcore
-    public void SetDebuggingText(string _words)
-    {
-        for (int i = 0; i < Arr_DEBUGGER.Length; i++)
-        {
-            if (Arr_DEBUGGER[i].text == "New Text" || Arr_DEBUGGER[i].text == "" || Arr_DEBUGGER[i].text == _words)
-            {
-                Arr_DEBUGGER[i].text = _words;
             }
         }
     }
