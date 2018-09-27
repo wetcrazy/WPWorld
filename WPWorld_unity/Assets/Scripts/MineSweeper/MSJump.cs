@@ -64,8 +64,8 @@ public class MSJump : MonoBehaviour
 
                     if(_OBJScript.Get_BlockType() == BlockCounter.BlockType.Bomb)
                     {
-                        Rb.velocity = Vector3.zero;
-                        Rb.AddExplosionForce(ExplosionForce, transform.position, 1.0f, 1.0f, ForceMode.Impulse);
+                        //Rb.velocity = Vector3.zero;
+                        //Rb.AddExplosionForce(ExplosionForce, transform.position, 1.0f, 1.0f, ForceMode.Impulse);
                     }
 
                     isDoubleJUmp = false;
@@ -83,7 +83,7 @@ public class MSJump : MonoBehaviour
             Rb.velocity.Set(0, MAX_UPSPEED, 0);
         }
 
-        Debug.Log(Rb.velocity);
+        //Debug.Log(Rb.velocity);
     }
 
     private void OnCollisionEnter(Collision col)
