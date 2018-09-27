@@ -210,6 +210,8 @@ public class Enemy : MonoBehaviour {
                 GetComponent<Renderer>().enabled = false;
                 GetComponents<Collider>()[0].isTrigger = true;
 
+                CollidedObject.GetComponent<TPSLogic>().Jump();
+
                 GameObject n_Score = Instantiate(ScorePopup, transform);
                 n_Score.transform.parent = null;
                 n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
