@@ -17,7 +17,7 @@ public class ArcoreDeployer : MonoBehaviour
         
         SCREEN_TOTAL
     }
-    STATE_SCREEN ScreenState = STATE_SCREEN.SCREEN_SPLASH;
+    STATE_SCREEN ScreenState;
 
     // Game Objects
     public Camera MainCamera;
@@ -42,6 +42,13 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     GameObject GameScreen;
 
+    private void Awake()
+    {
+        SelectionScreen.SetActive(false);
+        GameScreen.SetActive(false);
+        ScreenState = STATE_SCREEN.SCREEN_SPLASH;
+    }
+
     private void Update()
     {   
         switch (ScreenState)
@@ -51,6 +58,8 @@ public class ArcoreDeployer : MonoBehaviour
                     if (!SplashScreen.activeSelf)
                     {
                         SplashScreen.SetActive(true);
+                        GameScreen.SetActive(false);
+                        SelectionScreen.SetActive(false);
                     }
 
                     if (Input.touchCount > 0 || Input.GetTouch(0).phase == TouchPhase.Moved)
@@ -65,14 +74,14 @@ public class ArcoreDeployer : MonoBehaviour
                     {
                         return;
                     }
-
-                    break;
                 }
             case STATE_SCREEN.SCREEN_SELECTION:
                 {
                     if(!SelectionScreen.activeSelf)
                     {
                         SelectionScreen.SetActive(true);
+                        SplashScreen.SetActive(false);
+                        GameScreen.SetActive(false);
                     }
 
                     break;
@@ -82,6 +91,8 @@ public class ArcoreDeployer : MonoBehaviour
                     if (!GameScreen.activeSelf)
                     {
                         GameScreen.SetActive(true);
+                        SplashScreen.SetActive(false);
+                        SelectionScreen.SetActive(false);
                     }
 
                     if (!isSpawned && Input.touchCount > 0)
@@ -92,6 +103,7 @@ public class ArcoreDeployer : MonoBehaviour
                     else if(GameObjPrefab == null)
                     {
                         isSpawned = false;
+                        DestroyCurrentLevel();
                         ScreenState = STATE_SCREEN.SCREEN_SELECTION;
                         break;
                     }
