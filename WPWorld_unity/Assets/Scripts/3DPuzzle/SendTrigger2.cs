@@ -12,7 +12,7 @@ public class SendTrigger2 : MonoBehaviour
     {
         renderout.enabled = false;
     }
-
+    //for pushing purposes.
     // Update is called once per frame
     void Update()
     {
