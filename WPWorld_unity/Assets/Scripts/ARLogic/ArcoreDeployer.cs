@@ -9,6 +9,16 @@ using GoogleARCore;
 /// </summary>
 public class ArcoreDeployer : MonoBehaviour
 {
+    enum STATE_SCREEN
+    {
+        SCREEN_SPLASH,
+        SCREEN_SELECTION,
+        SCREEN_GAME,
+        
+        SCREEN_TOTAL
+    }
+    STATE_SCREEN ScreenState = STATE_SCREEN.SCREEN_SPLASH;
+
     // Game Objects
     public Camera MainCamera;
     public GameObject[] Arr_LevelsOBJ;
@@ -34,6 +44,10 @@ public class ArcoreDeployer : MonoBehaviour
             if (Input.touchCount > 0 || (_touch = Input.GetTouch(0)).phase == TouchPhase.Moved)
             {
                 UI_SpashLogoOBJ.SetActive(false);
+                ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+
+                // Gets all Planes that are track and put it into the list
+                Session.GetTrackables<DetectedPlane>(List_AllPlanes);
             }
             else
             {
@@ -41,10 +55,31 @@ public class ArcoreDeployer : MonoBehaviour
             }
         }
 
-        // Tracking for Planes
-        Session.GetTrackables<DetectedPlane>(List_AllPlanes);
+        switch (ScreenState)
+        {
+            case STATE_SCREEN.SCREEN_SELECTION:
+                {
+
+
+                    break;
+                }
+            case STATE_SCREEN.SCREEN_GAME:
+                break;
+            case STATE_SCREEN.SCREEN_TOTAL:
+                break;
+            default:
+                break;
+        }
+
+
+
+
+
+        
+
         for (int i = 0; i < List_AllPlanes.Count; i++)
         {
+            //When the gameobject appears
             if (List_AllPlanes[i].TrackingState == TrackingState.Tracking)
             {
                 UI_TrackingText.enabled = false;
@@ -72,68 +107,14 @@ public class ArcoreDeployer : MonoBehaviour
         }
         else
         {
-            if(CheckGameObjects(GameObjPrefab) == false)
-            {              
-                isSpawned = false;
-                UI_Canvas.enabled = true;
-            }        
+            //if(CheckGameObjects(GameObjPrefab) == false)
+            //{              
+            //    isSpawned = false;
+            //    UI_Canvas.enabled = true;
+            //}        
         }
-      
-
-        /*
-        UI_Canvas.enabled = true;
-
-        if (CheckGameObjects(GameObjPrefab) == false)
-        {                   
-            Spawner(_touch);
-            return;
-        }
-        else
-        {          
-            UI_Canvas.enabled = false;
-        }
-        */
-        /*
-        // Check for NO Touch
-        if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-        {
-            return;
-        }
-
-        // Just incase not enabled
-        UI_Canvas.enabled = true;
-
-        if(GameObjPrefab == null)
-        {
-            SetNextObject("Planets"); // For starting the game
-        }
-        
-        // If the game object is active there is no need to update
-        if (CheckGameObjects(GameObjPrefab)) 
-        {
-            UI_Canvas.enabled = false;
-            return;
-        }
-        else
-        {
-            Spawner(_touch);
-            return;
-        }            
-        */
     }
-
-    // Checks for the game object game
-    private bool CheckGameObjects(GameObject _OBJ)
-    {
-        var _allOBJ = GameObject.FindGameObjectsWithTag(_OBJ.tag);
-        if (_allOBJ.Length >= 1)
-        {
-            SetDebuggingText(_allOBJ.Length.ToString());
-            return true;
-        }
-        return false;
-    }
-
+    
     // Add a new Object using point on screen and ARCore
     private void Spawner(Touch _touch)
     {
@@ -178,19 +159,7 @@ public class ArcoreDeployer : MonoBehaviour
             if (Arr_LevelsOBJ[i].name == _ObjName)
             {
                 GameObjPrefab = Arr_LevelsOBJ[i];
-                SetDebuggingText("OBJ= " + GameObjPrefab.name);
-            }
-        }
-    }
-
-    // My Debugging tool for Arcore
-    public void SetDebuggingText(string _words)
-    {
-        for (int i = 0; i < Arr_DEBUGGER.Length; i++)
-        {
-            if (Arr_DEBUGGER[i].text == "New Text" || Arr_DEBUGGER[i].text == "" || Arr_DEBUGGER[i].text == _words)
-            {
-                Arr_DEBUGGER[i].text = _words;
+              
             }
         }
     }
