@@ -82,18 +82,13 @@ public class TPSLogic : MonoBehaviour {
                     && Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit2, transform.lossyScale.y * 1.5f)
                     && Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit3, transform.lossyScale.y * 1.5f))
                 {
-                    if(hit.transform.gameObject == hit2.transform.gameObject && hit.transform.gameObject == hit3.transform.gameObject
-                        && (!hit.transform.name.Contains("Coin") && !hit.transform.name.Contains("Enemy")))
+                    if(hit.transform.position.y < transform.position.y
+                        && hit2.transform.position.y < transform.position.y
+                        && hit3.transform.position.y < transform.position.y)
                     {
-                        Debug.Log("All 3 raycast hits " + hit.transform.gameObject.name);
+                        Debug.Log("All 3 raycast hits " + hit.transform.gameObject.name + " , " + hit2.transform.gameObject.name + " , " + hit3.transform.gameObject.name);
                         if (Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.01f)
                             IsGrounded = true;
-                    }
-                    else
-                    {
-                        Debug.Log(hit.transform.name + " , " + hit2.transform.name + " , " + hit3.transform.name);
-                        if (Vector3.Distance(RigidRef.velocity, Vector3.zero) > 0.01f)
-                            MovementRef.GetDPadInput(Vector3.zero);
                     }
                 }
                 else
@@ -118,6 +113,7 @@ public class TPSLogic : MonoBehaviour {
                     else
                     {
                         // If unable to find any left or right collision, instantly set to grounded after checking rigidbody velocity
+                        Debug.Log("Unable to find anything on the left or right.");
                         if (Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.01f)
                             IsGrounded = true;
                     }
