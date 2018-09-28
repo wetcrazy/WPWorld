@@ -30,7 +30,7 @@ public class ShowOnCollide : MonoBehaviour {
                 {
                     GetComponent<Collider>().isTrigger = false;
 
-                    if (ShowSFX != null)
+                    if (ShowSFX != null && GameObject.Find("Sound System") != null)
                         GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(ShowSFX);
 
                     Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
