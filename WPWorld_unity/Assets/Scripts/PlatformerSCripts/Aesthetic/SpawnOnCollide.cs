@@ -70,7 +70,7 @@ public class SpawnOnCollide : MonoBehaviour {
                         switch (CurrSpawn)
                         {
                             case (SPAWNTYPE.COIN):
-                                if (CoinSFX != null)
+                                if (CoinSFX != null && SoundSystemRef != null)
                                     SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(CoinSFX);
                                 Instantiate(BounceCoin, this.transform.position, Quaternion.identity);
                                 break;
