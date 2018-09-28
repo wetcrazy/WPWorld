@@ -36,7 +36,9 @@ public class BlockCounter : MonoBehaviour
     /// Need to be in squence with NormalType ENUM
     /// </summary>
     public Material[] Arr_NormalMat;
-
+    /// <summary>
+    /// All the blocks in the scene
+    /// </summary>
     private GameObject[] Arr_Blocks;
     public bool isReset = true;
     /// <summary>
@@ -49,87 +51,6 @@ public class BlockCounter : MonoBehaviour
     {
         CheckBlocks();
         BlockSetup();
-    }
-
-    private void Update()
-    {
-        /*
-        // Block Set up
-        for (int i = 0; i < Arr_Blocks.Length; i++)
-        {
-            // Block parameter 
-            var _ScriptComponent = Arr_Blocks[i].GetComponent<BlockPara>();
-
-            // Setup the playing field
-            while (_ScriptComponent.Get_BlockType() == BlockType.Zero)
-            {
-                var _typeRNG = Random.Range(1, (int)BlockType.Total_BlockType);
-                if ((BlockType)_typeRNG == BlockType.Bomb)
-                {
-                    var _crtlRNG = Random.Range(0, BombSpawnRate); // Further rng it
-                    if (_crtlRNG == BombSpawnRate - 1) // apply the bomb
-                    {
-                        _ScriptComponent.Set_BlockType((BlockType)_typeRNG);
-                    }
-                }
-                else
-                {
-                    _ScriptComponent.Set_BlockType((BlockType)_typeRNG);
-                }             
-            }
-
-            // Block Material.maintexture setter
-            var _MatComponent = Arr_Blocks[i].GetComponent<Renderer>().material;
-
-            //_ScriptComponent.Set_isTriggered(true);
-
-            // On triggered
-            if (_ScriptComponent.Get_isTriggered())
-            {
-                // If they are normal blocks
-                if (_ScriptComponent.Get_BlockType() == BlockType.Normal)
-                {
-                    //  If they are not numberised
-                    if (_ScriptComponent.Get_NormalType() == NormalType.Empty)
-                    {
-                        // Mine sweeper logic 
-                        Collider[] _col = Physics.OverlapSphere(Arr_Blocks[i].transform.position, transform.localScale.x / 10);
-                        int _bombCount = 0;
-
-                        // Check for surrounding bombs
-                        for (int j = 0; j < _col.Length; j++)
-                        {
-                            // Dont check player
-                            if (_col[j].gameObject.tag == "Blocks")
-                            {
-                                // Check for bombs
-                                var _blockPara = _col[j].gameObject.GetComponent<BlockPara>();
-
-                                if (_blockPara.Get_BlockType() == BlockType.Bomb)
-                                {
-                                    _bombCount++;
-                                }
-                            }
-                        }
-
-                        // Replace the textures to the amount of bombs found around it
-                        _ScriptComponent.Set_NormalType((NormalType)_bombCount);
-                        _MatComponent.mainTexture = Find_Normalmaterial((int)_ScriptComponent.Get_NormalType());
-                    }
-                }
-                else
-                {
-                    // Switch to their textures
-                    _MatComponent.mainTexture = Find_material((int)_ScriptComponent.Get_BlockType());
-                }
-            }
-            else if (_MatComponent.mainTexture != Find_material(0)) // Set into blank blocks
-            {
-                //Default to bricks
-                _MatComponent.mainTexture = Find_material(0); // Hardcoded
-            }
-        }
-        */
         for (int i = 0; i < Arr_Blocks.Length; i++)
         {
             CheckBombs(Arr_Blocks[i]);
@@ -233,40 +154,46 @@ public class BlockCounter : MonoBehaviour
         _tempScript.Set_NormalType((NormalType)_bombCount);
     }
 
-    // Render the material Super dumb way of doing it
+    // Render the material Super dumb way of doing it (Recursive Function)
     private void RenderMaterial(GameObject _gameObj)
     {
+        // A list of rays being casted
         List<RaycastHit> _listRays = new List<RaycastHit>();
 
+        // Check the surroundings of the blocks except down and up
         RaycastHit _ray;
-        if (Physics.Raycast(_gameObj.transform.position, gameObject.transform.forward, out _ray))
+        if (Physics.Raycast(_gameObj.transform.position, gameObject.transform.forward, out _ray)) // Forward
         {
             _listRays.Add(_ray);
         }
-        if (Physics.Raycast(_gameObj.transform.position, -gameObject.transform.forward, out _ray))
+        if (Physics.Raycast(_gameObj.transform.position, -gameObject.transform.forward, out _ray)) // Backward
         {
             _listRays.Add(_ray);
         }
-        if (Physics.Raycast(_gameObj.transform.position, gameObject.transform.right, out _ray))
+        if (Physics.Raycast(_gameObj.transform.position, gameObject.transform.right, out _ray)) // Right
         {
             _listRays.Add(_ray);
         }
-        if (Physics.Raycast(_gameObj.transform.position, -gameObject.transform.right, out _ray))
+        if (Physics.Raycast(_gameObj.transform.position, -gameObject.transform.right, out _ray)) // Left
         {
             _listRays.Add(_ray);
         }
         
+        // Loop through all directions from above to open up the block's material
         foreach(RaycastHit _hit in _listRays)
         {
             var _tempScript = _hit.transform.gameObject.GetComponent<BlockPara>();
-            var _tempMat = _hit.transform.gameObject.GetComponent<Renderer>().material;
-
+                    
+            // Safety check to avoid setting the material again
             if(_tempScript.Get_isTriggered())
             {
                 continue;
             }
+
+            var _tempMat = _hit.transform.gameObject.GetComponent<Renderer>().material;
             _tempScript.Set_isTriggered(true);
 
+            // Recursive Attivade here only when detected more zero blocks
             if (_tempScript.Get_NormalType() == NormalType.Zero )
             { 
                 _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());
@@ -299,47 +226,14 @@ public class BlockCounter : MonoBehaviour
         // If they are normal blocks
         if (_tempScript.Get_BlockType() == BlockType.Normal)
         {
+            // Set their own texture first
             _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());
 
+            // Start Opening up all the blank blocks
             if (_tempScript.Get_NormalType() == NormalType.Zero)
             {
-                RenderMaterial(_gameObj);
-            }
-            /*
-            //  If they are not numberised
-            if (_tempScript.Get_NormalType() == NormalType.Empty)
-            {
-                // Mine sweeper logic 
-
-                
-                Collider[] _col = Physics.OverlapSphere(_gameObj.transform.position, transform.localScale.x / 10);
-                int _bombCount = 0;            
-
-                // Check for surrounding bombs
-                for (int j = 0; j < _col.Length; j++)
-                {
-                    // Dont check player
-                    if (_col[j].gameObject.tag == "Blocks")
-                    {
-                        // Check for bombs
-                        var _blockPara = _col[j].gameObject.GetComponent<BlockPara>();
-
-                        if (_blockPara.Get_BlockType() == BlockType.Bomb)
-                        {
-                            _bombCount++;
-                        }
-                        else if (_blockPara.Get_NormalType() == NormalType.Empty)
-                        {                            
-                            WhenTriggered(_col[j].gameObject);                          
-                        }
-                    }
-                }
-              
-                // Replace the textures to the amount of bombs found around it
-                _tempScript.Set_NormalType((NormalType)_bombCount);
-                _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());                      
-            }
-            */
+                RenderMaterial(_gameObj); // Function to load the actual materials
+            }           
         }
         else
         {
