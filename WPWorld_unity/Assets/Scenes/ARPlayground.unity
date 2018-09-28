@@ -1800,7 +1800,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2023834245}
-  - component: {fileID: 2023834246}
   - component: {fileID: 2023834247}
   m_Layer: 0
   m_Name: AR controller
@@ -1822,22 +1821,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2023834246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2023834244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4d6b555acc829540ab62ec80bd40c1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainCamera: {fileID: 0}
-  Arr_Levels: []
-  TrackingUI: {fileID: 0}
-  SplashUI: {fileID: 0}
-  canvas: {fileID: 0}
 --- !u!114 &2023834247
 MonoBehaviour:
   m_ObjectHideFlags: 0

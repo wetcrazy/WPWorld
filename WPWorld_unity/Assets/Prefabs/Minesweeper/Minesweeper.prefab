@@ -1125,9 +1125,9 @@ GameObject:
   - component: {fileID: 33002589609411920}
   - component: {fileID: 23710693074271994}
   - component: {fileID: 65626648608178864}
-  - component: {fileID: 114716464642207322}
   - component: {fileID: 114522465284934432}
   - component: {fileID: 54179829729499138}
+  - component: {fileID: 114236800023115174}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -40435,6 +40435,22 @@ MonoBehaviour:
   Block_Type: 0
   Normal_Type: 0
   isTriggered: 0
+--- !u!114 &114236800023115174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1124998710966328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c306b21d7c6640140a0da38106ac4273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpSpeed: 3
+  ExplosionForce: 10
+  MAX_UPSPEED: 10
+  MAX_HEIGHT: 100
+  BlockCounter: {fileID: 1610126705508462}
 --- !u!114 &114236988528043278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -43933,22 +43949,6 @@ MonoBehaviour:
   Block_Type: 0
   Normal_Type: 0
   isTriggered: 0
---- !u!114 &114716464642207322
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1124998710966328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c306b21d7c6640140a0da38106ac4273, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  JumpSpeed: 3
-  ExplosionForce: 10
-  MAX_UPSPEED: 10
-  MAX_HEIGHT: 100
-  BlockCounter: {fileID: 1610126705508462}
 --- !u!114 &114720802395685200
 MonoBehaviour:
   m_ObjectHideFlags: 1
