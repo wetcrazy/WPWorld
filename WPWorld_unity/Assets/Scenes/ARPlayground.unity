@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b211a85d4146e644db61d1b501b8e690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ARControllerOBJ: {fileID: 2023834244}
+  ARControllerOBJ: {fileID: 0}
 --- !u!4 &26471283
 Transform:
   m_ObjectHideFlags: 0
@@ -1258,8 +1258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c669a4cc43174caea1a3748b76f2652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
-    type: 2}
+  DetectedPlanePrefab: {fileID: 0}
 --- !u!4 &1493078051
 Transform:
   m_ObjectHideFlags: 0
@@ -1623,13 +1622,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d6b555acc829540ab62ec80bd40c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 1616941778}
-  Arr_Levels:
-  - {fileID: 1023899755378360, guid: 14ca16bdb66ecee4894b778d880a5df0, type: 2}
-  - {fileID: 1263744352132212, guid: 6eb1a59b82fc81f4488e75b092388539, type: 2}
+  MainCamera: {fileID: 0}
+  Arr_Levels: []
   TrackingUI: {fileID: 0}
-  SplashUI: {fileID: 654970445}
-  canvas: {fileID: 58667526}
+  SplashUI: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!114 &2023834247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1644,7 +1641,7 @@ MonoBehaviour:
   MainCamera: {fileID: 1616941778}
   Arr_LevelsOBJ:
   - {fileID: 1023899755378360, guid: 14ca16bdb66ecee4894b778d880a5df0, type: 2}
-  - {fileID: 1263744352132212, guid: 6eb1a59b82fc81f4488e75b092388539, type: 2}
+  - {fileID: 0}
   DebugTextOBJ: {fileID: 1992463958}
   UI_TrackingText: {fileID: 0}
   SelectionScreen: {fileID: 432049458}

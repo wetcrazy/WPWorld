@@ -47,8 +47,35 @@ public class Joystick : MonoBehaviour {
 
         Vector3 JoystickBackgroundPosition = JoystickBackground.transform.position;
 
-        if (Application.platform == RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android && Input.touchCount > 0)
         {
+            Vector3 MousePos = Input.GetTouch(0).position;
+            Vector3 DragDirection = (MousePos - JoystickBackgroundPosition);
+
+            float DragAngle = -Vector3.SignedAngle(Up, DragDirection.normalized, JoystickBackground.transform.forward);
+
+            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) > 25)
+            {
+                if (DragAngle < 0)
+                {
+                    DragAngle += 360;
+                }
+
+                Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, DragAngle);
+
+                //Send the dragging direction and angle to the player
+                PlayerObject.SendMessage("GetJoystickInput", DataPacket);
+            }
+
+            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
+            {
+                //Snap the joystick ball pos to the cursor if within the joystick background space
+                JoystickBall.transform.position = MousePos;
+            }
+            else
+            {
+                JoystickBall.transform.position = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
+            }
         }
         else if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
         {

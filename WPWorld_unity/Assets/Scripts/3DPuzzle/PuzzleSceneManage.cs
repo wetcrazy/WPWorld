@@ -31,7 +31,7 @@ public class PuzzleSceneManage : MonoBehaviour {
     void ResetValues()
     {
         Players.transform.position = PlayerStartpos;
-
+        Players.transform.forward = Vector3.forward;
         for (int i = 0; i < Traps.transform.childCount; ++i)
         {
             Transform theTrap = Traps.transform.GetChild(i);
