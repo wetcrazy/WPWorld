@@ -12,6 +12,7 @@ public class MSJump : MonoBehaviour
     public float ExplosionForce;
     public float MAX_UPSPEED;
     public float MAX_HEIGHT;
+    public GameObject BlockCounter;
 
     private bool isInAir = false;
     private bool isGrounded = true;
@@ -43,14 +44,20 @@ public class MSJump : MonoBehaviour
 
                 if (_hit.distance <= 0.5)
                 {
+                    /*
                     var _OBJScript = _hit.transform.gameObject.GetComponent<BlockPara>();
                     _OBJScript.Set_isTriggered(true);
 
                     if(_OBJScript.Get_BlockType() == BlockCounter.BlockType.Bomb)
                     {
-                        //Rb.velocity = Vector3.zero;
-                        //Rb.AddExplosionForce(ExplosionForce, transform.position, 1.0f, 1.0f, ForceMode.Impulse);
+                        Rb.velocity = Vector3.zero;
+                       /Rb.AddExplosionForce(ExplosionForce, transform.position, 1.0f, 1.0f, ForceMode.Impulse);
                     }
+                    */
+
+                    BlockCounter.SendMessage("WhenTriggered", _hit.transform.gameObject);
+                    var _OBJScript = _hit.transform.gameObject.GetComponent<BlockPara>();
+                    _OBJScript.Set_isTriggered(true);
 
                     isDoubleJUmp = false;
                 }             
