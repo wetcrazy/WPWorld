@@ -5687,9 +5687,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4334171391772292}
-  - component: {fileID: 114109491678894128}
+  - component: {fileID: 114956511277224266}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: Game Manager Minesweeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39427,7 +39427,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ba96987040d320d41b77fe9a1af55b50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77c658abb2e130c40b1eaae47133a1b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -39521,7 +39521,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114109491678894128}
+        - m_Target: {fileID: 0}
           m_MethodName: OnButtonDownSpawnFlag
           m_Mode: 1
           m_Arguments:
@@ -39708,17 +39708,6 @@ MonoBehaviour:
   Block_Type: 0
   Normal_Type: 0
   isTriggered: 0
---- !u!114 &114109491678894128
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1669130262489594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d1ab088dcaf0c147a3c2904ac65cf58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114115057734425988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40549,7 +40538,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5b5b77742761f5348bf78bfb3d972604, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20b3ddff26400fc49b751b01885b9dcd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -41263,7 +41252,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114109491678894128}
+        - m_Target: {fileID: 0}
           m_MethodName: OnButtonDownAllFlagClear
           m_Mode: 1
           m_Arguments:
@@ -41380,7 +41369,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5b5b77742761f5348bf78bfb3d972604, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77c658abb2e130c40b1eaae47133a1b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -41789,7 +41778,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5b5b77742761f5348bf78bfb3d972604, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77c658abb2e130c40b1eaae47133a1b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -42236,7 +42225,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5b5b77742761f5348bf78bfb3d972604, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77c658abb2e130c40b1eaae47133a1b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -42868,7 +42857,7 @@ MonoBehaviour:
   Arr_Mat:
   - {fileID: 2100000, guid: 1cc74daae19c8c94e9382dbe6acaab14, type: 2}
   - {fileID: 2100000, guid: 22e156413f2b0df4f942484123fd2da4, type: 2}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f9dcd320eafb5f84fa8d809da5cfd4f6, type: 2}
   Arr_NormalMat:
   - {fileID: 2100000, guid: 22e156413f2b0df4f942484123fd2da4, type: 2}
   - {fileID: 2100000, guid: b624d243880bf714fad5a3a27508cde8, type: 2}
@@ -42880,7 +42869,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 07dde07d93a7d5545b8a2a6ab364c8dd, type: 2}
   - {fileID: 2100000, guid: 6a043364a845f6f4c980682fc0ef99c5, type: 2}
   isReset: 1
-  BombSpawnRate: 10
+  BombSpawnRate: 9
 --- !u!114 &114562458839853532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -43286,7 +43275,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114109491678894128}
+        - m_Target: {fileID: 0}
           m_MethodName: OnButtonDownFlagClearOnPoint
           m_Mode: 1
           m_Arguments:
@@ -45172,7 +45161,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5b5b77742761f5348bf78bfb3d972604, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77c658abb2e130c40b1eaae47133a1b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -45614,6 +45603,19 @@ MonoBehaviour:
   Block_Type: 0
   Normal_Type: 0
   isTriggered: 0
+--- !u!114 &114956511277224266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669130262489594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b51259dc59d836b45a95b50daba6e730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagPrefab: {fileID: 1081935161345178, guid: cd82c0c01c5caf149b6e297f9e170bd6, type: 2}
+  List_Of_FlagOBJ: []
 --- !u!114 &114960198036391642
 MonoBehaviour:
   m_ObjectHideFlags: 1

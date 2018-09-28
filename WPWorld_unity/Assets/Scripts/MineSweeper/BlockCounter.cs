@@ -51,6 +51,7 @@ public class BlockCounter : MonoBehaviour
     {
         CheckBlocks();
         BlockSetup();
+
         for (int i = 0; i < Arr_Blocks.Length; i++)
         {
             CheckBombs(Arr_Blocks[i]);
