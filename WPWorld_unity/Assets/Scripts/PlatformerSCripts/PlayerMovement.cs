@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // Resets the acceleration of the gameobject to 0
-<<<<<<< HEAD
+
         //MovementDir = Vector3.zero;
     
         //// Moves the player according to Key Input
@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
         //    MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
         //if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.Z_ONLY)
         //    MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
-=======
+
         // MovementDir = Vector3.zero;
 
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour {
             if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.Z_ONLY)
                 MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
         }
->>>>>>> 468cdb66d544a42c56b3bfc80b452cef0722b8db
+
     }
 
     public void GetDPadInput(Vector3 MoveDirection)

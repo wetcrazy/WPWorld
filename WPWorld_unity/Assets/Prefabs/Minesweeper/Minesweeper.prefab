@@ -10363,7 +10363,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1616266017654428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.3780832, y: -4.569228, z: 1.5017602}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4334171391772292}
@@ -39716,11 +39716,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1669130262489594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 342876a10c8744e4e82c02346b7243a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d1ab088dcaf0c147a3c2904ac65cf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlagPrefab: {fileID: 1081935161345178, guid: 7f21a54eff941ed4fb66e9a4c206edbe, type: 2}
-  List_Of_FlagOBJ: []
 --- !u!114 &114115057734425988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -41933,7 +41931,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1989969770617300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ba82962e727584097b004421e04227, type: 3}
+  m_Script: {fileID: 11500000, guid: 621a83cc5df6e8f47b60681c1b48609a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   JoystickBall: {fileID: 114745710976563318}
@@ -42341,7 +42339,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -42870,7 +42868,7 @@ MonoBehaviour:
   Arr_Mat:
   - {fileID: 2100000, guid: 1cc74daae19c8c94e9382dbe6acaab14, type: 2}
   - {fileID: 2100000, guid: 22e156413f2b0df4f942484123fd2da4, type: 2}
-  - {fileID: 2100000, guid: 648739c66b3f1a14da92f6df6d606e72, type: 2}
+  - {fileID: 0}
   Arr_NormalMat:
   - {fileID: 2100000, guid: 22e156413f2b0df4f942484123fd2da4, type: 2}
   - {fileID: 2100000, guid: b624d243880bf714fad5a3a27508cde8, type: 2}
@@ -42882,7 +42880,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 07dde07d93a7d5545b8a2a6ab364c8dd, type: 2}
   - {fileID: 2100000, guid: 6a043364a845f6f4c980682fc0ef99c5, type: 2}
   isReset: 1
-  BombSpawnRate: 5
+  BombSpawnRate: 10
 --- !u!114 &114562458839853532
 MonoBehaviour:
   m_ObjectHideFlags: 1
