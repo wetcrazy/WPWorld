@@ -8,10 +8,12 @@ public class PatrolBlock : MonoBehaviour {
     private float MovementSpeed;
 
     [SerializeField]
-    private GameObject FirstPatrolPoint;
+    private Vector3 FirstPoint;
+    private Vector3 FirstPatrolPoint;
 
     [SerializeField]
-    private GameObject SecondPatrolPoint;
+    private Vector3 SecondPoint;
+    private Vector3 SecondPatrolPoint;
 
     private bool TravelToSecond = true;
 
@@ -22,7 +24,8 @@ public class PatrolBlock : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        FirstPatrolPoint = this.transform.position + FirstPoint;
+        SecondPatrolPoint = this.transform.position + SecondPoint;
 	}
 	
 	// Update is called once per frame
@@ -34,9 +37,9 @@ public class PatrolBlock : MonoBehaviour {
 
         if (TravelToSecond)
         {
-            if(Vector3.Distance(transform.position, SecondPatrolPoint.transform.position) > transform.lossyScale.magnitude)
+            if(Vector3.Distance(transform.position, SecondPatrolPoint) > transform.lossyScale.magnitude)
             {
-                transform.position = Vector3.Lerp(transform.position, SecondPatrolPoint.transform.position, Time.deltaTime * MovementSpeed);
+                transform.position = Vector3.Lerp(transform.position, SecondPatrolPoint, Time.deltaTime * MovementSpeed);
             }
             else
             {
@@ -45,9 +48,9 @@ public class PatrolBlock : MonoBehaviour {
         }
         else
         {
-            if (Vector3.Distance(transform.position, FirstPatrolPoint.transform.position) > transform.lossyScale.magnitude)
+            if (Vector3.Distance(transform.position, FirstPatrolPoint) > transform.lossyScale.magnitude)
             {
-                transform.position = Vector3.Lerp(transform.position, FirstPatrolPoint.transform.position, Time.deltaTime * MovementSpeed);
+                transform.position = Vector3.Lerp(transform.position, FirstPatrolPoint, Time.deltaTime * MovementSpeed);
             }
             else
             {

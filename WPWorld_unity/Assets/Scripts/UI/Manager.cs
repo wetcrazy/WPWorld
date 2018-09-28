@@ -5,29 +5,35 @@ public class Manager : MonoBehaviour
 {
     public GameObject ARControllerOBJ;
 
-    public void SendLevelInfoBrickBreaker()
-    {
-        ARControllerOBJ.SendMessage("SetNextObject", "BrickBreaker");
-    }
+    //public void SendLevelInfoBrickBreaker()
+    //{
+    //    ARControllerOBJ.SendMessage("SetNextObject", "TrapPlayground");
+    //}
 
-    public void SendLevelInfo3DPuzzle()
+    //public void SendLevelInfo3DPuzzle()
+    //{
+    //    ARControllerOBJ.SendMessage("SetNextObject", "3DPuzzleStage1");
+    //}
+
+    public void SendLevelInfo(string LevelName)
     {
-        ARControllerOBJ.SendMessage("SetNextObject", "3DPuzzleStage1");
+        ARControllerOBJ.SendMessage("SetNextObject", LevelName);
     }
 
     public void ChangeButtonColour()
     {
         for (int i = 0; i < gameObject.transform.childCount; ++i)
         {
-            Transform theButton = gameObject.transform.GetChild(i);
+            GameObject theButton = gameObject.transform.GetChild(i).gameObject;
 
-            if (gameObject.transform.GetChild(i).GetComponent<Button>() == null)
+            if (theButton.GetComponent<Button>() == null)
             {
                 continue;
             }
 
-            if (gameObject.transform.GetChild(i).name == UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name)
+            if (theButton.name == UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name)
             {
+                //Change selected button to green
                 theButton.GetComponent<Image>().color = Color.green;
             }
             else

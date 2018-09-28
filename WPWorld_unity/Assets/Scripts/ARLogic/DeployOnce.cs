@@ -50,11 +50,6 @@ public class DeployOnce : MonoBehaviour
     /// </summary>
     private GameObject gameObjectPrefab;
 
-    /// <summary>
-    /// For debug for this script
-    /// </summary>
-    public Text DEBUGING_SHIT;
-    public Text DEBUGING_SHIT2;
 
     void Update()
     {
@@ -148,14 +143,14 @@ public class DeployOnce : MonoBehaviour
         //}
         //return false;
 
-        for (int i = 0; i < _temp.Length; i++)
-        {        
-            if (_temp[i] != null)
-            {
-                DEBUGING_SHIT2.text = _temp[i].name;
-                return true;
-            }
-        }
+        //for (int i = 0; i < _temp.Length; i++)
+        //{        
+        //    if (_temp[i] != null)
+        //    {
+        //        DEBUGING_SHIT2.text = _temp[i].name;
+        //        return true;
+        //    }
+        //}
         return false;
     }
 
@@ -181,7 +176,6 @@ public class DeployOnce : MonoBehaviour
             switch (_name)
             {
                 case "Planet":
-                    DEBUGING_SHIT.text = "Been Pressed!!";
                     SceneManager.LoadScene("SampleScene2");
                     break;
                 default:
@@ -193,7 +187,6 @@ public class DeployOnce : MonoBehaviour
     // Sets the next obj to summon
     public void NextObj(string _ObjName)
     {
-        DEBUGING_SHIT.text = "Been Pressed!!";
         for (int i = 0; i < Arr_Levels.Length; i++)
         {
             if (Arr_Levels[i].name == _ObjName)
