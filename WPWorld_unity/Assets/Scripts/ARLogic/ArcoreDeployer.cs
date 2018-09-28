@@ -84,6 +84,13 @@ public class ArcoreDeployer : MonoBehaviour
                         GameScreen.SetActive(false);
                     }
 
+                    if (!isSpawned && Input.touchCount > 0)
+                    {
+                        Spawner(Input.GetTouch(0));
+                        isSpawned = true;
+                        ScreenState = STATE_SCREEN.SCREEN_GAME;
+                    }
+
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
@@ -94,13 +101,8 @@ public class ArcoreDeployer : MonoBehaviour
                         SplashScreen.SetActive(false);
                         SelectionScreen.SetActive(false);
                     }
-
-                    if (!isSpawned && Input.touchCount > 0)
-                    {
-                        Spawner(Input.GetTouch(0));
-                        isSpawned = true;
-                    }
-                    else if(GameObjPrefab == null)
+                    
+                    if(GameObjPrefab == null)
                     {
                         isSpawned = false;
                         DestroyCurrentLevel();
