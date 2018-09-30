@@ -44,7 +44,7 @@ public class BlockCounter : MonoBehaviour
     /// <summary>
     /// Higher the number, the lesser chance for the bomb to spawn
     /// </summary>
-    [Range(0,10)]
+    [Range(1,10)]
     public int BombSpawnRate;
 
     private void Awake()
@@ -63,7 +63,7 @@ public class BlockCounter : MonoBehaviour
     // 000000000000000000000000000000000000000000
 
     /// <summary>
-    /// Checks all the blocks in the scene
+    /// Counts all the blocks in the scene and save it into an array
     /// </summary>
     private void CheckBlocks()
     {
@@ -71,6 +71,9 @@ public class BlockCounter : MonoBehaviour
         BlockCount = Arr_Blocks.Length;
     }
 
+    /// <summary>
+    /// Finds the material for the block
+    /// </summary>
     private Texture Find_material(int _num)
     {
         for (int i = 0; i < Arr_Mat.Length; i++)
@@ -83,6 +86,9 @@ public class BlockCounter : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Finds a normal material for the block
+    /// </summary>
     private Texture Find_Normalmaterial(int _num)
     {
         for (int i = 0; i < Arr_NormalMat.Length; i++)
@@ -95,6 +101,9 @@ public class BlockCounter : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Sets up the Game
+    /// </summary>
     private void BlockSetup()
     {
         // Loop all the found blocks in the scene
