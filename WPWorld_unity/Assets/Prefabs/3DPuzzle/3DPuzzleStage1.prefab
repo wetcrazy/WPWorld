@@ -1244,7 +1244,7 @@ GameObject:
   - component: {fileID: 33696290864682854}
   - component: {fileID: 23087091205828256}
   - component: {fileID: 65357650906215344}
-  - component: {fileID: 114005657319505740}
+  - component: {fileID: 114628047851042650}
   m_Layer: 0
   m_Name: Triggerbox3
   m_TagString: Untagged
@@ -1641,7 +1641,7 @@ GameObject:
   - component: {fileID: 33848082002264536}
   - component: {fileID: 23956687908660452}
   - component: {fileID: 65874568512541172}
-  - component: {fileID: 114676127104641614}
+  - component: {fileID: 114171639179807582}
   m_Layer: 0
   m_Name: Triggerbox2
   m_TagString: Untagged
@@ -6859,7 +6859,7 @@ GameObject:
   - component: {fileID: 33208832389848952}
   - component: {fileID: 23915079304711306}
   - component: {fileID: 65496599762418296}
-  - component: {fileID: 114238042803134882}
+  - component: {fileID: 114601273320590864}
   m_Layer: 0
   m_Name: Triggerbox4
   m_TagString: Untagged
@@ -9001,7 +9001,7 @@ GameObject:
   - component: {fileID: 33177124901004344}
   - component: {fileID: 23050071423755612}
   - component: {fileID: 65121545743758396}
-  - component: {fileID: 114579178752797206}
+  - component: {fileID: 114944750384162770}
   m_Layer: 0
   m_Name: Triggerbox1
   m_TagString: Untagged
@@ -19560,7 +19560,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1023899755378360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 374.01862, y: 268.31348, z: -370.23328}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 4933615358674440}
@@ -84820,20 +84820,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114005657319505740
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1058016596831696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Trap: {fileID: 1019064909019078}
-  renderout: {fileID: 23731811685908916}
-  speed: 0.5
 --- !u!114 &114015289901090024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -84943,6 +84929,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114171639179807582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1077311368738396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trap: {fileID: 1225414697754934}
+  speed: 1
 --- !u!114 &114180421700461312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85025,20 +85024,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114238042803134882
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1385868780830968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Trap: {fileID: 1937968555878506}
-  renderout: {fileID: 23743406752782506}
-  speed: 0.5
 --- !u!114 &114257259773849728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85163,7 +85148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCollided: 0
-  render: {fileID: 114005657319505740}
 --- !u!114 &114403477489840356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85280,21 +85264,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCollided: 0
-  render: {fileID: 114238042803134882}
---- !u!114 &114579178752797206
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1514363766512802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Trap: {fileID: 1887777716755968}
-  renderout: {fileID: 23687228394550854}
-  speed: 0.5
 --- !u!114 &114583150791480784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85342,6 +85311,32 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114601273320590864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1385868780830968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trap: {fileID: 1937968555878506}
+  speed: 1
+--- !u!114 &114628047851042650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1058016596831696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trap: {fileID: 1019064909019078}
+  speed: 1
 --- !u!114 &114664566225832246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85369,20 +85364,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114676127104641614
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1077311368738396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Trap: {fileID: 1225414697754934}
-  renderout: {fileID: 23450055975302060}
-  speed: 0.5
 --- !u!114 &114699852491005246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85526,7 +85507,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCollided: 0
-  render: {fileID: 114579178752797206}
 --- !u!114 &114811516295590772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85591,7 +85571,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCollided: 0
-  render: {fileID: 114676127104641614}
 --- !u!114 &114850988403981748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85639,6 +85618,19 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114944750384162770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1514363766512802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52eb352ceee3ac94dbff971d43f69830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Trap: {fileID: 1887777716755968}
+  speed: 1
 --- !u!135 &135481983636206522
 SphereCollider:
   m_ObjectHideFlags: 1

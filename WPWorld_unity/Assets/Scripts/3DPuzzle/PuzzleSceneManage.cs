@@ -37,7 +37,7 @@ public class PuzzleSceneManage : MonoBehaviour {
             Transform theTrap = Traps.transform.GetChild(i);
             theTrap.transform.position = theTrap.GetComponent<TrapCollider>().GetTrapPos();
             theTrap.GetComponent<TrapCollider>().isCollided = false;
-            theTrap.GetComponent<TrapCollider>().render.renderout.enabled = false;
+            //theTrap.GetComponent<TrapCollider>().render.renderout.enabled = false;
         }
         
     }

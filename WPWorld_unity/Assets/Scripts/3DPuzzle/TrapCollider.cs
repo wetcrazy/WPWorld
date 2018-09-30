@@ -8,14 +8,12 @@ public class TrapCollider : MonoBehaviour {
     private Vector3 PlayerStartpos; // original player position
     private Vector3 TrapPos; // original trap position
     public bool isCollided = false;
-    public SendTrigger2 render;
 
     public Vector3 GetTrapPos()
     {
         return TrapPos;
     }
 
-    Scene CurrentScene;
     // Use this for initialization
     void Start () {
         TrapPos = transform.position;
