@@ -6,7 +6,7 @@ public class BlockCounter : MonoBehaviour
 {
     public enum BlockType
     {
-        Zero = 0,
+        Empty = 0,
         Normal,
         Bomb,
         Total_BlockType
@@ -115,7 +115,7 @@ public class BlockCounter : MonoBehaviour
             var _MatComponent = Arr_Blocks[i].GetComponent<Renderer>().material;
 
             // Setup the playing field
-            while (_ScriptComponent.Get_BlockType() == BlockType.Zero)
+            while (_ScriptComponent.Get_BlockType() == BlockType.Empty)
             {
                 var _typeRNG = Random.Range(1, (int)BlockType.Total_BlockType);
                 if ((BlockType)_typeRNG == BlockType.Bomb)
@@ -231,7 +231,7 @@ public class BlockCounter : MonoBehaviour
             return;
         }
 
-        //_tempScript.Set_isTriggered(true);       
+        _tempScript.Set_isTriggered(true);
 
         // If they are normal blocks
         if (_tempScript.Get_BlockType() == BlockType.Normal)

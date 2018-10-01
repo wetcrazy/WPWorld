@@ -12,7 +12,7 @@ public class BlockPara : MonoBehaviour
     private void Awake()
     {                  
         // Default this Object to BlockType Zero
-        Block_Type = BlockCounter.BlockType.Zero;
+        Block_Type = BlockCounter.BlockType.Empty;
         Normal_Type = BlockCounter.NormalType.Empty;
     }
  
