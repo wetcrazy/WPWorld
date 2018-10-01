@@ -34,6 +34,8 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject[] SelectionLevels;
     [SerializeField]
     GameObject CurrentWorldName;
+    [SerializeField]
+    Button WorldSelectBtn;
 
     int CurrentLevelSelection = 0;
     public GameObject DebugTextOBJ;
@@ -66,6 +68,11 @@ public class ArcoreDeployer : MonoBehaviour
         {
             SelectionLevels[i].SetActive(false);
         }
+
+        Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
+        Color NewColor = WorldSelectButtonImage.color;
+        NewColor.a = 1;
+        WorldSelectButtonImage.color = NewColor;
     }
 
     private void Update()
@@ -257,11 +264,15 @@ public class ArcoreDeployer : MonoBehaviour
     public void SetNextObject()
     {
         //Temporary level select hardcode method
-        string _ObjName = Arr_LevelsOBJ[CurrentLevelSelection].gameObject.name;
+        //GameObjPrefab = Arr_LevelsOBJ[CurrentLevelSelection];
+
+        //ToGame();
+
+        string _ObjName = Arr_LevelsOBJ[CurrentLevelSelection].name;
 
         foreach (GameObject PrefabLevel in Arr_LevelsOBJ)
         {
-            if(_ObjName == PrefabLevel.name)
+            if (_ObjName == PrefabLevel.name)
             {
                 GameObjPrefab = PrefabLevel;
                 ToGame();
@@ -280,5 +291,6 @@ public class ArcoreDeployer : MonoBehaviour
         {
             DebugText.text = "Please Select a Level Before Starting";
         }
+
     }
 }
