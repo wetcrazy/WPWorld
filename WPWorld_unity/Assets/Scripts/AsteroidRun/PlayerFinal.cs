@@ -19,10 +19,6 @@ public class PlayerFinal : MonoBehaviour {
     float TurnSpeed = 0.5f;
     [SerializeField]
     GameObject JoystickObject;
-    [SerializeField]
-    GameObject PlayerPermanentNorth;
-    [SerializeField]
-    GameObject ForwardCube;
 
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
@@ -53,8 +49,6 @@ public class PlayerFinal : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        ForwardCube.transform.position = gameObject.transform.position + gameObject.transform.forward * 0.1f;
-
         //Make player health gradually fall
         if (CurrentHealth > 0)
         {
