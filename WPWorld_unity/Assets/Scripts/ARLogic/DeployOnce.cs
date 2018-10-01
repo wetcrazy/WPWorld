@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//--NOTE: THIS SCRIPT HAS BEEN DEPRECATED I.E. MARKED FOR REMOVAL--\\
 
 public class DeployOnce : MonoBehaviour
 {
