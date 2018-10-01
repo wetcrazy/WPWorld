@@ -8,8 +8,7 @@ public class BlockCounter : MonoBehaviour
     {
         Empty = 0,
         Normal,
-        Bomb,
-        Rocket,
+        Bomb,    
         Total_BlockType
     };
     public enum NumberType
@@ -45,12 +44,7 @@ public class BlockCounter : MonoBehaviour
     /// Higher the number, the lesser chance for the bomb to spawn
     /// </summary>
     [Range(1,10)]
-    public int BombSpawnRate;
-    /// <summary>
-    /// Higher the number, the lesser chance for the bomb to spawn
-    /// </summary>
-    [Range(1, 100)]
-    public int RocketSpawnRate;
+    public int BombSpawnRate;  
 
     private void Awake()
     {
@@ -134,15 +128,7 @@ public class BlockCounter : MonoBehaviour
                     {
                         _ScriptComponent.Set_BlockType((BlockType)_typeRNG); // Apply the bomb block
                     }
-                }
-                else if ((BlockType)_typeRNG == BlockType.Rocket) // ROCKET
-                {
-                    var _crtlRNG = Random.Range(0, RocketSpawnRate); // Further rng it
-                    if (_crtlRNG == RocketSpawnRate - 1)
-                    {
-                        _ScriptComponent.Set_BlockType((BlockType)_typeRNG); // Apply the bomb block
-                    }
-                }
+                }             
                 else
                 {
                     _ScriptComponent.Set_BlockType((BlockType)_typeRNG); // Apply normal block

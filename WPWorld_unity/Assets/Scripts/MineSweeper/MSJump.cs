@@ -37,7 +37,7 @@ public class MSJump : MonoBehaviour
         }
         
         // Raycast the block below the player 
-        if (isDoubleJUmp)
+        if (isDoubleJUmp)   
         {
             // Check the Object below
             RaycastHit _hit;

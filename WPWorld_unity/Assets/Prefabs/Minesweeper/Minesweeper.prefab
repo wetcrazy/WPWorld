@@ -33699,7 +33699,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!65 &65001689412220944
 BoxCollider:
@@ -43159,11 +43159,10 @@ MonoBehaviour:
   BlockCount: 0
   Arr_Mat:
   - {fileID: 2100000, guid: 1cc74daae19c8c94e9382dbe6acaab14, type: 2}
-  - {fileID: 2100000, guid: 22e156413f2b0df4f942484123fd2da4, type: 2}
+  - {fileID: 2100000, guid: ae9c490b12c44934ba5e31b7a6fcc222, type: 2}
   - {fileID: 2100000, guid: f9dcd320eafb5f84fa8d809da5cfd4f6, type: 2}
-  - {fileID: 2100000, guid: 08b0572f77a58b6428add439516dbd22, type: 2}
   Arr_NormalMat:
-  - {fileID: 2100000, guid: 22e156413f2b0df4f942484123fd2da4, type: 2}
+  - {fileID: 2100000, guid: ae9c490b12c44934ba5e31b7a6fcc222, type: 2}
   - {fileID: 2100000, guid: b624d243880bf714fad5a3a27508cde8, type: 2}
   - {fileID: 2100000, guid: 2969e286c77d2b44cbea420c5e93b7b8, type: 2}
   - {fileID: 2100000, guid: 8dda7bb3c96988e4680b3f375247e6fa, type: 2}
@@ -43173,7 +43172,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 07dde07d93a7d5545b8a2a6ab364c8dd, type: 2}
   - {fileID: 2100000, guid: 6a043364a845f6f4c980682fc0ef99c5, type: 2}
   BombSpawnRate: 10
-  RocketSpawnRate: 100
 --- !u!114 &114560209787997014
 MonoBehaviour:
   m_ObjectHideFlags: 1
