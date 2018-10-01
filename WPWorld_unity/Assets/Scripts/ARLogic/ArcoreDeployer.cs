@@ -30,9 +30,18 @@ public class ArcoreDeployer : MonoBehaviour
     private bool isSpawned = false;
 
     // UI Objects
+    [SerializeField]
+    GameObject[] SelectionLevels;
+    [SerializeField]
+    GameObject CurrentWorldName;
+
+    int CurrentLevelSelection = 0;
     public GameObject DebugTextOBJ;
-    public Text UI_TrackingText;
     Text DebugText;
+
+    //UI Logic Variables
+    [SerializeField]
+    float WorldRotationSpeed = 10;
 
     //Screens
     [SerializeField]
@@ -44,11 +53,19 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void Awake()
     {
+        SplashScreen.SetActive(true);
         SelectionScreen.SetActive(false);
         GameScreen.SetActive(false);
         ScreenState = STATE_SCREEN.SCREEN_SPLASH;
 
         DebugText = DebugTextOBJ.GetComponent<Text>();
+
+        SelectionLevels[0].SetActive(true);
+        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[0].name;
+        for (int i = 1; i < SelectionLevels.Length; ++i)
+        {
+            SelectionLevels[i].SetActive(false);
+        }
     }
 
     private void Update()
@@ -64,15 +81,7 @@ public class ArcoreDeployer : MonoBehaviour
                         SelectionScreen.SetActive(false);
                     }
 
-                    if (Input.touchCount > 0 || Input.GetTouch(0).phase == TouchPhase.Moved)
-                    {
-                        ScreenState = STATE_SCREEN.SCREEN_SELECTION;
-
-                        // Gets all Planes that are track and put it into the list
-                        Session.GetTrackables(List_AllPlanes);
-                        break;
-                    }
-
+                    SplashScreenUpdate();
                     break;
                 }
             case STATE_SCREEN.SCREEN_SELECTION:
@@ -84,6 +93,7 @@ public class ArcoreDeployer : MonoBehaviour
                         GameScreen.SetActive(false);
                     }
 
+                    SelectionScreenUpdate();
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
@@ -95,62 +105,94 @@ public class ArcoreDeployer : MonoBehaviour
                         SelectionScreen.SetActive(false);
                     }
 
-                    // Gets all Planes that are track and put it into the list
-                    //Session.GetTrackables(List_AllPlanes);
-                    
-                    if (!isSpawned && Input.touchCount > 0)
-                    {
-                        DebugText.text = "Loading Level...\n\nIf not loading, tap on an availabe plane to load the level";
-                        Spawner(Input.GetTouch(0));
-                        //isSpawned = true;
-                    }
-                    else if (GameObjPrefab == null)
-                    {
-                        isSpawned = false;
-                        ScreenState = STATE_SCREEN.SCREEN_SELECTION;
-                        break;
-                    }
-
-                    for (int i = 0; i < List_AllPlanes.Count; i++)
-                    {
-                        //If tracking has stopped, return to selection screen
-                        if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
-                        {
-                            DestroyCurrentLevel();
-                            ScreenState = STATE_SCREEN.SCREEN_SELECTION;
-                            break;
-                        }
-                    }
+                    GameScreenUpdate();
                     break;
                 }
             default:
                 break;
         }
-        
-        //for (int i = 0; i < List_AllPlanes.Count; i++)
-        //{
-        //    //When the gameobject appears
-        //    if (List_AllPlanes[i].TrackingState == TrackingState.Tracking)
-        //    {
-        //        UI_TrackingText.enabled = false;
-        //        break;
-        //    }           
-        //    else if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
-        //    {
-        //        //UI_Canvas.enabled = true;
-        //    }
-        //    else
-        //    {
-        //        UI_TrackingText.enabled = true;
-        //    }
-        //}
-
-        //if (Input.touchCount < 1 || (_touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-        //{
-        //    return;
-        //}
     }
-    
+
+    private void SplashScreenUpdate()
+    {
+        if (Input.touchCount > 0)
+        {
+            ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+
+            // Gets all Planes that are track and put it into the list
+            Session.GetTrackables(List_AllPlanes);
+        }
+    }
+
+    private void SelectionScreenUpdate()
+    {
+        SelectionLevels[CurrentLevelSelection].transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
+    }
+
+    private void GameScreenUpdate()
+    {
+        // Gets all Planes that are track and put it into the list
+        //Session.GetTrackables(List_AllPlanes);
+
+        if (!isSpawned && Input.touchCount > 0)
+        {
+            DebugText.text = "Loading Level...\n\nIf not loading, tap on an availabe plane to load the level";
+            Spawner(Input.GetTouch(0));
+            //isSpawned = true;
+        }
+        else if (GameObjPrefab == null)
+        {
+            isSpawned = false;
+            ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+            return;
+        }
+
+        for (int i = 0; i < List_AllPlanes.Count; i++)
+        {
+            //If tracking has stopped, return to selection screen
+            if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+            {
+                DestroyCurrentLevel();
+                ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+                break;
+            }
+        }
+    }
+
+    public void LevelSelectionNext()
+    {
+        SelectionLevels[CurrentLevelSelection].SetActive(false);
+
+        if (CurrentLevelSelection + 1 < SelectionLevels.Length)
+        {
+            ++CurrentLevelSelection;
+        }
+        else
+        {
+            CurrentLevelSelection = 0;
+        }
+
+        SelectionLevels[CurrentLevelSelection].SetActive(true);
+        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[CurrentLevelSelection].name;
+    }
+
+    public void LevelSelectionPrevious()
+    {
+        SelectionLevels[CurrentLevelSelection].SetActive(false);
+
+        if (CurrentLevelSelection > 0)
+        {
+            --CurrentLevelSelection;
+        }
+        else
+        {
+            CurrentLevelSelection = SelectionLevels.Length - 1;
+        }
+
+        SelectionLevels[CurrentLevelSelection].SetActive(true);
+        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[CurrentLevelSelection].name;
+    }
+
     public void DestroyCurrentLevel()
     {
         //Destroy(GameObjPrefab);
@@ -212,13 +254,17 @@ public class ArcoreDeployer : MonoBehaviour
 
 
     // Sets the next game object (Works like a scene manager)
-    public void SetNextObject(string _ObjName)
+    public void SetNextObject()
     {
+        //Temporary level select hardcode method
+        string _ObjName = Arr_LevelsOBJ[CurrentLevelSelection].gameObject.name;
+
         foreach (GameObject PrefabLevel in Arr_LevelsOBJ)
         {
             if(_ObjName == PrefabLevel.name)
             {
                 GameObjPrefab = PrefabLevel;
+                ToGame();
                 break;
             }
         }

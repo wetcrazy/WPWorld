@@ -16,14 +16,18 @@ public class PuzzleSceneManage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         for (int i = 0; i < Traps.transform.childCount; ++i)
         {
-            Transform theTrap = Traps.transform.GetChild(i);
-            if(theTrap.GetComponent<TrapCollider>().isCollided)
+            TrapCollider theTrap = Traps.transform.GetChild(i).gameObject.GetComponent<TrapCollider>();
+
+            if (theTrap.Get_isCollided())
             {
                 ResetValues();
                 break;
+            }
+            else if (theTrap.gameObject.activeSelf)
+            {
+                theTrap.TrapUpdate();
             }
         }
     }
@@ -34,10 +38,12 @@ public class PuzzleSceneManage : MonoBehaviour {
         Players.transform.forward = Vector3.forward;
         for (int i = 0; i < Traps.transform.childCount; ++i)
         {
-            Transform theTrap = Traps.transform.GetChild(i);
-            theTrap.transform.position = theTrap.GetComponent<TrapCollider>().GetTrapPos();
-            theTrap.GetComponent<TrapCollider>().isCollided = false;
-            //theTrap.GetComponent<TrapCollider>().render.renderout.enabled = false;
+            TrapCollider theTrap = Traps.transform.GetChild(i).gameObject.GetComponent<TrapCollider>();
+            theTrap.transform.position = theTrap.GetTrapPos();
+            theTrap.Set_RenderOut(false);
+            theTrap.Set_isCollided(false);
+            theTrap.gameObject.SetActive(true);
+            theTrap.Set_mooved(false);
         }
         
     }

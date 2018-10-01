@@ -1,20 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+//--NOTE: THIS SCRIPT HAS BEEN DEPRECATED I.E. MARKED FOR REMOVAL--\\
+
 public class Manager : MonoBehaviour
 {
     public GameObject ARControllerOBJ;
-
-    //public void SendLevelInfoBrickBreaker()
-    //{
-    //    ARControllerOBJ.SendMessage("SetNextObject", "TrapPlayground");
-    //}
-
-    //public void SendLevelInfo3DPuzzle()
-    //{
-    //    ARControllerOBJ.SendMessage("SetNextObject", "3DPuzzleStage1");
-    //}
-
+    
     public void SendLevelInfo(string LevelName)
     {
         ARControllerOBJ.SendMessage("SetNextObject", LevelName);
