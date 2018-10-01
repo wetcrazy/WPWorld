@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Block Parameters
+/// </summary>
 public class BlockPara : MonoBehaviour
 {
     public BlockCounter.BlockType Block_Type;
-    public BlockCounter.NormalType Normal_Type;
+    public BlockCounter.NumberType Normal_Type;
     [SerializeField]
     private bool isTriggered = false;
 
     private void Awake()
     {                  
         // Default this Object to BlockType Zero
-        Block_Type = BlockCounter.BlockType.Zero;
-        Normal_Type = BlockCounter.NormalType.Empty;
+        Block_Type = BlockCounter.BlockType.Empty;
+        Normal_Type = BlockCounter.NumberType.Empty;
     }
  
 
@@ -39,11 +42,11 @@ public class BlockPara : MonoBehaviour
         Block_Type = _blocktype;
     }
 
-    public BlockCounter.NormalType Get_NormalType()
+    public BlockCounter.NumberType Get_NormalType()
     {
         return Normal_Type;
     }
-    public void Set_NormalType(BlockCounter.NormalType _NormalType)
+    public void Set_NormalType(BlockCounter.NumberType _NormalType)
     {
         Normal_Type = _NormalType;
     }

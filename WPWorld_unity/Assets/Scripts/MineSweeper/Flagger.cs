@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Allows the player to spawn flags
+/// </summary>
 public class Flagger : MonoBehaviour
 {
     public GameObject FlagPrefab;

@@ -25,60 +25,53 @@ public class MSJump : MonoBehaviour
         Rb = GetComponent<Rigidbody>();
     }
 
+    /// <summary>
+    /// Physic Update
+    /// </summary>
     private void FixedUpdate()
     {
-        // Jumping
+        // Keyboard Jumping
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
         
-        if (isDoubleJUmp)
+        // Raycast the block below the player 
+        if (isDoubleJUmp)   
         {
             // Check the Object below
             RaycastHit _hit;
             if (Physics.Raycast(transform.position, -Vector3.up, out _hit))
-            {
-                // Second Jump ground pound animation
-                rtAngle += 360.0f / _hit.distance * Time.deltaTime;
-
-                if (_hit.distance <= 0.5)
+            {             
+                // Block checking
+                if(_hit.transform.gameObject.tag != "Blocks")
                 {
-                    /*
-                    var _OBJScript = _hit.transform.gameObject.GetComponent<BlockPara>();
-                    _OBJScript.Set_isTriggered(true);
-
-                    if(_OBJScript.Get_BlockType() == BlockCounter.BlockType.Bomb)
-                    {
-                        Rb.velocity = Vector3.zero;
-                       /Rb.AddExplosionForce(ExplosionForce, transform.position, 1.0f, 1.0f, ForceMode.Impulse);
-                    }
-                    */
-
-                    BlockCounter.SendMessage("WhenTriggered", _hit.transform.gameObject);
-                    var _OBJScript = _hit.transform.gameObject.GetComponent<BlockPara>();
-                    _OBJScript.Set_isTriggered(true);
+                    return;
+                }
+                // If the distance is small enough, trigger it
+                if (_hit.distance <= 1.0f)
+                {               
+                    BlockCounter.SendMessage("WhenTriggered", _hit.transform.gameObject);                 
 
                     isDoubleJUmp = false;
                 }             
             }
         }
-        // Ground pound animation updater
-        gameObject.transform.eulerAngles = new Vector3(0, rtAngle, 0);
-
-
+       
         // Speed bumper
         if (Rb.velocity.y > MAX_UPSPEED || Rb.velocity.y < -MAX_UPSPEED)
         {
             Rb.velocity = Vector3.zero;
             Rb.velocity.Set(0, MAX_UPSPEED, 0);
-        }
-
-        //Debug.Log(Rb.velocity);
+        }      
     }
 
+    /// <summary>
+    /// Jumping
+    /// </summary>
     private void Jump()
     {
+        // 1st Jump 
         if (isGrounded)
         {
             isGrounded = false;
@@ -86,6 +79,7 @@ public class MSJump : MonoBehaviour
             Rb.velocity = Vector3.zero;
             Rb.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
         }
+        // 2nd Jump (ground pound)
         else
         {
             if (isInAir)
@@ -97,38 +91,23 @@ public class MSJump : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// For button jumping (phone)
+    /// </summary>
     private void GetJumpButtonInput()
     {
         Jump();
     }
 
+    /// <summary>
+    /// Resets variables when hit the ground 
+    /// </summary>
     private void OnCollisionEnter(Collision col)
     {
         if (col.transform.tag != "Blocks")
         {
             return;
-        }
-
-        /*
-        if(isDoubleJUmp)
-        {
-            var _OBJScript = col.gameObject.GetComponent<BlockPara>();
-            _OBJScript.Set_isTriggered(true);
-
-            if (_OBJScript.Get_BlockType() == BlockCounter.BlockType.Bomb)
-            {
-                Rb.velocity.Set(Rb.velocity.x, 0, Rb.velocity.z);
-                Rb.AddExplosionForce(ExplosionForce, transform.position, 1.0f, 1.0f, ForceMode.Impulse);
-            }
-            else
-            {
-                isInAir = false;
-                isGrounded = true;
-                isDoubleJUmp = false;
-                rtAngle = 0.0f;
-            }
-        }
-        */
+        }      
 
         isInAir = false;
         isGrounded = true;
