@@ -6,7 +6,7 @@ public class BlockCounter : MonoBehaviour
 {
     public enum BlockType
     {
-        Zero = 0,
+        Empty = 0,
         Normal,
         Bomb,
         Total_BlockType
@@ -115,7 +115,7 @@ public class BlockCounter : MonoBehaviour
             var _MatComponent = Arr_Blocks[i].GetComponent<Renderer>().material;
 
             // Setup the playing field
-            while (_ScriptComponent.Get_BlockType() == BlockType.Zero)
+            while (_ScriptComponent.Get_BlockType() == BlockType.Empty)
             {
                 var _typeRNG = Random.Range(1, (int)BlockType.Total_BlockType);
                 if ((BlockType)_typeRNG == BlockType.Bomb)
@@ -164,7 +164,9 @@ public class BlockCounter : MonoBehaviour
         _tempScript.Set_NormalType((NormalType)_bombCount);
     }
 
-    // Render the material Super dumb way of doing it (Recursive Function)
+    /// <summary>
+    ///  Render the material using a Super dumb way of doing it (Recursive Function)
+    /// </summary>  
     private void RenderMaterial(GameObject _gameObj)
     {
         // A list of rays being casted
@@ -227,11 +229,11 @@ public class BlockCounter : MonoBehaviour
         var _tempMat = _gameObj.GetComponent<Renderer>().material;
 
         if (_tempScript.Get_isTriggered())
-        {           
+        {
             return;
         }
 
-        //_tempScript.Set_isTriggered(true);       
+        _tempScript.Set_isTriggered(true);
 
         // If they are normal blocks
         if (_tempScript.Get_BlockType() == BlockType.Normal)
@@ -243,12 +245,11 @@ public class BlockCounter : MonoBehaviour
             if (_tempScript.Get_NormalType() == NormalType.Zero)
             {
                 RenderMaterial(_gameObj); // Function to load the actual materials
-            }           
+            }
+            return;
         }
-        else
-        {
-            // Switch to their textures
-            _tempMat.mainTexture = Find_material((int)_tempScript.Get_BlockType());
-        }
+
+        // Switch to their textures (Default)
+        _tempMat.mainTexture = Find_material((int)_tempScript.Get_BlockType());
     }
 }
