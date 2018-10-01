@@ -164,7 +164,9 @@ public class BlockCounter : MonoBehaviour
         _tempScript.Set_NormalType((NormalType)_bombCount);
     }
 
-    // Render the material Super dumb way of doing it (Recursive Function)
+    /// <summary>
+    ///  Render the material using a Super dumb way of doing it (Recursive Function)
+    /// </summary>  
     private void RenderMaterial(GameObject _gameObj)
     {
         // A list of rays being casted
@@ -227,7 +229,7 @@ public class BlockCounter : MonoBehaviour
         var _tempMat = _gameObj.GetComponent<Renderer>().material;
 
         if (_tempScript.Get_isTriggered())
-        {           
+        {
             return;
         }
 
@@ -243,12 +245,11 @@ public class BlockCounter : MonoBehaviour
             if (_tempScript.Get_NormalType() == NormalType.Zero)
             {
                 RenderMaterial(_gameObj); // Function to load the actual materials
-            }           
+            }
+            return;
         }
-        else
-        {
-            // Switch to their textures
-            _tempMat.mainTexture = Find_material((int)_tempScript.Get_BlockType());
-        }
+
+        // Switch to their textures (Default)
+        _tempMat.mainTexture = Find_material((int)_tempScript.Get_BlockType());
     }
 }

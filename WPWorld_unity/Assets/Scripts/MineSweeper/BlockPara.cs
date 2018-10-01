@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Block Parameters
+/// </summary>
 public class BlockPara : MonoBehaviour
 {
     public BlockCounter.BlockType Block_Type;
