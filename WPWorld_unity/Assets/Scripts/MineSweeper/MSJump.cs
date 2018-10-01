@@ -49,7 +49,7 @@ public class MSJump : MonoBehaviour
                     return;
                 }
                 // If the distance is small enough, trigger it
-                if (_hit.distance <= 0.5)
+                if (_hit.distance <= 1.0f)
                 {               
                     BlockCounter.SendMessage("WhenTriggered", _hit.transform.gameObject);                 
 
