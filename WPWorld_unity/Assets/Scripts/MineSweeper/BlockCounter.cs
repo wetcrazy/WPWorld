@@ -8,10 +8,10 @@ public class BlockCounter : MonoBehaviour
     {
         Empty = 0,
         Normal,
-        Bomb,
+        Bomb,    
         Total_BlockType
     };
-    public enum NormalType
+    public enum NumberType
     {
         Zero = 0,
         One,
@@ -40,21 +40,24 @@ public class BlockCounter : MonoBehaviour
     /// All the blocks in the scene
     /// </summary>
     private GameObject[] Arr_Blocks;
-    public bool isReset = true;
     /// <summary>
     /// Higher the number, the lesser chance for the bomb to spawn
     /// </summary>
     [Range(1,10)]
-    public int BombSpawnRate;
+    public int BombSpawnRate;  
 
     private void Awake()
     {
         CheckBlocks();
         BlockSetup();
 
+        // Number filling
         for (int i = 0; i < Arr_Blocks.Length; i++)
         {
-            CheckBombs(Arr_Blocks[i]);
+            if(Arr_Blocks[i].GetComponent<BlockPara>().Get_BlockType() == BlockType.Normal)
+            {
+                CheckBombs(Arr_Blocks[i]);
+            }          
         }
     }
 
@@ -118,14 +121,14 @@ public class BlockCounter : MonoBehaviour
             while (_ScriptComponent.Get_BlockType() == BlockType.Empty)
             {
                 var _typeRNG = Random.Range(1, (int)BlockType.Total_BlockType);
-                if ((BlockType)_typeRNG == BlockType.Bomb)
+                if ((BlockType)_typeRNG == BlockType.Bomb) // BOMB
                 {
                     var _crtlRNG = Random.Range(0, BombSpawnRate); // Further rng it
-                    if (_crtlRNG == BombSpawnRate - 1) 
+                    if (_crtlRNG == BombSpawnRate - 1)
                     {
                         _ScriptComponent.Set_BlockType((BlockType)_typeRNG); // Apply the bomb block
                     }
-                }
+                }             
                 else
                 {
                     _ScriptComponent.Set_BlockType((BlockType)_typeRNG); // Apply normal block
@@ -161,11 +164,11 @@ public class BlockCounter : MonoBehaviour
         }
 
         // Replace the textures to the amount of bombs found around it
-        _tempScript.Set_NormalType((NormalType)_bombCount);
+        _tempScript.Set_NormalType((NumberType)_bombCount);
     }
 
     /// <summary>
-    ///  Render the material using a Super dumb way of doing it (Recursive Function)
+    ///  Reveal the material using a Super dumb way of doing it (Recursive Function)
     /// </summary>  
     private void RenderMaterial(GameObject _gameObj)
     {
@@ -191,7 +194,7 @@ public class BlockCounter : MonoBehaviour
             _listRays.Add(_ray);
         }
         
-        // Loop through all directions from above to open up the block's material
+        // Loop through all directions from above to reveal the block's material
         foreach(RaycastHit _hit in _listRays)
         {
             var _tempScript = _hit.transform.gameObject.GetComponent<BlockPara>();
@@ -205,15 +208,24 @@ public class BlockCounter : MonoBehaviour
             var _tempMat = _hit.transform.gameObject.GetComponent<Renderer>().material;
             _tempScript.Set_isTriggered(true);
 
-            // Recursive Attivade here only when detected more zero blocks
-            if (_tempScript.Get_NormalType() == NormalType.Zero )
-            { 
-                _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());
-                RenderMaterial(_hit.transform.gameObject);
+            // For normal number blocks
+            if(_tempScript.Get_BlockType() == BlockType.Normal)
+            {
+                // Recursive Attivade here only when detected more zero blocks
+                if (_tempScript.Get_NormalType() == NumberType.Zero)
+                {
+                    _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());
+                    RenderMaterial(_hit.transform.gameObject);
+                }
+                else // Default
+                {
+                    _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());
+                }
             }
+            // For Rockets
             else
             {
-                _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());
+                _tempMat.mainTexture = Find_material((int)_tempScript.Get_BlockType());
             }
         }
     }
@@ -242,7 +254,7 @@ public class BlockCounter : MonoBehaviour
             _tempMat.mainTexture = Find_Normalmaterial((int)_tempScript.Get_NormalType());
 
             // Start Opening up all the blank blocks
-            if (_tempScript.Get_NormalType() == NormalType.Zero)
+            if (_tempScript.Get_NormalType() == NumberType.Zero)
             {
                 RenderMaterial(_gameObj); // Function to load the actual materials
             }
