@@ -22,8 +22,6 @@ public class ArcoreDeployer : MonoBehaviour
     // Game Objects
     public Camera MainCamera;
     public GameObject[] Arr_LevelsOBJ;
-  
-    //public Text[] Arr_DEBUGGER; // Debugger
 
     private List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     private GameObject GameObjPrefab = null;
@@ -36,6 +34,10 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject CurrentWorldName;
     [SerializeField]
     Button WorldSelectBtn;
+    [SerializeField]
+    GameObject ScreenSpaceCanvas;
+    [SerializeField]
+    GameObject PauseBar;
 
     int CurrentLevelSelection = 0;
     public GameObject DebugTextOBJ;
@@ -53,11 +55,14 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     GameObject GameScreen;
 
-    private void Awake()
+    private void Start()
     {
         SplashScreen.SetActive(true);
         SelectionScreen.SetActive(false);
         GameScreen.SetActive(false);
+        ScreenSpaceCanvas.SetActive(false);
+        PauseBar.SetActive(false);
+
         ScreenState = STATE_SCREEN.SCREEN_SPLASH;
 
         DebugText = DebugTextOBJ.GetComponent<Text>();
@@ -81,37 +86,23 @@ public class ArcoreDeployer : MonoBehaviour
         {
             case STATE_SCREEN.SCREEN_SPLASH:
                 {
-                    if (!SplashScreen.activeSelf)
-                    {
-                        SplashScreen.SetActive(true);
-                        GameScreen.SetActive(false);
-                        SelectionScreen.SetActive(false);
-                    }
+                    //if (!SplashScreen.activeSelf)
+                    //{
+                    //    SplashScreen.SetActive(true);
+                    //    GameScreen.SetActive(false);
+                    //    SelectionScreen.SetActive(false);
+                    //}
 
                     SplashScreenUpdate();
                     break;
                 }
             case STATE_SCREEN.SCREEN_SELECTION:
                 {
-                    if(!SelectionScreen.activeSelf)
-                    {
-                        SelectionScreen.SetActive(true);
-                        SplashScreen.SetActive(false);
-                        GameScreen.SetActive(false);
-                    }
-
                     SelectionScreenUpdate();
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
                 {
-                    if (!GameScreen.activeSelf)
-                    {
-                        GameScreen.SetActive(true);
-                        SplashScreen.SetActive(false);
-                        SelectionScreen.SetActive(false);
-                    }
-
                     GameScreenUpdate();
                     break;
                 }
@@ -124,7 +115,7 @@ public class ArcoreDeployer : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+            ToSelectionScreen();
 
             // Gets all Planes that are track and put it into the list
             Session.GetTrackables(List_AllPlanes);
@@ -150,7 +141,7 @@ public class ArcoreDeployer : MonoBehaviour
         else if (GameObjPrefab == null)
         {
             isSpawned = false;
-            ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+            ToSelectionScreen();
             return;
         }
 
@@ -205,19 +196,6 @@ public class ArcoreDeployer : MonoBehaviour
         //Destroy(GameObjPrefab);
         Destroy(_GroundObject);
         GameObjPrefab = null;
-
-        //Reset button colours
-        for (int i = 0; i < SelectionScreen.transform.childCount; ++i)
-        {
-            GameObject theButton = SelectionScreen.transform.GetChild(i).gameObject;
-
-            if (theButton.GetComponent<Button>() == null)
-            {
-                continue;
-            }
-
-            theButton.GetComponent<Image>().color = Color.white;
-        }
 
         DebugText.text = "Waiting For Selection";
     }
@@ -275,16 +253,45 @@ public class ArcoreDeployer : MonoBehaviour
             if (_ObjName == PrefabLevel.name)
             {
                 GameObjPrefab = PrefabLevel;
-                ToGame();
+                ToGameScreen();
                 break;
             }
         }
     }
 
-   public void ToGame()
+    public void ToSelectionScreen()
+    {
+        if (!SelectionScreen.activeSelf)
+        {
+            SelectionScreen.SetActive(true);
+            SplashScreen.SetActive(false);
+            GameScreen.SetActive(false);
+            ScreenSpaceCanvas.SetActive(true);
+
+            PauseManager PauseBarScript = PauseBar.GetComponent<PauseManager>();
+            if (PauseBarScript.isPauseBarOpen)
+            {
+                PauseBarScript.PauseButtonDown();
+            }
+            PauseBar.SetActive(false);
+        }
+        
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+    }
+
+   public void ToGameScreen()
     {
         if (GameObjPrefab != null)
         {
+            if (!GameScreen.activeSelf)
+            {
+                GameScreen.SetActive(true);
+                SplashScreen.SetActive(false);
+                SelectionScreen.SetActive(false);
+                ScreenSpaceCanvas.SetActive(false);
+                PauseBar.SetActive(true);
+            }
+
             ScreenState = STATE_SCREEN.SCREEN_GAME;
         }
         else
