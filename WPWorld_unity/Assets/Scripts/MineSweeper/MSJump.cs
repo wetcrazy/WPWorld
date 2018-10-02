@@ -9,16 +9,13 @@ using UnityEngine;
 public class MSJump : MonoBehaviour
 {
     public float JumpSpeed;
-    public float ExplosionForce;
     public float MAX_UPSPEED;
-    public float MAX_HEIGHT;
     public GameObject BlockCounter;
 
     private bool isInAir = false;
     private bool isGrounded = true;
     private bool isDoubleJUmp = false;
     private Rigidbody Rb;
-    private float rtAngle;
 
     private void Awake()
     {
@@ -110,8 +107,6 @@ public class MSJump : MonoBehaviour
         }      
 
         isInAir = false;
-        isGrounded = true;
-        
-        rtAngle = 0.0f;
+        isGrounded = true;   
     }
 }
