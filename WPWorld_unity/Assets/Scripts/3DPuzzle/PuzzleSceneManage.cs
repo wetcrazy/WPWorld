@@ -15,7 +15,7 @@ public class PuzzleSceneManage : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {    
         for (int i = 0; i < Traps.transform.childCount; ++i)
         {
             TrapCollider theTrap = Traps.transform.GetChild(i).gameObject.GetComponent<TrapCollider>();

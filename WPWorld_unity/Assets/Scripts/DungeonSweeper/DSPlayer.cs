@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Contains the jump and the physics of the player
-/// </summary>
-
-public class MSJump : MonoBehaviour
+public class DSPlayer : MonoBehaviour
 {
     public float JumpSpeed;
     public float MAX_UPSPEED;
-    public GameObject BlockCounter;
 
     private bool isInAir = false;
     private bool isGrounded = true;
     private bool isDoubleJUmp = false;
     private Rigidbody Rb;
+    private DungeonsweeperManager.AnchorPointType PlayerAnchorPosition { get; set; }
 
     private void Awake()
     {
@@ -32,36 +28,39 @@ public class MSJump : MonoBehaviour
         {
             Jump();
         }
-        
+
         // Raycast the block below the player 
-        if (isDoubleJUmp)   
+        if (isDoubleJUmp)
         {
             // Check the Object below
             RaycastHit _hit;
             if (Physics.Raycast(transform.position, -Vector3.up, out _hit))
-            {             
+            {
                 // Block checking
-                if(_hit.transform.gameObject.tag != "Blocks")
+                if (_hit.transform.gameObject.tag != "Blocks")
                 {
                     return;
                 }
                 // If the distance is small enough, trigger it
                 if (_hit.distance <= 1.0f)
-                {               
-                    BlockCounter.SendMessage("WhenTriggered", _hit.transform.gameObject);                 
-
-                    isDoubleJUmp = false;
-                }             
+                {
+                    var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
+                    _hitedObjScript.m_isTriggered = true;
+                }
             }
         }
-       
+
         // Speed bumper
         if (Rb.velocity.y > MAX_UPSPEED || Rb.velocity.y < -MAX_UPSPEED)
         {
             Rb.velocity = Vector3.zero;
             Rb.velocity.Set(0, MAX_UPSPEED, 0);
-        }      
+        }
     }
+
+    // 000000000000000000000000000000000000000000
+    //              Private METHOD
+    // 000000000000000000000000000000000000000000
 
     /// <summary>
     /// Jumping
@@ -104,9 +103,10 @@ public class MSJump : MonoBehaviour
         if (col.transform.tag != "Blocks")
         {
             return;
-        }      
+        }
 
         isInAir = false;
-        isGrounded = true;   
+        isGrounded = true;
+        isDoubleJUmp = false;
     }
 }
