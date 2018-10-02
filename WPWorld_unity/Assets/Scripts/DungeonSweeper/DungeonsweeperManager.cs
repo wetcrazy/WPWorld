@@ -114,7 +114,7 @@ public class DungeonsweeperManager : MonoBehaviour
         }
     }
 
-    // Renders when the player triggers it (Script activade from player)
+    // Renders triggered blocks
     private void Triggered_Render()
     {
         var _AnchorScript = Arr_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
@@ -134,6 +134,62 @@ public class DungeonsweeperManager : MonoBehaviour
                 _objMat.mainTexture = List_BlockMat[(int)_objScript.m_BlockType];
             }
 
+        }
+    }
+
+    // Render Numbers for normal blocks
+    private void Triggered_NumberRender(GameObject _obj)
+    {
+        // A list of rays being casted
+        List<RaycastHit> _listRays = new List<RaycastHit>();
+
+        // Check the surroundings of the blocks except down and up
+        RaycastHit _ray;
+        if (Physics.Raycast(_obj.transform.position, gameObject.transform.forward, out _ray)) // Forward
+        {
+            _listRays.Add(_ray);
+        }
+        if (Physics.Raycast(_obj.transform.position, -gameObject.transform.forward, out _ray)) // Backward
+        {
+            _listRays.Add(_ray);
+        }
+        if (Physics.Raycast(_obj.transform.position, gameObject.transform.right, out _ray)) // Right
+        {
+            _listRays.Add(_ray);
+        }
+        if (Physics.Raycast(_obj.transform.position, -gameObject.transform.right, out _ray)) // Left
+        {
+            _listRays.Add(_ray);
+        }
+
+        // Loop through all directions from above to reveal the block's material
+        foreach (RaycastHit _hit in _listRays)
+        {
+            var _tempScript = _hit.transform.gameObject.GetComponent<Blocks>();
+
+            // Safety check to avoid setting the material again
+            if (_tempScript.m_isTriggered)
+            {
+                continue;
+            }
+
+            var _tempMat = _hit.transform.gameObject.GetComponent<Renderer>().material;
+            _tempScript.m_isTriggered = true;
+
+            // For normal number blocks
+            if (_tempScript.m_BlockType == BlockType.NORMAL)
+            {
+                // Recursive Attivade here only when detected more zero blocks
+                if (_tempScript.m_BlockNumberType == BlockNumberType.ZERO)
+                {
+                    _tempMat.mainTexture = List_NumberBlockMat[(int)_tempScript.m_BlockNumberType];
+                    Triggered_NumberRender(_hit.transform.gameObject);
+                }
+                else // Default
+                {
+                    _tempMat.mainTexture = List_NumberBlockMat[(int)_tempScript.m_BlockNumberType];
+                }
+            }          
         }
     }
 
