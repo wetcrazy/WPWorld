@@ -75,47 +75,43 @@ public class TPSLogic : MonoBehaviour {
                 || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
-                RaycastHit hit2, hit3;
-
-                // Checks if all three or only one raycast is hitting
-                if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
-                    && Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit2, transform.lossyScale.y * 1.5f)
-                    && Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit3, transform.lossyScale.y * 1.5f))
+                // Checks if the object that the bottom raycasts that's hitting is visible
+                if(hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    if(hit.transform.position.y < transform.position.y
-                        && hit2.transform.position.y < transform.position.y
-                        && hit3.transform.position.y < transform.position.y)
-                    {
-                        Debug.Log("All 3 raycast hits " + hit.transform.gameObject.name + " , " + hit2.transform.gameObject.name + " , " + hit3.transform.gameObject.name);
-                        if (Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.01f)
-                            IsGrounded = true;
-                    }
-                }
-                else
-                {
-                    // Checks if left and right raycast has detected anything during three points hitting to ensure it only detects the bottom and not it's side by mistake
                     if (Physics.Raycast(transform.position, -transform.right.normalized, out hit, transform.lossyScale.x * 1.25f) || Physics.Raycast(transform.position, transform.right.normalized, out hit, transform.lossyScale.x * 1.25f))
                     {
-                        // Checks if the hit object is visible as certain objects will go invisible during the platforming section of the game
-                        if (hit.transform.GetComponent<Renderer>().isVisible && !hit.transform.name.Contains("Coin"))
+                        // Checks if the object that left and right raycast that's hitting is visible
+                        if(hit.transform.gameObject.GetComponent<Renderer>().isVisible)
                         {
-                            Debug.Log("Left and/or right is colliding with " + hit.transform.name);
-                            if (Vector3.Distance(RigidRef.velocity, Vector3.zero) > 0.01f)
+                            RaycastHit hit2, hit3;
+                            
+                            // Checks if all 3 raycasts on the bottom is hitting something, otherwise we can determine only one raycast is hitting
+                            if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
+                                && Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit2, transform.lossyScale.y * 1.5f)
+                                && Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit3, transform.lossyScale.y * 1.5f))
+                            {
+                                if (hit.transform.gameObject.GetComponent<Renderer>().isVisible && hit2.transform.gameObject.GetComponent<Renderer>().isVisible && hit3.transform.gameObject.GetComponent<Renderer>().isVisible)
+                                {
+                                    Debug.Log("All three is hitting, so ignore!");
+                                    IsGrounded = true;
+                                }
+                            }
+                            else
+                            {
+                                Debug.Log("Only one is hitting, don't ignore!");
                                 MovementRef.GetDPadInput(Vector3.zero);
+                            }
                         }
                         else
                         {
-                            // Checks if the rigid body is near zero to prevent resetting during a jump
-                            if (Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.01f)
-                                IsGrounded = true;
+                            Debug.Log("Touching left and right, but invisible!");
+                            IsGrounded = true;
                         }
                     }
                     else
                     {
-                        // If unable to find any left or right collision, instantly set to grounded after checking rigidbody velocity
-                        Debug.Log("Unable to find anything on the left or right.");
-                        if (Vector3.Distance(RigidRef.velocity, Vector3.zero) < 0.01f)
-                            IsGrounded = true;
+                        Debug.Log("Nothing is touching");
+                        IsGrounded = true;
                     }
                 }
             }
@@ -160,14 +156,6 @@ public class TPSLogic : MonoBehaviour {
     {
         RestrictJump = n_Restrict;
     }
-
-    //private void Jump()
-    //{
-    //    RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-    //    if (JumpSFX != null)
-    //        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
-    //    IsGrounded = false;
-    //}
 
     private void GetJumpButtonInput()
     {

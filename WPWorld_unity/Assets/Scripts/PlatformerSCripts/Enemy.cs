@@ -33,6 +33,11 @@ public class Enemy : MonoBehaviour {
 
     private bool Hidden = true;
 
+    private Vector3 OrgSize;
+    private float TimeElapsed;
+    [SerializeField]
+    private float TimeToDecay;
+
     [SerializeField]
     private GameObject ScorePopup;
 
@@ -44,6 +49,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
+        OrgSize = transform.lossyScale;
 	}
 	
 	// Update is called once per frame
@@ -168,6 +174,24 @@ public class Enemy : MonoBehaviour {
                     }
                 }
                 break;
+            case (ENEMYTYPES.DEAD):
+                if(TimeElapsed >= TimeToDecay)
+                {
+                    transform.localScale = OrgSize;
+                    GetComponent<Renderer>().enabled = false;
+                }
+                else
+                {
+                    TimeElapsed += Time.deltaTime;
+                    Vector3 ChangedSize = transform.localScale;
+                    if (OrgSize == ChangedSize)
+                    {
+                        ChangedSize.y = ChangedSize.y * 0.5f;
+
+                        transform.localScale = ChangedSize;
+                    }
+                }
+                break;
         }
     }
 
@@ -192,8 +216,9 @@ public class Enemy : MonoBehaviour {
         {
             CurrType = ENEMYTYPES.DEAD;
             RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-            GetComponent<Renderer>().enabled = false;
             GetComponents<Collider>()[0].isTrigger = true;
+
+            TimeElapsed = TimeToDecay;
         }
     }
 
@@ -201,37 +226,38 @@ public class Enemy : MonoBehaviour {
     {
         GameObject CollidedObject = collision.gameObject;
 
-        if(CollidedObject.tag == "Player")
+        if(CurrType != ENEMYTYPES.DEAD)
         {
-            if(CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
+            if (CollidedObject.tag == "Player")
             {
-                CurrType = ENEMYTYPES.DEAD;
-                RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-                GetComponent<Renderer>().enabled = false;
-                GetComponents<Collider>()[0].isTrigger = true;
+                if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
+                {
+                    CurrType = ENEMYTYPES.DEAD;
+                    Physics.IgnoreCollision(CollidedObject.GetComponent<Collider>(), GetComponent<Collider>());
 
-                CollidedObject.GetComponent<TPSLogic>().Jump();
+                    CollidedObject.GetComponent<TPSLogic>().Jump();
 
-                GameObject n_Score = Instantiate(ScorePopup, transform);
-                n_Score.transform.parent = null;
-                n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                n_Score.transform.position = this.transform.position;
+                    GameObject n_Score = Instantiate(ScorePopup, transform);
+                    n_Score.transform.parent = null;
+                    n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    n_Score.transform.position = this.transform.position;
 
-                n_Score.GetComponent<TextMesh>().text = Score.ToString();
+                    n_Score.GetComponent<TextMesh>().text = Score.ToString();
+                }
+                else
+                {
+                    CollidedObject.GetComponent<TPSLogic>().Death();
+                }
             }
-            else
+
+            if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2
+                >= transform.position.y + transform.lossyScale.y / 2)
             {
-                CollidedObject.GetComponent<TPSLogic>().Death();
+                Vector3 Knockback_Y = RigidRef.velocity;
+                Knockback_Y *= -2;
+
+                RigidRef.AddForce(Knockback_Y, ForceMode.VelocityChange);
             }
-        }
-
-        if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2
-            >= transform.position.y + transform.lossyScale.y / 2)
-        {
-            Vector3 Knockback_Y = RigidRef.velocity;
-            Knockback_Y *= -2;
-
-            RigidRef.AddForce(Knockback_Y, ForceMode.VelocityChange);
         }
     }
 }
