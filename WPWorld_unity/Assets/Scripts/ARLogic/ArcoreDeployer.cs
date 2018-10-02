@@ -76,7 +76,7 @@ public class ArcoreDeployer : MonoBehaviour
 
         Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
         Color NewColor = WorldSelectButtonImage.color;
-        NewColor.a = 0;
+        //NewColor.a = 0;
         WorldSelectButtonImage.color = NewColor;
     }
 
