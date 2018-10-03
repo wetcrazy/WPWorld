@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour {
         //if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.Z_ONLY)
         //    MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
 
-        // MovementDir = Vector3.zero;
+        MovementDir = Vector3.zero;
 
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {

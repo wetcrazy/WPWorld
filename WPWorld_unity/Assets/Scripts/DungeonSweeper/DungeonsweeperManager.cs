@@ -52,6 +52,9 @@ public class DungeonsweeperManager : MonoBehaviour
     [Tooltip("The list of Stage Sizes")]
     public List<GameObject> List_StageSizesPrefab;
 
+    [Range(1, 10)]
+    [SerializeField]
+    private int BombSpawnRate = 1;
     private AnchorPointType AnchorNumber;
     private LevelType Level;
 
@@ -61,6 +64,7 @@ public class DungeonsweeperManager : MonoBehaviour
         Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
 
         GridSetUp();
+        Set_NumberBlocks();
     }
 
     private void Update()
@@ -104,13 +108,60 @@ public class DungeonsweeperManager : MonoBehaviour
             while(_childScript.m_BlockType == BlockType.EMPTY)
             {
                 var _RNG = Random.Range(1, (int)BlockType.TOTAL_BLOCKTYPE);
-                _childScript.m_BlockType = (BlockType)_RNG;
+
+                if ((BlockType)_RNG == BlockType.BOMB) // BOMB
+                {
+                    var _crtlRNG = Random.Range(0, BombSpawnRate); // Further rng it
+                    if (_crtlRNG == BombSpawnRate - 1)
+                    {
+                        _childScript.m_BlockType = (BlockType)_RNG; // Apply the bomb block
+                    }
+                }
+                else
+                {
+                    _childScript.m_BlockType = (BlockType)_RNG; // Apply normal block
+                }               
             }
 
             _childMat.mainTexture = List_BlockMat[1];
 
             var _AnchorScript = Arr_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
             _AnchorScript.mList_Blocks.Add(_child.gameObject);
+        }
+    }
+
+    // Set number of bombs into blocks
+    private void Set_NumberBlocks()
+    {
+        var _AnchorScript = Arr_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
+        foreach (GameObject _obj in _AnchorScript.mList_Blocks) // All the blocks in current anchor
+        {
+            if (_obj.tag != "Blocks")
+            {
+                continue;
+            }
+
+            var _objScript = _obj.GetComponent<Blocks>();
+
+            if(_objScript.m_BlockType != BlockType.NORMAL)
+            {
+                continue;
+            }
+
+            Collider[] _arrCol = Physics.OverlapSphere(_obj.transform.position, _obj.transform.localScale.x / 10);
+            int _bombCount = 0;
+
+            foreach(Collider _col in _arrCol)
+            {
+                var _colScript = _col.gameObject.GetComponent<Blocks>();                
+
+                if(_colScript.m_BlockType == BlockType.BOMB)
+                {
+                    _bombCount += 1;
+                }
+            }
+
+            _objScript.m_BlockNumberType = (BlockNumberType)_bombCount;
         }
     }
 
@@ -131,15 +182,26 @@ public class DungeonsweeperManager : MonoBehaviour
             {
                 var _objMat = _obj.GetComponent<Renderer>().material;
 
-                _objMat.mainTexture = List_BlockMat[(int)_objScript.m_BlockType];
-            }
+                if (_objScript.m_BlockType == BlockType.NORMAL)
+                {
+                    _objMat.mainTexture = List_NumberBlockMat[(int)_objScript.m_BlockNumberType];
+                    if(_objScript.m_BlockNumberType == BlockNumberType.ZERO)
+                    {
+                        Triggered_Number(_obj);
+                    }
 
+                }
+                else
+                {                 
+                    _objMat.mainTexture = List_BlockMat[(int)_objScript.m_BlockType];
+                }            
+            }
         }
     }
 
-    // Render Numbers for normal blocks
-    private void Triggered_NumberRender(GameObject _obj)
-    {
+    // Triggers the Numbers for normal blocks
+    private void Triggered_Number(GameObject _obj)
+    {     
         // A list of rays being casted
         List<RaycastHit> _listRays = new List<RaycastHit>();
 
@@ -165,32 +227,27 @@ public class DungeonsweeperManager : MonoBehaviour
         // Loop through all directions from above to reveal the block's material
         foreach (RaycastHit _hit in _listRays)
         {
-            var _tempScript = _hit.transform.gameObject.GetComponent<Blocks>();
-
-            // Safety check to avoid setting the material again
-            if (_tempScript.m_isTriggered)
+            if (Vector3.Distance(_obj.transform.position, _hit.transform.position) <= _obj.transform.localScale.x) // Checks the distance
             {
-                continue;
+                var _hitScript = _hit.transform.gameObject.GetComponent<Blocks>();
+
+                if(_hitScript.m_isTriggered)
+                {
+                    continue;
+                }
+
+                if(_hitScript.m_BlockType == BlockType.NORMAL)
+                {
+                    _hitScript.m_isTriggered = true;
+                    if(_hitScript.m_BlockNumberType == BlockNumberType.ZERO)
+                    {
+                        Triggered_Number(_hit.transform.gameObject);
+                    }
+                }
             }
-
-            var _tempMat = _hit.transform.gameObject.GetComponent<Renderer>().material;
-            _tempScript.m_isTriggered = true;
-
-            // For normal number blocks
-            if (_tempScript.m_BlockType == BlockType.NORMAL)
-            {
-                // Recursive Attivade here only when detected more zero blocks
-                if (_tempScript.m_BlockNumberType == BlockNumberType.ZERO)
-                {
-                    _tempMat.mainTexture = List_NumberBlockMat[(int)_tempScript.m_BlockNumberType];
-                    Triggered_NumberRender(_hit.transform.gameObject);
-                }
-                else // Default
-                {
-                    _tempMat.mainTexture = List_NumberBlockMat[(int)_tempScript.m_BlockNumberType];
-                }
-            }          
+            
         }
+
     }
 
     // 000000000000000000000000000000000000000000
@@ -203,6 +260,13 @@ public class DungeonsweeperManager : MonoBehaviour
         Level = _levelType;
     }
 
-    
+    // Set the next grid
+    public void Set_Anchorie(AnchorPointType _nextAnchor)
+    {
+        Set_NextAnchorNumber(_nextAnchor);
+        Awake();
+    }
+
+
 
 }
