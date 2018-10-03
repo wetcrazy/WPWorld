@@ -25,13 +25,16 @@ public class BounceCoin : MonoBehaviour {
         OrgPos = transform.position;
 
         RigidRef.AddForce(transform.up * UpwardForce, ForceMode.VelocityChange);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
         TimeElapsed += Time.deltaTime;
 
-        if(TimeElapsed > 0.1f)
+        transform.Rotate(new Vector3(0, 5, 0));
+
+        if (TimeElapsed > 0.1f)
         {
             if(Vector3.Distance(OrgPos, transform.position) < 0.01f || OrgPos.y > transform.position.y)
             {

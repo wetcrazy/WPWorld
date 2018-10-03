@@ -54,7 +54,7 @@ public class Joystick : MonoBehaviour {
 
             float DragAngle = -Vector3.SignedAngle(Up, DragDirection.normalized, JoystickBackground.transform.forward);
 
-            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) > 25)
+            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) != 0)
             {
                 if (DragAngle < 0)
                 {
@@ -62,9 +62,12 @@ public class Joystick : MonoBehaviour {
                 }
 
                 Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, DragAngle);
+                float Multiplier = Vector3.Distance(JoystickBall.transform.position, JoystickBackgroundPosition) / JoystickBallDragLengthLimit;
 
                 //Send the dragging direction and angle to the player
                 PlayerObject.SendMessage("GetJoystickInput", DataPacket);
+                //Sends the multiplier value (0 - 1) to the player
+                PlayerObject.SendMessage("SetMovementMultiplier", Multiplier);
             }
 
             if (Vector3.Distance(MousePos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
@@ -84,7 +87,7 @@ public class Joystick : MonoBehaviour {
 
             float DragAngle = -Vector3.SignedAngle(Up, DragDirection.normalized, JoystickBackground.transform.forward);
 
-            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) > 25)
+            if (Vector3.Distance(MousePos, JoystickBackgroundPosition) != 0)
             {
                 if(DragAngle < 0)
                 {
@@ -92,19 +95,50 @@ public class Joystick : MonoBehaviour {
                 }
 
                 Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, DragAngle);
+                float Multiplier = Vector3.Distance(JoystickBall.transform.position, JoystickBackgroundPosition) / JoystickBallDragLengthLimit;
 
                 //Send the dragging direction and angle to the player
                 PlayerObject.SendMessage("GetJoystickInput", DataPacket);
+                //Sends the multiplier value (0 - 1) to the player
+                PlayerObject.SendMessage("SetMovementMultiplier", Multiplier);
             }
 
             if (Vector3.Distance(MousePos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
             {
                 //Snap the joystick ball pos to the cursor if within the joystick background space
-                JoystickBall.transform.position = MousePos;
+                Vector3 n_Pos = MousePos;
+                switch(PlayerObject.GetComponent<PlayerMovement>().GetRestriction())
+                {
+                    case (MovementRestrict.NONE):
+                        n_Pos = JoystickBackgroundPosition;
+                        break;
+                    case (MovementRestrict.X_ONLY):
+                        n_Pos.y = JoystickBackgroundPosition.y;
+                        break;
+                    case (MovementRestrict.Z_ONLY):
+                        n_Pos.x = JoystickBackgroundPosition.x;
+                        break;
+                }
+
+                JoystickBall.transform.position = n_Pos;
             }
             else
             {
-                JoystickBall.transform.position = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
+                Vector3 n_Pos = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
+                switch (PlayerObject.GetComponent<PlayerMovement>().GetRestriction())
+                {
+                    case (MovementRestrict.NONE):
+                        n_Pos = JoystickBackgroundPosition;
+                        break;
+                    case (MovementRestrict.X_ONLY):
+                        n_Pos.y = JoystickBackgroundPosition.y;
+                        break;
+                    case (MovementRestrict.Z_ONLY):
+                        n_Pos.x = JoystickBackgroundPosition.x;
+                        break;
+                }
+
+                JoystickBall.transform.position = n_Pos;
             }
         }
     }

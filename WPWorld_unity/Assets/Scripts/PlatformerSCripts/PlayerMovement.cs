@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 MovementDir = Vector3.zero;
 
     [SerializeField]
+    private float MovementMultiplier;
+
+    [SerializeField]
     private MovementRestrict CurrRestriction;
     private Vector3 RespawnPoint;
     private Vector3 PermenantNorthDirection;
@@ -47,7 +50,7 @@ public class PlayerMovement : MonoBehaviour {
         //if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.Z_ONLY)
         //    MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
 
-        // MovementDir = Vector3.zero;
+        //MovementDir = Vector3.zero;
 
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {
@@ -62,7 +65,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public void GetDPadInput(Vector3 MoveDirection)
     {
-        MovementDir = MoveDirection;      
+        MovementDir = MoveDirection;
     }
 
     public void GetJoystickInput(Vector4 DragInfo)
@@ -77,7 +80,24 @@ public class PlayerMovement : MonoBehaviour {
         float DragAngle = DragInfo.w;
         
         //Rotate the player object based on the dragged angle and using world's forward vector as reference axis
-        gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Vector3.forward;
+        gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Camera.main.transform.forward;
+        Vector3 n_Dir = gameObject.transform.forward;
+
+        switch (CurrRestriction)
+        {
+            case (MovementRestrict.NONE):
+                gameObject.transform.forward = Vector3.zero;
+                break;
+            case (MovementRestrict.X_ONLY):
+                n_Dir.z = 0;
+                gameObject.transform.forward = n_Dir;
+                break;
+            case (MovementRestrict.Z_ONLY):
+                n_Dir.x = 0;
+                gameObject.transform.forward = n_Dir;
+                break;
+        }
+
         //Move towards the new direction the player is facing
         MovementDir = gameObject.transform.forward;
     }
@@ -90,7 +110,7 @@ public class PlayerMovement : MonoBehaviour {
     void FixedUpdate()
     {
         // Actually moves the player according to the Movement Direction, Movement speed is attached here to prevent multiple movement speed from being multiplied in Update
-        RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * Time.fixedDeltaTime);
+        RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * MovementMultiplier * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -110,6 +130,11 @@ public class PlayerMovement : MonoBehaviour {
     public float GetMovementSpeed()
     {
         return MovementSpeed;
+    }
+
+    public void SetMovementMultiplier(float n_Multiplier)
+    {
+        MovementMultiplier = n_Multiplier;
     }
 
     public MovementRestrict GetRestriction()
