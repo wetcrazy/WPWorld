@@ -32,23 +32,23 @@ public class DumbAI : MonoBehaviour {
     // Update is called once per frame
     void ChangeTarget()
     {
-        if (CurrState == "Moving to left")
+        if (CurrState == "Moving to right")
         {
             //change to down
-            CurrState = "Moving to right";
+            CurrState = "Moving to left";
             Newpos = Startpos.position;
         }
-        else if (CurrState == "Moving to right")
+        else if (CurrState == "Moving to left")
         {
             //change to up after new pos is down
-            CurrState =  "Moving to left";
+            CurrState = "Moving to right";
             Newpos = EndPos.position;
         }
 
         else if (CurrState == "")
         {
             // if empty assume going up
-            CurrState = "Moving to left";
+            CurrState = "Moving to right";
             Newpos = EndPos.position;
         }
         Invoke("ChangeTarget", resettime);
