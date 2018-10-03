@@ -40,8 +40,6 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject PauseBar;
 
     int CurrentLevelSelection = 0;
-    public GameObject DebugTextOBJ;
-    Text DebugText;
 
     //UI Logic Variables
     [SerializeField]
@@ -65,8 +63,6 @@ public class ArcoreDeployer : MonoBehaviour
 
         ScreenState = STATE_SCREEN.SCREEN_SPLASH;
 
-        DebugText = DebugTextOBJ.GetComponent<Text>();
-
         SelectionLevels[0].SetActive(true);
         CurrentWorldName.GetComponent<Text>().text = SelectionLevels[0].name;
         for (int i = 1; i < SelectionLevels.Length; ++i)
@@ -76,7 +72,7 @@ public class ArcoreDeployer : MonoBehaviour
 
         Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
         Color NewColor = WorldSelectButtonImage.color;
-        //NewColor.a = 0;
+        NewColor.a = 0;
         WorldSelectButtonImage.color = NewColor;
     }
 
@@ -126,6 +122,7 @@ public class ArcoreDeployer : MonoBehaviour
     {
         SelectionLevels[CurrentLevelSelection].transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
     }
+    Touch RememberedTouch;
 
     private void GameScreenUpdate()
     {
@@ -134,8 +131,8 @@ public class ArcoreDeployer : MonoBehaviour
 
         if (!isSpawned && Input.touchCount > 0)
         {
-            DebugText.text = "Loading Level...\n\nIf not loading, tap on an availabe plane to load the level";
-            Spawner(Input.GetTouch(0));
+            RememberedTouch = Input.GetTouch(0);
+            Spawner(RememberedTouch);
             //isSpawned = true;
         }
         else if (GameObjPrefab == null)
@@ -196,8 +193,13 @@ public class ArcoreDeployer : MonoBehaviour
         //Destroy(GameObjPrefab);
         Destroy(_GroundObject);
         GameObjPrefab = null;
+    }
 
-        DebugText.text = "Waiting For Selection";
+    public void RestartLevel()
+    {
+        DestroyCurrentLevel();
+        SetNextObject();
+        Spawner(RememberedTouch);
     }
 
     // Add a new Object using point on screen and ARCore
@@ -223,8 +225,6 @@ public class ArcoreDeployer : MonoBehaviour
 
                 // Make the ground object the child of the anchor
                 _GroundObject.transform.parent = _anchor.transform;
-
-                DebugText.text = "Loaded Level: " + GameObjPrefab.name;
                 isSpawned = true;
             }
         }
@@ -294,10 +294,5 @@ public class ArcoreDeployer : MonoBehaviour
 
             ScreenState = STATE_SCREEN.SCREEN_GAME;
         }
-        else
-        {
-            DebugText.text = "Please Select a Level Before Starting";
-        }
-
     }
 }

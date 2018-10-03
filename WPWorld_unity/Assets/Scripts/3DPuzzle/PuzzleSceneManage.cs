@@ -31,16 +31,30 @@ public class PuzzleSceneManage : MonoBehaviour {
                 theTrap.TrapUpdate();
             }
         }
-        DumbAI Dumb = dummer.gameObject.GetComponent<DumbAI>();
+        for (int j = 0; j < dummer.transform.childCount; ++j)
+        {
+            DumbAI Dumb = dummer.transform.GetChild(j).gameObject.GetComponent<DumbAI>();
 
-        if(Dumb.GetCollideAI())
-        {
-            ResetValues();
+            if (Dumb.GetCollideAI())
+            {
+                ResetValues();
+                break;
+            }
+            else  
+            {
+                Dumb.UpdateTheThing();
+            }
         }
-        else
-        {
-            Dumb.UpdateTheThing();
-        }
+       // DumbAI Dumb = dummer.gameObject.GetComponent<DumbAI>();
+
+        //if(Dumb.GetCollideAI())
+        //{
+        //    ResetValues();
+        //}
+        //else
+        //{
+        //    Dumb.UpdateTheThing();
+        //}
     }
 
     void ResetValues()
@@ -56,9 +70,12 @@ public class PuzzleSceneManage : MonoBehaviour {
             theTrap.gameObject.SetActive(true);
             theTrap.Set_mooved(false);
         }
-        DumbAI Dumb = dummer.gameObject.GetComponent<DumbAI>();
-        Dumb.transform.position = Dumb.OriginalPos;
-        Dumb.resettime = 0;
-        Dumb.SetCollideAI(false);
+        for (int j = 0; j < dummer.transform.childCount; ++j)
+        {
+            DumbAI Dumb = dummer.transform.GetChild(j).gameObject.GetComponent<DumbAI>();
+            Dumb.transform.position = Dumb.OriginalPos;
+            Dumb.SetCollideAI(false);
+            Dumb.CurrState = "";
+        }
     }
 }
