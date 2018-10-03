@@ -44,6 +44,9 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private int Score;
 
+    [SerializeField]
+    private AudioClip DeathSound;
+
     private Rigidbody RigidRef;
 
 	// Use this for initialization
@@ -236,6 +239,8 @@ public class Enemy : MonoBehaviour {
                     Physics.IgnoreCollision(CollidedObject.GetComponent<Collider>(), GetComponent<Collider>());
 
                     CollidedObject.GetComponent<TPSLogic>().Jump();
+
+                    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSound);
 
                     GameObject n_Score = Instantiate(ScorePopup, transform);
                     n_Score.transform.parent = null;
