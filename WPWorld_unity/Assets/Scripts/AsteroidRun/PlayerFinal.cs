@@ -25,7 +25,6 @@ public class PlayerFinal : MonoBehaviour {
     Joystick JoysticControls;
     bool isMoving = false, isTurning = false;
     Vector3 PivotAxis;
-    float NetAngleTurned = 0;
 
     public enum DEBUFF_EFFECT
     {
