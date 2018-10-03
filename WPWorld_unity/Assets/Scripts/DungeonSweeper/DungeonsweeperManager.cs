@@ -43,6 +43,14 @@ public class DungeonsweeperManager : MonoBehaviour
         TOTAL_LEVEL
     }
 
+    public enum HeightType
+    {
+        ONE = 1,
+        TWO,
+        THREE,
+        TOTAL_HEIGHT,
+    }
+
     [Tooltip("The list of main anchor point to spawn the stage")]
     public GameObject[] Arr_Anchors;
     [Tooltip("The list of main block textures")]
@@ -63,8 +71,8 @@ public class DungeonsweeperManager : MonoBehaviour
         Set_NextAnchorNumber(AnchorPointType.ANCHOR_ONE); // Start with the first       
         Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
 
-        GridSetUp();
-        Set_NumberBlocks();
+        //GridSetUp();
+        //Set_NumberBlocks();
     }
 
     private void Update()
@@ -185,11 +193,10 @@ public class DungeonsweeperManager : MonoBehaviour
                 if (_objScript.m_BlockType == BlockType.NORMAL)
                 {
                     _objMat.mainTexture = List_NumberBlockMat[(int)_objScript.m_BlockNumberType];
-                    if(_objScript.m_BlockNumberType == BlockNumberType.ZERO)
+                    if (_objScript.m_BlockNumberType == BlockNumberType.ZERO)
                     {
                         Triggered_Number(_obj);
                     }
-
                 }
                 else
                 {                 
@@ -223,6 +230,15 @@ public class DungeonsweeperManager : MonoBehaviour
         {
             _listRays.Add(_ray);
         }
+        if (Physics.Raycast(_obj.transform.position, gameObject.transform.up, out _ray)) // UP
+        {
+            _listRays.Add(_ray);
+        }
+        if (Physics.Raycast(_obj.transform.position, -gameObject.transform.up, out _ray)) // down
+        {
+            _listRays.Add(_ray);
+        }
+       
 
         // Loop through all directions from above to reveal the block's material
         foreach (RaycastHit _hit in _listRays)
@@ -249,24 +265,36 @@ public class DungeonsweeperManager : MonoBehaviour
         }
 
     }
+    
+    private void BuildStage()
+    {
+        Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
+
+        //GridSetUp();
+        //Set_NumberBlocks();
+    }
 
     // 000000000000000000000000000000000000000000
     //              PUBLIC METHOD
     // 000000000000000000000000000000000000000000
 
     // Set the level
-    public void Set_DungeonSweeperLevel(LevelType _levelType)
+    public void Set_DungeonSweeperLevel(int _levelType)
     {
-        Level = _levelType;
+        //Level = _levelType;
     }
 
-    // Set the next grid
-    public void Set_Anchorie(AnchorPointType _nextAnchor)
+    public void SpawnNext()
     {
-        Set_NextAnchorNumber(_nextAnchor);
-        Awake();
+        if((int)AnchorNumber == 4)
+        {
+            Set_NextAnchorNumber(AnchorPointType.ANCHOR_ONE);
+        }
+        else
+        {
+            Set_NextAnchorNumber(AnchorNumber + 1);
+        }
+       
+        BuildStage();
     }
-
-
-
 }

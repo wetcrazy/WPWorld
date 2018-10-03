@@ -122,6 +122,7 @@ public class ArcoreDeployer : MonoBehaviour
     {
         SelectionLevels[CurrentLevelSelection].transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
     }
+    Touch RememberedTouch;
 
     private void GameScreenUpdate()
     {
@@ -130,7 +131,8 @@ public class ArcoreDeployer : MonoBehaviour
 
         if (!isSpawned && Input.touchCount > 0)
         {
-            Spawner(Input.GetTouch(0));
+            RememberedTouch = Input.GetTouch(0);
+            Spawner(RememberedTouch);
             //isSpawned = true;
         }
         else if (GameObjPrefab == null)
@@ -197,6 +199,7 @@ public class ArcoreDeployer : MonoBehaviour
     {
         DestroyCurrentLevel();
         SetNextObject();
+        Spawner(RememberedTouch);
     }
 
     // Add a new Object using point on screen and ARCore

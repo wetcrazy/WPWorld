@@ -97,14 +97,4 @@ public class PauseManager : MonoBehaviour {
             theButton.SetActive(false);
         }
     }
-
-    public void SaveGame()
-    {
-        
-    }
-
-   public void QuitToMainMenu()
-    {
-
-    }
 }
