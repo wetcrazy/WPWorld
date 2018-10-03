@@ -69,10 +69,7 @@ public class DungeonsweeperManager : MonoBehaviour
     private void Awake()
     {
         Set_NextAnchorNumber(AnchorPointType.ANCHOR_ONE); // Start with the first       
-        Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
-
-        //GridSetUp();
-        //Set_NumberBlocks();
+        BuildStage();
     }
 
     private void Update()
@@ -270,8 +267,8 @@ public class DungeonsweeperManager : MonoBehaviour
     {
         Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
 
-        //GridSetUp();
-        //Set_NumberBlocks();
+        GridSetUp();
+        Set_NumberBlocks();
     }
 
     // 000000000000000000000000000000000000000000
