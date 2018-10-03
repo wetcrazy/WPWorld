@@ -53,6 +53,8 @@ public class TPSLogic : MonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump)
                 {
+                    if (JumpSFX != null)
+                        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
                     Jump();
                 }
             }
@@ -121,8 +123,6 @@ public class TPSLogic : MonoBehaviour {
     public void Jump()
     {
         RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-        if (JumpSFX != null)
-            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
         IsGrounded = false;
     }
 
