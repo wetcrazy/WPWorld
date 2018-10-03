@@ -18,7 +18,7 @@ public class CollectOnCollide : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.LookAt(2 * transform.position - Camera.main.transform.position);
+        transform.Rotate(new Vector3(0, 5, 0));
 	}
 
     private void OnTriggerEnter(Collider other)

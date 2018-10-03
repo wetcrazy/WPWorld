@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23137725400847860}
   - component: {fileID: 65492854701332972}
   - component: {fileID: 54258157196770088}
-  - component: {fileID: 114897800364248264}
+  - component: {fileID: 114010931936404216}
   m_Layer: 0
   m_Name: Item Box
   m_TagString: Untagged
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114897800364248264
+--- !u!114 &114010931936404216
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -121,12 +121,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1312874920543408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0f3a34b124cd64fa7139a43c1280fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 727f04227759b36428715013ca40b890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrSpawn: 0
-  ChangedMaterial: {fileID: 2100000, guid: ccd2ed131bd0acb4983d00ceae415a97, type: 2}
-  CoinSFX: {fileID: 8300000, guid: 46dfb971b4353404dac309ed8b3c4c7e, type: 3}
-  BounceCoin: {fileID: 1189048848443504, guid: 223ba1306530a594d90977430c92f152, type: 2}
-  ItemEnemySFX: {fileID: 8300000, guid: a1b658ce7ce30724da2231fbe2db18ff, type: 3}
+  ChangedMaterial: {fileID: 2100000, guid: cb51ec522bf0d9948a40f0963a939962, type: 2}
+  CoinSFX: {fileID: 8300000, guid: 10112bf84bbaee04cb24103b4c712b0a, type: 3}
+  BounceCoin: {fileID: 1189048848443504, guid: d8bb24d67b96b354b801a90973819864, type: 2}
+  ItemEnemySFX: {fileID: 0}
   Enemy: {fileID: 0}
