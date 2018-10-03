@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour {
 
@@ -11,9 +12,13 @@ public class PauseManager : MonoBehaviour {
     float DistanceBetweenIcons = 30;
     [SerializeField]
     GameObject PauseBarBackground;
+    [SerializeField]
+    float PauseBarBackgroundFillSpeed = 40;
+
 
     Vector3 AnchorPos;
     bool isShowingPauseBar = false;
+    float PauseBarBackgroundFillAmount = 0;
 
     //For external scripts
     public bool isPauseBarOpen
@@ -32,7 +37,33 @@ public class PauseManager : MonoBehaviour {
             PauseBarButtons[i].transform.localPosition.Set((i + 1) * -DistanceBetweenIcons, -5, 0);
         }
     }
-    
+
+    private void Update()
+    {
+        if (isShowingPauseBar && PauseBarBackgroundFillAmount < 1.3f)
+        {
+            PauseBarBackgroundFillAmount += (Time.deltaTime * PauseBarBackgroundFillSpeed);
+            Vector3 newLocalScale = PauseBarBackground.GetComponent<RectTransform>().localScale;
+            newLocalScale.x = PauseBarBackgroundFillAmount;
+            PauseBarBackground.GetComponent<RectTransform>().localScale = newLocalScale;
+        }
+        else if (!isShowingPauseBar)
+        {
+            if (PauseBarBackgroundFillAmount > 0)
+            {
+                PauseBarBackgroundFillAmount -= (Time.deltaTime * PauseBarBackgroundFillSpeed);
+                Vector3 newLocalScale = PauseBarBackground.GetComponent<RectTransform>().localScale;
+                newLocalScale.x = PauseBarBackgroundFillAmount;
+                PauseBarBackground.GetComponent<RectTransform>().localScale = newLocalScale;
+            }
+            else
+            {
+                PauseBarBackgroundFillAmount = 0;
+                PauseBarBackground.gameObject.SetActive(false);
+            }
+        }
+    }
+
     public void PauseButtonDown()
     {
         //If Pause Bar is already open
@@ -65,8 +96,6 @@ public class PauseManager : MonoBehaviour {
         {
             theButton.SetActive(false);
         }
-
-        PauseBarBackground.gameObject.SetActive(false);
     }
 
     public void SaveGame()

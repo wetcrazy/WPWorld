@@ -32,6 +32,8 @@ public class DSPlayer : MonoBehaviour
         // Raycast the block below the player 
         if (isDoubleJUmp)
         {
+            var _playerScript = gameObject.GetComponent<PlayerMovement>();
+            _playerScript.GetDPadInput(Vector3.zero);
             // Check the Object below
             RaycastHit _hit;
             if (Physics.Raycast(transform.position, -Vector3.up, out _hit))
@@ -42,7 +44,8 @@ public class DSPlayer : MonoBehaviour
                     return;
                 }
                 // If the distance is small enough, trigger it
-                if (_hit.distance <= 1.0f)
+                Debug.Log(_hit.transform.localScale.x / 10);
+                if (_hit.distance <= _hit.transform.localScale.x / 10)
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
                     _hitedObjScript.m_isTriggered = true;
@@ -79,7 +82,7 @@ public class DSPlayer : MonoBehaviour
         else
         {
             if (isInAir)
-            {
+            {              
                 Rb.velocity = Vector3.zero;
                 Rb.AddForce(-Vector3.up * JumpSpeed, ForceMode.Impulse);
                 isDoubleJUmp = true;

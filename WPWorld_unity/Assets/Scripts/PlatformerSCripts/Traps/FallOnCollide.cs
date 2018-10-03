@@ -10,31 +10,32 @@ public class FallOnCollide : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
-        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
 
         RenderRef = GetComponent<Renderer>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject PlayerRef = GameObject.FindGameObjectWithTag("Player");
-        GameObject[] EnemyRefs = GameObject.FindGameObjectsWithTag("Enemy");
 
-        if (!RenderRef.isVisible)
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Killbox")
         {
-            Physics.IgnoreCollision(PlayerRef.GetComponent<Collider>(), GetComponent<Collider>());
-            foreach(GameObject Enemy in EnemyRefs)
+            Debug.Log("Stopped");
+            RenderRef.enabled = false;
+            RigidRef.useGravity = false;
+
+            RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+
+            foreach(Transform n_Child in transform)
             {
-                Physics.IgnoreCollision(Enemy.GetComponent<Collider>(), GetComponent<Collider>());
+                n_Child.GetComponent<Renderer>().enabled = false;
+                Physics.IgnoreCollision(n_Child.GetComponent<Collider>(), GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>());
             }
-        }
-        else
-        {
-            Physics.IgnoreCollision(PlayerRef.GetComponent<Collider>(), GetComponent<Collider>(), false);
-            foreach (GameObject Enemy in EnemyRefs)
-            {
-                Physics.IgnoreCollision(Enemy.GetComponent<Collider>(), GetComponent<Collider>(), false);
-            }
+
+            Physics.IgnoreCollision(GetComponent<Collider>(), GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>());
         }
     }
 
@@ -46,12 +47,13 @@ public class FallOnCollide : MonoBehaviour {
                 >= transform.position.y + transform.lossyScale.y / 2)
             {
                 RigidRef.useGravity = true;
-                RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+
+                RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
             }
         }
-        if(collision.gameObject.tag == "Killbox")
+        else if (collision.gameObject.tag != "Enemy")
         {
-            RenderRef.enabled = false;
+            Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
         }
     }
 }
