@@ -52,7 +52,7 @@ public class DungeonsweeperManager : MonoBehaviour
     }
 
     [Tooltip("The list of main anchor point to spawn the stage")]
-    public GameObject[] Arr_Anchors;
+    public List<GameObject> List_Anchors;
     [Tooltip("The list of main block textures")]
     public List<Texture> List_BlockMat;
     [Tooltip("The list of numbered textures")]
@@ -74,6 +74,7 @@ public class DungeonsweeperManager : MonoBehaviour
 
     private void Update()
     {
+        Check_PlayerPosition();
         Triggered_Render();
     }
 
@@ -84,7 +85,7 @@ public class DungeonsweeperManager : MonoBehaviour
     // Sets the preloaded stage sizes from prefabs
     private void Set_NextStageSize(GameObject _prefab)
     {
-        Instantiate(_prefab, Arr_Anchors[(int)AnchorNumber].transform.position, Quaternion.identity, Arr_Anchors[(int)AnchorNumber].transform);
+        Instantiate(_prefab, List_Anchors[(int)AnchorNumber].transform.position, Quaternion.identity, List_Anchors[(int)AnchorNumber].transform);
     }
 
     // Sets the next anchor point to spawn the grid
@@ -97,7 +98,7 @@ public class DungeonsweeperManager : MonoBehaviour
     private void GridSetUp()
     {
         // Find the children of Anchors
-        var _allchildblocks = Arr_Anchors[(int)AnchorNumber].GetComponentsInChildren<Transform>();
+        var _allchildblocks = List_Anchors[(int)AnchorNumber].GetComponentsInChildren<Transform>();
 
         // Loop all child in the parent
         foreach (Transform _child in _allchildblocks)
@@ -130,7 +131,7 @@ public class DungeonsweeperManager : MonoBehaviour
 
             _childMat.mainTexture = List_BlockMat[1];
 
-            var _AnchorScript = Arr_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
+            var _AnchorScript = List_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
             _AnchorScript.mList_Blocks.Add(_child.gameObject);
         }
     }
@@ -138,7 +139,7 @@ public class DungeonsweeperManager : MonoBehaviour
     // Set number of bombs into blocks
     private void Set_NumberBlocks()
     {
-        var _AnchorScript = Arr_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
+        var _AnchorScript = List_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
         foreach (GameObject _obj in _AnchorScript.mList_Blocks) // All the blocks in current anchor
         {
             if (_obj.tag != "Blocks")
@@ -173,7 +174,9 @@ public class DungeonsweeperManager : MonoBehaviour
     // Renders triggered blocks
     private void Triggered_Render()
     {
-        var _AnchorScript = Arr_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
+        var _player = GameObject.FindGameObjectWithTag("Player");
+        var _playerScript = _player.GetComponent<DSPlayer>();
+        var _AnchorScript = List_Anchors[(int)_playerScript.m_PlayerAnchorPosition].GetComponent<AnchorPoint>();
         foreach (GameObject _obj in _AnchorScript.mList_Blocks)
         {
             if (_obj.tag != "Blocks")
@@ -236,11 +239,15 @@ public class DungeonsweeperManager : MonoBehaviour
         {
             _listRays.Add(_ray);
         }
-       */
+        */
 
         // Loop through all directions from above to reveal the block's material
         foreach (RaycastHit _hit in _listRays)
-        {
+        {           
+            if(_hit.transform.gameObject.tag != "Blocks")
+            {
+                continue;
+            }
             if (Vector3.Distance(_obj.transform.position, _hit.transform.position) <= _obj.transform.localScale.x) // Checks the distance
             {
                 var _hitScript = _hit.transform.gameObject.GetComponent<Blocks>();
@@ -272,6 +279,29 @@ public class DungeonsweeperManager : MonoBehaviour
         Set_NumberBlocks();
     }
 
+    private void Check_PlayerPosition()
+    {
+        var _player = GameObject.FindGameObjectWithTag("Player");
+        var _playerScript = _player.GetComponent<DSPlayer>();
+        GameObject _closestAnchor = List_Anchors[0]; 
+
+        foreach(GameObject _anchorPos in List_Anchors)
+        {         
+            
+            if(Vector3.Distance(_player.transform.position,_anchorPos.transform.position) < Vector3.Distance(_player.transform.position, _closestAnchor.transform.position))
+            {
+                _closestAnchor = _anchorPos;           
+            }
+        }
+        for(int i=0;i<List_Anchors.Capacity-1;i++)
+        {
+            if(List_Anchors[i] == _closestAnchor)
+            {
+                _playerScript.m_PlayerAnchorPosition = (AnchorPointType)i;
+                break;
+            }
+        }
+    }
     // 000000000000000000000000000000000000000000
     //              PUBLIC METHOD
     // 000000000000000000000000000000000000000000
