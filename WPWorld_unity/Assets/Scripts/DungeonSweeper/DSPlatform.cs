@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class DSPlatform : MonoBehaviour
 {
-    private bool isExpand = false;
-
-    private void Update()
+    
+    public void Expand(Vector3 _vector3) // Expands the size of the cube
     {
-        
+        transform.localScale += _vector3;
     }
 
-    private void Expand()
+    public void Rotate()
     {
-       // transform.localScale
+        transform.Rotate(Vector3.up, 90);
     }
 }

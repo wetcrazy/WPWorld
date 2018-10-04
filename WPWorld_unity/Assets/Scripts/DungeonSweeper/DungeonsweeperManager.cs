@@ -60,11 +60,13 @@ public class DungeonsweeperManager : MonoBehaviour
     [Tooltip("The list of Stage Sizes")]
     public List<GameObject> List_StageSizesPrefab;
 
-    [Range(1, 10)]
+    public GameObject PlatformManager;
+
+    [Tooltip("0 = No spawn, 1 = More Spawn")]
+    [Range(0, 10)]
     [SerializeField]
-    private int BombSpawnRate = 1;
+    private int BombSpawnRate;
     private AnchorPointType AnchorNumber;
-    private LevelType Level;
 
     private void Awake()
     {
@@ -265,10 +267,8 @@ public class DungeonsweeperManager : MonoBehaviour
                         Triggered_Number(_hit.transform.gameObject);
                     }
                 }
-            }
-            
+            }     
         }
-
     }
     
     private void BuildStage()
@@ -286,22 +286,16 @@ public class DungeonsweeperManager : MonoBehaviour
         GameObject _closestAnchor = List_Anchors[0]; 
 
         foreach(GameObject _anchorPos in List_Anchors)
-        {         
-            
+        {                    
             if(Vector3.Distance(_player.transform.position,_anchorPos.transform.position) < Vector3.Distance(_player.transform.position, _closestAnchor.transform.position))
             {
                 _closestAnchor = _anchorPos;           
             }
-        }
-        for(int i=0;i<List_Anchors.Capacity-1;i++)
-        {
-            if(List_Anchors[i] == _closestAnchor)
-            {
-                _playerScript.m_PlayerAnchorPosition = (AnchorPointType)i;
-                break;
-            }
-        }
+        }   
+
+        _playerScript.m_PlayerAnchorPosition = (AnchorPointType)List_Anchors.IndexOf(_closestAnchor);
     }
+
     // 000000000000000000000000000000000000000000
     //              PUBLIC METHOD
     // 000000000000000000000000000000000000000000
@@ -312,9 +306,10 @@ public class DungeonsweeperManager : MonoBehaviour
         //Level = _levelType;
     }
 
-    public void SpawnNext()
+    public void SpawnNext() // Force spawn a stage
     {
-        if((int)AnchorNumber == 4)
+        AnchorPointType _currPoint = AnchorNumber;
+        if(AnchorNumber == AnchorPointType.ANCHOR_FOUR)
         {
             Set_NextAnchorNumber(AnchorPointType.ANCHOR_ONE);
         }
@@ -322,7 +317,12 @@ public class DungeonsweeperManager : MonoBehaviour
         {
             Set_NextAnchorNumber(AnchorNumber + 1);
         }
-       
+
+        // Spawns the platform to link the 2 grid up
+        PlatformManager.transform.position = List_Anchors[(int)_currPoint].transform.position + ((List_Anchors[(int)AnchorNumber].transform.position - List_Anchors[(int)_currPoint].transform.position) / 2);       
+        var _PlatformMangerScript = PlatformManager.GetComponent<DSPlatformManager>();
+        _PlatformMangerScript.SpawnPlatform();
+
         BuildStage();
     }
 }
