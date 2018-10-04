@@ -69,10 +69,7 @@ public class DungeonsweeperManager : MonoBehaviour
     private void Awake()
     {
         Set_NextAnchorNumber(AnchorPointType.ANCHOR_ONE); // Start with the first       
-        Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
-
-        //GridSetUp();
-        //Set_NumberBlocks();
+        BuildStage();
     }
 
     private void Update()
@@ -230,6 +227,7 @@ public class DungeonsweeperManager : MonoBehaviour
         {
             _listRays.Add(_ray);
         }
+        /*
         if (Physics.Raycast(_obj.transform.position, gameObject.transform.up, out _ray)) // UP
         {
             _listRays.Add(_ray);
@@ -238,7 +236,7 @@ public class DungeonsweeperManager : MonoBehaviour
         {
             _listRays.Add(_ray);
         }
-       
+       */
 
         // Loop through all directions from above to reveal the block's material
         foreach (RaycastHit _hit in _listRays)
@@ -270,8 +268,8 @@ public class DungeonsweeperManager : MonoBehaviour
     {
         Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
 
-        //GridSetUp();
-        //Set_NumberBlocks();
+        GridSetUp();
+        Set_NumberBlocks();
     }
 
     // 000000000000000000000000000000000000000000
