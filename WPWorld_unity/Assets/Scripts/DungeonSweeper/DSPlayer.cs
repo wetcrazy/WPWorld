@@ -11,7 +11,15 @@ public class DSPlayer : MonoBehaviour
     private bool isGrounded = true;
     private bool isDoubleJUmp = false;
     private Rigidbody Rb;
-    private DungeonsweeperManager.AnchorPointType PlayerAnchorPosition { get; set; }
+    [SerializeField]
+    private DungeonsweeperManager.AnchorPointType PlayerAnchorPosition;
+
+    public DungeonsweeperManager.AnchorPointType m_PlayerAnchorPosition
+    {
+        get { return PlayerAnchorPosition; }
+        set { PlayerAnchorPosition = value; }
+    }
+
 
     private void Awake()
     {
@@ -43,8 +51,7 @@ public class DSPlayer : MonoBehaviour
                 {
                     return;
                 }
-                // If the distance is small enough, trigger it
-                Debug.Log(_hit.transform.localScale.x / 10);
+                // If the distance is small enough, trigger it             
                 if (_hit.distance <= _hit.transform.localScale.x / 10)
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();

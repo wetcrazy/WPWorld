@@ -724,6 +724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpSpeed: 3
   MAX_UPSPEED: 10
+  PlayerAnchorPosition: 0
 --- !u!114 &114357535906496724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1058,7 +1059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bf5aabe35341d4bb0e1a51b3ed9b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Arr_Anchors:
+  List_Anchors:
   - {fileID: 1267333136873326}
   - {fileID: 1462016510035512}
   - {fileID: 1408710965638240}
@@ -1195,7 +1196,7 @@ MonoBehaviour:
   MovementSpeed: 1
   MovementDir: {x: 0, y: 0, z: 0}
   MovementMultiplier: 1
-  CurrRestriction: 0
+  CurrRestriction: 3
 --- !u!114 &114967973546391696
 MonoBehaviour:
   m_ObjectHideFlags: 1
