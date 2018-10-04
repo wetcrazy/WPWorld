@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     private Vector3 MovementDir = Vector3.zero;
 
-    [SerializeField]
     private float MovementMultiplier;
 
     [SerializeField]
@@ -56,9 +55,9 @@ public class PlayerMovement : MonoBehaviour {
         {
             MovementDir = Vector3.zero;
             // Moves the player according to Key Input
-            if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.X_ONLY)
+            if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.X_ONLY)
                 MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
-            if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.Z_ONLY)
+            if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.Z_ONLY)
                 MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
         }
 
@@ -72,7 +71,7 @@ public class PlayerMovement : MonoBehaviour {
     public void GetJoystickInput(Vector4 DragInfo)
     {
         //Joystick input has stopped
-        if (DragInfo.Equals(Vector4.zero))
+        if (DragInfo.Equals(Vector4.zero) || CurrRestriction == MovementRestrict.NONE)
         {
             MovementDir = Vector3.zero;
             return;
@@ -84,13 +83,9 @@ public class PlayerMovement : MonoBehaviour {
         gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Camera.main.transform.forward;
         Vector3 n_Dir = gameObject.transform.forward;
         n_Dir.y = 0;
-        Debug.Log(n_Dir);
 
         switch (CurrRestriction)
         {
-            case (MovementRestrict.NONE):
-                n_Dir = Vector3.zero;
-                break;
             case (MovementRestrict.X_ONLY):
                 n_Dir.z = 0;
                 break;

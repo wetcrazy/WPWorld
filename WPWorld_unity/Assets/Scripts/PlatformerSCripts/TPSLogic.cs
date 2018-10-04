@@ -47,6 +47,8 @@ public class TPSLogic : MonoBehaviour {
             Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
             Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
 
+            MovementRef.SetMovementSpeed(OrgSpeed);
+
             if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
@@ -71,6 +73,8 @@ public class TPSLogic : MonoBehaviour {
 
             Debug.DrawRay(transform.position, -transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
             Debug.DrawRay(transform.position, transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
+
+            MovementRef.SetMovementSpeed(AirborneMovementSpeed);
 
             // Check if any raycast has collided with the floor, may collide with left and right blocks unwillingly
             if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
