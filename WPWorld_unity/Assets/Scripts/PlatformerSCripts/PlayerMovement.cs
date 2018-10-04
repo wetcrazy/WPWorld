@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum MovementRestrict // For use with scripted events like disabling player movement and forcing the character to move
 {
-    NONE, // NO RESTRICTIONS, ABOSLUTELY FREE MOVEMENT
+    NONE, // ALL RESTRICTIONS, ABOSLUTELY NO MOVEMENT
     X_ONLY, // MOVES ONLY ON X PLANE
     Z_ONLY, // MOVES ONLY ON Z PLANE
-    BOTH // BOTH ARE NOT ALLOWED, FREEZE PLAYER
+    BOTH // BOTH ARE ALLOWED, FREEZE PLAYER
 }
 
 public class PlayerMovement : MonoBehaviour {
@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
         {
+            MovementDir = Vector3.zero;
             // Moves the player according to Key Input
             if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.X_ONLY)
                 MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
@@ -82,21 +83,23 @@ public class PlayerMovement : MonoBehaviour {
         //Rotate the player object based on the dragged angle and using world's forward vector as reference axis
         gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Camera.main.transform.forward;
         Vector3 n_Dir = gameObject.transform.forward;
+        n_Dir.y = 0;
+        Debug.Log(n_Dir);
 
         switch (CurrRestriction)
         {
             case (MovementRestrict.NONE):
-                gameObject.transform.forward = Vector3.zero;
+                n_Dir = Vector3.zero;
                 break;
             case (MovementRestrict.X_ONLY):
                 n_Dir.z = 0;
-                gameObject.transform.forward = n_Dir;
                 break;
             case (MovementRestrict.Z_ONLY):
                 n_Dir.x = 0;
-                gameObject.transform.forward = n_Dir;
                 break;
         }
+
+        gameObject.transform.forward = n_Dir;
 
         //Move towards the new direction the player is facing
         MovementDir = gameObject.transform.forward;

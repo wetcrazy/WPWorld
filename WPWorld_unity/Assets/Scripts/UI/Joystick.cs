@@ -106,39 +106,11 @@ public class Joystick : MonoBehaviour {
             if (Vector3.Distance(MousePos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
             {
                 //Snap the joystick ball pos to the cursor if within the joystick background space
-                Vector3 n_Pos = MousePos;
-                switch(PlayerObject.GetComponent<PlayerMovement>().GetRestriction())
-                {
-                    case (MovementRestrict.NONE):
-                        n_Pos = JoystickBackgroundPosition;
-                        break;
-                    case (MovementRestrict.X_ONLY):
-                        n_Pos.y = JoystickBackgroundPosition.y;
-                        break;
-                    case (MovementRestrict.Z_ONLY):
-                        n_Pos.x = JoystickBackgroundPosition.x;
-                        break;
-                }
-
-                JoystickBall.transform.position = n_Pos;
+                JoystickBall.transform.position = MousePos;
             }
             else
             {
-                Vector3 n_Pos = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
-                switch (PlayerObject.GetComponent<PlayerMovement>().GetRestriction())
-                {
-                    case (MovementRestrict.NONE):
-                        n_Pos = JoystickBackgroundPosition;
-                        break;
-                    case (MovementRestrict.X_ONLY):
-                        n_Pos.y = JoystickBackgroundPosition.y;
-                        break;
-                    case (MovementRestrict.Z_ONLY):
-                        n_Pos.x = JoystickBackgroundPosition.x;
-                        break;
-                }
-
-                JoystickBall.transform.position = n_Pos;
+                JoystickBall.transform.position = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
             }
         }
     }
