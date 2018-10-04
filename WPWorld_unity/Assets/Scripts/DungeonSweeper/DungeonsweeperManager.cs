@@ -227,6 +227,7 @@ public class DungeonsweeperManager : MonoBehaviour
         {
             _listRays.Add(_ray);
         }
+        /*
         if (Physics.Raycast(_obj.transform.position, gameObject.transform.up, out _ray)) // UP
         {
             _listRays.Add(_ray);
@@ -235,7 +236,7 @@ public class DungeonsweeperManager : MonoBehaviour
         {
             _listRays.Add(_ray);
         }
-       
+       */
 
         // Loop through all directions from above to reveal the block's material
         foreach (RaycastHit _hit in _listRays)
