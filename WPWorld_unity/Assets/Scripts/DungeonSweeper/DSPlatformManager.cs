@@ -8,10 +8,12 @@ public class DSPlatformManager : MonoBehaviour
     public GameObject PlatformPrefab;
 
     [SerializeField]
-    private Vector3 expandSize;
+    private Vector3 ExpandSize;
     private bool isExpand = true;
     [SerializeField]
     private List<GameObject> List_Platform;
+
+    bool once = false;
 
     public bool m_isExpand
     {
@@ -21,35 +23,30 @@ public class DSPlatformManager : MonoBehaviour
 
     private void Update()
     {
-        if (List_Platform.Capacity == 0)
+        if (List_Platform.Count == 0)
         {
             return;
         }
-        //Expand(List_Platform[0]);
-        /*
-        if (isExpand)
+
+        foreach (GameObject _platformOBJ in List_Platform)
         {
-            if (List_Platform.Capacity == 1)
+            var _platformScript = _platformOBJ.GetComponent<DSPlatform>();
+          
+            if(_platformScript.m_isExpanding)
             {
-                Expand(List_Platform[0]);
-                return;
-            }
-
-            GameObject _closest = List_Platform[0];
-            var _player = GameObject.FindGameObjectWithTag("Player");
-
-            foreach (GameObject _obj in List_Platform)
-            {
-                if(Vector3.Distance(_player.transform.position, _obj.transform.position) < Vector3.Distance(_player.transform.position, _closest.transform.position))
-                {
-                    _closest = _obj;
-                }
-            }
-
-            Expand(List_Platform[List_Platform.IndexOf(_closest)]);
+                _platformScript.Expand(ExpandSize);
+            }          
         }
-        */
-    }
+       
+        if (List_Platform.Count > 1)
+        { 
+            Rotate_Platform(List_Platform[1]);
+        }
+        if (List_Platform.Count > 3)
+        {
+            Rotate_Platform(List_Platform[3]);
+        }
+    }  
 
     // 0000000000000000000000000000000000000000000
     //              PRIVATE METHOD
@@ -65,6 +62,16 @@ public class DSPlatformManager : MonoBehaviour
                 List_Platform.Add(_children);
             }
         }
+    }
+
+    private void Rotate_Platform(GameObject _obj)
+    {
+        var _objScript = _obj.GetComponent<DSPlatform>();
+        if(_objScript.m_isRotated)
+        {
+            return;
+        }
+        _objScript.Rotate();
     }
 
     // 000000000000000000000000000000000000000000
