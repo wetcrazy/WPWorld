@@ -51,12 +51,24 @@ public class DSPlayer : MonoBehaviour
                 {
                     return;
                 }
+
+                // Debuging line
+                Debug.DrawLine(transform.position, _hit.transform.position, Color.red, 5.0f);
+
                 // If the distance is small enough, trigger it             
                 if (_hit.distance <= _hit.transform.localScale.x / 10)
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
                     _hitedObjScript.m_isTriggered = true;
                 }
+                /*
+                if (_hit.distance <= 0)
+                {
+                    isInAir = false;
+                    isGrounded = true;
+                    isDoubleJUmp = false;
+                }
+                */
             }
         }
 
@@ -108,6 +120,7 @@ public class DSPlayer : MonoBehaviour
     /// <summary>
     /// Resets variables when hit the ground 
     /// </summary>
+    
     private void OnCollisionEnter(Collision col)
     {
         if (col.transform.tag != "Blocks")
@@ -119,4 +132,5 @@ public class DSPlayer : MonoBehaviour
         isGrounded = true;
         isDoubleJUmp = false;
     }
+    
 }
