@@ -113,8 +113,9 @@ public class DungeonsweeperManager : MonoBehaviour
 
             var _childScript = _child.gameObject.GetComponent<Blocks>();
             var _childMat = _child.gameObject.GetComponent<Renderer>().material;
+            var _AnchorScript = List_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
 
-            while(_childScript.m_BlockType == BlockType.EMPTY)
+            while (_childScript.m_BlockType == BlockType.EMPTY)
             {
                 var _RNG = Random.Range(1, (int)BlockType.TOTAL_BLOCKTYPE);
 
@@ -124,6 +125,7 @@ public class DungeonsweeperManager : MonoBehaviour
                     if (_crtlRNG == BombSpawnRate - 1)
                     {
                         _childScript.m_BlockType = (BlockType)_RNG; // Apply the bomb block
+                        _AnchorScript.m_numBomb += 1;
                     }
                 }
                 else
@@ -134,8 +136,9 @@ public class DungeonsweeperManager : MonoBehaviour
 
             _childMat.mainTexture = List_BlockMat[1];
 
-            var _AnchorScript = List_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
+          
             _AnchorScript.mList_Blocks.Add(_child.gameObject);
+            _AnchorScript.m_totalBlockCount = _AnchorScript.mList_Blocks.Count;
         }
     }
 
@@ -271,7 +274,8 @@ public class DungeonsweeperManager : MonoBehaviour
             }     
         }
     }
-    
+
+    // Builds the stage
     private void BuildStage()
     {
         Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
@@ -315,6 +319,7 @@ public class DungeonsweeperManager : MonoBehaviour
                     Destroy(_kill.gameObject);
                 }            
                 _anchorScript.mList_Blocks.Clear();
+                _anchorScript.Reset_Variables();
             }
         }
     }
