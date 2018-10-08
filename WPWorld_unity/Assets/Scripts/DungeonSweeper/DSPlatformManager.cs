@@ -80,17 +80,21 @@ public class DSPlatformManager : MonoBehaviour
 
     public void SpawnPlatform() // Force spawn a plateform
     {
+        if(List_Platform.Count >4)
+        {
+            return;
+        }
         var _gameObj = PlatformPrefab;
         Instantiate(_gameObj, transform.position, Quaternion.identity, transform.parent);
         Find_Children();
     }
 
-    public void DeletePlateform()
+    public void DeletePlateform(int _index)
     {
         if (List_Platform == null)
         {
             return;
         }
-        List_Platform.RemoveAt(0);
+        List_Platform.RemoveAt(_index);
     }
 }
