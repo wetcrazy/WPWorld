@@ -79,8 +79,6 @@ public class ArcoreDeployer : MonoBehaviour
         Color NewColor = WorldSelectButtonImage.color;
         NewColor.a = 0;
         WorldSelectButtonImage.color = NewColor;
-
-        CameraOriginalPos = MainCamera.transform.position;
     }
 
     private void Update()
@@ -134,7 +132,52 @@ public class ArcoreDeployer : MonoBehaviour
     {
         if (!isSpawned && Input.touchCount > 0)
         {
+            GameObjPrefab = UniverseObj;
             Spawner(Input.GetTouch(0));
+        }
+        else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Touch theTouch = Input.GetTouch(0);
+
+            Vector3 touchPosFar = new Vector3(theTouch.position.x, theTouch.position.y, MainCamera.farClipPlane);
+            Vector3 touchPosNear = new Vector3(theTouch.position.x, theTouch.position.y, MainCamera.nearClipPlane);
+
+            Vector3 touchPosF = MainCamera.ScreenToWorldPoint(touchPosFar);
+            Vector3 touchPosN = MainCamera.ScreenToWorldPoint(touchPosNear);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(touchPosN, touchPosF - touchPosN, out hit))
+            {
+                if (hit.transform.gameObject.tag == "Planet")
+                {
+                    for (int i = 0; i < SelectionLevels.Length; ++i)
+                    {
+                        if(SelectionLevels[i].name == hit.transform.gameObject.name)
+                        {
+                            CurrentLevelSelection = i;
+                            ToSelectionScreen_Planet();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        else if (isSpawned)
+        {
+            for (int i = 0; i < UniverseObj.transform.childCount; ++i)
+            {
+                _GroundObject.transform.GetChild(i).transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
+            }
+        }
+
+        for (int i = 0; i < List_AllPlanes.Count; i++)
+        {
+            //If tracking has stopped, return to selection screen
+            if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+            {
+                DestroyCurrentLevel();
+            }
         }
     }
 
@@ -161,50 +204,15 @@ public class ArcoreDeployer : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < List_AllPlanes.Count; i++)
+        foreach (DetectedPlane thePlane in List_AllPlanes)
         {
-            //If tracking has stopped, return to selection screen
-            if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+            if (thePlane.TrackingState == TrackingState.Stopped)
             {
                 DestroyCurrentLevel();
-                ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
+                ToSelectionScreen_Universe();
                 break;
             }
         }
-    }
-
-    public void LevelSelectionNext()
-    {
-        SelectionLevels[CurrentLevelSelection].SetActive(false);
-
-        if (CurrentLevelSelection + 1 < SelectionLevels.Length)
-        {
-            ++CurrentLevelSelection;
-        }
-        else
-        {
-            CurrentLevelSelection = 0;
-        }
-
-        SelectionLevels[CurrentLevelSelection].SetActive(true);
-        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[CurrentLevelSelection].name;
-    }
-
-    public void LevelSelectionPrevious()
-    {
-        SelectionLevels[CurrentLevelSelection].SetActive(false);
-
-        if (CurrentLevelSelection > 0)
-        {
-            --CurrentLevelSelection;
-        }
-        else
-        {
-            CurrentLevelSelection = SelectionLevels.Length - 1;
-        }
-
-        SelectionLevels[CurrentLevelSelection].SetActive(true);
-        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[CurrentLevelSelection].name;
     }
 
     public void DestroyCurrentLevel()
@@ -263,14 +271,13 @@ public class ArcoreDeployer : MonoBehaviour
         //Temporary level select hardcode method
         //GameObjPrefab = Arr_LevelsOBJ[CurrentLevelSelection];
 
-        //ToGame();
-
         string _ObjName = Arr_LevelsOBJ[CurrentLevelSelection].name;
 
         foreach (GameObject PrefabLevel in Arr_LevelsOBJ)
         {
             if (_ObjName == PrefabLevel.name)
             {
+                DestroyCurrentLevel();
                 GameObjPrefab = PrefabLevel;
                 ToGameScreen();
                 break;
@@ -282,8 +289,13 @@ public class ArcoreDeployer : MonoBehaviour
     {
         SplashScreen.SetActive(false);
         SelectionScreen.SetActive(false);
+        ScreenSpaceCanvas.SetActive(false);
+        SelectionLevels[CurrentLevelSelection].SetActive(false);
 
-        GameObjPrefab = UniverseObj;
+        if(_GroundObject != null)
+        {
+            _GroundObject.SetActive(true);
+        }
 
         ScreenState = STATE_SCREEN.SCREEN_SELECTION_UNIVERSE;
     }
@@ -304,7 +316,9 @@ public class ArcoreDeployer : MonoBehaviour
             }
             PauseBar.SetActive(false);
         }
-        
+
+        SelectionLevels[CurrentLevelSelection].SetActive(true);
+        _GroundObject.SetActive(false);
         ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
     }
 
@@ -320,7 +334,7 @@ public class ArcoreDeployer : MonoBehaviour
                 ScreenSpaceCanvas.SetActive(false);
                 PauseBar.SetActive(true);
             }
-
+            
             ScreenState = STATE_SCREEN.SCREEN_GAME;
             isSpawned = false;
         }

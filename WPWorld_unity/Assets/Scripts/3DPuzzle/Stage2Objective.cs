@@ -13,7 +13,11 @@ public class Stage2Objective : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//check if the coins are collected
-
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            var foundobjs = FindObjectsOfType<CollectOnCollide>();
+            Debug.Log(foundobjs + " : " + foundobjs.Length);
+        }
         //gameobject.setactive(True);
 	}
 }
