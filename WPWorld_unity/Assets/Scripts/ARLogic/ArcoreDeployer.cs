@@ -12,7 +12,8 @@ public class ArcoreDeployer : MonoBehaviour
     enum STATE_SCREEN
     {
         SCREEN_SPLASH,
-        SCREEN_SELECTION,
+        SCREEN_SELECTION_UNIVERSE,
+        SCREEN_SELECTION_PLANET,
         SCREEN_GAME,
         
         SCREEN_TOTAL
@@ -27,6 +28,8 @@ public class ArcoreDeployer : MonoBehaviour
     private GameObject GameObjPrefab = null;
     private bool isSpawned = false;
 
+    Vector3 CameraOriginalPos;
+
     // UI Objects
     [SerializeField]
     GameObject[] SelectionLevels;
@@ -38,6 +41,8 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject ScreenSpaceCanvas;
     [SerializeField]
     GameObject PauseBar;
+    [SerializeField]
+    GameObject UniverseObj;
 
     int CurrentLevelSelection = 0;
 
@@ -74,10 +79,12 @@ public class ArcoreDeployer : MonoBehaviour
         Color NewColor = WorldSelectButtonImage.color;
         NewColor.a = 0;
         WorldSelectButtonImage.color = NewColor;
+
+        CameraOriginalPos = MainCamera.transform.position;
     }
 
     private void Update()
-    {   
+    {
         switch (ScreenState)
         {
             case STATE_SCREEN.SCREEN_SPLASH:
@@ -92,9 +99,14 @@ public class ArcoreDeployer : MonoBehaviour
                     SplashScreenUpdate();
                     break;
                 }
-            case STATE_SCREEN.SCREEN_SELECTION:
+            case STATE_SCREEN.SCREEN_SELECTION_UNIVERSE:
                 {
-                    SelectionScreenUpdate();
+                    SelectionScreenUpdate_Universe();
+                    break;
+                }
+            case STATE_SCREEN.SCREEN_SELECTION_PLANET:
+                {
+                    SelectionScreenUpdate_Planet();
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
@@ -111,14 +123,22 @@ public class ArcoreDeployer : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            ToSelectionScreen();
+            ToSelectionScreen_Universe();
 
             // Gets all Planes that are track and put it into the list
             Session.GetTrackables(List_AllPlanes);
         }
     }
 
-    private void SelectionScreenUpdate()
+    private void SelectionScreenUpdate_Universe()
+    {
+        if (!isSpawned && Input.touchCount > 0)
+        {
+            Spawner(Input.GetTouch(0));
+        }
+    }
+
+    private void SelectionScreenUpdate_Planet()
     {
         SelectionLevels[CurrentLevelSelection].transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
     }
@@ -133,12 +153,11 @@ public class ArcoreDeployer : MonoBehaviour
         {
             RememberedTouch = Input.GetTouch(0);
             Spawner(RememberedTouch);
-            //isSpawned = true;
         }
         else if (GameObjPrefab == null)
         {
             isSpawned = false;
-            ToSelectionScreen();
+            ToSelectionScreen_Planet();
             return;
         }
 
@@ -148,7 +167,7 @@ public class ArcoreDeployer : MonoBehaviour
             if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
             {
                 DestroyCurrentLevel();
-                ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+                ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
                 break;
             }
         }
@@ -259,7 +278,17 @@ public class ArcoreDeployer : MonoBehaviour
         }
     }
 
-    public void ToSelectionScreen()
+    public void ToSelectionScreen_Universe()
+    {
+        SplashScreen.SetActive(false);
+        SelectionScreen.SetActive(false);
+
+        GameObjPrefab = UniverseObj;
+
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION_UNIVERSE;
+    }
+
+    public void ToSelectionScreen_Planet()
     {
         if (!SelectionScreen.activeSelf)
         {
@@ -276,7 +305,7 @@ public class ArcoreDeployer : MonoBehaviour
             PauseBar.SetActive(false);
         }
         
-        ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
     }
 
    public void ToGameScreen()
@@ -293,6 +322,7 @@ public class ArcoreDeployer : MonoBehaviour
             }
 
             ScreenState = STATE_SCREEN.SCREEN_GAME;
+            isSpawned = false;
         }
     }
 }
