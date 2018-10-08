@@ -38,4 +38,9 @@ public class AnchorPoint : MonoBehaviour
         get { return List_Blocks; }
     }
 
+    public void Reset_Variables()
+    {
+        numBomb = 0;
+        totalBlockCount = 0;
+    }
 }
