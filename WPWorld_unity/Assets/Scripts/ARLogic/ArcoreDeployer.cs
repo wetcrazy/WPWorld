@@ -12,7 +12,8 @@ public class ArcoreDeployer : MonoBehaviour
     enum STATE_SCREEN
     {
         SCREEN_SPLASH,
-        SCREEN_SELECTION,
+        SCREEN_SELECTION_UNIVERSE,
+        SCREEN_SELECTION_PLANET,
         SCREEN_GAME,
         
         SCREEN_TOTAL
@@ -27,6 +28,8 @@ public class ArcoreDeployer : MonoBehaviour
     private GameObject GameObjPrefab = null;
     private bool isSpawned = false;
 
+    Vector3 CameraOriginalPos;
+
     // UI Objects
     [SerializeField]
     GameObject[] SelectionLevels;
@@ -38,6 +41,8 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject ScreenSpaceCanvas;
     [SerializeField]
     GameObject PauseBar;
+    [SerializeField]
+    GameObject UniverseObj;
 
     int CurrentLevelSelection = 0;
 
@@ -77,7 +82,7 @@ public class ArcoreDeployer : MonoBehaviour
     }
 
     private void Update()
-    {   
+    {
         switch (ScreenState)
         {
             case STATE_SCREEN.SCREEN_SPLASH:
@@ -92,9 +97,14 @@ public class ArcoreDeployer : MonoBehaviour
                     SplashScreenUpdate();
                     break;
                 }
-            case STATE_SCREEN.SCREEN_SELECTION:
+            case STATE_SCREEN.SCREEN_SELECTION_UNIVERSE:
                 {
-                    SelectionScreenUpdate();
+                    SelectionScreenUpdate_Universe();
+                    break;
+                }
+            case STATE_SCREEN.SCREEN_SELECTION_PLANET:
+                {
+                    SelectionScreenUpdate_Planet();
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
@@ -111,14 +121,67 @@ public class ArcoreDeployer : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            ToSelectionScreen();
+            ToSelectionScreen_Universe();
 
             // Gets all Planes that are track and put it into the list
             Session.GetTrackables(List_AllPlanes);
         }
     }
 
-    private void SelectionScreenUpdate()
+    private void SelectionScreenUpdate_Universe()
+    {
+        if (!isSpawned && Input.touchCount > 0)
+        {
+            GameObjPrefab = UniverseObj;
+            Spawner(Input.GetTouch(0));
+        }
+        else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Touch theTouch = Input.GetTouch(0);
+
+            Vector3 touchPosFar = new Vector3(theTouch.position.x, theTouch.position.y, MainCamera.farClipPlane);
+            Vector3 touchPosNear = new Vector3(theTouch.position.x, theTouch.position.y, MainCamera.nearClipPlane);
+
+            Vector3 touchPosF = MainCamera.ScreenToWorldPoint(touchPosFar);
+            Vector3 touchPosN = MainCamera.ScreenToWorldPoint(touchPosNear);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(touchPosN, touchPosF - touchPosN, out hit))
+            {
+                if (hit.transform.gameObject.tag == "Planet")
+                {
+                    for (int i = 0; i < SelectionLevels.Length; ++i)
+                    {
+                        if(SelectionLevels[i].name == hit.transform.gameObject.name)
+                        {
+                            CurrentLevelSelection = i;
+                            ToSelectionScreen_Planet();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        else if (isSpawned)
+        {
+            for (int i = 0; i < UniverseObj.transform.childCount; ++i)
+            {
+                _GroundObject.transform.GetChild(i).transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
+            }
+        }
+
+        for (int i = 0; i < List_AllPlanes.Count; i++)
+        {
+            //If tracking has stopped, return to selection screen
+            if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+            {
+                DestroyCurrentLevel();
+            }
+        }
+    }
+
+    private void SelectionScreenUpdate_Planet()
     {
         SelectionLevels[CurrentLevelSelection].transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
     }
@@ -133,59 +196,23 @@ public class ArcoreDeployer : MonoBehaviour
         {
             RememberedTouch = Input.GetTouch(0);
             Spawner(RememberedTouch);
-            //isSpawned = true;
         }
         else if (GameObjPrefab == null)
         {
             isSpawned = false;
-            ToSelectionScreen();
+            ToSelectionScreen_Planet();
             return;
         }
 
-        for (int i = 0; i < List_AllPlanes.Count; i++)
+        foreach (DetectedPlane thePlane in List_AllPlanes)
         {
-            //If tracking has stopped, return to selection screen
-            if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
+            if (thePlane.TrackingState == TrackingState.Stopped)
             {
                 DestroyCurrentLevel();
-                ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+                ToSelectionScreen_Universe();
                 break;
             }
         }
-    }
-
-    public void LevelSelectionNext()
-    {
-        SelectionLevels[CurrentLevelSelection].SetActive(false);
-
-        if (CurrentLevelSelection + 1 < SelectionLevels.Length)
-        {
-            ++CurrentLevelSelection;
-        }
-        else
-        {
-            CurrentLevelSelection = 0;
-        }
-
-        SelectionLevels[CurrentLevelSelection].SetActive(true);
-        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[CurrentLevelSelection].name;
-    }
-
-    public void LevelSelectionPrevious()
-    {
-        SelectionLevels[CurrentLevelSelection].SetActive(false);
-
-        if (CurrentLevelSelection > 0)
-        {
-            --CurrentLevelSelection;
-        }
-        else
-        {
-            CurrentLevelSelection = SelectionLevels.Length - 1;
-        }
-
-        SelectionLevels[CurrentLevelSelection].SetActive(true);
-        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[CurrentLevelSelection].name;
     }
 
     public void DestroyCurrentLevel()
@@ -244,14 +271,13 @@ public class ArcoreDeployer : MonoBehaviour
         //Temporary level select hardcode method
         //GameObjPrefab = Arr_LevelsOBJ[CurrentLevelSelection];
 
-        //ToGame();
-
         string _ObjName = Arr_LevelsOBJ[CurrentLevelSelection].name;
 
         foreach (GameObject PrefabLevel in Arr_LevelsOBJ)
         {
             if (_ObjName == PrefabLevel.name)
             {
+                DestroyCurrentLevel();
                 GameObjPrefab = PrefabLevel;
                 ToGameScreen();
                 break;
@@ -259,7 +285,22 @@ public class ArcoreDeployer : MonoBehaviour
         }
     }
 
-    public void ToSelectionScreen()
+    public void ToSelectionScreen_Universe()
+    {
+        SplashScreen.SetActive(false);
+        SelectionScreen.SetActive(false);
+        ScreenSpaceCanvas.SetActive(false);
+        SelectionLevels[CurrentLevelSelection].SetActive(false);
+
+        if(_GroundObject != null)
+        {
+            _GroundObject.SetActive(true);
+        }
+
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION_UNIVERSE;
+    }
+
+    public void ToSelectionScreen_Planet()
     {
         if (!SelectionScreen.activeSelf)
         {
@@ -275,8 +316,10 @@ public class ArcoreDeployer : MonoBehaviour
             }
             PauseBar.SetActive(false);
         }
-        
-        ScreenState = STATE_SCREEN.SCREEN_SELECTION;
+
+        SelectionLevels[CurrentLevelSelection].SetActive(true);
+        _GroundObject.SetActive(false);
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
     }
 
    public void ToGameScreen()
@@ -291,8 +334,9 @@ public class ArcoreDeployer : MonoBehaviour
                 ScreenSpaceCanvas.SetActive(false);
                 PauseBar.SetActive(true);
             }
-
+            
             ScreenState = STATE_SCREEN.SCREEN_GAME;
+            isSpawned = false;
         }
     }
 }
