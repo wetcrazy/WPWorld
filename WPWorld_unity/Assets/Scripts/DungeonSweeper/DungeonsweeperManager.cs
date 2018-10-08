@@ -78,6 +78,7 @@ public class DungeonsweeperManager : MonoBehaviour
     {
         Check_PlayerPosition();
         Triggered_Render();
+        Detele_Grid();
     }
 
     // 0000000000000000000000000000000000000000000
@@ -294,6 +295,28 @@ public class DungeonsweeperManager : MonoBehaviour
         }   
 
         _playerScript.m_PlayerAnchorPosition = (AnchorPointType)List_Anchors.IndexOf(_closestAnchor);
+    }
+
+    // Delete grid when the platform is done
+    private void Detele_Grid()
+    {
+        foreach(GameObject _anchor in List_Anchors)
+        {
+            var _anchorScript = _anchor.GetComponent<AnchorPoint>();
+            var _anchorchild = _anchor.GetComponentsInChildren<Transform>();
+            if(_anchorScript.m_isdone)
+            {
+                foreach(Transform _kill in _anchorchild)
+                {
+                    if(_kill.gameObject.tag == "Anchor")
+                    {
+                        continue;
+                    }
+                    Destroy(_kill.gameObject);
+                }            
+                _anchorScript.mList_Blocks.Clear();
+            }
+        }
     }
 
     // 000000000000000000000000000000000000000000

@@ -25,8 +25,6 @@ public class TPSLogic : MonoBehaviour {
     private float AirborneMovementSpeed;
     private float OrgSpeed;
 
-    private bool HasBounced = false;
-
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
@@ -47,11 +45,16 @@ public class TPSLogic : MonoBehaviour {
             Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
             Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
 
+            Debug.DrawRay(transform.position, (-transform.up - transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
+            Debug.DrawRay(transform.position, (-transform.up + transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
+
             MovementRef.SetMovementSpeed(OrgSpeed);
 
             if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
-                || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
+                || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
+                || Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
+                || Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
                 if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump)
                 {
@@ -71,40 +74,56 @@ public class TPSLogic : MonoBehaviour {
             Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
             Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
 
+            Debug.DrawRay(transform.position, (-transform.up - transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
+            Debug.DrawRay(transform.position, (-transform.up + transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
+
             Debug.DrawRay(transform.position, -transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
             Debug.DrawRay(transform.position, transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
+            Debug.DrawRay(transform.position, -transform.forward.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
+            Debug.DrawRay(transform.position, transform.forward.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
 
             MovementRef.SetMovementSpeed(AirborneMovementSpeed);
 
             // Check if any raycast has collided with the floor, may collide with left and right blocks unwillingly
             if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
-                || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f))
+                || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
+                || Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
+                || Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
                 // Checks if the object that the bottom raycasts that's hitting is visible
                 if(hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    if (Physics.Raycast(transform.position, -transform.right.normalized, out hit, transform.lossyScale.x * 1.25f) || Physics.Raycast(transform.position, transform.right.normalized, out hit, transform.lossyScale.x * 1.25f))
+                    if (Physics.Raycast(transform.position, -transform.right.normalized, out hit, transform.lossyScale.x * 1.25f)
+                        || Physics.Raycast(transform.position, transform.right.normalized, out hit, transform.lossyScale.x * 1.25f)
+                        || Physics.Raycast(transform.position, -transform.forward.normalized, out hit, transform.lossyScale.x * 1.25f)
+                        || Physics.Raycast(transform.position, transform.forward.normalized, out hit, transform.lossyScale.x * 1.25f))
                     {
                         // Checks if the object that left and right raycast that's hitting is visible
                         if(hit.transform.gameObject.GetComponent<Renderer>().isVisible)
                         {
-                            RaycastHit hit2, hit3;
-                            
+                            RaycastHit hit2, hit3, hit4, hit5;
+
                             // Checks if all 3 raycasts on the bottom is hitting something, otherwise we can determine only one raycast is hitting
                             if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
                                 && Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit2, transform.lossyScale.y * 1.5f)
-                                && Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit3, transform.lossyScale.y * 1.5f))
+                                && Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit3, transform.lossyScale.y * 1.5f)
+                                && Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit4, transform.lossyScale.y * 1.5f)
+                                && Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit5, transform.lossyScale.y * 1.5f))
                             {
-                                if (hit.transform.gameObject.GetComponent<Renderer>().isVisible && hit2.transform.gameObject.GetComponent<Renderer>().isVisible && hit3.transform.gameObject.GetComponent<Renderer>().isVisible)
+                                if (hit.transform.gameObject.GetComponent<Renderer>().isVisible
+                                    && hit2.transform.gameObject.GetComponent<Renderer>().isVisible
+                                    && hit3.transform.gameObject.GetComponent<Renderer>().isVisible
+                                    && hit4.transform.gameObject.GetComponent<Renderer>().isVisible
+                                    && hit5.transform.gameObject.GetComponent<Renderer>().isVisible)
                                 {
-                                    Debug.Log("All three is hitting, so ignore!");
+                                    Debug.Log("All five is hitting, so ignore!");
                                     IsGrounded = true;
                                 }
                             }
                             else
                             {
-                                Debug.Log("Only one is hitting, don't ignore!");
+                                Debug.Log("All five isn't hitting, don't ignore!");
                                 MovementRef.GetDPadInput(Vector3.zero);
                             }
                         }
