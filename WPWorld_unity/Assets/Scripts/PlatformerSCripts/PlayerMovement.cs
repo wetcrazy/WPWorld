@@ -77,26 +77,53 @@ public class PlayerMovement : MonoBehaviour {
             return;
         }
         
-        float DragAngle = DragInfo.w;
+        //float DragAngle = DragInfo.w;
 
         MovementMultiplier = new Vector2(DragInfo.x, DragInfo.y).magnitude / JoysticControls.JoystickBallDragLengthLimit;
 
-        if(DragAngle < 90)
+        switch ((Joystick.JoystickDirection)DragInfo.w)
         {
-            gameObject.transform.forward = Vector3.forward;
+            case Joystick.JoystickDirection.DIR_FORWARD:
+                {
+                    gameObject.transform.forward = Vector3.forward;
+                    break;
+                }
+            case Joystick.JoystickDirection.DIR_RIGHT:
+                {
+                    gameObject.transform.forward = Vector3.right;
+                    break;
+                }
+            case Joystick.JoystickDirection.DIR_LEFT:
+                {
+                    gameObject.transform.forward = -Vector3.right;
+                    break;
+                }
+            case Joystick.JoystickDirection.DIR_BACK:
+                {
+                    gameObject.transform.forward = -Vector3.forward;
+                    break;
+                }
+            default:
+                break;
         }
-        else if(DragAngle < 180)
-        {
-            gameObject.transform.forward = Vector3.right;
-        }
-        else if (DragAngle < 270)
-        {
-            gameObject.transform.forward = -Vector3.forward;
-        }
-        else
-        {
-            gameObject.transform.forward = -Vector3.right;
-        }
+
+
+        //if(DragAngle < 90)
+        //{
+        //    gameObject.transform.forward = Vector3.forward;
+        //}
+        //else if(DragAngle < 180)
+        //{
+        //    gameObject.transform.forward = Vector3.right;
+        //}
+        //else if (DragAngle < 270)
+        //{
+        //    gameObject.transform.forward = -Vector3.forward;
+        //}
+        //else
+        //{
+        //    gameObject.transform.forward = -Vector3.right;
+        //}
 
         //Rotate the player object based on the dragged angle and using world's forward vector as reference axis
         //gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Camera.main.transform.forward;

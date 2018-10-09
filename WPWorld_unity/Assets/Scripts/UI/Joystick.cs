@@ -101,7 +101,7 @@ public class Joystick : MonoBehaviour {
         PlayerObject.SendMessage("GetJoystickInput", DataPacket);
     }
 
-    enum JoystickDirection
+    public enum JoystickDirection
     {
         DIR_FORWARD,
         DIR_RIGHT,
@@ -179,7 +179,6 @@ public class Joystick : MonoBehaviour {
                 }
             }
 
-
             //Constrain the joysstick ball to the x and y axes only
             if (joystickDirection == JoystickDirection.DIR_LEFT || joystickDirection == JoystickDirection.DIR_RIGHT)
             {
@@ -191,7 +190,7 @@ public class Joystick : MonoBehaviour {
             }
         }
 
-        Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, DragAngle);
+        Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, (float)joystickDirection);
 
         //Send the dragging direction and angle to the player
         PlayerObject.SendMessage("GetJoystickInput", DataPacket);
