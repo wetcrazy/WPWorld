@@ -40,6 +40,7 @@ public class DungeonsweeperManager : MonoBehaviour
     {
         EMPTY = 0,
         LEVEL_ONE,
+        LEVEL_TWO,
         TOTAL_LEVEL
     }
 
@@ -59,6 +60,8 @@ public class DungeonsweeperManager : MonoBehaviour
     public List<Texture> List_NumberBlockMat;
     [Tooltip("The list of Stage Sizes")]
     public List<GameObject> List_StageSizesPrefab;
+    [Tooltip("Current Level")]
+    public LevelType Curr_Level;
 
     public GameObject PlatformManager;
 
@@ -71,14 +74,45 @@ public class DungeonsweeperManager : MonoBehaviour
     private void Awake()
     {
         Set_NextAnchorNumber(AnchorPointType.ANCHOR_ONE); // Start with the first       
-        BuildStage();
+        //BuildStage();
     }
 
     private void Update()
     {
+        var _player = GameObject.FindGameObjectWithTag("Player");
+        var _playerScript = _player.GetComponent<DSPlayer>();
+
+        // Always check this first
         Check_PlayerPosition();
-        Triggered_Render();
-        Detele_Grid();
+
+        // Levels logic
+        switch (Curr_Level)
+        {
+            case LevelType.LEVEL_ONE:
+                if(CheckAnchorEmpty(List_Anchors[(int)AnchorNumber]))
+                {
+                    BombSpawnRate = 8;
+                    BuildStage(List_StageSizesPrefab[2]);
+                }              
+                break;
+            case LevelType.LEVEL_TWO:
+                if (CheckAnchorEmpty(List_Anchors[(int)AnchorNumber]))
+                {
+                    BombSpawnRate = 8;
+                    BuildStage(List_StageSizesPrefab[2]);
+                }
+                var _anchorScript = List_Anchors[(int)AnchorNumber].GetComponent<AnchorPoint>();
+                if(_anchorScript.m_isdone)
+                {
+                    Set_NextAnchorNumber(AnchorNumber + 1);
+                    BombSpawnRate = 7;
+                    BuildStage(List_StageSizesPrefab[1]);
+                }
+                break;
+        }
+
+
+        Triggered_Render();     
     }
 
     // 0000000000000000000000000000000000000000000
@@ -86,10 +120,10 @@ public class DungeonsweeperManager : MonoBehaviour
     // 0000000000000000000000000000000000000000000
 
     // Sets the preloaded stage sizes from prefabs
-    private void Set_NextStageSize(GameObject _prefab)
+    private void Build_NextStageSize(GameObject _prefab)
     {
         Instantiate(_prefab, List_Anchors[(int)AnchorNumber].transform.position, Quaternion.identity, List_Anchors[(int)AnchorNumber].transform);
-    }
+    }   
 
     // Sets the next anchor point to spawn the grid
     private void Set_NextAnchorNumber(AnchorPointType _anchor)
@@ -135,8 +169,7 @@ public class DungeonsweeperManager : MonoBehaviour
             }
 
             _childMat.mainTexture = List_BlockMat[1];
-
-          
+        
             _AnchorScript.mList_Blocks.Add(_child.gameObject);
             _AnchorScript.m_totalBlockCount = _AnchorScript.mList_Blocks.Count;
         }
@@ -278,7 +311,15 @@ public class DungeonsweeperManager : MonoBehaviour
     // Builds the stage
     private void BuildStage()
     {
-        Set_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
+        Build_NextStageSize(List_StageSizesPrefab[0]); // Testing purposes
+
+        GridSetUp();
+        Set_NumberBlocks();
+    }
+    // Builds the stage
+    private void BuildStage(GameObject _prefab)
+    {
+        Build_NextStageSize(_prefab); // Testing purposes
 
         GridSetUp();
         Set_NumberBlocks();
@@ -309,8 +350,8 @@ public class DungeonsweeperManager : MonoBehaviour
             var _anchorScript = _anchor.GetComponent<AnchorPoint>();
             var _anchorchild = _anchor.GetComponentsInChildren<Transform>();
             if(_anchorScript.m_isdone)
-            {
-                foreach(Transform _kill in _anchorchild)
+            {               
+                foreach (Transform _kill in _anchorchild)
                 {
                     if(_kill.gameObject.tag == "Anchor")
                     {
@@ -324,14 +365,47 @@ public class DungeonsweeperManager : MonoBehaviour
         }
     }
 
+    // Delete objects in that anchor
+    private void Detele_Grid(GameObject _anchor)
+    {
+        var _anchorScript = _anchor.GetComponent<AnchorPoint>();
+        var _anchorchild = _anchor.GetComponentsInChildren<Transform>();
+
+        foreach (Transform _kill in _anchorchild)
+        {
+            if (_kill.gameObject.tag == "Anchor")
+            {
+                continue;
+            }
+            Destroy(_kill.gameObject);
+        }
+        _anchorScript.mList_Blocks.Clear();
+        _anchorScript.Reset_Variables();
+    }
+
+    //Check Anchor
+    private bool CheckAnchorEmpty(GameObject _anchor)
+    {   
+        var _anchorchild = _anchor.GetComponentsInChildren<Transform>();
+
+        foreach (Transform _obj in _anchorchild)
+        {
+            if (_obj.gameObject.tag == "Blocks")
+            {
+                return false;                
+            }          
+        }
+        return true;
+    }
+
     // 000000000000000000000000000000000000000000
     //              PUBLIC METHOD
     // 000000000000000000000000000000000000000000
 
     // Set the level
-    public void Set_DungeonSweeperLevel(int _levelType)
+    public void Set_DungeonSweeperLevel(LevelType _levelType)
     {
-        //Level = _levelType;
+        Curr_Level = _levelType;
     }
 
     public void SpawnNext() // Force spawn a stage
