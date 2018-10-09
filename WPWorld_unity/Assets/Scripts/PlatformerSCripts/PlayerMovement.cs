@@ -37,13 +37,14 @@ public class PlayerMovement : MonoBehaviour {
         JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         gameObject.transform.forward = Vector3.forward;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         // Resets the acceleration of the gameobject to 0
 
         //MovementDir = Vector3.zero;
-    
+
         //// Moves the player according to Key Input
         //if(CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.X_ONLY)
         //    MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
@@ -61,7 +62,6 @@ public class PlayerMovement : MonoBehaviour {
         //    if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.Z_ONLY)
         //        MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
         //}
-
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
@@ -80,28 +80,42 @@ public class PlayerMovement : MonoBehaviour {
         
         //float DragAngle = DragInfo.w;
 
-        //MovementMultiplier = new Vector2(DragInfo.x, DragInfo.y).magnitude / JoysticControls.JoystickBallDragLengthLimit;
-
         switch ((Joystick.JoystickDirection)DragInfo.w)
         {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
-                    gameObject.transform.forward = Vector3.forward;
+                    if(CurrRestriction != MovementRestrict.X_ONLY && CurrRestriction != MovementRestrict.NONE)
+                    {
+                        Debug.Log("Cannot Move Forward");
+                    }
+                    gameObject.transform.forward = Camera.main.transform.forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_RIGHT:
                 {
-                    gameObject.transform.forward = Vector3.right;
+                    if (CurrRestriction != MovementRestrict.Z_ONLY && CurrRestriction != MovementRestrict.NONE)
+                    {
+                        Debug.Log("Cannot Move Right");
+                    }
+                    gameObject.transform.forward = Camera.main.transform.right;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_LEFT:
                 {
-                    gameObject.transform.forward = -Vector3.right;
+                    if (CurrRestriction != MovementRestrict.Z_ONLY && CurrRestriction != MovementRestrict.NONE)
+                    {
+                        Debug.Log("Cannot Move Left");
+                    }
+                    gameObject.transform.forward = -Camera.main.transform.right;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
-                    gameObject.transform.forward = -Vector3.forward;
+                    if (CurrRestriction != MovementRestrict.X_ONLY && CurrRestriction != MovementRestrict.NONE)
+                    {
+                        Debug.Log("Cannot Move Back");
+                    }
+                    gameObject.transform.forward = -Camera.main.transform.forward;
                     break;
                 }
             default:
@@ -179,6 +193,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public void SetMovementMultiplier(float n_Multiplier)
     {
+        if(n_Multiplier > 1)
+        {
+            n_Multiplier = 1;
+        }
         MovementMultiplier = n_Multiplier;
     }
 
