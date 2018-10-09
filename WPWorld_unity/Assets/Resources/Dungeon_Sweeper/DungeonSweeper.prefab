@@ -471,7 +471,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1267333136873326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 0, z: 30}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4584080984697116}
@@ -798,6 +798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JoystickBall: {fileID: 114532734823728058}
   JoystickBackground: {fileID: 114543973000624212}
+  is4Directional: 0
   JoystickBallDragLengthLimit: 70
 --- !u!114 &114330410058957324
 MonoBehaviour:
@@ -1179,7 +1180,7 @@ MonoBehaviour:
   - {fileID: 1048935316186690, guid: 0a4ab37f850e1134bba635ee5d83f9b2, type: 2}
   - {fileID: 1835465366554944, guid: f5b578b0792f8b24e8753cf5c6c545cb, type: 2}
   - {fileID: 1815118462844298, guid: 86f04c6d87fc6f149984ca663b3dd46f, type: 2}
-  Curr_Level: 1
+  Curr_Level: 2
   PlatformManager: {fileID: 1420025493456850}
   BombSpawnRate: 10
 --- !u!114 &114823066414096386
@@ -1244,6 +1245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 1
   MovementDir: {x: 0, y: 0, z: 0}
+  MovementMultiplier: 0
   CurrRestriction: 3
 --- !u!114 &114967973546391696
 MonoBehaviour:
