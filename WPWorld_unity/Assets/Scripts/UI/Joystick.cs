@@ -115,7 +115,7 @@ public class Joystick : MonoBehaviour {
 
     void ContrainedJoystick(Vector3 InputPos, Vector3 JoystickBackgroundPosition, Vector3 DragDirection, float DragAngle)
     {
-        float HalfLength = JoystickBallDragLengthLimit * 0.5f;
+        float HalfLength = JoystickBallDragLengthLimit * 0.1f;
 
         Vector3 OldPos = JoystickBall.transform.position;
 
