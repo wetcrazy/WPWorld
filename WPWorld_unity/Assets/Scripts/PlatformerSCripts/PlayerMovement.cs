@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     private Vector3 MovementDir = Vector3.zero;
 
+    [SerializeField] 
     private float MovementMultiplier;
 
     [SerializeField]
@@ -79,7 +80,7 @@ public class PlayerMovement : MonoBehaviour {
         
         //float DragAngle = DragInfo.w;
 
-        MovementMultiplier = new Vector2(DragInfo.x, DragInfo.y).magnitude / JoysticControls.JoystickBallDragLengthLimit;
+        //MovementMultiplier = new Vector2(DragInfo.x, DragInfo.y).magnitude / JoysticControls.JoystickBallDragLengthLimit;
 
         switch ((Joystick.JoystickDirection)DragInfo.w)
         {
