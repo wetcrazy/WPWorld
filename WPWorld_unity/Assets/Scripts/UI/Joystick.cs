@@ -95,12 +95,9 @@ public class Joystick : MonoBehaviour {
                 }
 
                 Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, DragAngle);
-                float Multiplier = Vector3.Distance(JoystickBall.transform.position, JoystickBackgroundPosition) / JoystickBallDragLengthLimit;
 
                 //Send the dragging direction and angle to the player
                 PlayerObject.SendMessage("GetJoystickInput", DataPacket);
-                //Sends the multiplier value (0 - 1) to the player
-                PlayerObject.SendMessage("SetMovementMultiplier", Multiplier);
             }
 
             if (Vector3.Distance(MousePos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
