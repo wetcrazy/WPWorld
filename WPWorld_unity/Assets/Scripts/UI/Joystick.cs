@@ -165,11 +165,13 @@ public class Joystick : MonoBehaviour {
             //Constrain the joysstick ball to the x and y axes only
             if (joystickDirection == JoystickDirection.DIR_LEFT || joystickDirection == JoystickDirection.DIR_RIGHT)
             {
-                JoystickBall.transform.position.Set(InputPos.x, OldPos.y, OldPos.z);
+                OldPos.x = InputPos.x;
+                JoystickBall.transform.position = OldPos;
             }
             else if (joystickDirection == JoystickDirection.DIR_BACK || joystickDirection == JoystickDirection.DIR_FORWARD)
             {
-                JoystickBall.transform.position.Set(OldPos.x, InputPos.y, OldPos.z);
+                OldPos.y = InputPos.y;
+                JoystickBall.transform.position = OldPos;
             }
         }
 
