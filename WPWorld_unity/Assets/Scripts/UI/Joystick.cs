@@ -140,24 +140,7 @@ public class Joystick : MonoBehaviour {
                 {
                     joystickDirection = JoystickDirection.DIR_LEFT;
                 }
-
-
-                //if (JoystickBall.transform.position.y > JoystickBackgroundPosition.y)
-                //{
-                //    joystickDirection = JoystickDirection.DIR_FORWARD;
-                //}
-                //else if (JoystickBall.transform.position.y < JoystickBackgroundPosition.y)
-                //{
-                //    joystickDirection = JoystickDirection.DIR_BACK;
-                //}
-                //else if (JoystickBall.transform.position.x > JoystickBackgroundPosition.x)
-                //{
-                //    joystickDirection = JoystickDirection.DIR_RIGHT;
-                //}
-                //else if (JoystickBall.transform.position.x < JoystickBackgroundPosition.x)
-                //{
-                //    joystickDirection = JoystickDirection.DIR_LEFT;
-                //}
+                
             }
             else
             {
@@ -184,7 +167,7 @@ public class Joystick : MonoBehaviour {
             {
                 JoystickBall.transform.position.Set(InputPos.x, OldPos.y, OldPos.z);
             }
-            else
+            else if (joystickDirection == JoystickDirection.DIR_BACK || joystickDirection == JoystickDirection.DIR_FORWARD)
             {
                 JoystickBall.transform.position.Set(OldPos.x, InputPos.y, OldPos.z);
             }
