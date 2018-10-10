@@ -11,15 +11,6 @@ public class DSPlayer : MonoBehaviour
     private bool isGrounded = true;
     private bool isDoubleJUmp = false;
     private Rigidbody Rb;
-    [SerializeField]
-    private DungeonsweeperManager.AnchorPointType PlayerAnchorPosition;
-
-    public DungeonsweeperManager.AnchorPointType m_PlayerAnchorPosition
-    {
-        get { return PlayerAnchorPosition; }
-        set { PlayerAnchorPosition = value; }
-    }
-
 
     private void Awake()
     {

@@ -471,7 +471,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1267333136873326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -30, y: 0, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4584080984697116}
@@ -750,7 +750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   is_Done: 0
   numBomb: 0
-  totalBlockCount: 0
+  numNormal: 0
   List_Blocks: []
 --- !u!114 &114265790928279712
 MonoBehaviour:
@@ -840,7 +840,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpSpeed: 3
   MAX_UPSPEED: 10
-  PlayerAnchorPosition: 0
 --- !u!114 &114357535906496724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -895,7 +894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   is_Done: 0
   numBomb: 0
-  totalBlockCount: 0
+  numNormal: 0
   List_Blocks: []
 --- !u!114 &114372914702263742
 MonoBehaviour:
@@ -1099,7 +1098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   is_Done: 0
   numBomb: 0
-  totalBlockCount: 0
+  numNormal: 0
   List_Blocks: []
 --- !u!114 &114666509005366288
 MonoBehaviour:
@@ -1144,7 +1143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   is_Done: 0
   numBomb: 0
-  totalBlockCount: 0
+  numNormal: 0
   List_Blocks: []
 --- !u!114 &114809603033386646
 MonoBehaviour:
@@ -1154,7 +1153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1915074231441350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8bf5aabe35341d4bb0e1a51b3ed9b1f, type: 3}
+  m_Script: {fileID: 11500000, guid: ab5ed0adb2e6e5f41bcd734ae4bdd08d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   List_Anchors:
@@ -1176,13 +1175,12 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 8c41e331b3e98ea478482fc344523885, type: 3}
   - {fileID: 2800000, guid: 0f147f8a0c4cc78458f18fc22481dd5d, type: 3}
   - {fileID: 2800000, guid: f1882b196d1bbdc44abf0a6238f8c413, type: 3}
-  List_StageSizesPrefab:
-  - {fileID: 1048935316186690, guid: 0a4ab37f850e1134bba635ee5d83f9b2, type: 2}
-  - {fileID: 1835465366554944, guid: f5b578b0792f8b24e8753cf5c6c545cb, type: 2}
+  List_GridSizesPrefab:
   - {fileID: 1815118462844298, guid: 86f04c6d87fc6f149984ca663b3dd46f, type: 2}
+  - {fileID: 1835465366554944, guid: f5b578b0792f8b24e8753cf5c6c545cb, type: 2}
+  - {fileID: 1048935316186690, guid: 0a4ab37f850e1134bba635ee5d83f9b2, type: 2}
   Curr_Level: 2
   PlatformManager: {fileID: 1420025493456850}
-  BombSpawnRate: 10
 --- !u!114 &114823066414096386
 MonoBehaviour:
   m_ObjectHideFlags: 1
