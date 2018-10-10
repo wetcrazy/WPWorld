@@ -92,7 +92,7 @@ public class DungeonsweeperManager : MonoBehaviour
                 if(CheckAnchorEmpty(List_Anchors[(int)AnchorNumber]))
                 {
                     BombSpawnRate = 8;
-                    BuildStage(List_StageSizesPrefab[2]);
+                    BuildStage(List_StageSizesPrefab[1]);
                 }              
                 break;
             case LevelType.LEVEL_TWO:
