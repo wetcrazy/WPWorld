@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour {
             case (ENEMYTYPES.PATROL):
                 if(PatrolToA)
                 {
-                    if(Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > 0.1f)
+                    if(Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.1f)
                     {
                         RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
                     }
@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour {
                 }
                 else
                 {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > 0.1f)
+                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.1f)
                     {
                         RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
                     }
@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour {
             case (ENEMYTYPES.PATROLJUMP):
                 if (PatrolToA)
                 {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > 0.1f)
+                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.5f)
                     {
                         RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
                         if (IsGrounded)
@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour {
                 }
                 else
                 {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > 0.1f)
+                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.5f)
                     {
                         RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
                         if (IsGrounded)
@@ -148,7 +148,7 @@ public class Enemy : MonoBehaviour {
             case (ENEMYTYPES.HIDDENPATROLJUMP):
                 if (PatrolToA)
                 {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > 0.1f)
+                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.5f)
                     {
                         RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
                         if (IsGrounded && !Hidden)
@@ -163,7 +163,7 @@ public class Enemy : MonoBehaviour {
                 }
                 else
                 {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > 0.1f)
+                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.5f)
                     {
                         RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
                         if (IsGrounded && !Hidden)

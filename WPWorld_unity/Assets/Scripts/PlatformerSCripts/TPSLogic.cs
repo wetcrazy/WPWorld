@@ -13,6 +13,9 @@ public class TPSLogic : MonoBehaviour {
     private AudioClip JumpSFX;
 
     [SerializeField]
+    private AudioClip DeathSFX;
+
+    [SerializeField]
     private int Points = 0;
 
     [SerializeField]
@@ -164,9 +167,27 @@ public class TPSLogic : MonoBehaviour {
         return DeathCounter;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Killbox")
+        {
+            Death();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            Death();
+        }
+    }
+
     public void Death()
     {
         DeathCounter++;
+        if (DeathSFX != null && GameObject.Find("Sound System") != null)
+            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSFX);
         GetComponent<PlayerMovement>().Respawn();
     }
 

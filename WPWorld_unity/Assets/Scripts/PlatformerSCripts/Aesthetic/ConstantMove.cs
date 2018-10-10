@@ -5,10 +5,16 @@ using UnityEngine;
 public class ConstantMove : MonoBehaviour {
 
     [SerializeField]
-    private MovementRestrict RestrictUponLeave;
+    private MovementAvaliability RestrictUponLeave;
 
     [SerializeField]
     private float SetMovementSpeed;
+
+    [SerializeField]
+    private bool AfterLeaveX;
+
+    [SerializeField]
+    private bool AfterLeaveZ;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +30,7 @@ public class ConstantMove : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<PlayerMovement>().SetRestriction(MovementRestrict.NONE);
+            other.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
             other.GetComponent<TPSLogic>().SetJumpRestrict(true);
 
             other.GetComponent<Rigidbody>().MovePosition(other.GetComponent<Rigidbody>().position + other.transform.forward * other.GetComponent<PlayerMovement>().GetMovementSpeed() * Time.fixedDeltaTime);
@@ -37,6 +43,13 @@ public class ConstantMove : MonoBehaviour {
         {
             other.GetComponent<PlayerMovement>().SetRestriction(RestrictUponLeave);
             other.GetComponent<TPSLogic>().SetJumpRestrict(false);
+
+            Vector3 PlayerPos = other.transform.position;
+            if(AfterLeaveX)
+                PlayerPos.x = transform.position.x;
+            if(AfterLeaveZ)
+                PlayerPos.z = transform.position.z;
+            other.transform.position = PlayerPos;
 
             GetComponent<Collider>().isTrigger = false;
         }
