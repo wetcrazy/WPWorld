@@ -93,30 +93,40 @@ public class PlayerMovement : MonoBehaviour {
             MovementDir = Vector3.zero;
             return;
         }
-        
+
         //float DragAngle = DragInfo.w;
+
+        Vector3 n_Forward;
 
         // Rotates the player to the designated forward looking area
         switch ((Joystick.JoystickDirection)DragInfo.w)
         {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
-                    gameObject.transform.forward = Camera.main.transform.forward;
+                    n_Forward = Camera.main.transform.forward;
+                    n_Forward.y = transform.forward.y;
+                    gameObject.transform.forward = n_Forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_RIGHT:
                 {
-                    gameObject.transform.forward = Camera.main.transform.right;
+                    n_Forward = Camera.main.transform.right;
+                    n_Forward.y = transform.forward.y;
+                    gameObject.transform.forward = n_Forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_LEFT:
                 {
-                    gameObject.transform.forward = -Camera.main.transform.right;
+                    n_Forward = Camera.main.transform.right;
+                    n_Forward.y = transform.forward.y;
+                    gameObject.transform.forward = -n_Forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
-                    gameObject.transform.forward = -Camera.main.transform.forward;
+                    n_Forward = Camera.main.transform.forward;
+                    n_Forward.y = transform.forward.y;
+                    gameObject.transform.forward = -n_Forward;
                     break;
                 }
             default:
@@ -158,7 +168,6 @@ public class PlayerMovement : MonoBehaviour {
         //gameObject.transform.forward = n_Dir;
 
         //Move towards the new direction the player is facing
-
         MovementDir = gameObject.transform.forward;
     }
 
