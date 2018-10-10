@@ -7,9 +7,9 @@ public class AnchorPoint : MonoBehaviour
     [SerializeField]
     private bool is_Done;
     [SerializeField]
-    private float numBomb;
+    private int numBomb;
     [SerializeField]
-    private float totalBlockCount;
+    private int numNormal;
     [SerializeField]
     private List<GameObject> List_Blocks;
 
@@ -20,16 +20,16 @@ public class AnchorPoint : MonoBehaviour
         get { return is_Done; }
     }
 
-    public float m_numBomb
+    public int m_numBomb
     {
         set { numBomb = value; }
         get { return numBomb; }
     }
 
-    public float m_totalBlockCount
+    public int m_numNormal
     {
-        set { totalBlockCount = value; }
-        get { return totalBlockCount; }
+        set { numNormal = value; }
+        get { return numNormal; }
     }
 
     public List<GameObject> mList_Blocks
@@ -38,4 +38,9 @@ public class AnchorPoint : MonoBehaviour
         get { return List_Blocks; }
     }
 
+    public void Reset_Variables()
+    {
+        numBomb = 0;
+        numNormal = 0;
+    }
 }

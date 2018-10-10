@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum MOVEDIRECTION
-{
-    FORWARD,
-    BACK,
-    LEFT,
-    RIGHT
-}
-
 public class ConstantMove : MonoBehaviour {
 
     [SerializeField]
-    private MOVEDIRECTION CurrMove;
+    private MovementAvaliability RestrictUponLeave;
 
+    [SerializeField]
+    private float SetMovementSpeed;
+
+    [SerializeField]
+    private bool AfterLeaveX;
+
+    [SerializeField]
+    private bool AfterLeaveZ;
 
 	// Use this for initialization
 	void Start () {
@@ -30,23 +30,10 @@ public class ConstantMove : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<PlayerMovement>().SetRestriction(MovementRestrict.BOTH);
+            other.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
             other.GetComponent<TPSLogic>().SetJumpRestrict(true);
-            switch(CurrMove)
-            {
-                case (MOVEDIRECTION.FORWARD):
-                    other.GetComponent<Rigidbody>().MovePosition(other.GetComponent<Rigidbody>().position + other.transform.forward * other.GetComponent<PlayerMovement>().GetMovementSpeed() * Time.fixedDeltaTime);
-                    break;
-                case (MOVEDIRECTION.BACK):
-                    other.GetComponent<Rigidbody>().MovePosition(other.GetComponent<Rigidbody>().position - other.transform.forward * other.GetComponent<PlayerMovement>().GetMovementSpeed() * Time.fixedDeltaTime);
-                    break;
-                case (MOVEDIRECTION.LEFT):
-                    other.GetComponent<Rigidbody>().MovePosition(other.GetComponent<Rigidbody>().position - other.transform.right * other.GetComponent<PlayerMovement>().GetMovementSpeed() * Time.fixedDeltaTime);
-                    break;
-                case (MOVEDIRECTION.RIGHT):
-                    other.GetComponent<Rigidbody>().MovePosition(other.GetComponent<Rigidbody>().position + other.transform.right * other.GetComponent<PlayerMovement>().GetMovementSpeed() * Time.fixedDeltaTime);
-                    break;
-            }
+
+            other.GetComponent<Rigidbody>().MovePosition(other.GetComponent<Rigidbody>().position + other.transform.forward * other.GetComponent<PlayerMovement>().GetMovementSpeed() * Time.fixedDeltaTime);
         }
     }
 
@@ -54,8 +41,16 @@ public class ConstantMove : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<PlayerMovement>().SetRestriction(MovementRestrict.X_ONLY);
+            other.GetComponent<PlayerMovement>().SetRestriction(RestrictUponLeave);
             other.GetComponent<TPSLogic>().SetJumpRestrict(false);
+
+            Vector3 PlayerPos = other.transform.position;
+            if(AfterLeaveX)
+                PlayerPos.x = transform.position.x;
+            if(AfterLeaveZ)
+                PlayerPos.z = transform.position.z;
+            other.transform.position = PlayerPos;
+
             GetComponent<Collider>().isTrigger = false;
         }
     }

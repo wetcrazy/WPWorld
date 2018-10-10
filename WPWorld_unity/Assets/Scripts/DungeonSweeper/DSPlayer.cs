@@ -11,7 +11,6 @@ public class DSPlayer : MonoBehaviour
     private bool isGrounded = true;
     private bool isDoubleJUmp = false;
     private Rigidbody Rb;
-    private DungeonsweeperManager.AnchorPointType PlayerAnchorPosition { get; set; }
 
     private void Awake()
     {
@@ -32,8 +31,8 @@ public class DSPlayer : MonoBehaviour
         // Raycast the block below the player 
         if (isDoubleJUmp)
         {
-            var _playerScript = gameObject.GetComponent<PlayerMovement>();
-            _playerScript.GetDPadInput(Vector3.zero);
+            //var _playerScript = gameObject.GetComponent<PlayerMovement>();
+            //_playerScript.GetDPadInput(Vector3.zero);
             // Check the Object below
             RaycastHit _hit;
             if (Physics.Raycast(transform.position, -Vector3.up, out _hit))
@@ -42,14 +41,25 @@ public class DSPlayer : MonoBehaviour
                 if (_hit.transform.gameObject.tag != "Blocks")
                 {
                     return;
-                }
-                // If the distance is small enough, trigger it
-                Debug.Log(_hit.transform.localScale.x / 10);
+                }               
+
+                // Debuging line
+                Debug.DrawLine(transform.position, _hit.transform.position, Color.red, 5.0f);
+
+                // If the distance is small enough, trigger it             
                 if (_hit.distance <= _hit.transform.localScale.x / 10)
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
                     _hitedObjScript.m_isTriggered = true;
                 }
+                /*
+                if (_hit.distance <= 0)
+                {
+                    isInAir = false;
+                    isGrounded = true;
+                    isDoubleJUmp = false;
+                }
+                */
             }
         }
 
@@ -100,7 +110,7 @@ public class DSPlayer : MonoBehaviour
 
     /// <summary>
     /// Resets variables when hit the ground 
-    /// </summary>
+    /// </summary>   
     private void OnCollisionEnter(Collision col)
     {
         if (col.transform.tag != "Blocks")
@@ -112,4 +122,5 @@ public class DSPlayer : MonoBehaviour
         isGrounded = true;
         isDoubleJUmp = false;
     }
+    
 }

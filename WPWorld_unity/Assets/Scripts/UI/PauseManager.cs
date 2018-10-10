@@ -14,9 +14,7 @@ public class PauseManager : MonoBehaviour {
     GameObject PauseBarBackground;
     [SerializeField]
     float PauseBarBackgroundFillSpeed = 40;
-
-
-    Vector3 AnchorPos;
+    
     bool isShowingPauseBar = false;
     float PauseBarBackgroundFillAmount = 0;
 
@@ -28,7 +26,6 @@ public class PauseManager : MonoBehaviour {
 
     private void Start()
     {
-        AnchorPos = PauseBarButtons[0].transform.position;
         PauseBarBackground.gameObject.SetActive(false);
 
         for (int i = 0; i < PauseBarButtons.Count; ++i)

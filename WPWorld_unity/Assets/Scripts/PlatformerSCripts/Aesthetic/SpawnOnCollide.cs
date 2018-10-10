@@ -48,7 +48,8 @@ public class SpawnOnCollide : MonoBehaviour {
         if (CollidedObject.tag == "Player" && !CollidedObject.GetComponent<TPSLogic>().GetGrounded())
         {
             if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2 <= transform.position.y - transform.lossyScale.y / 2
-                && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2)
+                && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2
+                && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
             {
                 if(RenderRef.material.name.Contains(ChangedMaterial.name))
                 {
