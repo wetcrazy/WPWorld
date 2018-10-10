@@ -73,16 +73,6 @@ public class SceneControlFinal : MonoBehaviour {
             asteroid.transform.position += (PlanetObject.transform.position - asteroid.transform.position).normalized * asteroid.GetComponent<AsteroidScript>().AsteroidSpeed * Time.deltaTime;
         }
 
-        foreach (GameObject obstacle in ObstacleList)
-        {
-            if(!obstacle.activeSelf)
-            {
-                continue;
-            }
-
-            obstacle.GetComponent<ObstacleScript>().ObstacleUpdate(PlanetObject);
-        }
-
         if(!HealthPowerupObject.activeSelf)
         {
             //Countdown the spawn timer
@@ -97,6 +87,19 @@ public class SceneControlFinal : MonoBehaviour {
             }
         }
 	}
+
+    private void FixedUpdate()
+    {
+        foreach (GameObject obstacle in ObstacleList)
+        {
+            if (!obstacle.activeSelf)
+            {
+                continue;
+            }
+
+            obstacle.GetComponent<ObstacleScript>().ObstacleUpdate(PlanetObject);
+        }
+    }
 
     void UpdateCanvasTimer()
     {
@@ -209,7 +212,7 @@ public class SceneControlFinal : MonoBehaviour {
         HealthPowerupObject.SetActive(true);
 
         //Assign a random pos on planet to the health powerup
-        HealthPowerupObject.transform.position = (Random.onUnitSphere * 0.08f) + PlanetObject.transform.position;
+        HealthPowerupObject.transform.position = (Random.onUnitSphere * 0.15f) + PlanetObject.transform.position;
     }
 
     void SpawnAsteroid()
