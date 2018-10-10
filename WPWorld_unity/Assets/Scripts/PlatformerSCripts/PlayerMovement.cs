@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MovementRestrict // For use with scripted events like disabling player movement and forcing the character to move
+public enum MovementAvaliability // For use with scripted events like disabling player movement and forcing the character to move
 {
     NONE, // ALL RESTRICTIONS, ABOSLUTELY NO MOVEMENT
     X_ONLY, // MOVES ONLY ON X PLANE
     Z_ONLY, // MOVES ONLY ON Z PLANE
-    BOTH // BOTH ARE ALLOWED, FREEZE PLAYER
+    BOTH // BOTH ARE ALLOWED, DOESN"T RESTRICT PLAYER
 }
 
 public class PlayerMovement : MonoBehaviour {
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour {
     private float MovementMultiplier;
 
     [SerializeField]
-    private MovementRestrict CurrRestriction;
+    private MovementAvaliability CurrAvaliability;
     private Vector3 RespawnPoint;
     private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
@@ -62,6 +62,22 @@ public class PlayerMovement : MonoBehaviour {
         //    if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.Z_ONLY)
         //        MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
         //}
+
+        switch(CurrAvaliability)
+        {
+            case (MovementAvaliability.NONE):
+                RigidRef.constraints = RigidbodyConstraints.None;
+                break;
+            case (MovementAvaliability.X_ONLY):
+                RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+                break;
+            case (MovementAvaliability.Z_ONLY):
+                RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
+                break;
+            case (MovementAvaliability.BOTH):
+                RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
+                break;
+        }
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
@@ -72,7 +88,7 @@ public class PlayerMovement : MonoBehaviour {
     public void GetJoystickInput(Vector4 DragInfo)
     {
         //Joystick input has stopped
-        if (DragInfo.Equals(Vector4.zero))
+        if (DragInfo.Equals(Vector4.zero) || CurrAvaliability == MovementAvaliability.NONE)
         {
             MovementDir = Vector3.zero;
             return;
@@ -80,48 +96,32 @@ public class PlayerMovement : MonoBehaviour {
         
         //float DragAngle = DragInfo.w;
 
+        // Rotates the player to the designated forward looking area
         switch ((Joystick.JoystickDirection)DragInfo.w)
         {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
-                    if(CurrRestriction != MovementRestrict.X_ONLY && CurrRestriction != MovementRestrict.NONE)
-                    {
-                        Debug.Log("Cannot Move Forward");
-                    }
                     gameObject.transform.forward = Camera.main.transform.forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_RIGHT:
                 {
-                    if (CurrRestriction != MovementRestrict.Z_ONLY && CurrRestriction != MovementRestrict.NONE)
-                    {
-                        Debug.Log("Cannot Move Right");
-                    }
                     gameObject.transform.forward = Camera.main.transform.right;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_LEFT:
                 {
-                    if (CurrRestriction != MovementRestrict.Z_ONLY && CurrRestriction != MovementRestrict.NONE)
-                    {
-                        Debug.Log("Cannot Move Left");
-                    }
                     gameObject.transform.forward = -Camera.main.transform.right;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
-                    if (CurrRestriction != MovementRestrict.X_ONLY && CurrRestriction != MovementRestrict.NONE)
-                    {
-                        Debug.Log("Cannot Move Back");
-                    }
                     gameObject.transform.forward = -Camera.main.transform.forward;
                     break;
                 }
             default:
                 break;
         }
-
 
         //if(DragAngle < 90)
         //{
@@ -158,6 +158,7 @@ public class PlayerMovement : MonoBehaviour {
         //gameObject.transform.forward = n_Dir;
 
         //Move towards the new direction the player is facing
+
         MovementDir = gameObject.transform.forward;
     }
 
@@ -200,14 +201,14 @@ public class PlayerMovement : MonoBehaviour {
         MovementMultiplier = n_Multiplier;
     }
 
-    public MovementRestrict GetRestriction()
+    public MovementAvaliability GetRestriction()
     {
-        return CurrRestriction;
+        return CurrAvaliability;
     }
 
-    public void SetRestriction(MovementRestrict n_Restrict)
+    public void SetRestriction(MovementAvaliability n_Restrict)
     {
-        CurrRestriction = n_Restrict;
+        CurrAvaliability = n_Restrict;
     }
 
     public void SetRespawn(Vector3 n_Respawn)
