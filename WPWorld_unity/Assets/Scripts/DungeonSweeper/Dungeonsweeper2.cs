@@ -48,9 +48,11 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     public GameObject PlatformManager;
 
+    public object _objScript { get; private set; }
+
     private void Awake()
     {
-        GridSetup(List_GridSizesPrefab[1], 0, 0);
+        GridSetup(List_GridSizesPrefab[1], 0, 10,6);
     }
 
     private void Update()
@@ -62,7 +64,7 @@ public class Dungeonsweeper2 : MonoBehaviour
     }
 
     // Spawns the grid and save the data
-    private void GridSetup(GameObject _gridPrefab, int _anchorIndex, int _maxBomb)
+    private void GridSetup(GameObject _gridPrefab, int _anchorIndex, int _maxBomb,int _BombSpawnRate)
     {
         // Spawn Grid
         Instantiate(_gridPrefab, List_Anchors[_anchorIndex].transform.position, Quaternion.identity, List_Anchors[_anchorIndex].transform);
@@ -83,6 +85,7 @@ public class Dungeonsweeper2 : MonoBehaviour
             // Update the variables
             _anchorScript.mList_Blocks.Add(_child.gameObject);
             _anchorScript.m_numBomb = _maxBomb;
+            _anchorScript.m_BombSpawnRate = _BombSpawnRate;
 
             // Material
             _child.GetComponent<Renderer>().material.mainTexture = List_BlockMat[1];
@@ -110,6 +113,7 @@ public class Dungeonsweeper2 : MonoBehaviour
 
         var _AnchorScript = List_Anchors[List_Anchors.IndexOf(_closestobj)].GetComponent<AnchorPoint>();
 
+        // Minesweeper logic    
         foreach (GameObject _block in _AnchorScript.mList_Blocks)
         {
             var _blockScript = _block.GetComponent<Blocks>();
@@ -117,6 +121,11 @@ public class Dungeonsweeper2 : MonoBehaviour
 
             if (_blockScript.m_isTriggered)
             {
+                if (!_AnchorScript.m_isTypeApplied)// First step
+                {
+                    FirstStep(List_Anchors.IndexOf(_closestobj), _block);
+                }
+
                 if (_blockScript.m_BlockType == BlockType.NUMBERED)
                 {
                     Numbered_Material(_block);
@@ -131,6 +140,16 @@ public class Dungeonsweeper2 : MonoBehaviour
     // Minesweeper logic
     private void Numbered_Material(GameObject _block)
     {
+        // If its not zero just return
+        var _blockScript = _block.GetComponent<Blocks>();
+        var _blockMat = _block.GetComponent<Renderer>().material;
+        _blockMat.mainTexture = List_NumberBlockMat[(int)_blockScript.m_BlockNumberType];
+
+        if (_blockScript.m_BlockNumberType != BlockNumberType.ZERO)
+        {
+            return;
+        }
+
         // A list of rays being casted
         List<RaycastHit> _listRays = new List<RaycastHit>();
 
@@ -172,12 +191,90 @@ public class Dungeonsweeper2 : MonoBehaviour
 
             if (_hitScript.m_BlockType == BlockType.NUMBERED)
             {
-                _hitScript.m_isTriggered = true;
-                if (_hitScript.m_BlockNumberType == BlockNumberType.ZERO)
+                _hitScript.m_isTriggered = true;              
+            }
+        }
+    }
+
+    // Place all the types of blocks into the blocks
+    private void FirstStep(int _index,GameObject _firstBlock)
+    {
+        var _anchorScript = List_Anchors[_index].GetComponent<AnchorPoint>();
+
+        if(_anchorScript.m_isTypeApplied) // Once the grid is applied no need to apply again
+        {
+            return;
+        }
+
+        var _firstBlockScript = _firstBlock.GetComponent<Blocks>();
+        _firstBlockScript.m_BlockType = BlockType.NUMBERED;
+               
+        _anchorScript.m_isTypeApplied = true;
+        int currBomb = 0;
+
+        foreach (GameObject _child in _anchorScript.mList_Blocks)
+        {
+            var _childScript = _child.GetComponent<Blocks>();
+
+            while (_childScript.m_BlockType == BlockType.EMPTY)
+            {
+                var _RNG = Random.Range(1, (int)BlockType.TOTAL_BLOCKTYPE);
+                if ((BlockType)_RNG == BlockType.BOMB) // BOMB
+                {                  
+                    if (currBomb > _anchorScript.m_numBomb) // Bomb Limiter
+                    {
+                        continue;
+                    }
+
+                    var _crtlRNG = Random.Range(0, _anchorScript.m_BombSpawnRate); // Further rng it
+                    if (_crtlRNG == _anchorScript.m_BombSpawnRate - 1)
+                    {                      
+                        _childScript.m_BlockType = (BlockType)_RNG; // Apply the bomb block                       
+                    }
+
+                }
+                else
                 {
-                    Numbered_Material(_hit.transform.gameObject);
+                    _childScript.m_BlockType = (BlockType)_RNG; // Apply normal block
+                }                        
+            }
+             
+        }
+
+        Numbering(_anchorScript);
+    }
+
+    // Activades after the bombs have been placed
+    private void Numbering(AnchorPoint _anchorScript)
+    {
+        foreach (GameObject _child in _anchorScript.mList_Blocks)
+        {
+            var _childScript = _child.GetComponent<Blocks>();
+
+            if (_childScript.m_BlockType != BlockType.NUMBERED)
+            {
+                continue;
+            }
+
+            Collider[] _arrCol = Physics.OverlapSphere(_child.transform.position, _child.transform.localScale.x / 10);
+            int _bombCount = 0;
+
+            foreach (Collider _col in _arrCol)
+            {
+                if(_col.transform.gameObject.tag != "Blocks")
+                {
+                    continue;
+                }
+
+                var _colScript = _col.gameObject.GetComponent<Blocks>();
+
+                if (_colScript.m_BlockType == BlockType.BOMB)
+                {
+                    _bombCount += 1;
                 }
             }
+
+            _childScript.m_BlockNumberType = (BlockNumberType)_bombCount;
         }
     }
 }
