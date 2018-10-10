@@ -10,15 +10,15 @@ public class Blocks : MonoBehaviour
     [SerializeField]
     private bool isTriggered;
     [SerializeField]
-    private DungeonsweeperManager.BlockType blockType;
+    private Dungeonsweeper2.BlockType blockType;
     [SerializeField]
-    private DungeonsweeperManager.BlockNumberType blockNumber;
+    private Dungeonsweeper2.BlockNumberType blockNumber;
 
     private void Awake()
     {
         isTriggered = false;
-        blockType = DungeonsweeperManager.BlockType.EMPTY;
-        blockNumber = DungeonsweeperManager.BlockNumberType.EMPTY;
+        blockType = Dungeonsweeper2.BlockType.EMPTY;
+        blockNumber = Dungeonsweeper2.BlockNumberType.EMPTY;
     }
 
     // 000000000000000000000000000000000000000000
@@ -31,13 +31,13 @@ public class Blocks : MonoBehaviour
         get { return isTriggered; }
     }
    
-    public DungeonsweeperManager.BlockType m_BlockType
+    public Dungeonsweeper2.BlockType m_BlockType
     {
         set { blockType = value; }
         get { return blockType; }
     }
    
-    public DungeonsweeperManager.BlockNumberType m_BlockNumberType
+    public Dungeonsweeper2.BlockNumberType m_BlockNumberType
     {
         set { blockNumber = value; }
         get { return blockNumber; }
