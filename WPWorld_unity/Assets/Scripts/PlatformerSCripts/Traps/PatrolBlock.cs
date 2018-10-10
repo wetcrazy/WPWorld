@@ -22,6 +22,11 @@ public class PatrolBlock : MonoBehaviour {
 
     private bool HasCollided;
 
+    [SerializeField]
+    private Vector3 LocalScale;
+    [SerializeField]
+    private Vector3 OrgScale;
+
 	// Use this for initialization
 	void Start () {
         FirstPatrolPoint = this.transform.position + FirstPoint;
@@ -59,18 +64,37 @@ public class PatrolBlock : MonoBehaviour {
         }
 	}
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            HasCollided = true;
+            if(CollideToStart)
+                HasCollided = true;
+
+            if(OrgScale == Vector3.zero)
+            {
+                OrgScale = collision.gameObject.transform.lossyScale;
+            }
+            if(LocalScale == Vector3.zero && collision.gameObject.transform.lossyScale != collision.gameObject.transform.localScale)
+            {
+                LocalScale = collision.gameObject.transform.localScale;
+            }
+
             collision.gameObject.transform.parent = transform;
+
+            if(Vector3.Distance(collision.gameObject.transform.localScale, LocalScale) < 0.001f)
+            {
+                collision.gameObject.transform.localScale = LocalScale;
+            }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
+        {
             collision.gameObject.transform.parent = null;
+            collision.gameObject.transform.localScale = OrgScale;
+        }
     }
 }

@@ -59,7 +59,7 @@ public class TPSLogic : MonoBehaviour {
                 || Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
-                if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump)
+                if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump && hit.transform.gameObject.GetComponent<Renderer>().isVisible)
                 {
                     if (JumpSFX != null)
                         GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
