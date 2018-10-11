@@ -201,7 +201,7 @@ public class SceneControlFinal : MonoBehaviour {
         ObstacleObj.GetComponent<ObstacleScript>().ObstacleInit(PlanetObject);
 
         //Assign a random pos on planet to the obstacle
-        ObstacleObj.transform.position = (Random.onUnitSphere * 0.05f) + PlanetObject.transform.position;
+        ObstacleObj.transform.position = (Random.onUnitSphere * 0.1f) + PlanetObject.transform.position;
 
         ObstacleList.Add(ObstacleObj);
     }
@@ -212,7 +212,7 @@ public class SceneControlFinal : MonoBehaviour {
         HealthPowerupObject.SetActive(true);
 
         //Assign a random pos on planet to the health powerup
-        HealthPowerupObject.transform.position = (Random.onUnitSphere * 0.15f) + PlanetObject.transform.position;
+        HealthPowerupObject.transform.position = (Random.onUnitSphere * 0.4f) + PlanetObject.transform.position;
     }
 
     void SpawnAsteroid()
