@@ -9,10 +9,12 @@ public class PatrolBlock : MonoBehaviour {
 
     [SerializeField]
     private Vector3 FirstPoint;
+    [SerializeField]
     private Vector3 FirstPatrolPoint;
 
     [SerializeField]
     private Vector3 SecondPoint;
+    [SerializeField]
     private Vector3 SecondPatrolPoint;
 
     private bool TravelToSecond = true;
@@ -21,11 +23,6 @@ public class PatrolBlock : MonoBehaviour {
     private bool CollideToStart;
 
     private bool HasCollided;
-
-    [SerializeField]
-    private Vector3 LocalScale;
-    [SerializeField]
-    private Vector3 OrgScale;
 
 	// Use this for initialization
 	void Start () {
@@ -64,6 +61,15 @@ public class PatrolBlock : MonoBehaviour {
         }
 	}
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            if (CollideToStart)
+                HasCollided = true;
+        }
+    }
+
     private void OnCollisionStay(Collision collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -71,21 +77,7 @@ public class PatrolBlock : MonoBehaviour {
             if(CollideToStart)
                 HasCollided = true;
 
-            if(OrgScale == Vector3.zero)
-            {
-                OrgScale = collision.gameObject.transform.lossyScale;
-            }
-            if(LocalScale == Vector3.zero && collision.gameObject.transform.lossyScale != collision.gameObject.transform.localScale)
-            {
-                LocalScale = collision.gameObject.transform.localScale;
-            }
-
             collision.gameObject.transform.parent = transform;
-
-            if(Vector3.Distance(collision.gameObject.transform.localScale, LocalScale) < 0.001f)
-            {
-                collision.gameObject.transform.localScale = LocalScale;
-            }
         }
     }
 
@@ -94,7 +86,6 @@ public class PatrolBlock : MonoBehaviour {
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.transform.parent = null;
-            collision.gameObject.transform.localScale = OrgScale;
         }
     }
 }
