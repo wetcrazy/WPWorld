@@ -76,11 +76,11 @@ public class SpawnOnCollide : MonoBehaviour {
                                 Instantiate(BounceCoin, this.transform.position, Quaternion.identity);
                                 break;
                             case (SPAWNTYPE.ITEM):
-                                if (ItemEnemySFX != null)
+                                if (ItemEnemySFX != null && SoundSystemRef != null)
                                     SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
                                 break;
                             case (SPAWNTYPE.ENEMY):
-                                if (ItemEnemySFX != null)
+                                if (ItemEnemySFX != null && SoundSystemRef != null)
                                     SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
                                 break;
                         }
