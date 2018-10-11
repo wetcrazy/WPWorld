@@ -57,10 +57,10 @@ public class TETRISbehaviour : MonoBehaviour {
     IEnumerator Stall()
     {
         yield return new WaitForSeconds(5);
-        magic = true;
-        RandomTranslation();
-        this.gameObject.transform.Translate(directions[dirnum] *0.1f ,Space.World);
-        Debug.Log("tried moving");
+       // magic = true;
+       // RandomTranslation();
+        //this.gameObject.transform.Translate(directions[dirnum] *0.1f ,Space.World);
+      //  Debug.Log("tried moving");
         //  collided = false;
         StartCoroutine(Stall());
         // maystop = true;
