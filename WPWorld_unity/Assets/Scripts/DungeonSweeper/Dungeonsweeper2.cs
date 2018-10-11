@@ -339,10 +339,10 @@ public class Dungeonsweeper2 : MonoBehaviour
             }
         }
 
-        // WIN
+        
         if(_triggedblocks == _AnchorScript.m_numNormal)
         {
-            // WIN CODE
+            _AnchorScript.m_isdone = true;
         }
 
     }
