@@ -295,7 +295,7 @@ public class ArcoreDeployer : MonoBehaviour
                 }
             case "Platformer World":
                 {
-                    _ObjName = "Level1";
+                    _ObjName = "Level 1";
                     break;
                 }
             case "Asteroid World":
