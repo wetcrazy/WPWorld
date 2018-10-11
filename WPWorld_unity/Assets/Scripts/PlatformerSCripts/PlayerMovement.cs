@@ -104,28 +104,28 @@ public class PlayerMovement : MonoBehaviour {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
                     n_Forward = Camera.main.transform.forward;
-                    n_Forward.y = transform.forward.y;
+                    n_Forward.y = 0;
                     gameObject.transform.forward = n_Forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_RIGHT:
                 {
                     n_Forward = Camera.main.transform.right;
-                    n_Forward.y = transform.forward.y;
+                    n_Forward.y = 0;
                     gameObject.transform.forward = n_Forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_LEFT:
                 {
                     n_Forward = Camera.main.transform.right;
-                    n_Forward.y = transform.forward.y;
+                    n_Forward.y = 0;
                     gameObject.transform.forward = -n_Forward;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
                     n_Forward = Camera.main.transform.forward;
-                    n_Forward.y = transform.forward.y;
+                    n_Forward.y = 0;
                     gameObject.transform.forward = -n_Forward;
                     break;
                 }

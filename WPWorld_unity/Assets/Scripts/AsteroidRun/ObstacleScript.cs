@@ -25,7 +25,8 @@ public class ObstacleScript : MonoBehaviour {
         }
         else
         {
-            GetComponent<Rigidbody>().AddForce((PlanetObject.transform.position - gameObject.transform.position).normalized * SceneControllerScript.GRAVITY);
+            //gameObject.transform.up = (gameObject.transform.position - PlanetObject.transform.position).normalized;
+            GetComponent<Rigidbody>().AddForce((PlanetObject.transform.position - gameObject.transform.position).normalized * SceneControllerScript.GRAVITY * 10);
             gameObject.transform.RotateAround(PlanetObject.transform.position, gameObject.transform.right, Time.deltaTime * 20);
         }
     }

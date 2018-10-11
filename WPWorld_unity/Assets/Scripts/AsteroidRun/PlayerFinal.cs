@@ -23,7 +23,6 @@ public class PlayerFinal : MonoBehaviour {
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
     Joystick JoysticControls;
-    bool isMoving = false, isTurning = false;
     Vector3 PivotAxis;
 
     public enum DEBUFF_EFFECT
@@ -41,7 +40,7 @@ public class PlayerFinal : MonoBehaviour {
     // Use this for initialization
     void Start () {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.01f, 0);
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.1f, 0);
         JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
     }
 	
@@ -124,12 +123,12 @@ public class PlayerFinal : MonoBehaviour {
         if(newPivotAxis.Equals(Vector3.zero))
         {
             //Player has stopped holding down a DPad key, so stop moving the player
-            isMoving = false;
+            //isMoving = false;
         }
         else
         {
-            //Player is moving
-            isMoving = true;
+        //    //Player is moving
+        //    isMoving = true;
 
             //Check if the pivot is the same as before. If so, dont need to change it again
             if(!PivotAxis.Equals(newPivotAxis))
@@ -144,8 +143,6 @@ public class PlayerFinal : MonoBehaviour {
         //Joystick input has stopped
         if(DragInfo.Equals(Vector4.zero))
         {
-            isMoving = false;
-            isTurning = false;
             return;
         }
 
@@ -189,7 +186,7 @@ public class PlayerFinal : MonoBehaviour {
 
             if(RefAxis == 180)
             {
-                //When there is 100% movement and no turning, just flip the movement speed
+                //Moving backwards, so just flip the movement speed
                 TempMove = -TempMove;
             }
         }
@@ -201,7 +198,7 @@ public class PlayerFinal : MonoBehaviour {
 
             if(RefAxis == 90)
             {
-                //When there is 100% movement and no turning, just flip the movement speed
+                //Moving backwards, so just flip the movement speed
                 TempMove = -TempMove;
             }
         }
@@ -209,22 +206,23 @@ public class PlayerFinal : MonoBehaviour {
         if (DragAngle > 180) //Dragged to the left
         {
             //Player turns leftwards
-            gameObject.transform.Rotate(gameObject.transform.up, -DragLength * TempTurn * Time.deltaTime, Space.Self);
+            gameObject.transform.Rotate(new Vector3(0,1,0), -DragLength * TempTurn * Time.deltaTime, Space.Self);
         }
         else //Dragged to the right
         {
             //Player turns rightwards
-            gameObject.transform.Rotate(gameObject.transform.up, DragLength * TempTurn * Time.deltaTime, Space.Self);
+            gameObject.transform.Rotate(new Vector3(0, 1, 0), DragLength * TempTurn * Time.deltaTime, Space.Self);
         }
 
         //Rotate the player around the pivot axis to simulate movement on a sphere
-        gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, TempMove * Time.deltaTime);
+        gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, TempMove * PlayerSpeedMultiplier * Time.deltaTime);
     }
 
     void PlayerFall()
     {
         //Adds a constant force that pushes the player towards the center of the planet
         GetComponent<Rigidbody>().AddForce((SceneControllerScript.PlanetObject.transform.position - gameObject.transform.position).normalized * SceneControllerScript.GRAVITY);
+
     }
  
     private void OnTriggerEnter(Collider other)

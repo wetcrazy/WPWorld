@@ -115,84 +115,91 @@ public class Joystick : MonoBehaviour {
 
     void ContrainedJoystick(Vector3 InputPos, Vector3 JoystickBackgroundPosition, Vector3 DragDirection, float DragAngle)
     {
-        float HalfLength = JoystickBallDragLengthLimit * 0.1f;
+        //float HalfLength = JoystickBallDragLengthLimit * 0.1f;
 
-        Vector3 OldPos = JoystickBall.transform.position;
+        //Vector3 OldPos = JoystickBall.transform.position;
 
         //Determine which axis the ball is travelling on
-        if (joystickDirection == JoystickDirection.DIR_NONE)
-        {
-            if (Vector3.Angle(Up, InputPos) <= 45)
+        
+            if (Vector3.Angle(Up, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_FORWARD;
             }
-            else if (Vector3.Angle(-Up, InputPos) <= 45)
+            else if (Vector3.Angle(-Up, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_BACK;
             }
-            else if (Vector3.Angle(Right, InputPos) <= 45)
+            else if (Vector3.Angle(Right, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_RIGHT;
             }
-            else if (Vector3.Angle(-Right, InputPos) <= 45)
+            else if (Vector3.Angle(-Right, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_LEFT;
             }
+        //else
+        //{
+        //    if (InputPos.y > JoystickBackgroundPosition.y + HalfLength)
+        //    {
+        //        joystickDirection = JoystickDirection.DIR_FORWARD;
+        //    }
+        //    else if (InputPos.y < JoystickBackgroundPosition.y - HalfLength)
+        //    {
+        //        joystickDirection = JoystickDirection.DIR_BACK;
+        //    }
+        //    else if (InputPos.x > JoystickBackgroundPosition.x + HalfLength)
+        //    {
+        //        joystickDirection = JoystickDirection.DIR_RIGHT;
+        //    }
+        //    else if (InputPos.x < JoystickBackgroundPosition.x - HalfLength)
+        //    {
+        //        joystickDirection = JoystickDirection.DIR_LEFT;
+        //    }
+        //}
 
-        }
-        else
-        {
-            if (InputPos.y > JoystickBackgroundPosition.y + HalfLength)
-            {
-                joystickDirection = JoystickDirection.DIR_FORWARD;
-            }
-            else if (InputPos.y < JoystickBackgroundPosition.y - HalfLength)
-            {
-                joystickDirection = JoystickDirection.DIR_BACK;
-            }
-            else if (InputPos.x > JoystickBackgroundPosition.x + HalfLength)
-            {
-                joystickDirection = JoystickDirection.DIR_RIGHT;
-            }
-            else if (InputPos.x < JoystickBackgroundPosition.x - HalfLength)
-            {
-                joystickDirection = JoystickDirection.DIR_LEFT;
-            }
-        }
+        //if (Vector3.Distance(InputPos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
+        //{
+        //    //Constrain the joysstick ball to the x and y axes only
+        //    if (joystickDirection == JoystickDirection.DIR_LEFT || joystickDirection == JoystickDirection.DIR_RIGHT)
+        //    {
+        //        OldPos.x = InputPos.x;
+        //        JoystickBall.transform.position = OldPos;
+        //    }
+        //    else if (joystickDirection == JoystickDirection.DIR_BACK || joystickDirection == JoystickDirection.DIR_FORWARD)
+        //    {
+        //        OldPos.y = InputPos.y;
+        //        JoystickBall.transform.position = OldPos;
+        //    }
+        //}
+        //else
+        //{
+        //    switch (joystickDirection)
+        //    {
+        //        case JoystickDirection.DIR_FORWARD:
+        //            JoystickBall.transform.position = JoystickBackgroundPosition + Up * 0.5f;
+        //            break;
+        //        case JoystickDirection.DIR_RIGHT:
+        //            JoystickBall.transform.position = JoystickBackgroundPosition + Right * 0.5f;
+        //            break;
+        //        case JoystickDirection.DIR_LEFT:
+        //            JoystickBall.transform.position = JoystickBackgroundPosition - Right * 0.5f;
+        //            break;
+        //        case JoystickDirection.DIR_BACK:
+        //            JoystickBall.transform.position = JoystickBackgroundPosition - Up * 0.5f;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         if (Vector3.Distance(InputPos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
         {
-            //Constrain the joysstick ball to the x and y axes only
-            if (joystickDirection == JoystickDirection.DIR_LEFT || joystickDirection == JoystickDirection.DIR_RIGHT)
-            {
-                OldPos.x = InputPos.x;
-                JoystickBall.transform.position = OldPos;
-            }
-            else if (joystickDirection == JoystickDirection.DIR_BACK || joystickDirection == JoystickDirection.DIR_FORWARD)
-            {
-                OldPos.y = InputPos.y;
-                JoystickBall.transform.position = OldPos;
-            }
+            //Snap the joystick ball pos to the cursor if within the joystick background space
+            JoystickBall.transform.position = InputPos;
         }
         else
         {
-            switch (joystickDirection)
-            {
-                case JoystickDirection.DIR_FORWARD:
-                    JoystickBall.transform.position = JoystickBackgroundPosition + Up * 0.5f;
-                    break;
-                case JoystickDirection.DIR_RIGHT:
-                    JoystickBall.transform.position = JoystickBackgroundPosition + Right * 0.5f;
-                    break;
-                case JoystickDirection.DIR_LEFT:
-                    JoystickBall.transform.position = JoystickBackgroundPosition - Right * 0.5f;
-                    break;
-                case JoystickDirection.DIR_BACK:
-                    JoystickBall.transform.position = JoystickBackgroundPosition - Up * 0.5f;
-                    break;
-                default:
-                    break;
-            }
+            JoystickBall.transform.position = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
         }
 
         Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, (float)joystickDirection);

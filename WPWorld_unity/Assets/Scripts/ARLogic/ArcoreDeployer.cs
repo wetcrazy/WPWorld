@@ -31,8 +31,8 @@ public class ArcoreDeployer : MonoBehaviour
     Vector3 CameraOriginalPos;
 
     // UI Objects
-    [SerializeField]
-    GameObject[] SelectionLevels;
+    //[SerializeField]
+    //GameObject[] SelectionLevels;
     [SerializeField]
     GameObject CurrentWorldName;
     [SerializeField]
@@ -43,8 +43,12 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject PauseBar;
     [SerializeField]
     GameObject UniverseObj;
+    [SerializeField]
+    GameObject SelectedWorld;
 
-    int CurrentLevelSelection = 0;
+    Text CurrentWorldName_Text;
+
+    //int CurrentLevelSelection = 0;
 
     //UI Logic Variables
     [SerializeField]
@@ -68,12 +72,14 @@ public class ArcoreDeployer : MonoBehaviour
 
         ScreenState = STATE_SCREEN.SCREEN_SPLASH;
 
-        SelectionLevels[0].SetActive(true);
-        CurrentWorldName.GetComponent<Text>().text = SelectionLevels[0].name;
-        for (int i = 1; i < SelectionLevels.Length; ++i)
-        {
-            SelectionLevels[i].SetActive(false);
-        }
+        //SelectionLevels[0].SetActive(true);
+        //CurrentWorldName_Text.text = SelectionLevels[0].name;
+        //for (int i = 1; i < SelectionLevels.Length; ++i)
+        //{
+        //    SelectionLevels[i].SetActive(false);
+        //}
+
+        CurrentWorldName_Text = CurrentWorldName.GetComponent<Text>();
 
         Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
         Color NewColor = WorldSelectButtonImage.color;
@@ -151,15 +157,19 @@ public class ArcoreDeployer : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Planet")
                 {
-                    for (int i = 0; i < SelectionLevels.Length; ++i)
-                    {
-                        if(SelectionLevels[i].name == hit.transform.gameObject.name)
-                        {
-                            CurrentLevelSelection = i;
-                            ToSelectionScreen_Planet();
-                            break;
-                        }
-                    }
+                    //for (int i = 0; i < SelectionLevels.Length; ++i)
+                    //{
+                    //    if(SelectionLevels[i] == hit.transform.gameObject)
+                    //    {
+                    //        CurrentLevelSelection = i;
+
+                    //        break;
+                    //    }
+                    //}
+
+                    CurrentWorldName_Text.text = hit.transform.gameObject.name;
+                    SelectedWorld.GetComponent<MeshRenderer>().material = hit.transform.gameObject.GetComponent<MeshRenderer>().material;
+                    ToSelectionScreen_Planet();
                 }
             }
         }
@@ -183,7 +193,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void SelectionScreenUpdate_Planet()
     {
-        SelectionLevels[CurrentLevelSelection].transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
+        SelectedWorld.transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
     }
     Touch RememberedTouch;
 
@@ -269,9 +279,33 @@ public class ArcoreDeployer : MonoBehaviour
     public void SetNextObject()
     {
         //Temporary level select hardcode method
-        //GameObjPrefab = Arr_LevelsOBJ[CurrentLevelSelection];
+        string _ObjName = "";
 
-        string _ObjName = Arr_LevelsOBJ[CurrentLevelSelection].name;
+        switch (CurrentWorldName_Text.text)
+        {
+            case "3DPuzzle World":
+                {
+                    _ObjName = "World01_Stage01";
+                    break;
+                }
+            case "DungeonSweeper World":
+                {
+                    _ObjName = "DungeonSweeper";
+                    break;
+                }
+            case "Platformer World":
+                {
+                    _ObjName = "Level 1";
+                    break;
+                }
+            case "Asteroid World":
+                {
+                    _ObjName = "World05_Stage01";
+                    break;
+                }
+            default:
+                break;
+        }
 
         foreach (GameObject PrefabLevel in Arr_LevelsOBJ)
         {
@@ -290,7 +324,7 @@ public class ArcoreDeployer : MonoBehaviour
         SplashScreen.SetActive(false);
         SelectionScreen.SetActive(false);
         ScreenSpaceCanvas.SetActive(false);
-        SelectionLevels[CurrentLevelSelection].SetActive(false);
+        //SelectionLevels[CurrentLevelSelection].SetActive(false);
 
         if(_GroundObject != null)
         {
@@ -316,8 +350,7 @@ public class ArcoreDeployer : MonoBehaviour
             }
             PauseBar.SetActive(false);
         }
-
-        SelectionLevels[CurrentLevelSelection].SetActive(true);
+        
         _GroundObject.SetActive(false);
         ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
     }
