@@ -61,7 +61,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1202152214143850
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,10 +749,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_Done: 0
+  is_GridApplied: 0
   is_TypeApplied: 0
+  is_PlatformSpawn: 0
   numBomb: 0
   BombSpawnRate: 0
   numNormal: 0
+  GridName: 
   List_Blocks: []
 --- !u!114 &114265790928279712
 MonoBehaviour:
@@ -895,10 +898,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_Done: 0
+  is_GridApplied: 0
   is_TypeApplied: 0
+  is_PlatformSpawn: 0
   numBomb: 0
   BombSpawnRate: 0
   numNormal: 0
+  GridName: 
   List_Blocks: []
 --- !u!114 &114372914702263742
 MonoBehaviour:
@@ -1074,10 +1080,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae9f3452389e1845830551125b4e623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlatformPrefab: {fileID: 1691046625390184, guid: 306cf2cf507132d4fb1b91ceda6f47ff,
+  PlatformPrefab: {fileID: 1141283164936914, guid: 568e72d8987b7b1449df5ff44ad9f5e8,
     type: 2}
-  ExpandSize: {x: 0.1, y: 0, z: 0}
-  List_Platform: []
+  DSManager: {fileID: 1915074231441350}
+  ExpandingSpeed: {x: 0, y: 0, z: 1}
 --- !u!114 &114631810958465812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1101,10 +1107,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_Done: 0
+  is_GridApplied: 0
   is_TypeApplied: 0
+  is_PlatformSpawn: 0
   numBomb: 0
   BombSpawnRate: 0
   numNormal: 0
+  GridName: 
   List_Blocks: []
 --- !u!114 &114666509005366288
 MonoBehaviour:
@@ -1148,10 +1157,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_Done: 0
+  is_GridApplied: 0
   is_TypeApplied: 0
+  is_PlatformSpawn: 0
   numBomb: 0
   BombSpawnRate: 0
   numNormal: 0
+  GridName: 
   List_Blocks: []
 --- !u!114 &114809603033386646
 MonoBehaviour:

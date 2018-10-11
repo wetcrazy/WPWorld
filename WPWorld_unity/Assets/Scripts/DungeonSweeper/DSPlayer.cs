@@ -51,15 +51,13 @@ public class DSPlayer : MonoBehaviour
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
                     _hitedObjScript.m_isTriggered = true;
-                }
-                /*
-                if (_hit.distance <= 0)
-                {
-                    isInAir = false;
-                    isGrounded = true;
-                    isDoubleJUmp = false;
-                }
-                */
+
+                    // LOSE CONDITION
+                    if(_hitedObjScript.m_BlockType == Dungeonsweeper2.BlockType.BOMB)
+                    {
+
+                    }
+                }               
             }
         }
 
@@ -112,12 +110,7 @@ public class DSPlayer : MonoBehaviour
     /// Resets variables when hit the ground 
     /// </summary>   
     private void OnCollisionEnter(Collision col)
-    {
-        if (col.transform.tag != "Blocks")
-        {
-            return;
-        }
-
+    {   
         isInAir = false;
         isGrounded = true;
         isDoubleJUmp = false;
