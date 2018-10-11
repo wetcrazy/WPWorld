@@ -115,25 +115,25 @@ public class Joystick : MonoBehaviour {
 
     void ContrainedJoystick(Vector3 InputPos, Vector3 JoystickBackgroundPosition, Vector3 DragDirection, float DragAngle)
     {
-        float HalfLength = JoystickBallDragLengthLimit * 0.1f;
+        //float HalfLength = JoystickBallDragLengthLimit * 0.1f;
 
-        Vector3 OldPos = JoystickBall.transform.position;
+        //Vector3 OldPos = JoystickBall.transform.position;
 
         //Determine which axis the ball is travelling on
         
-            if (Vector3.Angle(Up, InputPos) <= 45)
+            if (Vector3.Angle(Up, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_FORWARD;
             }
-            else if (Vector3.Angle(-Up, InputPos) <= 45)
+            else if (Vector3.Angle(-Up, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_BACK;
             }
-            else if (Vector3.Angle(Right, InputPos) <= 45)
+            else if (Vector3.Angle(Right, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_RIGHT;
             }
-            else if (Vector3.Angle(-Right, InputPos) <= 45)
+            else if (Vector3.Angle(-Right, DragDirection) <= 45)
             {
                 joystickDirection = JoystickDirection.DIR_LEFT;
             }
