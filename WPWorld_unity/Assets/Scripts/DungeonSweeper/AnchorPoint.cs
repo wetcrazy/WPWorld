@@ -7,6 +7,8 @@ public class AnchorPoint : MonoBehaviour
     [SerializeField]
     private bool is_Done = false;
     [SerializeField]
+    private bool is_GridApplied = false;
+    [SerializeField]
     private bool is_TypeApplied = false;
     [SerializeField]
     private int numBomb;
@@ -21,6 +23,12 @@ public class AnchorPoint : MonoBehaviour
     {
         set { is_Done = value; }
         get { return is_Done; }
+    }
+
+    public bool m_isGridApplied
+    {
+        set { is_GridApplied = value; }
+        get { return is_GridApplied; }
     }
 
     public bool m_isTypeApplied

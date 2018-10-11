@@ -52,7 +52,7 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     private void Awake()
     {
-        GridSetup(List_GridSizesPrefab[1], 0, 10,6);
+        //GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
     }
 
     private void Update()
@@ -60,6 +60,33 @@ public class Dungeonsweeper2 : MonoBehaviour
         var _player = GameObject.FindGameObjectWithTag("Player");
         var _playerScript = _player.GetComponent<DSPlayer>();
 
+        
+        switch (Curr_Level)
+        {
+            case LevelType.LEVEL_ONE:
+                // 1st anchor
+                if(!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
+                {
+                    List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6); 
+                }          
+                break;
+            case LevelType.LEVEL_TWO:
+                // 1st anchor
+                if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
+                {
+                    List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
+                }
+                // 2nd anchor
+                if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
+                {
+                    List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[0], 1, 10, 6);
+                }
+                break;
+        }
+        
         Triggered_Material(_player.transform);
     }
 
@@ -201,11 +228,6 @@ public class Dungeonsweeper2 : MonoBehaviour
     {
         var _anchorScript = List_Anchors[_index].GetComponent<AnchorPoint>();
 
-        if(_anchorScript.m_isTypeApplied) // Once the grid is applied no need to apply again
-        {
-            return;
-        }
-
         var _firstBlockScript = _firstBlock.GetComponent<Blocks>();
         _firstBlockScript.m_BlockType = BlockType.NUMBERED;
                
@@ -241,6 +263,7 @@ public class Dungeonsweeper2 : MonoBehaviour
              
         }
 
+        // Runs after all bombs have been placed
         Numbering(_anchorScript);
     }
 
