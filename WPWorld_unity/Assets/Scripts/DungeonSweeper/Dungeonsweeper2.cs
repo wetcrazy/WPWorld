@@ -52,14 +52,40 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     private void Awake()
     {
-        GridSetup(List_GridSizesPrefab[1], 0, 10,6);
+        //GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
     }
 
     private void Update()
     {
         var _player = GameObject.FindGameObjectWithTag("Player");
         var _playerScript = _player.GetComponent<DSPlayer>();
-
+        
+        switch (Curr_Level)
+        {
+            case LevelType.LEVEL_ONE:
+                // 1st anchor
+                if(!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
+                {
+                    List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6); 
+                }          
+                break;
+            case LevelType.LEVEL_TWO:
+                // 1st anchor
+                if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
+                {
+                    List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
+                }
+                // 2nd anchor
+                if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
+                {
+                    List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[0], 1, 10, 6);
+                }
+                break;
+        }
+        
         Triggered_Material(_player.transform);
     }
 
@@ -83,13 +109,16 @@ public class Dungeonsweeper2 : MonoBehaviour
             }
 
             // Update the variables
-            _anchorScript.mList_Blocks.Add(_child.gameObject);
-            _anchorScript.m_numBomb = _maxBomb;
-            _anchorScript.m_BombSpawnRate = _BombSpawnRate;
+            _anchorScript.mList_Blocks.Add(_child.gameObject);       
 
             // Material
             _child.GetComponent<Renderer>().material.mainTexture = List_BlockMat[1];
         }
+
+        _anchorScript.m_numBomb = _maxBomb;
+        _anchorScript.m_BombSpawnRate = _BombSpawnRate;
+        _anchorScript.m_GridName = _gridPrefab.name;
+        _anchorScript.m_numNormal = _anchorScript.mList_Blocks.Count;
     }
 
     // Material any block that has been triggered
@@ -201,11 +230,6 @@ public class Dungeonsweeper2 : MonoBehaviour
     {
         var _anchorScript = List_Anchors[_index].GetComponent<AnchorPoint>();
 
-        if(_anchorScript.m_isTypeApplied) // Once the grid is applied no need to apply again
-        {
-            return;
-        }
-
         var _firstBlockScript = _firstBlock.GetComponent<Blocks>();
         _firstBlockScript.m_BlockType = BlockType.NUMBERED;
                
@@ -241,6 +265,7 @@ public class Dungeonsweeper2 : MonoBehaviour
              
         }
 
+        // Runs after all bombs have been placed
         Numbering(_anchorScript);
     }
 
@@ -276,5 +301,49 @@ public class Dungeonsweeper2 : MonoBehaviour
 
             _childScript.m_BlockNumberType = (BlockNumberType)_bombCount;
         }
+    }
+
+    // Checks the grid ended
+    private void Check_GridEnded(Transform _playerposition)
+    {
+        // Runs the code where the player is closest to
+        GameObject _closestobj = null;
+        for (int i = 0; i < List_Anchors.Count - 1; i++)
+        {
+            if (i == 0)
+            {
+                _closestobj = List_Anchors[i];
+                continue;
+            }
+
+            if (Vector3.Distance(_playerposition.position, _closestobj.transform.position) > Vector3.Distance(_playerposition.position, List_Anchors[i].transform.position))
+            {
+                _closestobj = List_Anchors[i];
+            }
+        }
+
+        var _AnchorScript = List_Anchors[List_Anchors.IndexOf(_closestobj)].GetComponent<AnchorPoint>();
+
+        // Check the win and lose condition
+        int _triggedblocks = 0;
+        foreach (GameObject _block in _AnchorScript.mList_Blocks)
+        {
+            var _blockScript = _block.GetComponent<Blocks>();
+
+            if(_blockScript.m_isTriggered)
+            {
+                if(_blockScript.m_BlockType == BlockType.NUMBERED)
+                {
+                    _triggedblocks++;
+                }
+            }
+        }
+
+        // WIN
+        if(_triggedblocks == _AnchorScript.m_numNormal)
+        {
+            // WIN CODE
+        }
+
     }
 }

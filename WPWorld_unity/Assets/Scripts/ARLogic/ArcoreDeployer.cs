@@ -285,7 +285,7 @@ public class ArcoreDeployer : MonoBehaviour
         {
             case "3DPuzzle World":
                 {
-                    _ObjName = "3DPuzzleStage1";
+                    _ObjName = "World01_Stage01";
                     break;
                 }
             case "DungeonSweeper World":
@@ -295,7 +295,7 @@ public class ArcoreDeployer : MonoBehaviour
                 }
             case "Platformer World":
                 {
-                    _ObjName = "Level1";
+                    _ObjName = "Level 1";
                     break;
                 }
             case "Asteroid World":

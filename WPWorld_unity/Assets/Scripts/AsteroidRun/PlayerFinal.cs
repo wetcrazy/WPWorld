@@ -40,7 +40,7 @@ public class PlayerFinal : MonoBehaviour {
     // Use this for initialization
     void Start () {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.02f, 0);
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.1f, 0);
         JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
     }
 	
@@ -215,7 +215,7 @@ public class PlayerFinal : MonoBehaviour {
         }
 
         //Rotate the player around the pivot axis to simulate movement on a sphere
-        gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, TempMove * Time.deltaTime);
+        gameObject.transform.RotateAround(SceneControllerScript.PlanetObject.transform.position, gameObject.transform.right, TempMove * PlayerSpeedMultiplier * Time.deltaTime);
     }
 
     void PlayerFall()
