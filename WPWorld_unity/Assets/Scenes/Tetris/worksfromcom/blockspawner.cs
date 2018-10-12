@@ -17,7 +17,8 @@ public class blockspawner : MonoBehaviour {
     List<GameObject> Blockrefs = new List<GameObject>();
 
     List<float> floorchecker = new List<float>();
-
+    List<Vector3> floorposchecker = new List<Vector3>();
+    List<Vector3> floorpos = new List<Vector3>();
     float lowest;
     float mid;
     float highest;
@@ -37,7 +38,7 @@ public class blockspawner : MonoBehaviour {
     List<Vector3> HoliestGrail = new List<Vector3>();
     Vector3 myfinaltranslation;
 
-
+   
     private void Start()
     {
         scaleof = 0.1f;
@@ -50,209 +51,12 @@ public class blockspawner : MonoBehaviour {
        
     }
 
-    private void Update()
-    {
-        
-       
-    }
-
-
-
     void ResetmyBool()
     {
         Transnegx = false;
         Transposx = false;
         Transnegz = false;
         Transposz = false;
-    }
-    void checkmyfloor()
-    {
-        List<float> floorchecker = new List<float>();
-        int layerMask = 1 << 8;
-
-        // This would cast rays only against colliders in layer 8.
-        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-        layerMask = ~layerMask;
-
-        RaycastHit hit;
-        //Debug.Log(this.gameObject.transform.position);
-
-        //greater the distance from my point the lower it is
-
-        lowest = 0.0f;
-        mid = 0.0f;
-        highest = 999.9f;
-        untouchable = 9999.9f;
-        
-
-
-        if (Physics.Raycast(transform.position + new Vector3(-1, 10, 1) * 0.1f, Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-            //print("Found an object Vector3(-1, 0,1)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position+ new Vector3(0, 10, 1) * 0.1f  , Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(0, 0, 1)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position + new Vector3(1, 10, 1) * 0.1f, Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(1, 0, 1)  - distance: " + hit.distance);
-
-        if (Physics.Raycast(transform.position+ new Vector3(-1, 10, 0) * 0.1f , Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(-1, 0,0)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position+ new Vector3(0, 10, 0) * 0.1f  , Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(0, 0, 0)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position+ new Vector3(1, 10, 0) * 0.1f  , Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(1, 0, 0)  - distance: " + hit.distance);
-
-        if (Physics.Raycast(transform.position+ new Vector3(-1, 10, -1) * 0.1f, Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(-1, 0,-1) - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position+ new Vector3(0, 10, -1) * 0.1f , Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(0, 0,-1)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position+ new Vector3(1, 10, -1) * 0.1f , Vector3.down, out hit))
-        {
-            Testmyhighest(hit.distance);
-            Testmylowest(hit.distance);
-        }
-        //print("Found an object Vector3(1, 0,-1)  - distance: " + hit.distance);
-
-
-        ////////////////////////////
-        if (Physics.Raycast(transform.position + new Vector3(-1, 10, 1) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(hit.transform.position.y);
-        }
-        //print("Found an object Vector3(-1, 0,1)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position + new Vector3(0, 10, 1) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-        //print("Found an object Vector3(0, 0, 1)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position + new Vector3(1, 10, 1) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-        //print("Found an object Vector3(1, 0, 1)  - distance: " + hit.distance);
-
-        if (Physics.Raycast(transform.position + new Vector3(-1, 10, 0) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-        //print("Found an object Vector3(-1, 0,0)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position + new Vector3(0, 10, 0) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-        //print("Found an object Vector3(0, 0, 0)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position + new Vector3(1, 10, 0) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-        //print("Found an object Vector3(1, 0, 0)  - distance: " + hit.distance);
-
-        if (Physics.Raycast(transform.position + new Vector3(-1, 10, -1) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-        //print("Found an object Vector3(-1, 0,-1) - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position + new Vector3(0, 10, -1) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-        //print("Found an object Vector3(0, 0,-1)  - distance: " + hit.distance);
-        if (Physics.Raycast(transform.position + new Vector3(1, 10, -1) * 0.1f, Vector3.down, out hit))
-        {
-            floorchecker.Add(lowest - hit.distance);
-        }
-       for(int i = 0;i<9;i++)
-        {
-            Debug.Log(floorchecker[i]);
-        }
-
-        //print("Found an object Vector3(1, 0,-1)  - distance: " + hit.distance);
-
-        //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
-        //{
-
-        //}
-        //Debug.DrawRay(transform.position + new Vector3(1, 0, 1) * 0.1f  ,   transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(0, 0, 1) * 0.1f  ,   transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(-1, 0, 1) * 0.1f ,  transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(1, 0, 0) * 0.1f  ,   transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(0, 0, 0) * 0.1f  ,   transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(-1, 0, 0) * 0.1f ,  transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(1, 0, -1) * 0.1f ,  transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(0, 0, -1) * 0.1f ,  transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        //Debug.DrawRay(transform.position + new Vector3(-1, 0, -1) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        // Does the ray intersect any objects excluding the player layer
-        ////if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
-        ////{
-        ////    Debug.DrawRay(transform.position + new Vector3(1, 0, 1) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(0, 0, 1) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(-1, 0, 1) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(1, 0, 0) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(0, 0, 0) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(-1, 0, 0) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(1, 0, -1) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(0, 0, -1) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(-1, 0, -1) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    //Debug.Log("Did Hit");
-        ////    //Debug.Log(Physics.Raycast)
-        ////}
-        ////else
-        ////{
-        ////    //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    //  Debug.Log("Did not Hit"); Debug.DrawRay(transform.position + new Vector3(1,0,1 ) * 0.1f, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-        ////    Debug.DrawRay(transform.position + new Vector3(0, 0, 1) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    Debug.DrawRay(transform.position + new Vector3(-1, 0, 1) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    Debug.DrawRay(transform.position + new Vector3(1, 0, 0) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    Debug.DrawRay(transform.position + new Vector3(0, 0, 0) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    Debug.DrawRay(transform.position + new Vector3(-1, 0, 0) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    Debug.DrawRay(transform.position + new Vector3(1, 0, -1) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    Debug.DrawRay(transform.position + new Vector3(0, 0, -1) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////    Debug.DrawRay(transform.position + new Vector3(-1, 0, -1) * 0.1f, transform.TransformDirection(Vector3.down) * 1000, Color.white);
-        ////}
-    }
-    void Testmylowest(float lowt)
-    {
-        if (lowt > lowest)
-        {
-            lowest = lowt;
-        }
-    }
-    void Testmyhighest(float hight)
-    {
-        if (hight > highest)
-        {
-            highest = hight;
-        }
     }
     //void Setmyfloor()
     //{
@@ -421,7 +225,7 @@ public class blockspawner : MonoBehaviour {
     IEnumerator Example()
     {
         Wheretofall();
-       // checkmyfloor();
+        checkmyfloor();
         MoreRegret();
         //Instantiate(a, this.gameObject.transform.position + OFFs,rotOFFS);
         //Instantiate(a, this.gameObject.transform.position + OFFs,rotOFFS);
@@ -439,6 +243,7 @@ public class blockspawner : MonoBehaviour {
         this.gameObject.transform.Translate(-currpos.x, 0, -currpos.z, Space.World);
         this.gameObject.transform.Translate(gamex, 0, gamez, Space.World);
     }
+
     void MoreRegret()
     {
         int myrotation = Random.Range(0, 8);
@@ -625,5 +430,98 @@ public class blockspawner : MonoBehaviour {
         fixz = Mathf.Round(this.gameObject.transform.position.z * 10f) / 10f;
         float mynewposz = fixz - myposz;
         this.gameObject.transform.Translate(mynewposx, 0, mynewposz, Space.World);
+    }
+
+    void checkmyfloor()
+    {
+       // Debug.Log(this.gameObject.transform.position);
+        floorchecker = new List<float>();
+        floorposchecker = new List<Vector3>();
+        floorpos = new List<Vector3>();
+        int layerMask = 1 << 8;
+        // This would cast rays only against colliders in layer 8.
+        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+        layerMask = ~layerMask;
+
+        Setraypos();
+
+        RaycastHit hit;
+        //Debug.Log(this.gameObject.transform.position);
+
+        //greater the distance from my point the lower it is
+
+        lowest = 0.0f;
+        mid = 0.0f;
+        highest = 999.9f;
+        untouchable = 9999.9f;
+        
+        for(int rpos = 0; rpos< floorposchecker.Count;rpos++)
+        {
+            if (Physics.Raycast(transform.position + floorposchecker[rpos] * 0.1f, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
+            {
+                Testing(hit);
+            }
+        }
+
+        ////////////////////////////
+       
+        for (int rpos = 0; rpos < floorposchecker.Count; rpos++)
+        {
+            if (Physics.Raycast(transform.position + floorposchecker[rpos] * 0.1f, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
+            {
+                 floorchecker.Add(lowest - hit.distance);
+                 floorpos.Add(hit.transform.position);
+            }
+        }
+
+       
+      
+   
+       for(int i = 0;i<floorposchecker.Count;i++)
+        {
+           // Debug.Log(floorpos + "    " + i);
+           // Debug.Log(floorchecker[i] +"  "+ i );
+        }
+
+      
+    }
+    void Setraypos()
+    {
+        floorposchecker.Add(new Vector3(-1, 10, 1));
+        floorposchecker.Add(new Vector3(0, 10, 1));
+        floorposchecker.Add(new Vector3(1, 10, 1));
+        floorposchecker.Add(new Vector3(-1, 10, 0));
+        floorposchecker.Add(new Vector3(0, 10, 0));
+        floorposchecker.Add(new Vector3(1, 10, 0));
+        floorposchecker.Add(new Vector3(-1, 10, -1));
+        floorposchecker.Add(new Vector3(0, 10, -1));
+        floorposchecker.Add(new Vector3(1, 10, -1));
+    }
+    void Testing(RaycastHit hit)
+    {
+        if (hit.transform.gameObject.name == "Dot Cube(Clone)")
+        {
+            Testmyhighest(hit.distance);
+            Testmylowest(hit.distance);
+        }
+        else if (hit.transform.gameObject.GetComponent<TETRISbehaviour>().firstcollision)
+        {
+            Testmyhighest(hit.distance);
+            Testmylowest(hit.distance);
+        }
+    }
+    void Testmylowest(float lowt)
+    {
+        if (lowt > lowest)
+        {
+            lowest = lowt;
+        }
+    }
+    void Testmyhighest(float hight)
+    {
+        if (hight > highest)
+        {
+            highest = hight;
+        }
     }
 }

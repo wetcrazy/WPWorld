@@ -5,7 +5,7 @@ using UnityEngine;
 public class TETRISbehaviour : MonoBehaviour {
 
    // private bool maystop;
-    private bool firstcollision;
+    public bool firstcollision;
     private bool collided;
     private bool magic;
     List<Vector3> directions;
@@ -42,7 +42,7 @@ public class TETRISbehaviour : MonoBehaviour {
         else if(firstcollision && collided && !magic)
         {
             AdjustTransform();
-            magic = true;
+            //magic = true;
            // StartCoroutine(Stall());
            // Debug.Log("blob");
         }
@@ -92,12 +92,12 @@ public class TETRISbehaviour : MonoBehaviour {
         {
             if(firstcollision)
             {
-                Debug.Log("Im still colliding");
+            //    Debug.Log("Im still colliding");
             }
             else
             {
 
-                Debug.Log("imcolliding for the first time");
+              //  Debug.Log("imcolliding for the first time");
             }
             collided = true;
             //maystop = true;
@@ -108,14 +108,14 @@ public class TETRISbehaviour : MonoBehaviour {
         }
         if(collision.gameObject.CompareTag("OOB"))//out of bounds
         {
-            Debug.Log("hi im outside");
+         //   Debug.Log("hi im outside");
         }
     }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Block"))
         {
-            Debug.Log("oh snap stay");
+         //   Debug.Log("oh snap stay");
         }
     }
 
