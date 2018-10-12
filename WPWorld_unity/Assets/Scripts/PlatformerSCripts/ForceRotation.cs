@@ -11,6 +11,11 @@ public class ForceRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.eulerAngles = Vector3.zero;
+
 	}
+
+    private void Awake()
+    {
+        transform.eulerAngles = Vector3.zero;
+    }
 }

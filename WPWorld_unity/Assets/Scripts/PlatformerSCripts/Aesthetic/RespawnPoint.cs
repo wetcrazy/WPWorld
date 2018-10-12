@@ -33,7 +33,7 @@ public class RespawnPoint : MonoBehaviour {
         }
 	}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (Interacted)
             return;
