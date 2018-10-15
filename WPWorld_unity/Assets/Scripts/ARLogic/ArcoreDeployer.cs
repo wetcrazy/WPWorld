@@ -289,9 +289,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void RestartLevel()
     {
-        //DestroyCurrentLevel();
-        //SetNextObject();
-        //Spawner(RememberedTouch);
+        
     }
 
     // Add a new Object using point on screen and ARCore
