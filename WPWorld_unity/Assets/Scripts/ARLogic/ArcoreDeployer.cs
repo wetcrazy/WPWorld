@@ -196,6 +196,8 @@ public class ArcoreDeployer : MonoBehaviour
         {
             _GroundObject.SetActive(false);
         }
+
+        DebugText.text = "Exit";
     }
 
     public void ToSelectionScreen_Planet()
@@ -287,9 +289,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void RestartLevel()
     {
-        //DestroyCurrentLevel();
-        //SetNextObject();
-        //Spawner(RememberedTouch);
+        
     }
 
     // Add a new Object using point on screen and ARCore
