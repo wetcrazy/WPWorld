@@ -6,6 +6,7 @@ public class DSPlayer : MonoBehaviour
 {
     public float JumpSpeed;
     public float MAX_UPSPEED;
+    public GameObject Manager;
 
     private bool isInAir = false;
     private bool isGrounded = true;
@@ -109,11 +110,17 @@ public class DSPlayer : MonoBehaviour
     /// <summary>
     /// Resets variables when hit the ground 
     /// </summary>   
-    private void OnCollisionEnter(Collision col)
+    private void OnCollisionEnter(Collision other)
     {   
         isInAir = false;
         isGrounded = true;
         isDoubleJUmp = false;
+
+        if (other.gameObject.tag == "Killbox")
+        {
+            var _pos = Manager.GetComponent<Dungeonsweeper2>().Get_Player_AnchorPosition(gameObject.transform);         
+            Rb.MovePosition(_pos + transform.forward * Time.deltaTime);
+        }
     }
-    
+
 }
