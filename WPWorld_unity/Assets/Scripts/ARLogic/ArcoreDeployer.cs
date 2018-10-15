@@ -15,7 +15,7 @@ public class ArcoreDeployer : MonoBehaviour
         SCREEN_SELECTION_UNIVERSE,
         SCREEN_SELECTION_PLANET,
         SCREEN_GAME,
-        
+
         SCREEN_TOTAL
     }
     STATE_SCREEN ScreenState;
@@ -32,54 +32,35 @@ public class ArcoreDeployer : MonoBehaviour
 
     // UI Objects
     //[SerializeField]
-    //GameObject[] SelectionLevels;
-    [SerializeField]
-    GameObject CurrentWorldName;
-    [SerializeField]
-    Button WorldSelectBtn;
-    [SerializeField]
-    GameObject ScreenSpaceCanvas;
-    [SerializeField]
-    GameObject PauseBar;
     [SerializeField]
     GameObject UniverseObj;
     [SerializeField]
     GameObject SelectedWorld;
+    [SerializeField]
+    Text CurrentWorldName;
+    [SerializeField]
+    Button WorldSelectBtn;
 
-    Text CurrentWorldName_Text;
+    [SerializeField]
+    Text DebugText;
 
-    //int CurrentLevelSelection = 0;
+    private GameObject[] SplashScreenObjects;
+    private GameObject[] SelectionScreen_PlanetsObjects;
+    private GameObject[] GameScreenObjects;
 
     //UI Logic Variables
     [SerializeField]
     float WorldRotationSpeed = 10;
-
-    //Screens
-    [SerializeField]
-    GameObject SelectionScreen;
-    [SerializeField]
-    GameObject SplashScreen;
-    [SerializeField]
-    GameObject GameScreen;
-
+    
     private void Start()
     {
-        SplashScreen.SetActive(true);
-        SelectionScreen.SetActive(false);
-        GameScreen.SetActive(false);
-        ScreenSpaceCanvas.SetActive(false);
-        PauseBar.SetActive(false);
+        SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
+        SelectionScreen_PlanetsObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Planets");
+        GameScreenObjects = GameObject.FindGameObjectsWithTag("GameScreen");
 
-        ScreenState = STATE_SCREEN.SCREEN_SPLASH;
-
-        //SelectionLevels[0].SetActive(true);
-        //CurrentWorldName_Text.text = SelectionLevels[0].name;
-        //for (int i = 1; i < SelectionLevels.Length; ++i)
-        //{
-        //    SelectionLevels[i].SetActive(false);
-        //}
-
-        CurrentWorldName_Text = CurrentWorldName.GetComponent<Text>();
+        ExitSelectionScreen_Planet();
+        ExitGameScreen();
+        ToSplashScreen();
 
         Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
         Color NewColor = WorldSelectButtonImage.color;
@@ -93,13 +74,6 @@ public class ArcoreDeployer : MonoBehaviour
         {
             case STATE_SCREEN.SCREEN_SPLASH:
                 {
-                    //if (!SplashScreen.activeSelf)
-                    //{
-                    //    SplashScreen.SetActive(true);
-                    //    GameScreen.SetActive(false);
-                    //    SelectionScreen.SetActive(false);
-                    //}
-
                     SplashScreenUpdate();
                     break;
                 }
@@ -123,15 +97,44 @@ public class ArcoreDeployer : MonoBehaviour
         }
     }
 
-    private void SplashScreenUpdate()
+    private void ToSplashScreen()
+    {
+        ScreenState = STATE_SCREEN.SCREEN_SPLASH;
+
+        foreach (GameObject obj in SplashScreenObjects)
+        {
+            obj.SetActive(true);
+        }
+    }
+
+    public void SplashScreenUpdate()
     {
         if (Input.touchCount > 0)
         {
+            ExitSplashScreen();
             ToSelectionScreen_Universe();
 
             // Gets all Planes that are track and put it into the list
             Session.GetTrackables(List_AllPlanes);
         }
+    }
+
+    public void ExitSplashScreen()
+    {
+        foreach (GameObject obj in SplashScreenObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+
+    public void ToSelectionScreen_Universe()
+    {
+        if (_GroundObject != null)
+        {
+            _GroundObject.SetActive(true);
+        }
+
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION_UNIVERSE;
     }
 
     private void SelectionScreenUpdate_Universe()
@@ -157,18 +160,10 @@ public class ArcoreDeployer : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Planet")
                 {
-                    //for (int i = 0; i < SelectionLevels.Length; ++i)
-                    //{
-                    //    if(SelectionLevels[i] == hit.transform.gameObject)
-                    //    {
-                    //        CurrentLevelSelection = i;
-
-                    //        break;
-                    //    }
-                    //}
-
-                    CurrentWorldName_Text.text = hit.transform.gameObject.name;
+                    CurrentWorldName.text = hit.transform.gameObject.name;
                     SelectedWorld.GetComponent<MeshRenderer>().material = hit.transform.gameObject.GetComponent<MeshRenderer>().material;
+
+                    ExitSelectionScreen_Universe();
                     ToSelectionScreen_Planet();
                 }
             }
@@ -191,11 +186,58 @@ public class ArcoreDeployer : MonoBehaviour
         }
     }
 
+    public void ExitSelectionScreen_Universe(bool DestroyUniverse = false)
+    {
+        if (DestroyUniverse)
+        {
+            DestroyCurrentLevel();
+        }
+        else if (_GroundObject != null)
+        {
+            _GroundObject.SetActive(false);
+        }
+    }
+
+    public void ToSelectionScreen_Planet()
+    {
+        foreach (GameObject obj in SelectionScreen_PlanetsObjects)
+        {
+            obj.SetActive(true);
+        }
+
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
+    }
+
     private void SelectionScreenUpdate_Planet()
     {
         SelectedWorld.transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
     }
-    Touch RememberedTouch;
+
+    public void ExitSelectionScreen_Planet(bool DestroyUniverse = false)
+    {
+        if (DestroyUniverse)
+        {
+            DestroyCurrentLevel();
+        }
+
+        foreach (GameObject obj in SelectionScreen_PlanetsObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+
+    public void ToGameScreen()
+    {
+        foreach (GameObject obj in GameScreenObjects)
+        {
+            obj.SetActive(true);
+        }
+
+        ScreenState = STATE_SCREEN.SCREEN_GAME;
+        isSpawned = false;
+
+        SetNextObject();
+    }
 
     private void GameScreenUpdate()
     {
@@ -204,39 +246,50 @@ public class ArcoreDeployer : MonoBehaviour
 
         if (!isSpawned && Input.touchCount > 0)
         {
-            RememberedTouch = Input.GetTouch(0);
-            Spawner(RememberedTouch);
-        }
-        else if (GameObjPrefab == null)
-        {
-            isSpawned = false;
-            ToSelectionScreen_Planet();
-            return;
+            Spawner(Input.GetTouch(0));
         }
 
         foreach (DetectedPlane thePlane in List_AllPlanes)
         {
             if (thePlane.TrackingState == TrackingState.Stopped)
             {
-                DestroyCurrentLevel();
-                ToSelectionScreen_Universe();
+                ExitGameScreen();
+                ToSelectionScreen_Planet();
                 break;
             }
         }
     }
 
-    public void DestroyCurrentLevel()
+    public void ExitGameScreen()
     {
-        //Destroy(GameObjPrefab);
-        Destroy(_GroundObject);
-        GameObjPrefab = null;
+        DestroyCurrentLevel();
+        isSpawned = false;
+
+        foreach (GameObject obj in GameScreenObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+
+    private void DestroyCurrentLevel()
+    {
+        if (_GroundObject != null)
+        {
+            Destroy(_GroundObject);
+            _GroundObject = null;
+        }
+
+        if (GameObjPrefab != null)
+        {
+            GameObjPrefab = null;
+        }
     }
 
     public void RestartLevel()
     {
-        DestroyCurrentLevel();
-        SetNextObject();
-        Spawner(RememberedTouch);
+        //DestroyCurrentLevel();
+        //SetNextObject();
+        //Spawner(RememberedTouch);
     }
 
     // Add a new Object using point on screen and ARCore
@@ -276,12 +329,12 @@ public class ArcoreDeployer : MonoBehaviour
 
 
     // Sets the next game object (Works like a scene manager)
-    public void SetNextObject()
+    private void SetNextObject()
     {
         //Temporary level select hardcode method
         string _ObjName = "";
 
-        switch (CurrentWorldName_Text.text)
+        switch (CurrentWorldName.text)
         {
             case "3DPuzzle World":
                 {
@@ -313,63 +366,8 @@ public class ArcoreDeployer : MonoBehaviour
             {
                 DestroyCurrentLevel();
                 GameObjPrefab = PrefabLevel;
-                ToGameScreen();
                 break;
             }
-        }
-    }
-
-    public void ToSelectionScreen_Universe()
-    {
-        SplashScreen.SetActive(false);
-        SelectionScreen.SetActive(false);
-        ScreenSpaceCanvas.SetActive(false);
-        //SelectionLevels[CurrentLevelSelection].SetActive(false);
-
-        if(_GroundObject != null)
-        {
-            _GroundObject.SetActive(true);
-        }
-
-        ScreenState = STATE_SCREEN.SCREEN_SELECTION_UNIVERSE;
-    }
-
-    public void ToSelectionScreen_Planet()
-    {
-        if (!SelectionScreen.activeSelf)
-        {
-            SelectionScreen.SetActive(true);
-            SplashScreen.SetActive(false);
-            GameScreen.SetActive(false);
-            ScreenSpaceCanvas.SetActive(true);
-
-            PauseManager PauseBarScript = PauseBar.GetComponent<PauseManager>();
-            if (PauseBarScript.isPauseBarOpen)
-            {
-                PauseBarScript.PauseButtonDown();
-            }
-            PauseBar.SetActive(false);
-        }
-        
-        _GroundObject.SetActive(false);
-        ScreenState = STATE_SCREEN.SCREEN_SELECTION_PLANET;
-    }
-
-   public void ToGameScreen()
-    {
-        if (GameObjPrefab != null)
-        {
-            if (!GameScreen.activeSelf)
-            {
-                GameScreen.SetActive(true);
-                SplashScreen.SetActive(false);
-                SelectionScreen.SetActive(false);
-                ScreenSpaceCanvas.SetActive(false);
-                PauseBar.SetActive(true);
-            }
-            
-            ScreenState = STATE_SCREEN.SCREEN_GAME;
-            isSpawned = false;
         }
     }
 }

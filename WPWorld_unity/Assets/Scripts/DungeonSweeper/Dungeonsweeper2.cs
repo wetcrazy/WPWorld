@@ -349,8 +349,32 @@ public class Dungeonsweeper2 : MonoBehaviour
 
 
     // Public methods
+
     public void Level_Select(LevelType _level)
     {
         Curr_Level = _level;
+    }
+
+
+    public Vector3 Get_Player_AnchorPosition(Transform _playerposition)
+    {     
+        GameObject _closestobj = null;
+        for (int i = 0; i < List_Anchors.Count - 1; i++)
+        {
+            if (i == 0)
+            {
+                _closestobj = List_Anchors[i];
+                continue;
+            }
+
+            if (Vector3.Distance(_playerposition.position, _closestobj.transform.position) > Vector3.Distance(_playerposition.position, List_Anchors[i].transform.position))
+            {
+                _closestobj = List_Anchors[i];
+            }
+        }
+
+        var _pos = List_Anchors[List_Anchors.IndexOf(_closestobj)].transform.position;
+
+        return _pos;
     }
 }
