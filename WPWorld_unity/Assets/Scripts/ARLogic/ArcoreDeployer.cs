@@ -196,6 +196,8 @@ public class ArcoreDeployer : MonoBehaviour
         {
             _GroundObject.SetActive(false);
         }
+
+        DebugText.text = "Exit";
     }
 
     public void ToSelectionScreen_Planet()
