@@ -32,35 +32,23 @@ public class ArcoreDeployer : MonoBehaviour
 
     // UI Objects
     //[SerializeField]
-    //GameObject[] SelectionLevels;
-    [SerializeField]
-    GameObject CurrentWorldName;
-    [SerializeField]
-    Button WorldSelectBtn;
-    [SerializeField]
-    GameObject ScreenSpaceCanvas;
-    [SerializeField]
-    GameObject PauseBar;
     [SerializeField]
     GameObject UniverseObj;
-    [SerializeField]
-    GameObject SelectedWorld;
+
+    private List<GameObject> SplashScreenObjects = new List<GameObject>();
+    private List<GameObject> SelectionScreen_PlanetsObjects = new List<GameObject>();
+    private List<GameObject> GameScreenObjects = new List<GameObject>();
 
     Text CurrentWorldName_Text;
-
-    //int CurrentLevelSelection = 0;
 
     //UI Logic Variables
     [SerializeField]
     float WorldRotationSpeed = 10;
 
-    //Screens
-    [SerializeField]
-    GameObject SelectionScreen;
-    [SerializeField]
-    GameObject SplashScreen;
-    [SerializeField]
-    GameObject GameScreen;
+    private void Awake()
+    {
+        SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");   
+    }
 
     private void Start()
     {
