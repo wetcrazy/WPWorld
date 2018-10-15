@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dungeonsweeper2 : MonoBehaviour
 {
@@ -50,6 +51,9 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     public object _objScript { get; private set; }
 
+    public List<Text> RC_Text;
+
+
     private void Awake()
     {
         //GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
@@ -87,6 +91,25 @@ public class Dungeonsweeper2 : MonoBehaviour
         }
         
         Triggered_Material(_player.transform);
+
+
+        foreach (GameObject _anchor in List_Anchors)
+        {
+            int _count = 0;
+            var _anchorScript = _anchor.GetComponent<AnchorPoint>();
+            foreach (GameObject _block in _anchorScript.mList_Blocks)
+            {
+                var _blockScript = _block.GetComponent<Blocks>();   
+                if(!_blockScript.m_isTriggered)
+                {
+                    if(_blockScript.m_BlockType == BlockType.NUMBERED)
+                    {
+                        _count += 1;
+                    }
+                }
+            }
+            RC_Text[List_Anchors.IndexOf(_anchor)].text = _count.ToString();
+        }
     }
 
     // Spawns the grid and save the data
@@ -349,8 +372,32 @@ public class Dungeonsweeper2 : MonoBehaviour
 
 
     // Public methods
+
     public void Level_Select(LevelType _level)
     {
         Curr_Level = _level;
+    }
+
+
+    public Vector3 Get_Player_AnchorPosition(Transform _playerposition)
+    {     
+        GameObject _closestobj = null;
+        for (int i = 0; i < List_Anchors.Count - 1; i++)
+        {
+            if (i == 0)
+            {
+                _closestobj = List_Anchors[i];
+                continue;
+            }
+
+            if (Vector3.Distance(_playerposition.position, _closestobj.transform.position) > Vector3.Distance(_playerposition.position, List_Anchors[i].transform.position))
+            {
+                _closestobj = List_Anchors[i];
+            }
+        }
+
+        var _pos = List_Anchors[List_Anchors.IndexOf(_closestobj)].transform.position;
+
+        return _pos;
     }
 }
