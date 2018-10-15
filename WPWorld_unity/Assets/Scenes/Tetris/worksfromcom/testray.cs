@@ -19,7 +19,7 @@ public class testray : MonoBehaviour {
 
         //}
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
-            print("Found an object - distance: " + hit.distance);
+     //       print("Found an object - distance: " + hit.distance);
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
         {
