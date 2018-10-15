@@ -59,7 +59,10 @@ public class TPSLogic : MonoBehaviour {
                 || Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
-                if (Input.GetKeyDown(KeyCode.Space) && !RestrictJump && hit.transform.gameObject.GetComponent<Renderer>().isVisible)
+                if (Input.GetKeyDown(KeyCode.Space)
+                    &&!RestrictJump
+                    && hit.transform.GetComponent<Renderer>()
+                    && hit.transform.GetComponent<Renderer>().isVisible)
                 {
                     if (JumpSFX != null)
 
@@ -95,7 +98,7 @@ public class TPSLogic : MonoBehaviour {
                 || Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
                 // Checks if the object that the bottom raycasts that's hitting is visible
-                if(hit.transform.GetComponent<Renderer>().isVisible)
+                if(hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible)
                 {
                     if (Physics.Raycast(transform.position, -transform.right.normalized, out hit, transform.lossyScale.x * 1.25f)
                         || Physics.Raycast(transform.position, transform.right.normalized, out hit, transform.lossyScale.x * 1.25f)
@@ -103,7 +106,7 @@ public class TPSLogic : MonoBehaviour {
                         || Physics.Raycast(transform.position, transform.forward.normalized, out hit, transform.lossyScale.x * 1.25f))
                     {
                         // Checks if the object that left and right raycast that's hitting is visible
-                        if(hit.transform.gameObject.GetComponent<Renderer>().isVisible)
+                        if (hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible)
                         {
                             RaycastHit hit2, hit3, hit4, hit5;
 
@@ -114,11 +117,11 @@ public class TPSLogic : MonoBehaviour {
                                 && Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit4, transform.lossyScale.y * 1.5f)
                                 && Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit5, transform.lossyScale.y * 1.5f))
                             {
-                                if (hit.transform.gameObject.GetComponent<Renderer>().isVisible
-                                    && hit2.transform.gameObject.GetComponent<Renderer>().isVisible
-                                    && hit3.transform.gameObject.GetComponent<Renderer>().isVisible
-                                    && hit4.transform.gameObject.GetComponent<Renderer>().isVisible
-                                    && hit5.transform.gameObject.GetComponent<Renderer>().isVisible)
+                                if (hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible
+                                    && hit2.transform.GetComponent<Renderer>() && hit2.transform.GetComponent<Renderer>().isVisible
+                                    && hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible
+                                    && hit4.transform.GetComponent<Renderer>() && hit4.transform.GetComponent<Renderer>().isVisible
+                                    && hit5.transform.GetComponent<Renderer>() && hit5.transform.GetComponent<Renderer>().isVisible)
                                 {
                                     Debug.Log("All five is hitting, so ignore!");
                                     IsGrounded = true;

@@ -26,7 +26,12 @@ public class DumbAI : MonoBehaviour {
 
     public void UpdateTheThing()
     {
-        MovePlatform.position = Vector3.Lerp(MovePlatform.position, Newpos, time * Time.deltaTime); // move to designated position
+        //MovePlatform.position = Vector3.Lerp(MovePlatform.position, Newpos, time * Time.deltaTime); // move to designated position
+        MovePlatform.position = Vector3.MoveTowards(MovePlatform.position, Newpos, time * Time.deltaTime); // move to designated position
+        if (MovePlatform.transform.position == Newpos)
+        {
+            ChangeTarget();
+        }
     }
 
     // Update is called once per frame
@@ -51,7 +56,8 @@ public class DumbAI : MonoBehaviour {
             CurrState = "Moving to right";
             Newpos = EndPos.position;
         }
-        Invoke("ChangeTarget", resettime);
+        //Invoke("ChangeTarget", resettime);
+        
     }
     private void OnCollisionEnter(Collision collision)
     {

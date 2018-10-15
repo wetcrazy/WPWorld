@@ -27,6 +27,9 @@ public class SpawnOnCollide : MonoBehaviour {
     private AudioClip ItemEnemySFX;
 
     [SerializeField]
+    private GameObject Item;
+
+    [SerializeField]
     private GameObject Enemy;
 
     private Renderer RenderRef;
@@ -78,10 +81,12 @@ public class SpawnOnCollide : MonoBehaviour {
                             case (SPAWNTYPE.ITEM):
                                 if (ItemEnemySFX != null && SoundSystemRef != null)
                                     SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
+                                Instantiate(Item, this.transform.position, Quaternion.identity);
                                 break;
                             case (SPAWNTYPE.ENEMY):
                                 if (ItemEnemySFX != null && SoundSystemRef != null)
                                     SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
+                                Instantiate(Enemy, this.transform.position, Quaternion.identity);
                                 break;
                         }
                     }
