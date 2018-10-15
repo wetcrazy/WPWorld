@@ -75,7 +75,7 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
+                    GridSetup(List_GridSizesPrefab[1], 0, 6, 6);
                 }
                 // 2nd anchor
                 if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
@@ -345,5 +345,12 @@ public class Dungeonsweeper2 : MonoBehaviour
             _AnchorScript.m_isdone = true;
         }
 
+    }
+
+
+    // Public methods
+    public void Level_Select(LevelType _level)
+    {
+        Curr_Level = _level;
     }
 }
