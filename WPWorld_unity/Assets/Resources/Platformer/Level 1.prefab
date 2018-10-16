@@ -5411,7 +5411,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4906358097824540}
-  - component: {fileID: 114949469560659594}
+  - component: {fileID: 114828512797319982}
   m_Layer: 0
   m_Name: Level 1
   m_TagString: Untagged
@@ -28715,6 +28715,7 @@ MonoBehaviour:
   CoinSFX: {fileID: 8300000, guid: 10112bf84bbaee04cb24103b4c712b0a, type: 3}
   BounceCoin: {fileID: 1453655935875998, guid: 4ebc3261d36d8094eb7d92c95eee4c34, type: 2}
   ItemEnemySFX: {fileID: 0}
+  Item: {fileID: 0}
   Enemy: {fileID: 0}
 --- !u!114 &114142375060695516
 MonoBehaviour:
@@ -28790,6 +28791,7 @@ MonoBehaviour:
   CoinSFX: {fileID: 8300000, guid: 10112bf84bbaee04cb24103b4c712b0a, type: 3}
   BounceCoin: {fileID: 1453655935875998, guid: 4ebc3261d36d8094eb7d92c95eee4c34, type: 2}
   ItemEnemySFX: {fileID: 0}
+  Item: {fileID: 0}
   Enemy: {fileID: 0}
 --- !u!114 &114158832315361954
 MonoBehaviour:
@@ -29752,6 +29754,7 @@ MonoBehaviour:
   CoinSFX: {fileID: 8300000, guid: 10112bf84bbaee04cb24103b4c712b0a, type: 3}
   BounceCoin: {fileID: 1453655935875998, guid: 4ebc3261d36d8094eb7d92c95eee4c34, type: 2}
   ItemEnemySFX: {fileID: 0}
+  Item: {fileID: 0}
   Enemy: {fileID: 0}
 --- !u!114 &114465817780102804
 MonoBehaviour:
@@ -30734,6 +30737,7 @@ MonoBehaviour:
   CoinSFX: {fileID: 8300000, guid: 10112bf84bbaee04cb24103b4c712b0a, type: 3}
   BounceCoin: {fileID: 1453655935875998, guid: 4ebc3261d36d8094eb7d92c95eee4c34, type: 2}
   ItemEnemySFX: {fileID: 0}
+  Item: {fileID: 0}
   Enemy: {fileID: 0}
 --- !u!114 &114815925142952230
 MonoBehaviour:
@@ -30790,6 +30794,18 @@ MonoBehaviour:
   AmountOfDebris: 4
   Debris: {fileID: 1885821988590580, guid: 95d227731538da74a819d339e2d6fdd8, type: 2}
   DestroySFX: {fileID: 8300000, guid: 77052c6ce4061fd41b03200a9d893bf5, type: 3}
+--- !u!114 &114828512797319982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1900130708535058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e403d8c695a104dac1aeb83e2c65e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGM: {fileID: 8300000, guid: 4e61186c5a7e1414b946eefa7e8dabae, type: 3}
 --- !u!114 &114829600036968718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -31128,17 +31144,6 @@ MonoBehaviour:
   SetMovementSpeed: 0
   AfterLeaveX: 0
   AfterLeaveZ: 0
---- !u!114 &114949469560659594
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1900130708535058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8c1a60243913d44bb6a6fd05b7e1f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114950875175376008
 MonoBehaviour:
   m_ObjectHideFlags: 1
