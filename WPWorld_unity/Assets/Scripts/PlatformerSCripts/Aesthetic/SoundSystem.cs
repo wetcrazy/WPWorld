@@ -28,7 +28,9 @@ public class SoundSystem : MonoBehaviour {
 
     public void PlayBGM(AudioClip n_BGM)
     {
+        BGM.GetComponent<AudioSource>().Stop();
         BGM.GetComponent<AudioSource>().clip = n_BGM;
+        BGM.GetComponent<AudioSource>().Play();
     }
 
     public void PlaySFX(AudioClip n_SFX)
