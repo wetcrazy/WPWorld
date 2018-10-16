@@ -12,6 +12,8 @@ public class TrapCollider : MonoBehaviour
     public float speed = 1;
     private Renderer Renderout;
     private bool mooveout = false;
+    [SerializeField]
+    private AudioClip what;
     public Vector3 GetTrapPos()
     {
         return TrapPos;
@@ -61,6 +63,7 @@ public class TrapCollider : MonoBehaviour
             mooveout = true;
             Renderout.enabled = true;
             Debug.Log("Surprise.");
+            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(what);
         }
     }
 

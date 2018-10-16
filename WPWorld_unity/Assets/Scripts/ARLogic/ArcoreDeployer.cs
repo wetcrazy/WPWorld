@@ -14,6 +14,7 @@ public class ArcoreDeployer : MonoBehaviour
         SCREEN_SPLASH,
         SCREEN_SELECTION_UNIVERSE,
         SCREEN_SELECTION_PLANET,
+        SCREEN_SELECTION_STAGE,
         SCREEN_GAME,
 
         SCREEN_TOTAL
@@ -40,25 +41,42 @@ public class ArcoreDeployer : MonoBehaviour
     Text CurrentWorldName;
     [SerializeField]
     Button WorldSelectBtn;
+    [SerializeField]
+    GameObject StageSelect;
 
     [SerializeField]
     Text DebugText;
 
     private GameObject[] SplashScreenObjects;
     private GameObject[] SelectionScreen_PlanetsObjects;
+    private GameObject[] SelectionScreen_StageObjects;
     private GameObject[] GameScreenObjects;
 
     //UI Logic Variables
     [SerializeField]
     float WorldRotationSpeed = 10;
-    
+    [SerializeField]
+    float DistanceBetweenStageSelectButtons = 10;
+    [SerializeField]
+    int World01NumStages_PuzzleMaze = 3;
+    [SerializeField]
+    int World02NumStages_Tetris = 3;
+    [SerializeField]
+    int World03NumStages_Platformer = 3;
+    [SerializeField]
+    int World04NumStages_DungeonSweeper = 1;
+    [SerializeField]
+    int World05NumStages_AsteroidRun = 1;
+
     private void Start()
     {
         SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
         SelectionScreen_PlanetsObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Planets");
+        SelectionScreen_StageObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Stage");
         GameScreenObjects = GameObject.FindGameObjectsWithTag("GameScreen");
 
         ExitSelectionScreen_Planet();
+        ExitSelectionScreen_Stage();
         ExitGameScreen();
         ToSplashScreen();
 
@@ -228,6 +246,116 @@ public class ArcoreDeployer : MonoBehaviour
         }
     }
 
+    public void ToSelectionScreen_Stage()
+    {
+        int NumOfStages = 0;
+
+        switch (CurrentWorldName.text)
+        {
+            case "Puzzle Maze World":
+                {
+                    NumOfStages = World01NumStages_PuzzleMaze; 
+                    break;
+                }
+            case "Platformer World":
+                {
+                    NumOfStages = World03NumStages_Platformer;
+                    break;
+                }
+            case "DungeonSweeper World":
+                {
+                    NumOfStages = World04NumStages_DungeonSweeper;
+                    break;
+                }
+            
+            case "Asteroid World":
+                {
+                    NumOfStages = World05NumStages_AsteroidRun;
+                    break;
+                }
+            default:
+                break;
+        }
+
+        DebugText.text = NumOfStages.ToString();
+        GameObject StageSelectBtn = Instantiate(Resources.Load<GameObject>("StageSelectButton"), StageSelect.transform, false);
+        StageSelectBtn.GetComponent<RectTransform>().localPosition = new Vector3(0, (NumOfStages - 1) * (DistanceBetweenStageSelectButtons * 0.5f), 0);
+        StageSelectBtn.name = "Stage01";
+        StageSelectBtn.transform.GetChild(0).GetComponent<Text>().text = "Stage 01";
+        Vector3 localPos = StageSelectBtn.GetComponent<RectTransform>().localPosition;
+
+        if (NumOfStages > 1)
+        {
+            for (int i = 1; i < NumOfStages; ++i)
+            {
+                GameObject theStageSelectBtn = Instantiate(Resources.Load<GameObject>("StageSelectButton"), StageSelect.transform, false);
+                localPos.y -= (i * DistanceBetweenStageSelectButtons);
+                theStageSelectBtn.GetComponent<RectTransform>().localPosition = localPos;
+                theStageSelectBtn.name = "Stage0" + (i + 1).ToString();
+                theStageSelectBtn.transform.GetChild(0).GetComponent<Text>().text = "Stage 0" + (i + 1).ToString();
+            }
+        }
+
+        foreach (GameObject obj in SelectionScreen_StageObjects)
+        {
+            obj.SetActive(true);
+        }
+
+        ScreenState = STATE_SCREEN.SCREEN_SELECTION_STAGE;
+    }
+
+    public void SelectStage()
+    {
+        string WorldNum = "";
+
+        switch (CurrentWorldName.text)
+        {
+            case "Puzzle Maze World":
+                {
+                    WorldNum = "World01";
+                    break;
+                }
+            case "Platformer World":
+                {
+                    WorldNum = "World03";
+                    break;
+                }
+            case "DungeonSweeper World":
+                {
+                    WorldNum = "World04";
+                    break;
+                }
+            
+            case "Asteroid World":
+                {
+                    WorldNum = "World05";
+                    break;
+                }
+            default:
+                break;
+        }
+        
+        SetNextObject(WorldNum + '_' + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
+    }
+
+    public void ExitSelectionScreen_Stage(bool DestroyUniverse = false)
+    {
+        if (DestroyUniverse)
+        {
+            DestroyCurrentLevel();
+        }
+
+        for (int i = 0; i < StageSelect.transform.childCount; ++i)
+        {
+            Destroy(StageSelect.transform.GetChild(i));
+        }
+
+        foreach (GameObject obj in SelectionScreen_StageObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+
     public void ToGameScreen()
     {
         foreach (GameObject obj in GameScreenObjects)
@@ -238,7 +366,7 @@ public class ArcoreDeployer : MonoBehaviour
         ScreenState = STATE_SCREEN.SCREEN_GAME;
         isSpawned = false;
 
-        SetNextObject();
+        //SetNextObject();
     }
 
     private void GameScreenUpdate()
@@ -329,40 +457,11 @@ public class ArcoreDeployer : MonoBehaviour
 
 
     // Sets the next game object (Works like a scene manager)
-    private void SetNextObject()
+    private void SetNextObject(string StageName)
     {
-        //Temporary level select hardcode method
-        string _ObjName = "";
-
-        switch (CurrentWorldName.text)
-        {
-            case "3DPuzzle World":
-                {
-                    _ObjName = "World01_Stage01";
-                    break;
-                }
-            case "DungeonSweeper World":
-                {
-                    _ObjName = "DungeonSweeper";
-                    break;
-                }
-            case "Platformer World":
-                {
-                    _ObjName = "Level 1";
-                    break;
-                }
-            case "Asteroid World":
-                {
-                    _ObjName = "World05_Stage01";
-                    break;
-                }
-            default:
-                break;
-        }
-
         foreach (GameObject PrefabLevel in Arr_LevelsOBJ)
         {
-            if (_ObjName == PrefabLevel.name)
+            if (StageName == PrefabLevel.name)
             {
                 DestroyCurrentLevel();
                 GameObjPrefab = PrefabLevel;
