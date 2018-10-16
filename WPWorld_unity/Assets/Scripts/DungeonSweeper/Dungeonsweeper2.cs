@@ -51,7 +51,8 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     public object _objScript { get; private set; }
 
-    public List<Text> RC_Text;
+    public Text RC_Count, RC_Point;
+    public GameObject Lose_text;
 
 
     private void Awake()
@@ -90,26 +91,51 @@ public class Dungeonsweeper2 : MonoBehaviour
                 break;
         }
         
-        Triggered_Material(_player.transform);
+        Triggered_Material(_player.transform);                
 
-
-        foreach (GameObject _anchor in List_Anchors)
+        // TEXT STUFF
+        // Closest anchor to the player
+        GameObject _closestobj = null;
+        for (int i = 0; i < List_Anchors.Count - 1; i++)
         {
-            int _count = 0;
-            var _anchorScript = _anchor.GetComponent<AnchorPoint>();
-            foreach (GameObject _block in _anchorScript.mList_Blocks)
+            if (i == 0)
             {
-                var _blockScript = _block.GetComponent<Blocks>();   
-                if(!_blockScript.m_isTriggered)
+                _closestobj = List_Anchors[i];
+                continue;
+            }
+
+            if (Vector3.Distance(_player.transform.position, _closestobj.transform.position) > Vector3.Distance(_player.transform.position, List_Anchors[i].transform.position))
+            {
+                _closestobj = List_Anchors[i];
+            }
+        }
+
+        var _anchor = List_Anchors[List_Anchors.IndexOf(_closestobj)];
+
+        RC_Point.text = _anchor.name.ToString() + " = ";     
+
+        int _count = 0;
+        var _anchorScript = _anchor.GetComponent<AnchorPoint>();
+        foreach (GameObject _block in _anchorScript.mList_Blocks)
+        {
+            var _blockScript = _block.GetComponent<Blocks>();
+            if (!_blockScript.m_isTriggered)
+            {
+                if (_blockScript.m_BlockType == BlockType.NUMBERED)
                 {
-                    if(_blockScript.m_BlockType == BlockType.NUMBERED)
-                    {
-                        _count += 1;
-                    }
+                    _count += 1;
+                }             
+            }
+            else
+            {
+                if (_blockScript.m_BlockType == BlockType.BOMB)
+                {
+                    var _tempText = Lose_text.GetComponent<Text>();
+                    _tempText.enabled = true;
                 }
             }
-            RC_Text[List_Anchors.IndexOf(_anchor)].text = _count.ToString();
         }
+        RC_Count.text = _count.ToString();
     }
 
     // Spawns the grid and save the data
@@ -370,7 +396,6 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     }
 
-
     // Public methods
 
     public void Level_Select(LevelType _level)
@@ -399,5 +424,42 @@ public class Dungeonsweeper2 : MonoBehaviour
         var _pos = List_Anchors[List_Anchors.IndexOf(_closestobj)].transform.position;
 
         return _pos;
+    }
+
+    // Reset variables 
+    public void Reset_Level()
+    {
+        var _player = GameObject.FindGameObjectWithTag("Player");
+        var _playerRB = _player.GetComponent<Rigidbody>();
+
+        // Blocks and grid deletion 
+        foreach (GameObject _anchor in List_Anchors)
+        {
+            var _anchorScript = _anchor.GetComponent<AnchorPoint>();
+            foreach (GameObject _block in _anchorScript.mList_Blocks)
+            {
+                Destroy(_block);
+            }
+            _anchorScript.mList_Blocks.Clear();
+            _anchorScript.Reset_Variables();
+
+            var _temp = _anchor.GetComponentsInChildren<Transform>();
+            foreach (Transform _delete in _temp)
+            {
+                if(_delete.gameObject.tag != "Anchor")
+                {
+                    Destroy(_delete.gameObject);
+                }
+            }
+        }
+
+        // Player position
+        var _pos = Get_Player_AnchorPosition(_player.transform);
+  
+        _pos.y = 0.5f;
+        _playerRB.MovePosition(_pos + transform.forward * Time.deltaTime);
+
+        var _tempText = Lose_text.GetComponent<Text>();
+        _tempText.enabled = false;
     }
 }

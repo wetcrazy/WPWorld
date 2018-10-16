@@ -51,13 +51,7 @@ public class DSPlayer : MonoBehaviour
                 if (_hit.distance <= _hit.transform.localScale.x / 10)
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
-                    _hitedObjScript.m_isTriggered = true;
-
-                    // LOSE CONDITION
-                    if(_hitedObjScript.m_BlockType == Dungeonsweeper2.BlockType.BOMB)
-                    {
-
-                    }
+                    _hitedObjScript.m_isTriggered = true;                   
                 }               
             }
         }
@@ -118,7 +112,9 @@ public class DSPlayer : MonoBehaviour
 
         if (other.gameObject.tag == "Killbox")
         {
-            var _pos = Manager.GetComponent<Dungeonsweeper2>().Get_Player_AnchorPosition(gameObject.transform);         
+            var _pos = Manager.GetComponent<Dungeonsweeper2>().Get_Player_AnchorPosition(gameObject.transform);
+            Debug.Log(_pos);
+            _pos.y = 0.5f;
             Rb.MovePosition(_pos + transform.forward * Time.deltaTime);
         }
     }
