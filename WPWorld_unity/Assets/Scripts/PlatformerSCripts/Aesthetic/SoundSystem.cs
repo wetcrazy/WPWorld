@@ -15,20 +15,18 @@ public class SoundSystem : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            PlayBGM(TestClip);
-            BGM.GetComponent<AudioSource>().Play();
-        }
+
     }
 
     public void PlayBGM(AudioClip n_BGM)
     {
+        BGM.GetComponent<AudioSource>().Stop();
         BGM.GetComponent<AudioSource>().clip = n_BGM;
+        BGM.GetComponent<AudioSource>().Play();
     }
 
     public void PlaySFX(AudioClip n_SFX)

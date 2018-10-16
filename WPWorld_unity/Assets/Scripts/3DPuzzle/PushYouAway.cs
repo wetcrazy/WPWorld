@@ -5,8 +5,11 @@ using UnityEngine;
 public class PushYouAway : MonoBehaviour {
     Vector3 direction = new Vector3(0, 0, 90);
     float pushspeed = 2.0f;
-	// Use this for initialization
-	void Start () {
+
+    [SerializeField]
+    private AudioClip what;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -17,10 +20,12 @@ public class PushYouAway : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name == "Capsule")
+        if(collision.gameObject.name == "Player")
         {
+            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(what);
             Debug.Log("GG");
             collision.transform.Translate(pushspeed,0,0);
+
         }
     }
 }
