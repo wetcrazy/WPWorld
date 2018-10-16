@@ -377,7 +377,7 @@ public class blockspawner : MonoBehaviour {
            
         }
 
-        //L BLOCK
+        //L 
         //0,1,1 horizontal
         if (((Floorchecker[0] == 0) && (Floorchecker[1] == 1) && (Floorchecker[2] == 1)) ||
             ((Floorchecker[3] == 0) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1)) ||
@@ -527,10 +527,10 @@ public class blockspawner : MonoBehaviour {
                     {
                         rotpos = Random.Range(0, BlockPossibleRots.Count);
 
-                        if ( (BlockPossibleRots.Equals(Rotations[0]))||
-                             (BlockPossibleRots.Equals(Rotations[2]))||
-                             (BlockPossibleRots.Equals(Rotations[8]))||
-                             (BlockPossibleRots.Equals(Rotations[10])))
+                        if((BlockPossibleRots.Equals(Rotations[0]))  ||
+                           (BlockPossibleRots.Equals(Rotations[2]))  ||
+                           (BlockPossibleRots.Equals(Rotations[8]))  ||
+                           (BlockPossibleRots.Equals(Rotations[10])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
                             {
@@ -548,14 +548,92 @@ public class blockspawner : MonoBehaviour {
                         }
                        
 
-                        if ((BlockPossibleRots.Equals(Rotations[16])) ||
-                            (BlockPossibleRots.Equals(Rotations[22])) ||
-                            (BlockPossibleRots.Equals(Rotations[18])) ||
+                        if((BlockPossibleRots.Equals(Rotations[16])) ||
+                            (BlockPossibleRots.Equals(Rotations[22])))
+                        {
+                            if((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
+                            {
+                                PossiblePOS.Add(top);
+                            } 
+                            if((Floorchecker[1] == 0) && (Floorchecker[2] == 0))
+                            {
+                                PossiblePOS.Add(topright);
+                            } 
+                            if((Floorchecker[3] == 0) && (Floorchecker[4] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }  
+                            if((Floorchecker[4] == 0) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            } 
+                            if((Floorchecker[6] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(bot);
+                            }  
+                            if((Floorchecker[7] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(botright);
+                            }
+                        }
+
+                        if((BlockPossibleRots.Equals(Rotations[18])) ||
                             (BlockPossibleRots.Equals(Rotations[20])))
+                        {
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
+                            {
+                                PossiblePOS.Add(topleft);
+                            }
+                            if ((Floorchecker[1] == 0) && (Floorchecker[2] == 0))
+                            {
+                                PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[4] == 0) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[6] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(botleft);
+                            }
+                            if ((Floorchecker[7] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
+                        }
+
+                        if((BlockPossibleRots.Equals(Rotations[1]))  ||
+                           (BlockPossibleRots.Equals(Rotations[3]))  ||
+                           (BlockPossibleRots.Equals(Rotations[9]))  ||
+                           (BlockPossibleRots.Equals(Rotations[11])))
+                        {
+                            if  ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if  ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if  ((Floorchecker[2] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            }
+                        }
+
+                        if((BlockPossibleRots.Equals(Rotations[17])) ||
+                           (BlockPossibleRots.Equals(Rotations[23])) ||
+                           (BlockPossibleRots.Equals(Rotations[19])) ||
+                           (BlockPossibleRots.Equals(Rotations[21])))
                         {
 
                         }
-                            break;
+
+                        break;
                     }
 
                 }
