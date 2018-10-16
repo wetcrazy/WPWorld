@@ -335,7 +335,7 @@ public class ArcoreDeployer : MonoBehaviour
                 break;
         }
         
-        SetNextObject(WorldNum + '_' + UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
+        SetNextObject(WorldNum + '_' + "Stage01");
     }
 
     public void ExitSelectionScreen_Stage(bool DestroyUniverse = false)
@@ -366,7 +366,7 @@ public class ArcoreDeployer : MonoBehaviour
         ScreenState = STATE_SCREEN.SCREEN_GAME;
         isSpawned = false;
 
-        //SetNextObject();
+        SelectStage();
     }
 
     private void GameScreenUpdate()
