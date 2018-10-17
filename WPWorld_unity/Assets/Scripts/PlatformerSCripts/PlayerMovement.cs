@@ -105,6 +105,26 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     n_Forward = Camera.main.transform.forward;
                     n_Forward.y = 0;
+                    if(Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                    {
+                        //Prioritize X Dir over Z dir
+                        if (n_Forward.x > 0)
+                            n_Forward.x = Mathf.Round(n_Forward.x);
+                        else
+                            n_Forward.x = Mathf.Floor(n_Forward.x);
+
+                        n_Forward.z = 0;
+                    }
+                    else
+                    {
+                        //Prioritize Z Dir over X dir
+                        if (n_Forward.z > 0)
+                            n_Forward.z = Mathf.Round(n_Forward.z);
+                        else
+                            n_Forward.z = Mathf.Floor(n_Forward.z);
+
+                        n_Forward.x = 0;
+                    }
                     gameObject.transform.forward = n_Forward;
                     break;
                 }
@@ -112,6 +132,26 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     n_Forward = Camera.main.transform.right;
                     n_Forward.y = 0;
+                    if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                    {
+                        //Prioritize X Dir over Z dir
+                        if (n_Forward.x > 0)
+                            n_Forward.x = Mathf.Round(n_Forward.x);
+                        else
+                            n_Forward.x = Mathf.Floor(n_Forward.x);
+
+                        n_Forward.z = 0;
+                    }
+                    else
+                    {
+                        //Prioritize Z Dir over X dir
+                        if (n_Forward.z > 0)
+                            n_Forward.z = Mathf.Round(n_Forward.z);
+                        else
+                            n_Forward.z = Mathf.Floor(n_Forward.z);
+
+                        n_Forward.x = 0;
+                    }
                     gameObject.transform.forward = n_Forward;
                     break;
                 }
@@ -119,6 +159,26 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     n_Forward = Camera.main.transform.right;
                     n_Forward.y = 0;
+                    if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                    {
+                        //Prioritize X Dir over Z dir
+                        if (n_Forward.x > 0)
+                            n_Forward.x = Mathf.Round(n_Forward.x);
+                        else
+                            n_Forward.x = Mathf.Floor(n_Forward.x);
+
+                        n_Forward.z = 0;
+                    }
+                    else
+                    {
+                        //Prioritize Z Dir over X dir
+                        if (n_Forward.z > 0)
+                            n_Forward.z = Mathf.Round(n_Forward.z);
+                        else
+                            n_Forward.z = Mathf.Floor(n_Forward.z);
+
+                        n_Forward.x = 0;
+                    }
                     gameObject.transform.forward = -n_Forward;
                     break;
                 }
@@ -126,6 +186,26 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     n_Forward = Camera.main.transform.forward;
                     n_Forward.y = 0;
+                    if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                    {
+                        //Prioritize X Dir over Z dir
+                        if (n_Forward.x > 0)
+                            n_Forward.x = Mathf.Round(n_Forward.x);
+                        else
+                            n_Forward.x = Mathf.Floor(n_Forward.x);
+
+                        n_Forward.z = 0;
+                    }
+                    else
+                    {
+                        //Prioritize Z Dir over X dir
+                        if (n_Forward.z > 0)
+                            n_Forward.z = Mathf.Round(n_Forward.z);
+                        else
+                            n_Forward.z = Mathf.Floor(n_Forward.z);
+
+                        n_Forward.x = 0;
+                    }
                     gameObject.transform.forward = -n_Forward;
                     break;
                 }
