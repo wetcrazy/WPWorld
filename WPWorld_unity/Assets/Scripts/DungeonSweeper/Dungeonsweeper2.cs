@@ -189,11 +189,12 @@ public class Dungeonsweeper2 : MonoBehaviour
             }
         }
 
-        var _AnchorScript = List_Anchors[List_Anchors.IndexOf(_closestobj)].GetComponent<AnchorPoint>();
+        var _AnchorScript = List_Anchors[List_Anchors.IndexOf(_closestobj)].GetComponent<AnchorPoint>();     
 
         // Minesweeper logic    
         foreach (GameObject _block in _AnchorScript.mList_Blocks)
-        {
+        {         
+            // Change material
             var _blockScript = _block.GetComponent<Blocks>();
             var _blockMat = _block.GetComponent<Renderer>().material;
 
@@ -432,6 +433,7 @@ public class Dungeonsweeper2 : MonoBehaviour
         var _player = GameObject.FindGameObjectWithTag("Player");
         var _playerRB = _player.GetComponent<Rigidbody>();
 
+        /*
         // Blocks and grid deletion 
         foreach (GameObject _anchor in List_Anchors)
         {
@@ -448,9 +450,22 @@ public class Dungeonsweeper2 : MonoBehaviour
             {
                 if(_delete.gameObject.tag != "Anchor")
                 {
-                    Destroy(_delete.gameObject);
+                    Destroy(_delete.gameObject);             
                 }
             }
+        }
+        */
+
+        foreach(GameObject _anchor in List_Anchors)
+        {
+            var _anchorScript = _anchor.GetComponent<AnchorPoint>();
+            if(_anchor.transform.childCount == 1)
+            {
+                DestroyImmediate(_anchor.transform.GetChild(0).gameObject);
+            }
+           
+            _anchorScript.mList_Blocks.Clear();
+            _anchorScript.Reset_Variables();
         }
 
         // Player position
