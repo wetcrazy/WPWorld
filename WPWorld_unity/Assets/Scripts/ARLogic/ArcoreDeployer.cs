@@ -418,7 +418,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void RestartLevel()
     {
-        
+        _GroundObject.SendMessage("Reset_Level");
     }
 
     // Add a new Object using point on screen and ARCore

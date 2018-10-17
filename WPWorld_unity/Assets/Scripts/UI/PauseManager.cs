@@ -68,7 +68,7 @@ public class PauseManager : MonoBehaviour {
         {
             DisablePauseBar();
         }
-        else //If Pause Bar is closed 
+        else //If Pause Bar is closed
         {
             EnablePauseBar();
             //isFirstTouchDown = true;
