@@ -17,8 +17,6 @@ public class PlayerFinal : MonoBehaviour {
     float DebuffDuration = 5;
     [SerializeField]
     float TurnSpeed = 0.5f;
-    [SerializeField]
-    GameObject JoystickObject;
 
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;

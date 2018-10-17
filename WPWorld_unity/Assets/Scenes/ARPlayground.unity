@@ -429,12 +429,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &341448722 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114926123937859014, guid: a3c22b46e578a4d4fb8accb19f23fbbf,
-    type: 2}
-  m_PrefabInternal: {fileID: 977280929}
-  m_Script: {fileID: 11500000, guid: d4ce5df9b127c2e4c99d0cae784201a4, type: 3}
 --- !u!1 &372595394
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,14 +746,14 @@ RectTransform:
   m_GameObject: {fileID: 424056732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2242059, y: 1.224206, z: 1.224206}
+  m_LocalScale: {x: 1.6471921, y: 1.6471919, z: 1.6471919}
   m_Children: []
   m_Father: {fileID: 1298617826}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 273, y: 187}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 690, y: 211}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &424056734
@@ -801,7 +795,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 341448722}
+      - m_Target: {fileID: 1443994253}
         m_MethodName: ExitSelectionScreen_Planet
         m_Mode: 6
         m_Arguments:
@@ -812,7 +806,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 341448722}
+      - m_Target: {fileID: 1443994253}
         m_MethodName: ToSelectionScreen_Universe
         m_Mode: 1
         m_Arguments:
@@ -1372,7 +1366,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 341448722}
+      - m_Target: {fileID: 0}
         m_MethodName: RestartLevel
         m_Mode: 1
         m_Arguments:
@@ -1535,7 +1529,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 341448722}
+      - m_Target: {fileID: 1443994253}
         m_MethodName: ExitSelectionScreen_Planet
         m_Mode: 6
         m_Arguments:
@@ -1544,10 +1538,10 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 341448722}
-        m_MethodName: ToGameScreen
+      - m_Target: {fileID: 1443994253}
+        m_MethodName: ToSelectionScreen_Stage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1600,7 +1594,7 @@ RectTransform:
   m_GameObject: {fileID: 957634357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.9450169, y: 10.642118, z: 0.919335}
+  m_LocalScale: {x: 4.706503, y: 25.75154, z: 2.2245846}
   m_Children: []
   m_Father: {fileID: 1298617826}
   m_RootOrder: 0
@@ -1678,78 +1672,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 975768377}
---- !u!1001 &977280929
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4125752930465590, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114926123937859014, guid: a3c22b46e578a4d4fb8accb19f23fbbf,
-        type: 2}
-      propertyPath: MainCamera
-      value: 
-      objectReference: {fileID: 387910915}
-    - target: {fileID: 114926123937859014, guid: a3c22b46e578a4d4fb8accb19f23fbbf,
-        type: 2}
-      propertyPath: SelectedWorld
-      value: 
-      objectReference: {fileID: 2057363951}
-    - target: {fileID: 114926123937859014, guid: a3c22b46e578a4d4fb8accb19f23fbbf,
-        type: 2}
-      propertyPath: CurrentWorldName
-      value: 
-      objectReference: {fileID: 1796604484}
-    - target: {fileID: 114926123937859014, guid: a3c22b46e578a4d4fb8accb19f23fbbf,
-        type: 2}
-      propertyPath: WorldSelectBtn
-      value: 
-      objectReference: {fileID: 957634358}
-    - target: {fileID: 114926123937859014, guid: a3c22b46e578a4d4fb8accb19f23fbbf,
-        type: 2}
-      propertyPath: StageSelect
-      value: 
-      objectReference: {fileID: 460268551}
-    - target: {fileID: 114926123937859014, guid: a3c22b46e578a4d4fb8accb19f23fbbf,
-        type: 2}
-      propertyPath: DebugText
-      value: 
-      objectReference: {fileID: 1026814694}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a3c22b46e578a4d4fb8accb19f23fbbf, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &986299930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1807,7 +1729,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 341448722}
+      - m_Target: {fileID: 1679076714}
+        m_MethodName: PauseButtonDown
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1443994253}
         m_MethodName: ExitGameScreen
         m_Mode: 1
         m_Arguments:
@@ -1818,8 +1751,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 341448722}
-        m_MethodName: ToSelectionScreen_Universe
+      - m_Target: {fileID: 1443994253}
+        m_MethodName: ToSelectionScreen_Stage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1975,14 +1908,14 @@ RectTransform:
   m_GameObject: {fileID: 1026814692}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.59585786, y: 0.5958578, z: 0.5958578}
+  m_LocalScale: {x: 1.4778775, y: 1.477878, z: 1.477878}
   m_Children: []
   m_Father: {fileID: 1473548158}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -70, y: 88}
+  m_AnchoredPosition: {x: -192, y: 88}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1026814694
@@ -2364,7 +2297,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1298617826}
-  - component: {fileID: 1298617827}
   m_Layer: 5
   m_Name: PlanetSelection Buttons
   m_TagString: SelectionScreen_Planets
@@ -2392,17 +2324,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1298617827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1298617825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1400710353
 GameObject:
   m_ObjectHideFlags: 0
@@ -2418,7 +2339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1400710354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2442,6 +2363,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1443994252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1443994254}
+  - component: {fileID: 1443994253}
+  m_Layer: 0
+  m_Name: AR Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1443994253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1443994252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4ce5df9b127c2e4c99d0cae784201a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCamera: {fileID: 387910915}
+  Arr_LevelsOBJ:
+  - {fileID: 1869095435665628, guid: c7a9e0b67b1d8e64bb64b38325643d4e, type: 2}
+  - {fileID: 1900130708535058, guid: 57de27558763f2046852ed018fc93c0f, type: 2}
+  - {fileID: 1702827417383946, guid: 1995217a28c0aff48a9a74c933073cc9, type: 2}
+  - {fileID: 1978971912818060, guid: 21951c6a1be626f4c87cee389334f992, type: 2}
+  UniverseObj: {fileID: 1586531558205422, guid: c8f8242d9b728d74680817922d9d1669,
+    type: 2}
+  SelectedWorld: {fileID: 2057363951}
+  CurrentWorldName: {fileID: 1796604484}
+  WorldSelectBtn: {fileID: 957634358}
+  StageSelect: {fileID: 460268551}
+  StageSelectBtn: {fileID: 1836122363054446, guid: 50e25d3a950d5bc41ac5d9c291fba082,
+    type: 2}
+  DebugText: {fileID: 1026814694}
+  WorldRotationSpeed: 10
+  DistanceBetweenStageSelectButtons: 300
+  World01NumStages_PuzzleMaze: 3
+  World02NumStages_Tetris: 3
+  World03NumStages_Platformer: 3
+  World04NumStages_DungeonSweeper: 1
+  World05NumStages_AsteroidRun: 1
+--- !u!4 &1443994254
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1443994252}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455426656
 GameObject:
@@ -2553,7 +2536,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -3061,8 +3044,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1679076712}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.060008116}
-  m_LocalScale: {x: 3.300952, y: 3.30095, z: 519.3307}
+  m_LocalPosition: {x: 0, y: 0, z: 0.060008}
+  m_LocalScale: {x: 7.0918026, y: 7.091798, z: 1115.7358}
   m_Children:
   - {fileID: 278584990}
   - {fileID: 986299934}
@@ -3073,7 +3056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.4138184, y: -16.708069}
+  m_AnchoredPosition: {x: -31, y: -40}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1679076714
@@ -3119,14 +3102,14 @@ RectTransform:
   m_GameObject: {fileID: 1683223819}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2242137, y: 1.2242137, z: 1.2242137}
+  m_LocalScale: {x: 1.6472027, y: 1.6472024, z: 1.6472024}
   m_Children: []
   m_Father: {fileID: 460268552}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 273, y: 187.00003}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 690, y: 211.00018}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1683223821
@@ -3168,7 +3151,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 341448722}
+      - m_Target: {fileID: 1443994253}
         m_MethodName: ExitSelectionScreen_Stage
         m_Mode: 6
         m_Arguments:
@@ -3179,7 +3162,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 341448722}
+      - m_Target: {fileID: 1443994253}
         m_MethodName: ToSelectionScreen_Planet
         m_Mode: 1
         m_Arguments:
@@ -3523,7 +3506,7 @@ RectTransform:
   m_GameObject: {fileID: 2073534201}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0656922, y: 1.8567678, z: 1.8567678}
   m_Children:
   - {fileID: 975768378}
   m_Father: {fileID: 1473548158}

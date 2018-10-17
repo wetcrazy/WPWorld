@@ -197,7 +197,7 @@ public class SceneControlFinal : MonoBehaviour {
 
     void SpawnObstacle()
     {
-        GameObject ObstacleObj = (GameObject)Instantiate(Resources.Load("Asteroid_Run/Obstacle"));
+        GameObject ObstacleObj = Instantiate(Resources.Load<GameObject>("Asteroid_Run/Obstacle"), gameObject.transform.parent);
         ObstacleObj.GetComponent<ObstacleScript>().ObstacleInit(PlanetObject);
 
         //Assign a random pos on planet to the obstacle
@@ -218,9 +218,10 @@ public class SceneControlFinal : MonoBehaviour {
     void SpawnAsteroid()
     {
         //Spawn the asteroid in a random pos within the specified min/max distance
-        GameObject AsteroidObject = (GameObject)Instantiate(Resources.Load("Asteroid_Run/Asteroid"),
+        GameObject AsteroidObject = Instantiate(Resources.Load<GameObject>("Asteroid_Run/Asteroid"),
             new Vector3(Random.Range(-MaximumAsteroidDistanceToPlanet, MaximumAsteroidDistanceToPlanet), Random.Range(PlanetObject.transform.position.y - MaximumAsteroidDistanceToPlanet, PlanetObject.transform.position.y + MaximumAsteroidDistanceToPlanet), Random.Range(-MaximumAsteroidDistanceToPlanet, MaximumAsteroidDistanceToPlanet)),
-            transform.rotation);
+            transform.rotation,
+            gameObject.transform.parent);
 
         //Add to list of asteroids
         AsteroidList.Add(AsteroidObject);

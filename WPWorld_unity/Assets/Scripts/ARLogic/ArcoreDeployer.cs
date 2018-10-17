@@ -28,9 +28,7 @@ public class ArcoreDeployer : MonoBehaviour
     private List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     private GameObject GameObjPrefab = null;
     private bool isSpawned = false;
-
-    Vector3 CameraOriginalPos;
-
+    
     // UI Objects
     //[SerializeField]
     [SerializeField]
@@ -43,6 +41,8 @@ public class ArcoreDeployer : MonoBehaviour
     Button WorldSelectBtn;
     [SerializeField]
     GameObject StageSelect;
+    [SerializeField]
+    GameObject StageSelectBtn;
 
     [SerializeField]
     Text DebugText;
@@ -214,8 +214,6 @@ public class ArcoreDeployer : MonoBehaviour
         {
             _GroundObject.SetActive(false);
         }
-
-        DebugText.text = "Exit";
     }
 
     public void ToSelectionScreen_Planet()
@@ -254,7 +252,7 @@ public class ArcoreDeployer : MonoBehaviour
         {
             case "Puzzle Maze World":
                 {
-                    NumOfStages = World01NumStages_PuzzleMaze; 
+                    NumOfStages = World01NumStages_PuzzleMaze;
                     break;
                 }
             case "Platformer World":
@@ -267,7 +265,7 @@ public class ArcoreDeployer : MonoBehaviour
                     NumOfStages = World04NumStages_DungeonSweeper;
                     break;
                 }
-            
+
             case "Asteroid World":
                 {
                     NumOfStages = World05NumStages_AsteroidRun;
@@ -277,21 +275,26 @@ public class ArcoreDeployer : MonoBehaviour
                 break;
         }
 
-        DebugText.text = NumOfStages.ToString();
-        GameObject StageSelectBtn = Instantiate(Resources.Load<GameObject>("StageSelectButton"), StageSelect.transform, false);
-        StageSelectBtn.GetComponent<RectTransform>().localPosition = new Vector3(0, (NumOfStages - 1) * (DistanceBetweenStageSelectButtons * 0.5f), 0);
-        StageSelectBtn.name = "Stage01";
-        StageSelectBtn.transform.GetChild(0).GetComponent<Text>().text = "Stage 01";
-        Vector3 localPos = StageSelectBtn.GetComponent<RectTransform>().localPosition;
+        GameObject FirstStageSelectBtn = Instantiate(StageSelectBtn, StageSelect.transform, false);
+        FirstStageSelectBtn.GetComponent<RectTransform>().localPosition = new Vector3(0, (NumOfStages - 1) * (DistanceBetweenStageSelectButtons * 0.5f), 0);
+        FirstStageSelectBtn.name = "Stage01";
+        FirstStageSelectBtn.transform.GetChild(0).GetComponent<Text>().text = "Stage 01";
+        FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ExitSelectionScreen_Stage(true); });
+        FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { SelectStage(FirstStageSelectBtn.name); });
+        FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameScreen(); });
+        Vector3 localPos = FirstStageSelectBtn.GetComponent<RectTransform>().localPosition;
 
         if (NumOfStages > 1)
         {
             for (int i = 1; i < NumOfStages; ++i)
             {
-                GameObject theStageSelectBtn = Instantiate(Resources.Load<GameObject>("StageSelectButton"), StageSelect.transform, false);
-                localPos.y -= (i * DistanceBetweenStageSelectButtons);
+                GameObject theStageSelectBtn = Instantiate(StageSelectBtn, StageSelect.transform, false);
+                localPos.y -= (DistanceBetweenStageSelectButtons);
                 theStageSelectBtn.GetComponent<RectTransform>().localPosition = localPos;
                 theStageSelectBtn.name = "Stage0" + (i + 1).ToString();
+                theStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ExitSelectionScreen_Stage(true); });
+                theStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { SelectStage(theStageSelectBtn.name); });
+                theStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameScreen(); });
                 theStageSelectBtn.transform.GetChild(0).GetComponent<Text>().text = "Stage 0" + (i + 1).ToString();
             }
         }
@@ -304,7 +307,7 @@ public class ArcoreDeployer : MonoBehaviour
         ScreenState = STATE_SCREEN.SCREEN_SELECTION_STAGE;
     }
 
-    public void SelectStage()
+    public void SelectStage(string StageNum)
     {
         string WorldNum = "";
 
@@ -335,7 +338,7 @@ public class ArcoreDeployer : MonoBehaviour
                 break;
         }
         
-        SetNextObject(WorldNum + '_' + "Stage01");
+        SetNextObject(WorldNum + '_' + StageNum);
     }
 
     public void ExitSelectionScreen_Stage(bool DestroyUniverse = false)
@@ -345,9 +348,9 @@ public class ArcoreDeployer : MonoBehaviour
             DestroyCurrentLevel();
         }
 
-        for (int i = 0; i < StageSelect.transform.childCount; ++i)
+        for (int i = 1; i < StageSelect.transform.childCount; ++i)
         {
-            Destroy(StageSelect.transform.GetChild(i));
+            Destroy(StageSelect.transform.GetChild(i).gameObject);
         }
 
         foreach (GameObject obj in SelectionScreen_StageObjects)
@@ -365,8 +368,6 @@ public class ArcoreDeployer : MonoBehaviour
 
         ScreenState = STATE_SCREEN.SCREEN_GAME;
         isSpawned = false;
-
-        SelectStage();
     }
 
     private void GameScreenUpdate()
