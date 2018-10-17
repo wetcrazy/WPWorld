@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 114267943969708424}
   - component: {fileID: 54445926633045910}
   - component: {fileID: 65300049000105978}
-  - component: {fileID: 136878077339698454}
   - component: {fileID: 65017226456188828}
   m_Layer: 0
   m_Name: Player
@@ -364,18 +363,4 @@ MonoBehaviour:
   PlayerLoseHealthSpeed: 2
   DebuffDuration: 5
   TurnSpeed: 5
-  JoystickObject: {fileID: 0}
   DebuffEffect: 0
---- !u!136 &136878077339698454
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1404458727693476}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 0.683582
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.15820903, z: 0}
