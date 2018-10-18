@@ -15,6 +15,7 @@ public class ArcoreDeployer : MonoBehaviour
         SCREEN_SELECTION_UNIVERSE,
         SCREEN_SELECTION_PLANET,
         SCREEN_SELECTION_STAGE,
+        SCREEN_GAME_MOVEANCHOR,
         SCREEN_GAME,
 
         SCREEN_TOTAL
@@ -22,8 +23,14 @@ public class ArcoreDeployer : MonoBehaviour
     STATE_SCREEN ScreenState;
 
     // Game Objects
-    public Camera MainCamera;
-    public GameObject[] Arr_LevelsOBJ;
+    [SerializeField]
+    Camera MainCamera;
+    [SerializeField]
+    GameObject MainCameraRef;
+    [SerializeField]
+    GameObject[] Arr_LevelsOBJ;
+    [SerializeField]
+    GameObject AnchorRef;
 
     private List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     private GameObject GameObjPrefab = null;
@@ -50,6 +57,7 @@ public class ArcoreDeployer : MonoBehaviour
     private GameObject[] SplashScreenObjects;
     private GameObject[] SelectionScreen_PlanetsObjects;
     private GameObject[] SelectionScreen_StageObjects;
+    private GameObject[] GameMoveAnchorObjects;
     private GameObject[] GameScreenObjects;
 
     //UI Logic Variables
@@ -73,6 +81,7 @@ public class ArcoreDeployer : MonoBehaviour
         SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
         SelectionScreen_PlanetsObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Planets");
         SelectionScreen_StageObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Stage");
+        GameMoveAnchorObjects = GameObject.FindGameObjectsWithTag("GameMoveAnchor");
         GameScreenObjects = GameObject.FindGameObjectsWithTag("GameScreen");
 
         ExitSelectionScreen_Planet();
@@ -88,6 +97,8 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void Update()
     {
+        MainCamera.transform.Rotate(MainCamera.transform.right, 30 * Time.deltaTime);
+
         switch (ScreenState)
         {
             case STATE_SCREEN.SCREEN_SPLASH:
@@ -105,6 +116,11 @@ public class ArcoreDeployer : MonoBehaviour
                     SelectionScreenUpdate_Planet();
                     break;
                 }
+            case STATE_SCREEN.SCREEN_GAME_MOVEANCHOR:
+                {
+                    GameMoveAnchorUpdate();
+                    break;
+                }
             case STATE_SCREEN.SCREEN_GAME:
                 {
                     GameScreenUpdate();
@@ -115,6 +131,7 @@ public class ArcoreDeployer : MonoBehaviour
         }
     }
 
+    //-----SPLASH SCREEN FUNCTIONS-----//
     private void ToSplashScreen()
     {
         ScreenState = STATE_SCREEN.SCREEN_SPLASH;
@@ -144,7 +161,9 @@ public class ArcoreDeployer : MonoBehaviour
             obj.SetActive(false);
         }
     }
+    //-----------------------------------------------------------------//
 
+    //-----SELECTION SCREEN UNIVERSE FUNCTIONS-----//
     public void ToSelectionScreen_Universe()
     {
         if (_GroundObject != null)
@@ -215,7 +234,9 @@ public class ArcoreDeployer : MonoBehaviour
             _GroundObject.SetActive(false);
         }
     }
+    //-----------------------------------------------------------------//
 
+    //-----SELECTION SCREEN PLANET FUNCTIONS-----//
     public void ToSelectionScreen_Planet()
     {
         foreach (GameObject obj in SelectionScreen_PlanetsObjects)
@@ -243,7 +264,10 @@ public class ArcoreDeployer : MonoBehaviour
             obj.SetActive(false);
         }
     }
+    //-----------------------------------------------------------------//
 
+
+    //-----SELECTION SCREEN STAGE FUNCTIONS-----//
     public void ToSelectionScreen_Stage()
     {
         int NumOfStages = 0;
@@ -281,7 +305,8 @@ public class ArcoreDeployer : MonoBehaviour
         FirstStageSelectBtn.transform.GetChild(0).GetComponent<Text>().text = "Stage 01";
         FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ExitSelectionScreen_Stage(true); });
         FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { SelectStage(FirstStageSelectBtn.name); });
-        FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameScreen(); });
+        FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameMoveAnchor(); });
+        //FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameScreen(); });
         Vector3 localPos = FirstStageSelectBtn.GetComponent<RectTransform>().localPosition;
 
         if (NumOfStages > 1)
@@ -358,7 +383,66 @@ public class ArcoreDeployer : MonoBehaviour
             obj.SetActive(false);
         }
     }
+    //-----------------------------------------------------------------//
 
+    //-----GAME MOVE ANCHOR FUNCTIONS-----//
+    public void ToGameMoveAnchor()
+    {
+        foreach (GameObject obj in GameMoveAnchorObjects)
+        {
+            obj.SetActive(true);
+        }
+
+        ScreenState = STATE_SCREEN.SCREEN_GAME;
+        isSpawned = false;
+    }
+
+    public void GameMoveAnchorUpdate()
+    {
+        MainCameraRef.transform.position = MainCamera.transform.position;
+        MainCameraRef.transform.forward = new Vector3(MainCamera.transform.forward.x, MainCamera.transform.position.y, MainCamera.transform.forward.z);
+    }
+
+    public void MoveAnchorForward()
+    {
+        _GroundObject.transform.position += MainCameraRef.transform.forward * Time.deltaTime;
+    }
+
+    public void MoveAnchorBackward()
+    {
+        _GroundObject.transform.position -= MainCameraRef.transform.forward * Time.deltaTime;
+    }
+
+    public void MoveAnchorLeftward()
+    {
+        _GroundObject.transform.position -= MainCameraRef.transform.right * Time.deltaTime;
+    }
+
+    public void MoveAnchorRightward()
+    {
+        _GroundObject.transform.position += MainCameraRef.transform.right * Time.deltaTime;
+    }
+
+    public void MoveAnchorUpward()
+    {
+        _GroundObject.transform.position += MainCameraRef.transform.up * Time.deltaTime;
+    }
+
+    public void MoveAnchorDownward()
+    {
+        _GroundObject.transform.position -= MainCameraRef.transform.up * Time.deltaTime;
+    }
+
+    public void ExitGameMoveAnchor()
+    {
+        foreach (GameObject obj in GameMoveAnchorObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+    //-----------------------------------------------------------------//
+
+    //-----GAME SCREEN FUNCTIONS-----//
     public void ToGameScreen()
     {
         foreach (GameObject obj in GameScreenObjects)
@@ -401,6 +485,7 @@ public class ArcoreDeployer : MonoBehaviour
             obj.SetActive(false);
         }
     }
+    //-----------------------------------------------------------------//
 
     private void DestroyCurrentLevel()
     {
