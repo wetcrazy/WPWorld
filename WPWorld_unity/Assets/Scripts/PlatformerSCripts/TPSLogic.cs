@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TPSLogic : MonoBehaviour {
+public class TPSLogic : MonoBehaviour
+{
 
     [SerializeField]
     private float JumpSpeed;
     [SerializeField]
     private bool IsGrounded = false;
     private bool RestrictJump = false;
+    private bool Colliding = false;
     [SerializeField]
     private AudioClip JumpSFX;
 
@@ -28,24 +30,27 @@ public class TPSLogic : MonoBehaviour {
     private float AirborneMovementSpeed;
     private float OrgSpeed;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         RigidRef = GetComponent<Rigidbody>();
         MovementRef = GetComponent<PlayerMovement>();
 
         OrgSpeed = MovementRef.GetMovementSpeed();
 
         Physics.gravity = new Vector3(0, -5, 0);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         RaycastHit hit;
 
         if (IsGrounded)
         {
-            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
             Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
+
+            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
             Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
 
             Debug.DrawRay(transform.position, (-transform.up - transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
@@ -53,96 +58,72 @@ public class TPSLogic : MonoBehaviour {
 
             MovementRef.SetMovementSpeed(OrgSpeed);
 
-            if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
-                || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
-                || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
-                || Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
-                || Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (Input.GetKeyDown(KeyCode.Space)
-                    &&!RestrictJump
-                    && hit.transform.GetComponent<Renderer>()
-                    && hit.transform.GetComponent<Renderer>().isVisible)
-                {
-                    if (JumpSFX != null)
+                Jump();
+            }
 
-                    Jump();
-                }
+            if (!Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
+                && !Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
+                && !Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
+                && !Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
+                && !Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
+            {
+                IsGrounded = false;
             }
             else
             {
-                IsGrounded = false;
+                if (!hit.transform.GetComponent<Renderer>() || !hit.transform.GetComponent<Renderer>().isVisible)
+                {
+                    IsGrounded = false;
+                }
             }
         }
         else
         {
-            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
             Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
+
+            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
             Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
 
             Debug.DrawRay(transform.position, (-transform.up - transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
             Debug.DrawRay(transform.position, (-transform.up + transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
 
-            Debug.DrawRay(transform.position, -transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
-            Debug.DrawRay(transform.position, transform.right.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
-            Debug.DrawRay(transform.position, -transform.forward.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
-            Debug.DrawRay(transform.position, transform.forward.normalized * transform.lossyScale.x * 1.25f, Color.cyan);
+            Debug.DrawRay(transform.position, -transform.right.normalized * transform.lossyScale.x * 1.1f, Color.cyan);
+            Debug.DrawRay(transform.position, transform.right.normalized * transform.lossyScale.x * 1.1f, Color.cyan);
+            Debug.DrawRay(transform.position, -transform.forward.normalized * transform.lossyScale.z * 1.1f, Color.cyan);
+            Debug.DrawRay(transform.position, transform.forward.normalized * transform.lossyScale.z * 1.1f, Color.cyan);
 
             MovementRef.SetMovementSpeed(AirborneMovementSpeed);
 
-            // Check if any raycast has collided with the floor, may collide with left and right blocks unwillingly
+            RaycastHit hit2, hit3;
+
             if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
                 || Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
-                // Checks if the object that the bottom raycasts that's hitting is visible
-                if(hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible)
+                if (hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    if (Physics.Raycast(transform.position, -transform.right.normalized, out hit, transform.lossyScale.x * 1.25f)
-                        || Physics.Raycast(transform.position, transform.right.normalized, out hit, transform.lossyScale.x * 1.25f)
-                        || Physics.Raycast(transform.position, -transform.forward.normalized, out hit, transform.lossyScale.x * 1.25f)
-                        || Physics.Raycast(transform.position, transform.forward.normalized, out hit, transform.lossyScale.x * 1.25f))
+                    if (Physics.Raycast(transform.position, -transform.right.normalized, out hit, transform.lossyScale.x * 1.1f)
+                        || Physics.Raycast(transform.position, transform.right.normalized, out hit, transform.lossyScale.x * 1.1f)
+                        || Physics.Raycast(transform.position, -transform.forward.normalized, out hit, transform.lossyScale.z * 1.1f)
+                        || Physics.Raycast(transform.position, transform.forward.normalized, out hit, transform.lossyScale.z * 1.1f))
                     {
-                        // Checks if the object that left and right raycast that's hitting is visible
-                        if (hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible)
+                        if ((Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f) && Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit2, transform.lossyScale.y * 1.5f) && Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit3, transform.lossyScale.y * 1.5f))
+                            || (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f) && Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit2, transform.lossyScale.y * 1.5f) && Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit3, transform.lossyScale.y * 1.5f)))
                         {
-                            RaycastHit hit2, hit3, hit4, hit5;
-
-                            // Checks if all 3 raycasts on the bottom is hitting something, otherwise we can determine only one raycast is hitting
-                            if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
-                                && Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit2, transform.lossyScale.y * 1.5f)
-                                && Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit3, transform.lossyScale.y * 1.5f)
-                                && Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit4, transform.lossyScale.y * 1.5f)
-                                && Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit5, transform.lossyScale.y * 1.5f))
-                            {
-                                if (hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible
-                                    && hit2.transform.GetComponent<Renderer>() && hit2.transform.GetComponent<Renderer>().isVisible
-                                    && hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible
-                                    && hit4.transform.GetComponent<Renderer>() && hit4.transform.GetComponent<Renderer>().isVisible
-                                    && hit5.transform.GetComponent<Renderer>() && hit5.transform.GetComponent<Renderer>().isVisible)
-                                {
-                                    Debug.Log("All five is hitting, so ignore!");
-                                    IsGrounded = true;
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log("All five isn't hitting, don't ignore!");
-                                MovementRef.GetDPadInput(Vector3.zero);
-                            }
-                        }
-                        else
-                        {
-                            Debug.Log("Touching left and right, but invisible!");
-                            IsGrounded = true;
+                            if ((hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible) &&
+                                (hit2.transform.GetComponent<Renderer>() && hit2.transform.GetComponent<Renderer>().isVisible) &&
+                                (hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible))
+                                IsGrounded = true;
                         }
                     }
                     else
                     {
-                        Debug.Log("Nothing is touching");
-                        IsGrounded = true;
+                        if(Colliding)
+                            IsGrounded = true;
                     }
                 }
             }
@@ -154,8 +135,13 @@ public class TPSLogic : MonoBehaviour {
         if (!IsGrounded || RestrictJump)
             return;
 
-        if(JumpSFX != null && GameObject.Find("Sound System") != null)
+        if (JumpSFX != null && GameObject.Find("Sound System") != null)
             GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+        PushUp();
+    }
+
+    public void PushUp()
+    {
         RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
         IsGrounded = false;
     }
@@ -177,7 +163,7 @@ public class TPSLogic : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Killbox")
+        if (other.tag == "Killbox")
         {
             Death();
         }
@@ -185,10 +171,20 @@ public class TPSLogic : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             Death();
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        Colliding = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        Colliding = false;
     }
 
     public void Death()

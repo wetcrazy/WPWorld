@@ -137,9 +137,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb6d9ecfe45adf4793eea8d257a0242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrType: 5
+  CurrType: 0
   WalkDirection: 1
   JumpSpeed: 2
   PatrolPointA: {fileID: 0}
   PatrolPointB: {fileID: 0}
   PatrolToA: 0
+  TimeToDecay: 2
+  ScorePopup: {fileID: 1701056272419974, guid: 1b74302078d463a45afd120f9163d72b, type: 2}
+  Score: 200
+  DeathSound: {fileID: 8300000, guid: 0dcf0c0485d50b84d80047bf031d5849, type: 3}

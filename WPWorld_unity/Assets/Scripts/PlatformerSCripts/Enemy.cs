@@ -19,10 +19,12 @@ public class Enemy : MonoBehaviour {
     private ENEMYTYPES CurrType;
 
     [SerializeField]
-    private float WalkDirection;
+    private float WalkSpeed;
 
     [SerializeField]
     private float JumpSpeed;
+
+    private bool IsGrounded;
 
     [SerializeField]
     private GameObject PatrolPointA;
@@ -62,20 +64,20 @@ public class Enemy : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        bool IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y / 2* 1.001f);
+        IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y / 2* 1.001f);
         Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y / 2 * 1.001f), Color.white);
 
         switch (CurrType)
         {
             case (ENEMYTYPES.WALK):
-                RigidRef.MovePosition(RigidRef.position + new Vector3(WalkDirection, 0) * Time.fixedDeltaTime);
+                RigidRef.MovePosition(transform.position + transform.forward * WalkSpeed * Time.fixedDeltaTime);
                 break;
             case (ENEMYTYPES.PATROL):
                 if(PatrolToA)
                 {
                     if(Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.1f)
                     {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
                     }
                     else
                     {
@@ -86,7 +88,7 @@ public class Enemy : MonoBehaviour {
                 {
                     if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.1f)
                     {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
                     }
                     else
                     {
@@ -95,8 +97,8 @@ public class Enemy : MonoBehaviour {
                 }
                 break;
             case (ENEMYTYPES.WALKJUMP):
-                RigidRef.MovePosition(RigidRef.position + new Vector3(WalkDirection, 0) * Time.fixedDeltaTime);
-                if(IsGrounded)
+                RigidRef.MovePosition(transform.position + transform.forward * WalkSpeed * Time.fixedDeltaTime);
+                if (IsGrounded)
                 {
                     RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
                 }
@@ -106,7 +108,7 @@ public class Enemy : MonoBehaviour {
                 {
                     if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.5f)
                     {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
                         if (IsGrounded)
                         {
                             RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
@@ -121,7 +123,7 @@ public class Enemy : MonoBehaviour {
                 {
                     if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.5f)
                     {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
                         if (IsGrounded)
                         {
                             RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
@@ -134,15 +136,10 @@ public class Enemy : MonoBehaviour {
                 }
                 break;
             case (ENEMYTYPES.HIDDENWALKJUMP):
-                if (Hidden)
-                    RigidRef.MovePosition(RigidRef.position + new Vector3(WalkDirection, 0) * Time.fixedDeltaTime);
-                else
+                RigidRef.MovePosition(transform.position + transform.forward * WalkSpeed * Time.fixedDeltaTime);
+                if (IsGrounded && !Hidden)
                 {
-                    RigidRef.MovePosition(RigidRef.position + new Vector3(WalkDirection, 0) * Time.fixedDeltaTime);
-                    if (IsGrounded)
-                    {
-                        RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                    }
+                    RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
                 }
                 break;
             case (ENEMYTYPES.HIDDENPATROLJUMP):
@@ -150,7 +147,7 @@ public class Enemy : MonoBehaviour {
                 {
                     if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.5f)
                     {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
                         if (IsGrounded && !Hidden)
                         {
                             RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
@@ -165,7 +162,7 @@ public class Enemy : MonoBehaviour {
                 {
                     if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.5f)
                     {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkDirection) * Time.fixedDeltaTime);
+                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
                         if (IsGrounded && !Hidden)
                         {
                             RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
@@ -186,13 +183,6 @@ public class Enemy : MonoBehaviour {
                 else
                 {
                     TimeElapsed += Time.deltaTime;
-                    Vector3 ChangedSize = transform.localScale;
-                    if (OrgSize == ChangedSize)
-                    {
-                        ChangedSize.y = ChangedSize.y * 0.5f;
-
-                        transform.localScale = ChangedSize;
-                    }
                 }
                 break;
         }
@@ -219,7 +209,7 @@ public class Enemy : MonoBehaviour {
         {
             CurrType = ENEMYTYPES.DEAD;
             RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-            GetComponents<Collider>()[0].isTrigger = true;
+            GetComponent<Collider>().isTrigger = true;
 
             TimeElapsed = TimeToDecay;
         }
@@ -236,11 +226,24 @@ public class Enemy : MonoBehaviour {
                 if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
                 {
                     CurrType = ENEMYTYPES.DEAD;
-                    Physics.IgnoreCollision(CollidedObject.GetComponent<Collider>(), GetComponent<Collider>());
+                    GetComponent<Collider>().isTrigger = true;
+                    if(IsGrounded)
+                    {
+                        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+                        transform.localScale *= 0.5f;
+                        transform.localScale = new Vector3(OrgSize.x, transform.localScale.y, OrgSize.z);
 
-                    CollidedObject.GetComponent<TPSLogic>().Jump();
+                        transform.position -= new Vector3(0, transform.lossyScale.y * 0.5f, 0);
+                    }
+                    else
+                    {
+                        RigidRef.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+                    }
 
-                    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSound);
+                    CollidedObject.GetComponent<TPSLogic>().PushUp();
+
+                    if(GameObject.Find("Sound System") != null && DeathSound != null)
+                        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSound);
 
                     GameObject n_Score = Instantiate(ScorePopup, transform);
                     n_Score.transform.parent = null;
