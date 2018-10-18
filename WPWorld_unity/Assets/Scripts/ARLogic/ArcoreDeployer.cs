@@ -28,6 +28,7 @@ public class ArcoreDeployer : MonoBehaviour
     private List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     private GameObject GameObjPrefab = null;
     private bool isSpawned = false;
+    private Vector3 FirstTouchWorldPoint = new Vector3();
     
     // UI Objects
     //[SerializeField]
@@ -389,6 +390,8 @@ public class ArcoreDeployer : MonoBehaviour
                 break;
             }
         }
+
+        UpdateOffSet();
     }
 
     public void ExitGameScreen()
@@ -414,6 +417,11 @@ public class ArcoreDeployer : MonoBehaviour
         {
             GameObjPrefab = null;
         }
+
+        if(FirstTouchWorldPoint !=null)
+        {
+            FirstTouchWorldPoint = new Vector3();
+        }
     }
 
     public void RestartLevel()
@@ -438,6 +446,9 @@ public class ArcoreDeployer : MonoBehaviour
             {
                 // Instantiate the object at where it is hit
                 _GroundObject = Instantiate(GameObjPrefab, _hit.Pose.position, _hit.Pose.rotation, transform.parent);
+
+                // Get the position in the world space
+                FirstTouchWorldPoint = _hit.Pose.position;
 
                 // Create an anchor for ARCore to track the point of the real world
                 var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
@@ -468,6 +479,15 @@ public class ArcoreDeployer : MonoBehaviour
                 GameObjPrefab = PrefabLevel;
                 break;
             }
+        }
+    }
+
+    // Shifts the object back if there is an offset
+    private void UpdateOffSet()
+    {
+        if(_GroundObject.transform.position != FirstTouchWorldPoint)
+        {
+            Vector3.Lerp(_GroundObject.transform.position, FirstTouchWorldPoint, 0.1f);
         }
     }
 }
