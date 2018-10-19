@@ -9,16 +9,7 @@ public class PlatformStageScript : MonoBehaviour {
 
     private void Awake()
     {
-<<<<<<< HEAD
         transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
-=======
-        //transform.eulerAngles = Vector3.zero;
-
-        //Vector3 NewPos = Camera.main.transform.position;
-        //NewPos.y = transform.position.y;
-
-        //transform.position = NewPos;
->>>>>>> 57542a85fb71e372953892f625b685cd6663fff6
     }
 
     private void Start()
@@ -34,10 +25,7 @@ public class PlatformStageScript : MonoBehaviour {
     private void Update()
     {
         transform.eulerAngles = Vector3.zero;
-<<<<<<< HEAD
-=======
 
         transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
->>>>>>> 57542a85fb71e372953892f625b685cd6663fff6
     }
 }
