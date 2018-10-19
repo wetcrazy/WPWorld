@@ -413,7 +413,6 @@ public class ArcoreDeployer : MonoBehaviour
         {
             Spawner(Input.GetTouch(0), AnchorRef);
             _GroundObject.GetComponent<MeshRenderer>().enabled = true;
-            _GroundObject.transform.localScale = new Vector3(0.5f, 0.1f, 0.5f);
         }
 
         foreach (DetectedPlane thePlane in List_AllPlanes)
