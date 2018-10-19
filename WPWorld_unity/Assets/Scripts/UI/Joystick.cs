@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Joystick : MonoBehaviour {
+public class Joystick : MonoBehaviour
+{
 
     [SerializeField]
     Button JoystickBall;
@@ -41,7 +42,7 @@ public class Joystick : MonoBehaviour {
         Up = new Vector3(0, JoystickBallDragLengthLimit, 0);
         Right = new Vector3(JoystickBallDragLengthLimit, 0, 0);
     }
-    
+
 
     private void Update()
     {
@@ -55,13 +56,13 @@ public class Joystick : MonoBehaviour {
 
         if (Application.platform == RuntimePlatform.Android && Input.touchCount > 0)
         {
-            InputPos = Input.GetTouch(0).position;        
+            InputPos = Input.GetTouch(0).position;
         }
         else if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
         {
             InputPos = Input.mousePosition;
         }
-        
+
         DragDirection = (InputPos - JoystickBackgroundPosition);
         float DragAngle = -Vector3.SignedAngle(Up, DragDirection.normalized, JoystickBackground.transform.forward);
 
@@ -82,7 +83,7 @@ public class Joystick : MonoBehaviour {
             FreeMoveJoystick(InputPos, JoystickBackgroundPosition, DragDirection, DragAngle);
         }
     }
-    
+
     void FreeMoveJoystick(Vector3 InputPos, Vector3 JoystickBackgroundPosition, Vector3 DragDirection, float DragAngle)
     {
         if (Vector3.Distance(InputPos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
@@ -120,23 +121,26 @@ public class Joystick : MonoBehaviour {
         //Vector3 OldPos = JoystickBall.transform.position;
 
         //Determine which axis the ball is travelling on
-        
-            if (Vector3.Angle(Up, DragDirection) <= 45)
-            {
-                joystickDirection = JoystickDirection.DIR_FORWARD;
-            }
-            else if (Vector3.Angle(-Up, DragDirection) <= 45)
-            {
-                joystickDirection = JoystickDirection.DIR_BACK;
-            }
-            else if (Vector3.Angle(Right, DragDirection) <= 45)
-            {
-                joystickDirection = JoystickDirection.DIR_RIGHT;
-            }
-            else if (Vector3.Angle(-Right, DragDirection) <= 45)
-            {
-                joystickDirection = JoystickDirection.DIR_LEFT;
-            }
+
+        Debug.Log("Right: " + Vector3.Angle(Right, DragDirection));
+        Debug.Log("Left: " + Vector3.Angle(-Right, DragDirection));
+
+        if (Vector3.Angle(Up, DragDirection) <= 45)
+        {
+            joystickDirection = JoystickDirection.DIR_FORWARD;
+        }
+        else if (Vector3.Angle(-Up, DragDirection) <= 45)
+        {
+            joystickDirection = JoystickDirection.DIR_BACK;
+        }
+        else if (Vector3.Angle(Right, DragDirection) <= 45)
+        {
+            joystickDirection = JoystickDirection.DIR_RIGHT;
+        }
+        else if (Vector3.Angle(-Right, DragDirection) <= 45)
+        {
+            joystickDirection = JoystickDirection.DIR_LEFT;
+        }
         //else
         //{
         //    if (InputPos.y > JoystickBackgroundPosition.y + HalfLength)
