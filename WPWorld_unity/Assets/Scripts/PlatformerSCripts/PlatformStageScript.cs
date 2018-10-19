@@ -9,12 +9,12 @@ public class PlatformStageScript : MonoBehaviour {
 
     private void Awake()
     {
-        transform.eulerAngles = Vector3.zero;
+        //transform.eulerAngles = Vector3.zero;
 
-        Vector3 NewPos = Camera.main.transform.position;
-        NewPos.y = transform.position.y;
+        //Vector3 NewPos = Camera.main.transform.position;
+        //NewPos.y = transform.position.y;
 
-        transform.position = NewPos;
+        //transform.position = NewPos;
     }
 
     private void Start()
@@ -23,5 +23,12 @@ public class PlatformStageScript : MonoBehaviour {
         {
             GameObject.Find("Sound System").GetComponent<SoundSystem>().PlayBGM(BGM);
         }
+    }
+
+    private void Update()
+    {
+        transform.eulerAngles = Vector3.zero;
+
+        transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
     }
 }
