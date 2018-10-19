@@ -25,7 +25,5 @@ public class PlatformStageScript : MonoBehaviour {
     private void Update()
     {
         transform.eulerAngles = Vector3.zero;
-
-        transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
     }
 }
