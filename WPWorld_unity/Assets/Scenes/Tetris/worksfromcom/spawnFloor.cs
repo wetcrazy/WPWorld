@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spawnFloor : MonoBehaviour {
+public class spawnFloor : MonoBehaviour
+{
 
     public GameObject blockgameobject;
     public GameObject blockboundary;
@@ -23,7 +24,8 @@ public class spawnFloor : MonoBehaviour {
     private Quaternion rotaterlocater;
     // Use this for initialization
     private int height;
-    void Start () {
+    void Start()
+    {
         offset = 0.1f;
         height = 20;
         //locator = new Vector3(XOffset,YOffset,ZOffset);
@@ -79,9 +81,10 @@ public class spawnFloor : MonoBehaviour {
         //}
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
