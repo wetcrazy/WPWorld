@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class myowntetrisscriptbehaviour : MonoBehaviour {
+public class myowntetrisscriptbehaviour : MonoBehaviour
+{
 
 
     public GameObject aref;
@@ -15,16 +16,16 @@ public class myowntetrisscriptbehaviour : MonoBehaviour {
     public GameObject href;
     public GameObject iref;
 
- //    Use this for initialization
- //   void Start () {
-		
-	//}
-	
-	// Update is called once per frame
-	//void Update () {
-		
-	//}
-    
+    //    Use this for initialization
+    //   void Start () {
+
+    //}
+
+    // Update is called once per frame
+    //void Update () {
+
+    //}
+
     List<GameObject> Blockrefs = new List<GameObject>();
 
 

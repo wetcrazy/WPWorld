@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TETRISbehaviour : MonoBehaviour {
+public class TETRISbehaviour : MonoBehaviour
+{
 
-   // private bool maystop;
+    // private bool maystop;
     public bool firstcollision;
     private bool collided;
     private bool magic;
@@ -17,7 +18,8 @@ public class TETRISbehaviour : MonoBehaviour {
     Vector3 myback;
     //Vector3 mydown;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         collided = false;
         firstcollision = false;
         magic = false;
@@ -27,24 +29,25 @@ public class TETRISbehaviour : MonoBehaviour {
         myright = Vector3.right;
         myfront = Vector3.forward;
         myback = Vector3.back;
-       // mydown = Vector3.down;
-        
+        // mydown = Vector3.down;
+
         SetDirections();
         //StartCoroutine(Stall());
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (!collided &&!firstcollision) 
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!collided && !firstcollision)
         {
-         GetComponent<Rigidbody>().MovePosition(transform.position + Vector3.down * 0.5f * Time.deltaTime);
+            GetComponent<Rigidbody>().MovePosition(transform.position + Vector3.down * 0.5f * Time.deltaTime);
         }
-        else if(firstcollision && collided && !magic)
+        else if (firstcollision && collided && !magic)
         {
             AdjustTransform();
             //magic = true;
-           // StartCoroutine(Stall());
-           // Debug.Log("blob");
+            // StartCoroutine(Stall());
+            // Debug.Log("blob");
         }
         //else if (magic)
         //{
@@ -53,14 +56,14 @@ public class TETRISbehaviour : MonoBehaviour {
         //}
 
     }
-   
+
     IEnumerator Stall()
     {
         yield return new WaitForSeconds(5);
-       // magic = true;
-       // RandomTranslation();
+        // magic = true;
+        // RandomTranslation();
         //this.gameObject.transform.Translate(directions[dirnum] *0.1f ,Space.World);
-      //  Debug.Log("tried moving");
+        //  Debug.Log("tried moving");
         //  collided = false;
         StartCoroutine(Stall());
         // maystop = true;
@@ -90,59 +93,59 @@ public class TETRISbehaviour : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Block"))
         {
-            if(firstcollision)
+            if (firstcollision)
             {
-            //    Debug.Log("Im still colliding");
+                //    Debug.Log("Im still colliding");
             }
             else
             {
 
-              //  Debug.Log("imcolliding for the first time");
+                //  Debug.Log("imcolliding for the first time");
             }
             collided = true;
             //maystop = true;
             firstcollision = true;
-             
 
-              //Debug.Log("I AM GAY"  + collision.gameObject.name);
+
+            //Debug.Log("I AM GAY"  + collision.gameObject.name);
         }
-        if(collision.gameObject.CompareTag("OOB"))//out of bounds
+        if (collision.gameObject.CompareTag("OOB"))//out of bounds
         {
-         //   Debug.Log("hi im outside");
+            //   Debug.Log("hi im outside");
         }
     }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Block"))
         {
-         //   Debug.Log("oh snap stay");
+            //   Debug.Log("oh snap stay");
         }
     }
 
     void AdjustTransform()
     {
-       // firstcollision = true;
+        // firstcollision = true;
         float mypos = this.gameObject.transform.position.y;
         // Debug.Log(mypos);
         float fix;
         fix = Mathf.Round(this.gameObject.transform.position.y * 10f) / 10f;
         float mynewpos = fix - mypos;
         //Debug.Log("HEEELLLLOOOO     " + mypos);
-        this.gameObject.transform.Translate( 0, mynewpos,0,Space.World);
-       // Debug.Log(this.gameObject.transform.position.y);
+        this.gameObject.transform.Translate(0, mynewpos, 0, Space.World);
+        // Debug.Log(this.gameObject.transform.position.y);
     }
 
     void SetDirections()
     {
-        directions.Add( myleft  );
-        directions.Add( myright );
-        directions.Add( myfront );
-        directions.Add( myback  );
+        directions.Add(myleft);
+        directions.Add(myright);
+        directions.Add(myfront);
+        directions.Add(myback);
         //directions.Add(mydown);
     }
     void RandomTranslation()
     {
-         dirnum = Random.Range(0, 4);
-       // Debug.Log("tried moving "+gameObject.name+"   " + dirnum + "   " + Time.time);
+        dirnum = Random.Range(0, 4);
+        // Debug.Log("tried moving "+gameObject.name+"   " + dirnum + "   " + Time.time);
     }
 }
