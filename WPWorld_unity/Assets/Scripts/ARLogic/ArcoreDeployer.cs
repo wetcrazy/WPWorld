@@ -82,11 +82,12 @@ public class ArcoreDeployer : MonoBehaviour
         SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
         SelectionScreen_PlanetsObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Planets");
         SelectionScreen_StageObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Stage");
-        GameMoveAnchorObjects = GameObject.FindGameObjectsWithTag("GameMoveAnchor");
+        GameMoveAnchorObjects = GameObject.FindGameObjectsWithTag("GameMoveAnchorScreen");
         GameScreenObjects = GameObject.FindGameObjectsWithTag("GameScreen");
 
         ExitSelectionScreen_Planet();
         ExitSelectionScreen_Stage();
+        ExitGameMoveAnchor();
         ExitGameScreen();
         ToSplashScreen();
 
@@ -98,8 +99,6 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void Update()
     {
-        MainCamera.transform.Rotate(MainCamera.transform.right, 30 * Time.deltaTime);
-
         switch (ScreenState)
         {
             case STATE_SCREEN.SCREEN_SPLASH:
@@ -180,7 +179,7 @@ public class ArcoreDeployer : MonoBehaviour
         if (!isSpawned && Input.touchCount > 0)
         {
             GameObjPrefab = UniverseObj;
-            Spawner(Input.GetTouch(0));
+            Spawner(Input.GetTouch(0), UniverseObj);
         }
         else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
@@ -394,7 +393,8 @@ public class ArcoreDeployer : MonoBehaviour
             obj.SetActive(true);
         }
 
-        ScreenState = STATE_SCREEN.SCREEN_GAME;
+        AnchorRef.GetComponent<MeshRenderer>().enabled = false;
+        ScreenState = STATE_SCREEN.SCREEN_GAME_MOVEANCHOR;
         isSpawned = false;
     }
 
@@ -402,6 +402,28 @@ public class ArcoreDeployer : MonoBehaviour
     {
         MainCameraRef.transform.position = MainCamera.transform.position;
         MainCameraRef.transform.forward = new Vector3(MainCamera.transform.forward.x, MainCamera.transform.position.y, MainCamera.transform.forward.z);
+
+        if(_GroundObject != null)
+        {
+            AnchorRef.transform.position = _GroundObject.transform.position;
+            UpdateOffSet();
+        }
+
+        if (!isSpawned && Input.touchCount > 0)
+        {
+            Spawner(Input.GetTouch(0), AnchorRef);
+            _GroundObject.GetComponent<MeshRenderer>().enabled = true;
+        }
+
+        foreach (DetectedPlane thePlane in List_AllPlanes)
+        {
+            if (thePlane.TrackingState == TrackingState.Stopped)
+            {
+                ExitGameMoveAnchor();
+                ToSelectionScreen_Stage();
+                break;
+            }
+        }
     }
 
     public void MoveAnchorForward()
@@ -436,6 +458,12 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void ExitGameMoveAnchor()
     {
+        if (_GroundObject != null)
+        {
+            Destroy(_GroundObject);
+            _GroundObject = null;
+        }
+
         foreach (GameObject obj in GameMoveAnchorObjects)
         {
             obj.SetActive(false);
@@ -453,6 +481,8 @@ public class ArcoreDeployer : MonoBehaviour
 
         ScreenState = STATE_SCREEN.SCREEN_GAME;
         isSpawned = false;
+
+        SpawnLevel(Input.GetTouch(0));
     }
 
     private void GameScreenUpdate()
@@ -460,10 +490,10 @@ public class ArcoreDeployer : MonoBehaviour
         // Gets all Planes that are track and put it into the list
         //Session.GetTrackables(List_AllPlanes);
 
-        if (!isSpawned && Input.touchCount > 0)
-        {
-            Spawner(Input.GetTouch(0));
-        }
+        //if (!isSpawned && Input.touchCount > 0)
+        //{
+        //    SpawnLevel(Input.GetTouch(0));
+        //}
 
         foreach (DetectedPlane thePlane in List_AllPlanes)
         {
@@ -475,7 +505,7 @@ public class ArcoreDeployer : MonoBehaviour
             }
         }
 
-        UpdateOffSet();
+       UpdateOffSet();
     }
 
     public void ExitGameScreen()
@@ -515,7 +545,7 @@ public class ArcoreDeployer : MonoBehaviour
     }
 
     // Add a new Object using point on screen and ARCore
-    private void Spawner(Touch _touch)
+    private void Spawner(Touch _touch, GameObject SpawnObject)
     {
         // Raycast from point on screen to real world
         TrackableHit _hit;
@@ -530,13 +560,13 @@ public class ArcoreDeployer : MonoBehaviour
             else
             {
                 // Instantiate the object at where it is hit
-                _GroundObject = Instantiate(GameObjPrefab, _hit.Pose.position, _hit.Pose.rotation, transform.parent);
+                _GroundObject = Instantiate(SpawnObject, _hit.Pose.position, _hit.Pose.rotation);
 
                 // Get the position in the world space
                 FirstTouchWorldPoint = _hit.Pose.position;
 
                 // Create an anchor for ARCore to track the point of the real world
-                var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
+                _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
 
                 // Make the ground object the child of the anchor
                 _GroundObject.transform.parent = _anchor.transform;
@@ -545,8 +575,43 @@ public class ArcoreDeployer : MonoBehaviour
         }
     }
 
-    //Reference to the clone of GameObjPrefab
-    GameObject _GroundObject;
+    private void SpawnLevel(Touch _touch)
+    {
+        //// Raycast from point on screen to real world
+        //TrackableHit _hit;
+        //var _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
+        //if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
+        //{
+        //    // Check if it the raycast is hitting the back of the plane 
+        //    if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(MainCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
+        //    {
+        //        Debug.Log("Hit at back of the current DetectedPlane");
+        //    }
+        //    else
+        //    {
+        //        // Instantiate the object at where it is hit
+        //        _GroundObject = Instantiate(GameObjPrefab, AnchorRef.transform.position, AnchorRef.transform.rotation);
+
+        //        // Get the position in the world space
+        //        FirstTouchWorldPoint = _hit.Pose.position;
+
+        //        // Create an anchor for ARCore to track the point of the real world
+        //       var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
+
+        //        // Make the ground object the child of the anchor
+        //        _GroundObject.transform.parent = _anchor.transform;
+        //        isSpawned = true;
+        //    }
+        //}
+
+        
+
+        _GroundObject = Instantiate(GameObjPrefab, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
+    }
+
+        //Reference to the clone of GameObjPrefab
+        GameObject _GroundObject = null;
+    Anchor _anchor;
 
     // oooooooooooooooooooooooooooooooooooooooo
     //            <Public Stuff> 
