@@ -49,11 +49,13 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     public GameObject PlatformManager;
 
-    public object _objScript { get; private set; }
+    // public object _objScript { get; private set; }
 
     public Text RC_Count, RC_Point;
     public GameObject Lose_text;
+    public GameObject Win_text;
 
+    //private 
 
     private void Awake()
     {
@@ -91,7 +93,10 @@ public class Dungeonsweeper2 : MonoBehaviour
                 break;
         }
         
+        
+
         Triggered_Material(_player.transform);                
+
 
         // TEXT STUFF
         // Closest anchor to the player
@@ -112,7 +117,7 @@ public class Dungeonsweeper2 : MonoBehaviour
 
         var _anchor = List_Anchors[List_Anchors.IndexOf(_closestobj)];
 
-        RC_Point.text = _anchor.name.ToString() + " = ";     
+        RC_Point.text = "Empty Spaces Left";     
 
         int _count = 0;
         var _anchorScript = _anchor.GetComponent<AnchorPoint>();
