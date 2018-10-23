@@ -41,28 +41,6 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        // Resets the acceleration of the gameobject to 0
-
-        //MovementDir = Vector3.zero;
-
-        //// Moves the player according to Key Input
-        //if(CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.X_ONLY)
-        //    MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
-        //if (CurrRestriction != MovementRestrict.BOTH && CurrRestriction != MovementRestrict.Z_ONLY)
-        //    MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
-
-        //MovementDir = Vector3.zero;
-
-        //if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
-        //{
-        //    MovementDir = Vector3.zero;
-        //    // Moves the player according to Key Input
-        //    if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.X_ONLY)
-        //        MovementDir = Input.GetAxis("Vertical") * this.transform.forward; // Vertical = W, S, Up Arrow, Down Arrow
-        //    if (CurrRestriction != MovementRestrict.NONE && CurrRestriction != MovementRestrict.Z_ONLY)
-        //        MovementDir += Input.GetAxis("Horizontal") * this.transform.right; // Horizontal = A, D, Left Arrow, Right Arrow
-        //}
-
         switch(CurrAvaliability)
         {
             case (MovementAvaliability.NONE):
@@ -103,7 +81,11 @@ public class PlayerMovement : MonoBehaviour {
         {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
-                    n_Forward = Camera.main.transform.forward;
+                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 45)
+                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 225))
+                        n_Forward = Camera.main.transform.forward;
+                    else
+                        n_Forward = Camera.main.transform.up;
                     n_Forward.y = 0;
                     if(Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
                     {
@@ -184,7 +166,11 @@ public class PlayerMovement : MonoBehaviour {
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
-                    n_Forward = Camera.main.transform.forward;
+                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 45)
+                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 225))
+                        n_Forward = Camera.main.transform.forward;
+                    else
+                        n_Forward = Camera.main.transform.up;
                     n_Forward.y = 0;
                     if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
                     {
@@ -212,40 +198,6 @@ public class PlayerMovement : MonoBehaviour {
             default:
                 break;
         }
-
-        //if(DragAngle < 90)
-        //{
-        //    gameObject.transform.forward = Vector3.forward;
-        //}
-        //else if(DragAngle < 180)
-        //{
-        //    gameObject.transform.forward = Vector3.right;
-        //}
-        //else if (DragAngle < 270)
-        //{
-        //    gameObject.transform.forward = -Vector3.forward;
-        //}
-        //else
-        //{
-        //    gameObject.transform.forward = -Vector3.right;
-        //}
-
-        //Rotate the player object based on the dragged angle and using world's forward vector as reference axis
-        //gameObject.transform.forward = Quaternion.AngleAxis(DragAngle, gameObject.transform.up) * Camera.main.transform.forward;
-        //Vector3 n_Dir = gameObject.transform.forward;
-        //n_Dir.y = 0;
-
-        //switch (CurrRestriction)
-        //{
-        //    case (MovementRestrict.X_ONLY):
-        //        n_Dir.z = 0;
-        //        break;
-        //    case (MovementRestrict.Z_ONLY):
-        //        n_Dir.x = 0;
-        //        break;
-        //}
-
-        //gameObject.transform.forward = n_Dir;
 
         //Move towards the new direction the player is facing
         MovementDir = gameObject.transform.forward;

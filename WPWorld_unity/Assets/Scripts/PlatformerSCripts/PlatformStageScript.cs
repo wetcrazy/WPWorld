@@ -7,14 +7,19 @@ public class PlatformStageScript : MonoBehaviour {
     [SerializeField]
     private AudioClip BGM;
 
+    [SerializeField]
+    private bool SpawnOnPlayer;
+
     private void Awake()
     {
-        transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
+        if(SpawnOnPlayer)
+            transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
     }
 
     private void Start()
     {
-        transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
+        if (SpawnOnPlayer)
+            transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
 
         if (BGM != null && GameObject.Find("Sound System") != null)
         {

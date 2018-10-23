@@ -26,7 +26,9 @@ public class ShowOnCollide : MonoBehaviour {
         {
             if(!RenderRef.isVisible && !other.GetComponent<TPSLogic>().GetGrounded())
             {
-                if(other.transform.position.y < transform.position.y && Mathf.Abs(other.transform.position.x - transform.position.x) < transform.lossyScale.x / 2 && other.GetComponent<Rigidbody>().velocity.y > 0)
+                if(other.transform.position.y + other.transform.lossyScale.y / 2 < transform.position.y - transform.lossyScale.y / 2
+                    && Mathf.Abs(other.transform.position.x - transform.position.x) < transform.lossyScale.x * 0.75f
+                    && other.GetComponent<Rigidbody>().velocity.y > 0)
                 {
                     GetComponent<Collider>().isTrigger = false;
 

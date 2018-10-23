@@ -122,9 +122,6 @@ public class Joystick : MonoBehaviour
 
         //Determine which axis the ball is travelling on
 
-        Debug.Log("Right: " + Vector3.Angle(Right, DragDirection));
-        Debug.Log("Left: " + Vector3.Angle(-Right, DragDirection));
-
         if (Vector3.Angle(Up, DragDirection) <= 45)
         {
             joystickDirection = JoystickDirection.DIR_FORWARD;
