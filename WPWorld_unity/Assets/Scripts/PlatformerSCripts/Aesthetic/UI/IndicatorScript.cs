@@ -17,7 +17,11 @@ public class IndicatorScript : MonoBehaviour {
         LookAtRef = new GameObject("Test");
 
         RectRef = GetComponent<RectTransform>();
-	}
+
+        Color N_Color = transform.GetChild(0).GetComponent<Image>().color;
+        N_Color.a = 0;
+        transform.GetChild(0).GetComponent<Image>().color = N_Color;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -27,11 +31,21 @@ public class IndicatorScript : MonoBehaviour {
         if (ScreenPoint.x > 0 && ScreenPoint.x < 1 &&
             ScreenPoint.y > 0 && ScreenPoint.y < 1)
         {
-            transform.GetChild(0).GetComponent<Image>().enabled = false;
+            if(transform.GetChild(0).GetComponent<Image>().color.a > 0)
+            {
+                Color N_Color = transform.GetChild(0).GetComponent<Image>().color;
+                N_Color.a -= Time.deltaTime;
+                transform.GetChild(0).GetComponent<Image>().color = N_Color;
+            }
             return;
         }
 
-        transform.GetChild(0).GetComponent<Image>().enabled = true;
+        if (transform.GetChild(0).GetComponent<Image>().color.a < 1)
+        {
+            Color N_Color = transform.GetChild(0).GetComponent<Image>().color;
+            N_Color.a += Time.deltaTime;
+            transform.GetChild(0).GetComponent<Image>().color = N_Color;
+        }
 
         transform.LookAt(LookAtRef.transform);
 
