@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour {
 
-    //Private GameObject Teleporter;
-    //
+    [SerializeField]
+    private GameObject teleport;
+    private GameObject player;
 	// Use this for initialization
 	void Start () {
 		
@@ -15,4 +16,12 @@ public class Teleporter : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(gameObject.tag == "Player")
+        {
+            player.transform.position = teleport.transform.position; //teleports player to that specific place.
+        }
+    }
 }

@@ -28742,7 +28742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrType: 0
-  WalkDirection: 0.15
+  WalkSpeed: 0
   JumpSpeed: 2
   PatrolPointA: {fileID: 0}
   PatrolPointB: {fileID: 0}
@@ -30048,7 +30048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrType: 1
-  WalkDirection: 0.15
+  WalkSpeed: 0
   JumpSpeed: 2
   PatrolPointA: {fileID: 1286589516418020}
   PatrolPointB: {fileID: 1006378149897458}
@@ -30806,6 +30806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM: {fileID: 8300000, guid: 4e61186c5a7e1414b946eefa7e8dabae, type: 3}
+  SpawnOnPlayer: 1
 --- !u!114 &114829600036968718
 MonoBehaviour:
   m_ObjectHideFlags: 1

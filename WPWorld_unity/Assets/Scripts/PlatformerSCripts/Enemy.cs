@@ -110,13 +110,12 @@ public class Enemy : MonoBehaviour {
                     {
                         RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
                         if (IsGrounded)
-                        {
                             RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                        }
                     }
                     else
                     {
-                        PatrolToA = false;
+                        if(IsGrounded)
+                            PatrolToA = false;
                     }
                 }
                 else
@@ -131,7 +130,8 @@ public class Enemy : MonoBehaviour {
                     }
                     else
                     {
-                        PatrolToA = true;
+                        if (IsGrounded)
+                            PatrolToA = true;
                     }
                 }
                 break;
