@@ -74,7 +74,8 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if(!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6); 
+                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
+                    AnchorMovement(0);
                 }          
                 break;
             case LevelType.LEVEL_TWO:
@@ -83,18 +84,20 @@ public class Dungeonsweeper2 : MonoBehaviour
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
                     GridSetup(List_GridSizesPrefab[1], 0, 6, 6);
+                    AnchorMovement(0);
                 }
                 // 2nd anchor
                 if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
                     GridSetup(List_GridSizesPrefab[0], 1, 10, 6);
+                    AnchorMovement(1);
                 }
                 break;
         }
-        
-        
 
+
+        AnchorMovement();
         Triggered_Material(_player.transform);                
 
 
@@ -402,7 +405,39 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     }
 
+    // Moves the anchor to the centre of the playing field
+    private void AnchorMovement(int _index)
+    {
+        var _anchorScript = List_Anchors[_index].GetComponent<AnchorPoint>();
+        // Vector3.Lerp(List_Anchors[_index].transform.position, this.transform.localPosition, 3.0f);      
+        //List_Anchors[_index].transform.Translate(transform.localPosition * Vector3.Distance(List_Anchors[_index].transform.localPosition, transform.localPosition));
+        List_Anchors[_index].transform.localPosition = transform.localPosition;
+    }
+    // Updates and reverts back any anchor that has their grid cleared
+    private void AnchorMovement()
+    {
+        foreach (GameObject _anchor in List_Anchors)
+        {
+            var _anchorScript = _anchor.GetComponent<AnchorPoint>();
+            if(_anchorScript.m_isdone)
+            {
+                //Vector3.Lerp(_anchor.transform.position, _anchorScript.m_OldPosition, 3.0f);
+                _anchor.transform.localPosition = _anchorScript.m_OldPosition;
+                var _children = _anchor.GetComponents<Transform>();
+                foreach(Transform _child in _children)
+                {
+                    if(_child.gameObject.tag != "Anchor")
+                    {
+                        _child.Translate(Vector3.down * 10);
+                    }
+                }
+            }
+        }
+    }
+
+    // =================================
     // Public methods
+    // =================================
 
     public void Level_Select(LevelType _level)
     {
@@ -437,29 +472,6 @@ public class Dungeonsweeper2 : MonoBehaviour
     {
         var _player = GameObject.FindGameObjectWithTag("Player");
         var _playerRB = _player.GetComponent<Rigidbody>();
-
-        /*
-        // Blocks and grid deletion 
-        foreach (GameObject _anchor in List_Anchors)
-        {
-            var _anchorScript = _anchor.GetComponent<AnchorPoint>();
-            foreach (GameObject _block in _anchorScript.mList_Blocks)
-            {
-                Destroy(_block);
-            }
-            _anchorScript.mList_Blocks.Clear();
-            _anchorScript.Reset_Variables();
-
-            var _temp = _anchor.GetComponentsInChildren<Transform>();
-            foreach (Transform _delete in _temp)
-            {
-                if(_delete.gameObject.tag != "Anchor")
-                {
-                    Destroy(_delete.gameObject);             
-                }
-            }
-        }
-        */
 
         foreach(GameObject _anchor in List_Anchors)
         {

@@ -21,8 +21,15 @@ public class AnchorPoint : MonoBehaviour
     [SerializeField]
     private string GridName;
     [SerializeField]
+    private Vector3 OldPosition;
+    [SerializeField]
     private List<GameObject> List_Blocks;
-  
+
+    private void Awake()
+    {
+        OldPosition = transform.localPosition;
+    }
+
     public bool m_isdone
     {
         set { is_Done = value; }
@@ -68,6 +75,11 @@ public class AnchorPoint : MonoBehaviour
     {
         set { GridName = value; }
         get { return GridName; }
+    }
+
+    public Vector3 m_OldPosition
+    {    
+        get { return OldPosition; }
     }
 
     public List<GameObject> mList_Blocks
