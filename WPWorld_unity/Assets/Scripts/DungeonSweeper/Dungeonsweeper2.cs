@@ -33,6 +33,8 @@ public class Dungeonsweeper2 : MonoBehaviour
         EMPTY = 0,
         LEVEL_ONE,
         LEVEL_TWO,
+        LEVEL_THREE,
+        LEVEL_FOUR,
         TOTAL_LEVEL
     }
 
@@ -74,7 +76,7 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if(!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
+                    GridSetup(List_GridSizesPrefab[0], 0, 5, 6);
                     AnchorMovement(0);
                 }          
                 break;
@@ -83,7 +85,7 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 0, 6, 6);
+                    GridSetup(List_GridSizesPrefab[1], 0, 5, 6);
                     AnchorMovement(0);
                 }
                 // 2nd anchor
@@ -94,14 +96,62 @@ public class Dungeonsweeper2 : MonoBehaviour
                     AnchorMovement(1);
                 }
                 break;
+            case LevelType.LEVEL_THREE:
+                // 1st anchor
+                if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
+                {
+                    List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[0], 0, 10, 6);
+                    AnchorMovement(0);
+                }
+                // 2nd anchor
+                if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
+                {
+                    List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[1], 1, 15, 6);
+                    AnchorMovement(1);
+                }
+                if (!List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[1].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
+                {
+                    List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[2], 1, 20, 6);
+                    AnchorMovement(2);
+                }
+                break;
+            case LevelType.LEVEL_FOUR:
+                // 1st anchor
+                if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
+                {
+                    List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[0], 0, 10, 6);
+                    AnchorMovement(0);
+                }
+                // 2nd anchor
+                if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
+                {
+                    List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[1], 1, 15, 6);
+                    AnchorMovement(1);
+                }
+                if (!List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[1].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
+                {
+                    List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[2], 1, 20, 6);
+                    AnchorMovement(2);
+                }
+                if (!List_Anchors[3].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[2].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
+                {
+                    List_Anchors[3].GetComponent<AnchorPoint>().m_isGridApplied = true;
+                    GridSetup(List_GridSizesPrefab[2], 1, 25, 6);
+                    AnchorMovement(3);
+                }
+                break;
         }
 
 
         AnchorMovement();
         Triggered_Material(_player.transform);                
-
-
-        // TEXT STUFF
+     
         // Closest anchor to the player
         GameObject _closestobj = null;
         for (int i = 0; i < List_Anchors.Count - 1; i++)
@@ -117,9 +167,10 @@ public class Dungeonsweeper2 : MonoBehaviour
                 _closestobj = List_Anchors[i];
             }
         }
-
+     
         var _anchor = List_Anchors[List_Anchors.IndexOf(_closestobj)];
 
+        // TEXT STUFF
         RC_Point.text = "Empty Spaces Left";     
 
         int _count = 0;
@@ -145,6 +196,12 @@ public class Dungeonsweeper2 : MonoBehaviour
             }
         }
         RC_Count.text = _count.ToString();
+
+        // I got lazy so this is the grid finish condition
+        if(_count == 0 && _anchor.GetComponent<AnchorPoint>().m_isTypeApplied)
+        {
+            _anchor.GetComponent<AnchorPoint>().m_isdone = true;
+        }
     }
 
     // Spawns the grid and save the data
