@@ -136,6 +136,7 @@ public class Dungeonsweeper2 : MonoBehaviour
             }
             else
             {
+                // BOMB LOSE CONDITION
                 if (_blockScript.m_BlockType == BlockType.BOMB)
                 {
                     var _tempText = Lose_text.GetComponent<Text>();
@@ -408,9 +409,7 @@ public class Dungeonsweeper2 : MonoBehaviour
     // Moves the anchor to the centre of the playing field
     private void AnchorMovement(int _index)
     {
-        var _anchorScript = List_Anchors[_index].GetComponent<AnchorPoint>();
-        // Vector3.Lerp(List_Anchors[_index].transform.position, this.transform.localPosition, 3.0f);      
-        //List_Anchors[_index].transform.Translate(transform.localPosition * Vector3.Distance(List_Anchors[_index].transform.localPosition, transform.localPosition));
+        var _anchorScript = List_Anchors[_index].GetComponent<AnchorPoint>();       
         List_Anchors[_index].transform.localPosition = transform.localPosition;
     }
     // Updates and reverts back any anchor that has their grid cleared
@@ -419,18 +418,23 @@ public class Dungeonsweeper2 : MonoBehaviour
         foreach (GameObject _anchor in List_Anchors)
         {
             var _anchorScript = _anchor.GetComponent<AnchorPoint>();
-            if(_anchorScript.m_isdone)
+            if (_anchorScript.m_isdone)
             {
-                //Vector3.Lerp(_anchor.transform.position, _anchorScript.m_OldPosition, 3.0f);
-                _anchor.transform.localPosition = _anchorScript.m_OldPosition;
-                var _children = _anchor.GetComponents<Transform>();
-                foreach(Transform _child in _children)
+                var _children = _anchor.GetComponentsInChildren<Transform>();
+                foreach (Transform _child in _children)
                 {
-                    if(_child.gameObject.tag != "Anchor")
+                    if (_child.gameObject.tag != "Anchor")
                     {
-                        _child.Translate(Vector3.down * 10);
+                        var _randSpeed = Random.Range(0.01f, 0.1f);
+                        _child.Translate(Vector3.down * _randSpeed);
+                        Destroy(_child.gameObject, 1);
                     }
                 }
+                _anchorScript.mList_Blocks.Clear();
+            }
+            if (_anchor.GetComponentsInChildren<Transform>().Length <= 1)
+            {
+                _anchor.transform.localPosition = _anchorScript.m_OldPosition;
             }
         }
     }
