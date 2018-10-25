@@ -211,7 +211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1462016510035512
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1846046958667934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30, y: 10, z: 30}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000925330366002}
@@ -571,7 +571,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1190116285568558}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalPosition: {x: 0, y: -50, z: 0}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 4584080984697116}
@@ -873,7 +873,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOU WIN!!
+  m_Text: WIN!
 --- !u!114 &114092874690386340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1005,6 +1005,7 @@ MonoBehaviour:
   BombSpawnRate: 0
   numNormal: 0
   GridName: 
+  OldPosition: {x: 0, y: 0, z: 0}
   List_Blocks: []
 --- !u!114 &114280022586629628
 MonoBehaviour:
@@ -1122,6 +1123,7 @@ MonoBehaviour:
   BombSpawnRate: 0
   numNormal: 0
   GridName: 
+  OldPosition: {x: 0, y: 0, z: 0}
   List_Blocks: []
 --- !u!114 &114372914702263742
 MonoBehaviour:
@@ -1331,6 +1333,7 @@ MonoBehaviour:
   BombSpawnRate: 0
   numNormal: 0
   GridName: 
+  OldPosition: {x: 0, y: 0, z: 0}
   List_Blocks: []
 --- !u!114 &114666509005366288
 MonoBehaviour:
@@ -1381,6 +1384,7 @@ MonoBehaviour:
   BombSpawnRate: 0
   numNormal: 0
   GridName: 
+  OldPosition: {x: 0, y: 0, z: 0}
   List_Blocks: []
 --- !u!114 &114784220852803032
 MonoBehaviour:
