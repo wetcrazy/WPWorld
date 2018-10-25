@@ -418,27 +418,24 @@ public class Dungeonsweeper2 : MonoBehaviour
         foreach (GameObject _anchor in List_Anchors)
         {
             var _anchorScript = _anchor.GetComponent<AnchorPoint>();
-            if(_anchorScript.m_isdone)
+            if (_anchorScript.m_isdone)
             {
-                //_anchor.transform.localPosition = _anchorScript.m_OldPosition;             
                 var _children = _anchor.GetComponentsInChildren<Transform>();
-                foreach(Transform _child in _children)
+                foreach (Transform _child in _children)
                 {
-                    if(_child.gameObject.tag != "Anchor")
-                    {                       
+                    if (_child.gameObject.tag != "Anchor")
+                    {
                         var _randSpeed = Random.Range(0.01f, 0.1f);
                         _child.Translate(Vector3.down * _randSpeed);
-                        Destroy(_child.gameObject, 1);                     
+                        Destroy(_child.gameObject, 1);
                     }
                 }
-                _anchorScript.mList_Blocks.Clear();              
+                _anchorScript.mList_Blocks.Clear();
             }
-            /*
-            if(_anchor.GetComponentsInChildren<Transform>().Length <= 1)
+            if (_anchor.GetComponentsInChildren<Transform>().Length <= 1)
             {
-                _anchorScript.Reset_Variables();
+                _anchor.transform.localPosition = _anchorScript.m_OldPosition;
             }
-            */
         }
     }
 
