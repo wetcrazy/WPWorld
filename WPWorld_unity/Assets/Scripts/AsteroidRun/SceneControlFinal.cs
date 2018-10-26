@@ -236,17 +236,6 @@ public class SceneControlFinal : MonoBehaviour
 
         //Add to list of asteroids
         AsteroidList.Add(AsteroidObject);
-
-        //Debugging stuff, don't touch
-        float dist = Vector3.Distance(PlanetObject.transform.position, AsteroidObject.transform.position);
-        if (dist > MaximumAsteroidDistanceToPlanet)
-        {
-            Debug.Log("Asteroid is over specified max distance!");
-        }
-        else if (dist < MinimumAsteroidDistanceToPlanet)
-        {
-            Debug.Log("Asteroid is under specified min distance!");
-        }
     }
 
     public void Reset_Level()
@@ -261,6 +250,9 @@ public class SceneControlFinal : MonoBehaviour
             Destroy(obstacle);
         }
 
+        AsteroidList.Clear();
+        ObstacleList.Clear();
+
         NumOfObstacles = 1;
         CanvasTimer.GetComponent<Text>().text = StartingTime;
         TimerMinute = int.Parse(StartingTime.Substring(0, 2));
@@ -271,5 +263,6 @@ public class SceneControlFinal : MonoBehaviour
 
         Playerobject.transform.position = PlayerStartingPos;
         Playerobject.transform.forward = PlayerStartingForward;
+        Playerobject.GetComponent<PlayerFinal>().ResetHealth();
     }
 }
