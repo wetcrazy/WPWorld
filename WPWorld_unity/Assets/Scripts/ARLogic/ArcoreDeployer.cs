@@ -87,7 +87,7 @@ public class ArcoreDeployer : MonoBehaviour
 
         ExitSelectionScreen_Planet();
         ExitSelectionScreen_Stage();
-        ExitGameMoveAnchor();
+        ExitGameMoveAnchor(true);
         ExitGameScreen();
         ToSplashScreen();
 
@@ -268,8 +268,20 @@ public class ArcoreDeployer : MonoBehaviour
 
 
     //-----SELECTION SCREEN STAGE FUNCTIONS-----//
-    public void ToSelectionScreen_Stage()
+    public void ToSelectionScreen_Stage(bool checkObject = false)
     {
+        if(checkObject)
+        {
+            if(_GroundObject == null)
+            {
+                return;
+            }
+            else
+            {
+                Reset_Anchor();
+            }
+        }
+
         int NumOfStages = 0;
 
         switch (CurrentWorldName.text)
@@ -456,12 +468,18 @@ public class ArcoreDeployer : MonoBehaviour
         _GroundObject.transform.position -= MainCameraRef.transform.up * Time.deltaTime;
     }
 
-    public void ExitGameMoveAnchor()
+    public void Reset_Anchor()
     {
-        if (_GroundObject != null)
+        Destroy(_GroundObject);
+        _GroundObject = null;
+        isSpawned = false;
+    }
+
+    public void ExitGameMoveAnchor(bool isStartFunc = false)
+    {
+        if(_GroundObject == null && !isStartFunc)
         {
-            Destroy(_GroundObject);
-            _GroundObject = null;
+            return;
         }
 
         foreach (GameObject obj in GameMoveAnchorObjects)
@@ -474,6 +492,13 @@ public class ArcoreDeployer : MonoBehaviour
     //-----GAME SCREEN FUNCTIONS-----//
     public void ToGameScreen()
     {
+        if (_GroundObject == null)
+        {
+            return;
+        }
+
+        Reset_Anchor();
+
         foreach (GameObject obj in GameScreenObjects)
         {
             obj.SetActive(true);

@@ -17,6 +17,6 @@ public class DebugPos : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        TextRef.text = "X: " + ObjectToDebug.transform.position.x.ToString("F2") + "\nZ: " + ObjectToDebug.transform.position.z.ToString("F2");
+        TextRef.text = "X: " + ObjectToDebug.transform.position.x.ToString("F2") + "\nZ: " + ObjectToDebug.transform.position.z.ToString("F2") + "\nRB: " + ObjectToDebug.GetComponent<Rigidbody>().velocity;
 	}
 }

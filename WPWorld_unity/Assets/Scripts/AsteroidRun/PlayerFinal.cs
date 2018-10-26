@@ -57,6 +57,8 @@ public class PlayerFinal : MonoBehaviour {
             PlayerHealthBar.rectTransform.localScale = new Vector3(0, 1, 1);
 
             //Player dies
+            SceneControllerScript.Reset_Level();
+            return;
         }
 
         if(DebuffEffect != DEBUFF_EFFECT.DEBUFF_NONE)
@@ -173,7 +175,7 @@ public class PlayerFinal : MonoBehaviour {
         
         //The fractional modifier that determines how much moving and turning
         //based on the direction & angle of joystick ball
-        float Modifier = (DragAngle - RefAxis) / 90;
+        float Modifier = ((DragAngle - RefAxis) / 90);
         float TempTurn, TempMove;
 
         if (RefAxis == 0 || RefAxis == 180)
@@ -229,6 +231,10 @@ public class PlayerFinal : MonoBehaviour {
         {
             //Removes the asteroid
             Destroy(other.gameObject);
+
+            //Player dies
+            SceneControllerScript.Reset_Level();
+            return;
         }
         else if (other.name == "HealthPowerup")
         {
@@ -264,5 +270,10 @@ public class PlayerFinal : MonoBehaviour {
                     break;
             }
         }
+    }
+
+    public void ResetHealth()
+    {
+        CurrentHealth = MaximumHealth;
     }
 }

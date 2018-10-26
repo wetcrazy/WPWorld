@@ -112,8 +112,9 @@ public class DSPlayer : MonoBehaviour
 
         if (other.gameObject.tag == "Killbox")
         {
-            var _pos = Manager.GetComponent<Dungeonsweeper2>().Get_Player_AnchorPosition(gameObject.transform);
-            Debug.Log(_pos);
+            //var _pos = Manager.GetComponent<Dungeonsweeper2>().Get_Player_AnchorPosition(gameObject.transform);
+            //Debug.Log(_pos);
+            var _pos = new Vector3(0, 0, 0);
             _pos.y = 0.5f;
             Rb.MovePosition(_pos + transform.forward * Time.deltaTime);
         }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneControlFinal : MonoBehaviour {
-
+public class SceneControlFinal : MonoBehaviour
+{
     [SerializeField]
     public GameObject PlanetObject = null;
+    [SerializeField]
+    GameObject Playerobject = null;
     [SerializeField]
     GameObject HealthPowerupObject = null;
     [SerializeField]
@@ -26,6 +28,11 @@ public class SceneControlFinal : MonoBehaviour {
     [SerializeField]
     GameObject CanvasTimer = null;
 
+    //Initial values
+    string StartingTime;
+    Vector3 PlayerStartingPos;
+    Vector3 PlayerStartingForward;
+
     int TimerMinute = 0, TimerSecond = 0;
     float SecondTimer = 0;
     float HealthPowerupSpawnTimer;
@@ -34,23 +41,27 @@ public class SceneControlFinal : MonoBehaviour {
     List<GameObject> AsteroidList = new List<GameObject>();
     List<GameObject> ObstacleList = new List<GameObject>();
 
-	// Use this for initialization
-	void Start () {
-        string StartingTime = CanvasTimer.GetComponent<Text>().text;
+    // Use this for initialization
+    void Start()
+    {
+        StartingTime = CanvasTimer.GetComponent<Text>().text;
         TimerMinute = int.Parse(StartingTime.Substring(0, 2));
         TimerSecond = int.Parse(StartingTime.Substring(3));
+
+        PlayerStartingPos = Playerobject.transform.position;
+        PlayerStartingForward = Playerobject.transform.forward;
 
         HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
         SpawnHealthPowerup();
 
         for (int i = NumOfObstacles; i > 0; --i)
         {
-            SpawnObstacle();    
+            SpawnObstacle();
         }
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         UpdateCanvasTimer();
 
@@ -63,7 +74,7 @@ public class SceneControlFinal : MonoBehaviour {
         foreach (GameObject asteroid in AsteroidList)
         {
             //Removes any null objects
-            if(!asteroid)
+            if (!asteroid)
             {
                 AsteroidList.Remove(asteroid);
                 continue;
@@ -73,12 +84,12 @@ public class SceneControlFinal : MonoBehaviour {
             asteroid.transform.position += (PlanetObject.transform.position - asteroid.transform.position).normalized * asteroid.GetComponent<AsteroidScript>().AsteroidSpeed * Time.deltaTime;
         }
 
-        if(!HealthPowerupObject.activeSelf)
+        if (!HealthPowerupObject.activeSelf)
         {
             //Countdown the spawn timer
             HealthPowerupSpawnTimer -= Time.deltaTime;
 
-            if(HealthPowerupSpawnTimer <= 0)
+            if (HealthPowerupSpawnTimer <= 0)
             {
                 //Spawn the powerup after timer is up
                 SpawnHealthPowerup();
@@ -86,7 +97,7 @@ public class SceneControlFinal : MonoBehaviour {
                 HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
             }
         }
-	}
+    }
 
     private void FixedUpdate()
     {
@@ -150,7 +161,7 @@ public class SceneControlFinal : MonoBehaviour {
             }
             else
             {
-                if(TimerSecond >= 59)
+                if (TimerSecond >= 59)
                 {
                     TimerSecond = 0;
                     ++TimerMinute;
@@ -225,16 +236,33 @@ public class SceneControlFinal : MonoBehaviour {
 
         //Add to list of asteroids
         AsteroidList.Add(AsteroidObject);
+    }
 
-        //Debugging stuff, don't touch
-        float dist = Vector3.Distance(PlanetObject.transform.position, AsteroidObject.transform.position);
-        if (dist > MaximumAsteroidDistanceToPlanet)
+    public void Reset_Level()
+    {
+        foreach (GameObject asteroid in AsteroidList)
         {
-            Debug.Log("Asteroid is over specified max distance!");
+            Destroy(asteroid);
         }
-        else if (dist < MinimumAsteroidDistanceToPlanet)
+
+        foreach (GameObject obstacle in ObstacleList)
         {
-            Debug.Log("Asteroid is under specified min distance!");
+            Destroy(obstacle);
         }
+
+        AsteroidList.Clear();
+        ObstacleList.Clear();
+
+        NumOfObstacles = 1;
+        CanvasTimer.GetComponent<Text>().text = StartingTime;
+        TimerMinute = int.Parse(StartingTime.Substring(0, 2));
+        TimerSecond = int.Parse(StartingTime.Substring(3));
+        SecondTimer = 0;
+        HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
+        TimerIsCountingDown = true;
+
+        Playerobject.transform.position = PlayerStartingPos;
+        Playerobject.transform.forward = PlayerStartingForward;
+        Playerobject.GetComponent<PlayerFinal>().ResetHealth();
     }
 }
