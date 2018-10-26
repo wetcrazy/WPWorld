@@ -29,36 +29,73 @@ public class blockspawner : MonoBehaviour
     }
 
     //rotations
+    // all rotations       num|      L ::   ::       ||  thumb       ::       ||  z       ::       ||    t    ::        ||      u    ::       ||    block
+    Vector3 aaa;         //0  |   345  ::   ::       ||  thumb 345   ::       ||  z  45   ::3      ||  t 345  ::        ||   u 345   ::       ||  b 345
+    Vector3 aba;         //1  |   147  ::   ::       ||  thumb 147   ::       ||  z  47   ::1      ||  t 147  ::        ||   u 147   ::       ||  b 147
+    Vector3 aca;         //2  |   345  ::   ::       ||  thumb 345   ::       ||  z  34   ::5      ||  t 345  ::        ||   u 345   ::       ||  b 345
+    Vector3 ada;         //3  |   147  ::   ::       ||  thumb 147   ::       ||  z  14   ::7      ||  t 147  ::        ||   u 147   ::       ||  b 147
+
+    Vector3 baa;         //4  |   0345 ::   ::       ||  thumb 01345 ::       ||  z 0145  ::       ||  t 1345 ::        ||   u 02345 ::       ||  b 012345
+    Vector3 bba;         //5  |   1247 ::   ::       ||  thumb 12457 ::       ||  z 2457  ::       ||  t 1457 ::        ||   u 12478 ::       ||  b 124578
+    Vector3 bca;         //6  |   3458 ::   ::       ||  thumb 34578 ::       ||  z 3478  ::       ||  t 3457 ::        ||   u 34568 ::       ||  b 345678
+    Vector3 bda;         //7  |   1467 ::   ::       ||  thumb 13467 ::       ||  z 1346  ::       ||  t 1347 ::        ||   u 01467 ::       ||  b 013467
+
+    Vector3 caa;         //8  |   3    ::45 ::       ||  thumb 34    ::5      ||  z  34   ::5      ||  t 4    ::35      ||   u 35    ::4      ||  b 345
+    Vector3 cba;         //9  |   1    ::47 ::       ||  thumb 14    ::7      ||  z  14   ::7      ||  t 4    ::17      ||   u 17    ::4      ||  b 147
+    Vector3 cca;         //10 |   5    ::34 ::       ||  thumb 45    ::3      ||  z  45   ::3      ||  t 4    ::35      ||   u 35    ::4      ||  b 345
+    Vector3 cda;         //11 |   7    ::14 ::       ||  thumb 47    ::1      ||  z  47   ::1      ||  t 4    ::17      ||   u 17    ::4      ||  b 147
+
+    Vector3 daa;         //12 |   3456 ::   ::       ||  thumb 34567 ::       ||  z 4567  ::       ||  t 3457 ::        ||   u 34568 ::       ||  b 345678
+    Vector3 dba;         //13 |   0147 ::   ::       ||  thumb 01347 ::       ||  z 0347  ::       ||  t 1347 ::        ||   u 01467 ::       ||  b 013467
+    Vector3 dca;         //14 |   2345 ::   ::       ||  thumb 12345 ::       ||  z 1234  ::       ||  t 1345 ::        ||   u 02345 ::       ||  b 012345
+    Vector3 dda;         //15 |   1478 ::   ::       ||  thumb 14578 ::       ||  z 1458  ::       ||  t 1457 ::        ||   u 12478 ::       ||  b 124578
+
+    Vector3 aab;         //16 |   34   ::   ::       ||  thumb 34    ::       ||  z 3     ::4      ||  t 4    ::3       ||   u 34    ::       ||  b 34
+    Vector3 abb;         //17 |   14   ::   ::       ||  thumb 14    ::       ||  z 1     ::4      ||  t 4    ::1       ||   u 14    ::       ||  b 14
+    Vector3 acb;         //18 |   45   ::   ::       ||  thumb 45    ::       ||  z 5     ::4      ||  t 4    ::5       ||   u 45    ::       ||  b 45
+    Vector3 adb;         //19 |   47   ::   ::       ||  thumb 47    ::       ||  z 7     ::4      ||  t 4    ::7       ||   u 47    ::       ||  b 47
+
+    Vector3 aad;         //20 |   4    ::   ::5      ||  thumb 4     ::5      ||  z 4     ::5      ||  t 4    ::5       ||   u 45    ::       ||  b 45
+    Vector3 abd;         //21 |   4    ::   ::7      ||  thumb 4     ::7      ||  z 4     ::7      ||  t 4    ::7       ||   u 47    ::       ||  b 47
+    Vector3 acd;         //22 |   4    ::   ::3      ||  thumb 4     ::3      ||  z 4     ::3      ||  t 4    ::3       ||   u 34    ::       ||  b 34
+    Vector3 add;         //23 |   4    ::   ::1      ||  thumb 4     ::1      ||  z 4     ::1      ||  t 4    ::1       ||   u 14    ::       ||  b 14 
+
     List<Vector3> Rotations = new List<Vector3>();// list of rotations container
     Quaternion RotationOFF;
     void Setfixedrotations()//  24 rotations
     {
-        // all rotations                          num|      L ::   ::       ||  thumb       ::       ||  z       ::       ||    t    ::        ||      u    ::       ||    block
-        Vector3 aaa = new Vector3(0, 0, 0);     //0  |   345  ::   ::       ||  thumb 345   ::       ||  z  45   ::3      ||  t 345  ::        ||   u 345   ::       ||  b 345
-        Vector3 aba = new Vector3(0, 90, 0);    //1  |   147  ::   ::       ||  thumb 147   ::       ||  z  47   ::1      ||  t 147  ::        ||   u 147   ::       ||  b 147
-        Vector3 aca = new Vector3(0, 180, 0);   //2  |   345  ::   ::       ||  thumb 345   ::       ||  z  34   ::5      ||  t 345  ::        ||   u 345   ::       ||  b 345
-        Vector3 ada = new Vector3(0, 270, 0);   //3  |   147  ::   ::       ||  thumb 147   ::       ||  z  14   ::7      ||  t 147  ::        ||   u 147   ::       ||  b 147
-        Vector3 baa = new Vector3(90, 0, 0);    //4  |   0345 ::   ::       ||  thumb 01345 ::       ||  z 0145  ::       ||  t 1345 ::        ||   u 02345 ::       ||  b 012345
-        Vector3 bba = new Vector3(90, 90, 0);   //5  |   1247 ::   ::       ||  thumb 12457 ::       ||  z 2457  ::       ||  t 1457 ::        ||   u 12478 ::       ||  b 124578
-        Vector3 bca = new Vector3(90, 180, 0);  //6  |   3458 ::   ::       ||  thumb 34578 ::       ||  z 3478  ::       ||  t 3457 ::        ||   u 34568 ::       ||  b 345678
-        Vector3 bda = new Vector3(90, 270, 0);  //7  |   1467 ::   ::       ||  thumb 13467 ::       ||  z 1346  ::       ||  t 1347 ::        ||   u 01467 ::       ||  b 013467
-        Vector3 caa = new Vector3(180, 0, 0);   //8  |   3    ::45 ::       ||  thumb 34    ::5      ||  z  34   ::5      ||  t 4    ::35      ||   u 35    ::4      ||  b 345
-        Vector3 cba = new Vector3(180, 90, 0);  //9  |   1    ::47 ::       ||  thumb 14    ::7      ||  z  14   ::7      ||  t 4    ::17      ||   u 17    ::4      ||  b 147
-        Vector3 cca = new Vector3(180, 180, 0); //10 |   5    ::34 ::       ||  thumb 45    ::3      ||  z  45   ::3      ||  t 4    ::35      ||   u 35    ::4      ||  b 345
-        Vector3 cda = new Vector3(180, 270, 0); //11 |   7    ::14 ::       ||  thumb 47    ::1      ||  z  47   ::1      ||  t 4    ::17      ||   u 17    ::4      ||  b 147
-        Vector3 daa = new Vector3(270, 0, 0);   //12 |   3456 ::   ::       ||  thumb 34567 ::       ||  z 4567  ::       ||  t 3457 ::        ||   u 34568 ::       ||  b 345678
-        Vector3 dba = new Vector3(270, 90, 0);  //13 |   0147 ::   ::       ||  thumb 01347 ::       ||  z 0347  ::       ||  t 1347 ::        ||   u 01467 ::       ||  b 013467
-        Vector3 dca = new Vector3(270, 180, 0); //14 |   2345 ::   ::       ||  thumb 12345 ::       ||  z 1234  ::       ||  t 1345 ::        ||   u 02345 ::       ||  b 012345
-        Vector3 dda = new Vector3(270, 270, 0); //15 |   1478 ::   ::       ||  thumb 14578 ::       ||  z 1458  ::       ||  t 1457 ::        ||   u 12478 ::       ||  b 124578
-        Vector3 aab = new Vector3(0, 0, 90);    //16 |   34   ::   ::       ||  thumb 34    ::       ||  z 3     ::4      ||  t 4    ::3       ||   u 34    ::       ||  b 34
-        Vector3 abb = new Vector3(0, 90, 90);   //17 |   14   ::   ::       ||  thumb 14    ::       ||  z 1     ::4      ||  t 4    ::1       ||   u 14    ::       ||  b 14
-        Vector3 acb = new Vector3(0, 180, 90);  //18 |   45   ::   ::       ||  thumb 45    ::       ||  z 5     ::4      ||  t 4    ::5       ||   u 45    ::       ||  b 45
-        Vector3 adb = new Vector3(0, 270, 90);  //19 |   47   ::   ::       ||  thumb 47    ::       ||  z 7     ::4      ||  t 4    ::7       ||   u 47    ::       ||  b 47
-        Vector3 aad = new Vector3(0, 0, 270);   //20 |   4    ::   ::5      ||  thumb 4     ::5      ||  z 4     ::5      ||  t 4    ::5       ||   u 45    ::       ||  b 45
-        Vector3 abd = new Vector3(0, 90, 270);  //21 |   4    ::   ::7      ||  thumb 4     ::7      ||  z 4     ::7      ||  t 4    ::7       ||   u 47    ::       ||  b 47
-        Vector3 acd = new Vector3(0, 180, 270); //22 |   4    ::   ::3      ||  thumb 4     ::3      ||  z 4     ::3      ||  t 4    ::3       ||   u 34    ::       ||  b 34
-        Vector3 add = new Vector3(0, 270, 270); //23 |   4    ::   ::1      ||  thumb 4     ::1      ||  z 4     ::1      ||  t 4    ::1       ||   u 14    ::       ||  b 14 
-        
+        aaa = new Vector3(0, 0, 0);
+        aba = new Vector3(0, 90, 0);
+        aca = new Vector3(0, 180, 0);
+        ada = new Vector3(0, 270, 0);
+
+        baa = new Vector3(90, 0, 0);
+        bba = new Vector3(90, 90, 0);
+        bca = new Vector3(90, 180, 0);
+        bda = new Vector3(90, 270, 0);
+
+        caa = new Vector3(180, 0, 0);
+        cba = new Vector3(180, 90, 0);
+        cca = new Vector3(180, 180, 0);
+        cda = new Vector3(180, 270, 0);
+
+        daa = new Vector3(270, 0, 0);
+        dba = new Vector3(270, 90, 0);
+        dca = new Vector3(270, 180, 0);
+        dda = new Vector3(270, 270, 0);
+
+        aab = new Vector3(0, 0, 90);
+        abb = new Vector3(0, 90, 90);
+        acb = new Vector3(0, 180, 90);
+        adb = new Vector3(0, 270, 90);
+
+        aad = new Vector3(0, 0, 270);
+        abd = new Vector3(0, 90, 270);
+        acd = new Vector3(0, 180, 270);
+        add = new Vector3(0, 270, 270);
+
+
+
         Rotations.Add(aaa);
         Rotations.Add(aba);
         Rotations.Add(aca);
@@ -116,7 +153,7 @@ public class blockspawner : MonoBehaviour
         Transnegz = false;
         Transposz = false;
     }
-    
+
     float scaleof;//0.1f set manually to fit game
 
     int layerMask;
@@ -135,57 +172,19 @@ public class blockspawner : MonoBehaviour
     }
 
     int counter = 0;
-    //==============================================================================================
-    
-
     float lowest;
-    //  float mid;
+    
     float highest;
-    //float untouchable;
-    //int myrotation;//select which rotation
+    List<GameObject> PossibleBlocks = new List<GameObject>();
+    
+    List<Vector3> LPossibleRots = new List<Vector3>();
+    List<Vector3> ThumbPossibleRots = new List<Vector3>();
+    List<Vector3> ZPossibleRots = new List<Vector3>();
+    List<Vector3> TPossibleRots = new List<Vector3>();
+    List<Vector3> UPossibleRots = new List<Vector3>();
+    List<Vector3> BlockPossibleRots = new List<Vector3>();
 
-    Vector3 myfinaltranslation;
-
-    bool Theresablockhit;
-
-    private void Start()
-    {
-        Theresablockhit = false;
-        Settermyvoids();//no need look at this 
-        StartCoroutine(Example());//START SPAWNING
-
-    }
-    IEnumerator Example()
-    {
-        do
-        {
-            Wheretofall();//Random position on where to fall
-
-            Checkmyfloor();//scan the floor if got block and what the terrain is
-        }
-        while (Theresablockhit);
-
-        // find all possible outcomes
-        //MoreRegret();
-        PossibleRotations();
-
-        //Instantiatemyblock();
-        yield return new WaitForSeconds(2);//timer how long to wait
-
-
-        StartCoroutine(Example());
-    }
-    private void Update()
-    {
-        for (int i = 0; i < Floorposchecker.Count; i++)
-        {
-            if (Physics.Raycast(transform.position + Floorposchecker[i] * scaleof, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
-            {
-                Debug.DrawRay(transform.position + Floorposchecker[i] * scaleof, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-            }
-        }
-    }
-
+    List<Vector3> PossiblePOS = new List<Vector3>();
     //step1 set random position of the spawner
     void Wheretofall()
     {
@@ -196,12 +195,12 @@ public class blockspawner : MonoBehaviour
         this.gameObject.transform.Translate(gamex, 0, gamez, Space.World);
 
     }
-
     //step2 check the floor if theres a falling object and scan the terrain
+    bool Theresablockhit;
     void Checkmyfloor()
     {
         Floorchecker = new List<float>();//numbering system of terrain
-        Floorpos = new List<Vector3>();
+                                         //  Floorpos = new List<Vector3>();
         Theresablockhit = false;
         // floorpos = new List<Vector3>();
         hit = new RaycastHit();
@@ -222,12 +221,6 @@ public class blockspawner : MonoBehaviour
 
         if (!Theresablockhit)
         {
-
-
-            //////////////////////////////
-
-            //there are no falling blocks 
-            // Debug.Log("my lowest is" + lowest+"   my highest  "+ highest);// + "    and this is my position  " + this.gameObject.transform.position);
             for (int rpos = 0; rpos < Floorposchecker.Count; rpos++)
             {
                 if (Physics.Raycast(transform.position + Floorposchecker[rpos] * scaleof, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
@@ -240,162 +233,798 @@ public class blockspawner : MonoBehaviour
                     Floorchecker.Add(adjusted);
                 }
             }
-
-            // Debug.Log(Floorchecker[0] + ", " + Floorchecker[1] + ", " + Floorchecker[2] + "     " + Floorchecker[3] + ", " + Floorchecker[4] + ", " + Floorchecker[5] + "    " + Floorchecker[6] + ", " + Floorchecker[7] + ", " + Floorchecker[8]);
-            //Debug.Log(Floorchecker[3] + ", " + Floorchecker[4]+", " + Floorchecker[5]);
-            //Debug.Log(Floorchecker[6] + ", " + Floorchecker[7]+", " + Floorchecker[8]);
-            //Debug.Log("---------------------------------------------------------------------------------------------");
-
         }
     }
+    //==============================================================================================
+
+
+    
+    
+
+    Vector3 myfinaltranslation;
+
+
+    private void Start()
+    {
+        Theresablockhit = false;
+        Settermyvoids();//no need look at this 
+        StartCoroutine(Example());//START SPAWNING
+
+    }
+
+    IEnumerator Example()
+    {
+        do
+        {
+            Wheretofall();//Random position on where to fall
+
+            Checkmyfloor();//scan the floor if got block and what the terrain is
+        }
+        while (Theresablockhit);
+
+        // find all possible outcomes
+        //MoreRegret();
+         //ScanfloortoRot();
+        PossibleRotations();
+
+        //Instantiatemyblock();
+        yield return new WaitForSeconds(1);//timer how long to wait
+
+
+        StartCoroutine(Example());
+    }
+    private void Update()
+    {
+        for (int i = 0; i < Floorposchecker.Count; i++)
+        {
+            if (Physics.Raycast(transform.position + Floorposchecker[i] * scaleof, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
+            {
+                Debug.DrawRay(transform.position + Floorposchecker[i] * scaleof, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
+            }
+        }
+    }
+
+
     //step3 with the given terrain find all possible and allowed rotations
-    List<GameObject> PossibleBlocks = new List<GameObject>();
-
-    List<Vector3> BlockPossibleRots = new List<Vector3>();//done
-
-    List<Vector3> LPossibleRots = new List<Vector3>();
-
-    List<Vector3> UPossibleRots = new List<Vector3>();
-    List<Vector3> TPossibleRots = new List<Vector3>();
-    List<Vector3> ZPossibleRots = new List<Vector3>();
-    List<Vector3> ThumbPossibleRots = new List<Vector3>();
-
-    List<Vector3> PossiblePOS = new List<Vector3>();
     void ScanfloortoRot()
     {
-        //if horizontal line
-        if (((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0)) ||
-            ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0)) ||
-            ((Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0)))
-        {
+      
+        //// all rotations     //num|      L ::   ::       ||  thumb       ::       ||  z       ::       ||    t    ::        ||      u    ::       ||    block
+        //Vector3 aaa;         //0  |   345  ::   ::       ||  thumb 345   ::       ||  z  45   ::3      ||  t 345  ::        ||   u 345   ::       ||  b 345
+        //Vector3 aba;         //1  |   147  ::   ::       ||  thumb 147   ::       ||  z  47   ::1      ||  t 147  ::        ||   u 147   ::       ||  b 147
+        //Vector3 aca;         //2  |   345  ::   ::       ||  thumb 345   ::       ||  z  34   ::5      ||  t 345  ::        ||   u 345   ::       ||  b 345
+        //Vector3 ada;         //3  |   147  ::   ::       ||  thumb 147   ::       ||  z  14   ::7      ||  t 147  ::        ||   u 147   ::       ||  b 147
+        //Vector3 baa;         //4  |   0345 ::   ::       ||  thumb 01345 ::       ||  z 0145  ::       ||  t 1345 ::        ||   u 02345 ::       ||  b 012345
+        //Vector3 bba;         //5  |   1247 ::   ::       ||  thumb 12457 ::       ||  z 2457  ::       ||  t 1457 ::        ||   u 12478 ::       ||  b 124578
+        //Vector3 bca;         //6  |   3458 ::   ::       ||  thumb 34578 ::       ||  z 3478  ::       ||  t 3457 ::        ||   u 34568 ::       ||  b 345678
+        //Vector3 bda;         //7  |   1467 ::   ::       ||  thumb 13467 ::       ||  z 1346  ::       ||  t 1347 ::        ||   u 01467 ::       ||  b 013467
+        //Vector3 caa;         //8  |   3    ::45 ::       ||  thumb 34    ::5      ||  z  34   ::5      ||  t 4    ::35      ||   u 35    ::4      ||  b 345
+        //Vector3 cba;         //9  |   1    ::47 ::       ||  thumb 14    ::7      ||  z  14   ::7      ||  t 4    ::17      ||   u 17    ::4      ||  b 147
+        //Vector3 cca;         //10 |   5    ::34 ::       ||  thumb 45    ::3      ||  z  45   ::3      ||  t 4    ::35      ||   u 35    ::4      ||  b 345
+        //Vector3 cda;         //11 |   7    ::14 ::       ||  thumb 47    ::1      ||  z  47   ::1      ||  t 4    ::17      ||   u 17    ::4      ||  b 147
+        //Vector3 daa;         //12 |   3456 ::   ::       ||  thumb 34567 ::       ||  z 4567  ::       ||  t 3457 ::        ||   u 34568 ::       ||  b 345678
+        //Vector3 dba;         //13 |   0147 ::   ::       ||  thumb 01347 ::       ||  z 0347  ::       ||  t 1347 ::        ||   u 01467 ::       ||  b 013467
+        //Vector3 dca;         //14 |   2345 ::   ::       ||  thumb 12345 ::       ||  z 1234  ::       ||  t 1345 ::        ||   u 02345 ::       ||  b 012345
+        //Vector3 dda;         //15 |   1478 ::   ::       ||  thumb 14578 ::       ||  z 1458  ::       ||  t 1457 ::        ||   u 12478 ::       ||  b 124578
+        //Vector3 aab;         //16 |   34   ::   ::       ||  thumb 34    ::       ||  z 3     ::4      ||  t 4    ::3       ||   u 34    ::       ||  b 34
+        //Vector3 abb;         //17 |   14   ::   ::       ||  thumb 14    ::       ||  z 1     ::4      ||  t 4    ::1       ||   u 14    ::       ||  b 14
+        //Vector3 acb;         //18 |   45   ::   ::       ||  thumb 45    ::       ||  z 5     ::4      ||  t 4    ::5       ||   u 45    ::       ||  b 45
+        //Vector3 adb;         //19 |   47   ::   ::       ||  thumb 47    ::       ||  z 7     ::4      ||  t 4    ::7       ||   u 47    ::       ||  b 47
+        //Vector3 aad;         //20 |   4    ::   ::5      ||  thumb 4     ::5      ||  z 4     ::5      ||  t 4    ::5       ||   u 45    ::       ||  b 45
+        //Vector3 abd;         //21 |   4    ::   ::7      ||  thumb 4     ::7      ||  z 4     ::7      ||  t 4    ::7       ||   u 47    ::       ||  b 47
+        //Vector3 acd;         //22 |   4    ::   ::3      ||  thumb 4     ::3      ||  z 4     ::3      ||  t 4    ::3       ||   u 34    ::       ||  b 34
+        //Vector3 add;         //23 |   4    ::   ::1      ||  thumb 4     ::1      ||  z 4     ::1      ||  t 4    ::1       ||   u 14    ::       ||  b 14 
 
-            //block 
+
+
+        //num|      L ::   ::  
+        //0  |  L 345  ::   ::  
+        //2  |  L 345  ::   ::  
+        //0  |  thumb 345   ::  
+        //2  |  thumb 345   ::  
+        //0  |  t 345  ::   
+        //2  |  t 345  ::   
+        //0  |  u 345   ::   
+        //2  |  u 345   ::   
+        //0  |  b 345
+        //2  |  b 345
+        //8  |  b 345
+        //10 |  b 345
+        if ((Floorchecker[3] == 0) &&
+     (Floorchecker[4] == 0) &&
+     (Floorchecker[5] == 0))
+        {
+            LPossibleRots.Add(Rotations[0]);
+            LPossibleRots.Add(Rotations[2]);
+            ThumbPossibleRots.Add(Rotations[0]);
+            ThumbPossibleRots.Add(Rotations[2]);
+            TPossibleRots.Add(Rotations[0]);
+            TPossibleRots.Add(Rotations[2]);
+            UPossibleRots.Add(Rotations[0]);
+            UPossibleRots.Add(Rotations[2]);
             BlockPossibleRots.Add(Rotations[0]);
             BlockPossibleRots.Add(Rotations[2]);
             BlockPossibleRots.Add(Rotations[8]);
             BlockPossibleRots.Add(Rotations[10]);
-            //L
-            LPossibleRots.Add(Rotations[0]);
-            LPossibleRots.Add(Rotations[2]);
-
         }
-        //2 spacing horizontal
-        if (((Floorchecker[0] == 0) && (Floorchecker[1] == 0)) || ((Floorchecker[1] == 0) && (Floorchecker[2] == 0)) ||
-            ((Floorchecker[3] == 0) && (Floorchecker[4] == 0)) || ((Floorchecker[4] == 0) && (Floorchecker[5] == 0)) ||
-            ((Floorchecker[6] == 0) && (Floorchecker[7] == 0)) || ((Floorchecker[7] == 0) && (Floorchecker[8] == 0)))
+        //1  |  L 147  ::   ::  
+        //3  |  L 147  ::   ::  
+        //1  |  thumb 147   ::  
+        //3  |  thumb 147   ::  
+        //1  |  t 147  ::   
+        //3  |  t 147  ::   
+        //1  |  u 147   ::   
+        //3  |  u 147   ::   
+        //1  |  b 147
+        //3  |  b 147
+        //9  |  b 147
+        //11 |  b 147
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[7] == 0))
         {
-            //Block
-            BlockPossibleRots.Add(Rotations[16]);
-            BlockPossibleRots.Add(Rotations[22]);
-            BlockPossibleRots.Add(Rotations[18]);
-            BlockPossibleRots.Add(Rotations[20]);
-            //L
-            LPossibleRots.Add(Rotations[16]);
-            LPossibleRots.Add(Rotations[18]);
-
-        }
-
-        //L 
-        //0,1,1 horizontal
-        if (((Floorchecker[0] == 0) && (Floorchecker[1] == 1) && (Floorchecker[2] == 1)) ||
-            ((Floorchecker[3] == 0) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1)) ||
-            ((Floorchecker[6] == 0) && (Floorchecker[7] == 1) && (Floorchecker[8] == 1)))
-        {
-            //L
-            LPossibleRots.Add(Rotations[8]);
-
-        }
-        //1,1,0 horizontal
-        if (((Floorchecker[0] == 1) && (Floorchecker[1] == 1) && (Floorchecker[2] == 0)) ||
-            ((Floorchecker[3] == 1) && (Floorchecker[4] == 1) && (Floorchecker[5] == 0)) ||
-            ((Floorchecker[6] == 1) && (Floorchecker[7] == 1) && (Floorchecker[8] == 0)))
-        {
-            //L
-            LPossibleRots.Add(Rotations[10]);
-
-        }
-
-        //Vertical
-        if (((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0)) ||
-            ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0)) ||
-            ((Floorchecker[2] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0)))
-        {
-            //Block
+            LPossibleRots.Add(Rotations[1]);
+            LPossibleRots.Add(Rotations[3]);
+            ThumbPossibleRots.Add(Rotations[1]);
+            ThumbPossibleRots.Add(Rotations[3]);
+            TPossibleRots.Add(Rotations[1]);
+            TPossibleRots.Add(Rotations[3]);
+            UPossibleRots.Add(Rotations[1]);
+            UPossibleRots.Add(Rotations[3]);
             BlockPossibleRots.Add(Rotations[1]);
             BlockPossibleRots.Add(Rotations[3]);
             BlockPossibleRots.Add(Rotations[9]);
             BlockPossibleRots.Add(Rotations[11]);
-            //L
-            LPossibleRots.Add(Rotations[1]);
-            LPossibleRots.Add(Rotations[3]);
         }
-        //2 spacing vertical
-        if (((Floorchecker[0] == 0) && (Floorchecker[3] == 0)) || ((Floorchecker[3] == 0) && (Floorchecker[6] == 0)) ||
-            ((Floorchecker[1] == 0) && (Floorchecker[4] == 0)) || ((Floorchecker[4] == 0) && (Floorchecker[7] == 0)) ||
-            ((Floorchecker[2] == 0) && (Floorchecker[5] == 0)) || ((Floorchecker[5] == 0) && (Floorchecker[8] == 0)))
+
+        //16 |  L 34        ::   ::  
+        //16 |  thumb 34    ::  
+        //16 |  u 34        ::   
+        //22 |  u 34        ::   
+        //16 |  b 34
+        //22 |  b 34
+        if ((Floorchecker[3] == 0) &&
+          (Floorchecker[4] == 0))
         {
-            //block
+            LPossibleRots.Add(Rotations[16]);
+            ThumbPossibleRots.Add(Rotations[16]);
+            UPossibleRots.Add(Rotations[16]);
+            UPossibleRots.Add(Rotations[22]);
+            BlockPossibleRots.Add(Rotations[16]);
+            BlockPossibleRots.Add(Rotations[22]);
+        }
+        //18 |  L 45        ::   ::  
+        //18 |  thumb 45    ::  
+        //18 |  u 45        ::   
+        //20 |  u 45        ::   
+        //18 |  b 45
+        //20 |  b 45
+        if ((Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 0))
+        {
+            LPossibleRots.Add(Rotations[18]);
+            ThumbPossibleRots.Add(Rotations[18]);
+            UPossibleRots.Add(Rotations[18]);
+            UPossibleRots.Add(Rotations[20]);
+            BlockPossibleRots.Add(Rotations[18]);
+            BlockPossibleRots.Add(Rotations[20]);
+        }
+        //17 |  L 14        ::   ::  
+        //17 |  thumb 14    ::  
+        //17 |  u 14        ::   
+        //23 |  u 14        ::   
+        //17 |  b 14
+        //23 |  b 14 
+        if ((Floorchecker[1] == 0) &&
+       (Floorchecker[4] == 0))
+        {
+            LPossibleRots.Add(Rotations[17]);
+            ThumbPossibleRots.Add(Rotations[17]);
+            UPossibleRots.Add(Rotations[17]);
+            UPossibleRots.Add(Rotations[23]);
             BlockPossibleRots.Add(Rotations[17]);
             BlockPossibleRots.Add(Rotations[23]);
+        }
+        //19 |  L 47        ::   ::  
+        //19 |  thumb 47    ::  
+        //19 |  u 47        ::   
+        //21 |  u 47        ::   
+        //19 |  b 47
+        //21 |  b 47
+        if ((Floorchecker[4] == 0) &&
+       (Floorchecker[7] == 0))
+        {
+            LPossibleRots.Add(Rotations[19]);
+            ThumbPossibleRots.Add(Rotations[19]);
+            UPossibleRots.Add(Rotations[19]);
+            UPossibleRots.Add(Rotations[21]);
             BlockPossibleRots.Add(Rotations[19]);
             BlockPossibleRots.Add(Rotations[21]);
-            //L
-            LPossibleRots.Add(Rotations[17]);
-            LPossibleRots.Add(Rotations[19]);
+        }
+        //8  |  thumb 34    ::5 
+        //2  |  z  34       ::5 
+        //8  |  z  34       ::5 
+        if ((Floorchecker[3] == 0) &&
+          (Floorchecker[4] == 0) &&
+          (Floorchecker[5] == 1))
+        {
+
+            ThumbPossibleRots.Add(Rotations[8]);
+            ZPossibleRots.Add(Rotations[2]);
+            ZPossibleRots.Add(Rotations[8]);
+
+        }
+        //10 |  thumb 45    ::3 
+        //0  |  z  45       ::3 
+        //10 |  z  45       ::3
+        if ((Floorchecker[3] == 1) &&
+        (Floorchecker[4] == 0) &&
+        (Floorchecker[5] == 0))
+        {
+
+            ThumbPossibleRots.Add(Rotations[10]);
+            ZPossibleRots.Add(Rotations[0]);
+            ZPossibleRots.Add(Rotations[10]);
+
+        }
+        //9  |  thumb 14    ::7 
+        //3  |  z  14       ::7 
+        //9  |  z  14       ::7 
+        if ((Floorchecker[1] == 0) &&
+        (Floorchecker[4] == 0) &&
+        (Floorchecker[7] == 1))
+        {
+
+            ThumbPossibleRots.Add(Rotations[9]);
+            ZPossibleRots.Add(Rotations[3]);
+            ZPossibleRots.Add(Rotations[9]);
+
+        }
+        //11 |  thumb 47    ::1 
+        //1  |  z  47       ::1 
+        //11 |  z  47       ::1 
+        if ((Floorchecker[1] == 1) &&
+        (Floorchecker[4] == 0) &&
+        (Floorchecker[7] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[11]);
+            ZPossibleRots.Add(Rotations[1]);
+            ZPossibleRots.Add(Rotations[11]);
+        }
+        //8  |  u 35    ::4  
+        //10 |  u 35    ::4  
+        if ((Floorchecker[3] == 0) &&
+        (Floorchecker[4] == 1) &&
+        (Floorchecker[5] == 0))
+        {
+            UPossibleRots.Add(Rotations[8]);
+            UPossibleRots.Add(Rotations[10]);
+        }
+        //9  |  u 17    ::4  
+        //11 |  u 17    ::4  
+        if ((Floorchecker[1] == 0) &&
+        (Floorchecker[4] == 1) &&
+        (Floorchecker[7] == 0))
+        {
+            UPossibleRots.Add(Rotations[9]);
+            UPossibleRots.Add(Rotations[11]);
+        }
+        //8  |  t 4    ::35 
+        //10 |  t 4    ::35 
+        if ((Floorchecker[3] == 1) &&
+       (Floorchecker[4] == 0) &&
+       (Floorchecker[5] == 1))
+        {
+            TPossibleRots.Add(Rotations[8]);
+            TPossibleRots.Add(Rotations[10]);
+        }
+        //9  |  t 4    ::17 
+        //11 |  t 4    ::17 
+        if ((Floorchecker[1] == 1) &&
+      (Floorchecker[4] == 0) &&
+      (Floorchecker[7] == 1))
+        {
+            TPossibleRots.Add(Rotations[9]);
+            TPossibleRots.Add(Rotations[11]);
+        }
+        //20 |  thumb 4     ::5 
+        //20 |  z 4         ::5 
+        //18 |  t 4         ::5  
+        //20 |  t 4         ::5  
+        if ((Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 1))
+        {
+            ThumbPossibleRots.Add(Rotations[20]);
+
+            ZPossibleRots.Add(Rotations[20]);
+
+            TPossibleRots.Add(Rotations[18]);
+            TPossibleRots.Add(Rotations[20]);
+        }
+        //23 |  thumb 4     ::1 
+        //23 |  z 4         ::1 
+        //17 |  t 4         ::1  
+        //23 |  t 4         ::1  
+        if ((Floorchecker[4] == 0) &&
+           (Floorchecker[1] == 1))
+        {
+            ThumbPossibleRots.Add(Rotations[23]);
+
+            ZPossibleRots.Add(Rotations[23]);
+
+            TPossibleRots.Add(Rotations[17]);
+            TPossibleRots.Add(Rotations[23]);
+        }
+        //21 |  thumb 4     ::7 
+        //21 |  z 4         ::7 
+        //19 |  t 4         ::7  
+        //21 |  t 4         ::7  
+        if ((Floorchecker[4] == 0) &&
+           (Floorchecker[7] == 1))
+        {
+            ThumbPossibleRots.Add(Rotations[21]);
+
+            ZPossibleRots.Add(Rotations[21]);
+
+            TPossibleRots.Add(Rotations[19]);
+            TPossibleRots.Add(Rotations[21]);
+        }
+        //22 |  thumb 4     ::3 
+        //22 |  z 4         ::3 
+        //16 |  t 4         ::3  
+        //22 |  t 4         ::3  
+        if ((Floorchecker[4] == 0) &&
+           (Floorchecker[3] == 1))
+        {
+            ThumbPossibleRots.Add(Rotations[22]);
+
+            ZPossibleRots.Add(Rotations[22]);
+
+            TPossibleRots.Add(Rotations[16]);
+            TPossibleRots.Add(Rotations[22]);
         }
 
-        //L BLOCK
-        //0,1,1 Vertical
-        if (((Floorchecker[0] == 0) && (Floorchecker[3] == 1) && (Floorchecker[6] == 1)) ||
-            ((Floorchecker[1] == 0) && (Floorchecker[4] == 1) && (Floorchecker[7] == 1)) ||
-            ((Floorchecker[2] == 0) && (Floorchecker[5] == 1) && (Floorchecker[8] == 1)))
+
+
+
+
+
+        //8  |  L 3    ::45 ::  
+        if ((Floorchecker[3] == 0) &&
+           (Floorchecker[4] == 1) &&
+           (Floorchecker[5] == 1))
         {
-            //L
+            LPossibleRots.Add(Rotations[8]);
+        }
+        //10 |  L 5    ::34 ::  
+        if ((Floorchecker[3] == 1) &&
+         (Floorchecker[4] == 1) &&
+         (Floorchecker[5] == 0))
+        {
+            LPossibleRots.Add(Rotations[10]);
+        }
+        //9  |  L 1    ::47 ::  
+        if ((Floorchecker[1] == 0) &&
+       (Floorchecker[4] == 1) &&
+       (Floorchecker[7] == 1))
+        {
             LPossibleRots.Add(Rotations[9]);
-
         }
-        //1,1,0 Vertical
-        if (((Floorchecker[0] == 1) && (Floorchecker[3] == 1) && (Floorchecker[6] == 0)) ||
-            ((Floorchecker[1] == 1) && (Floorchecker[4] == 1) && (Floorchecker[7] == 0)) ||
-            ((Floorchecker[2] == 1) && (Floorchecker[5] == 1) && (Floorchecker[8] == 0)))
+        //11 |  L 7    ::14 ::  
+        if ((Floorchecker[1] == 1) &&
+     (Floorchecker[4] == 1) &&
+     (Floorchecker[7] == 0))
         {
-            //L
             LPossibleRots.Add(Rotations[11]);
+        }
+        //20 |  L 4    ::   ::5 
+        if ((Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 2))
+        {
+            LPossibleRots.Add(Rotations[20]);
+        }
+        //22 |  L 4    ::   ::3 
+        if ((Floorchecker[4] == 0) &&
+      (Floorchecker[3] == 2))
+        {
+            LPossibleRots.Add(Rotations[22]);
+        }
+        //21 |  L 4    ::   ::7 
+        if ((Floorchecker[4] == 0) &&
+      (Floorchecker[7] == 2))
+        {
+            LPossibleRots.Add(Rotations[21]);
+        }
+        //23 |  L 4    ::   ::1 
+        if ((Floorchecker[4] == 0) &&
+      (Floorchecker[1] == 2))
+        {
+            LPossibleRots.Add(Rotations[23]);
+        }
+        //16 |  z 3     ::4 
+        if ((Floorchecker[4] == 1) &&
+      (Floorchecker[3] == 0))
+        {
+            ZPossibleRots.Add(Rotations[16]);
+        }
+        //17 |  z 1     ::4 
+        if ((Floorchecker[4] == 1) &&
+     (Floorchecker[1] == 0))
+        {
+            ZPossibleRots.Add(Rotations[17]);
+        }
+        //18 |  z 5     ::4 
+        if ((Floorchecker[4] == 1) &&
+     (Floorchecker[5] == 0))
+        {
+            ZPossibleRots.Add(Rotations[18]);
+        }
+        //19 |  z 7     ::4 
+        if ((Floorchecker[4] == 1) &&
+     (Floorchecker[7] == 0))
+        {
+            ZPossibleRots.Add(Rotations[19]);
+        }
+        //--------------------------------------------------------------------
 
+        //4  |  L 0345 ::   ::  
+        if ((Floorchecker[3] == 0) &&
+       (Floorchecker[4] == 0) &&
+       (Floorchecker[5] == 0) &&
+       (Floorchecker[0] == 0))
+        {
+            LPossibleRots.Add(Rotations[4]);
+        }
+        //14 |  L 2345 ::   ::  
+        if ((Floorchecker[3] == 0) &&
+       (Floorchecker[4] == 0) &&
+       (Floorchecker[5] == 0) &&
+       (Floorchecker[2] == 0))
+        {
+            LPossibleRots.Add(Rotations[14]);
+        }
+        //6  |  L 3458 ::   ::  
+        if ((Floorchecker[3] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 0) &&
+         (Floorchecker[8] == 0))
+        {
+            LPossibleRots.Add(Rotations[6]);
+        }
+        //12 |  L 3456 ::   ::  
+        if ((Floorchecker[3] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 0) &&
+         (Floorchecker[6] == 0))
+        {
+            LPossibleRots.Add(Rotations[12]);
         }
 
-        //012345
-        //345678
-
-        //speacial***
-        //moveforward and back  
-        if (((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0)) ||
-             ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0)))
+        //13 |  L 0147 ::   ::  
+        if ((Floorchecker[1] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[7] == 0) &&
+         (Floorchecker[0] == 0))
         {
-            //block
+            LPossibleRots.Add(Rotations[13]);
+        }
+        //5  |  L 1247 ::   ::  
+        if ((Floorchecker[1] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[7] == 0) &&
+         (Floorchecker[2] == 0))
+        {
+            LPossibleRots.Add(Rotations[5]);
+        }
+        //7  |  L 1467 ::   ::  
+        if ((Floorchecker[1] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[6] == 0) &&
+         (Floorchecker[7] == 0))
+        {
+            LPossibleRots.Add(Rotations[7]);
+        }
+        //15 |  L 1478 ::   ::  
+        if ((Floorchecker[1] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[7] == 0) &&
+         (Floorchecker[8] == 0))
+        {
+            LPossibleRots.Add(Rotations[15]);
+        }
+
+
+        //num|  thumb       ::  
+        //4  |  thumb 01345 ::
+        if ((Floorchecker[3] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 0) &&
+         (Floorchecker[0] == 0) &&
+         (Floorchecker[1] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[4]);
+        }
+        //5  |  thumb 12457 ::
+        if ((Floorchecker[1] == 0) &&
+         (Floorchecker[2] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 0) &&
+         (Floorchecker[7] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[5]);
+        }
+        //6  |  thumb 34578 ::  
+        if ((Floorchecker[3] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 0) &&
+         (Floorchecker[7] == 0) &&
+         (Floorchecker[8] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[6]);
+        }
+        //7  |  thumb 13467 ::
+        if ((Floorchecker[1] == 0) &&
+         (Floorchecker[3] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[6] == 0) &&
+         (Floorchecker[7] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[7]);
+        }
+        //12 |  thumb 34567 ::  
+        if ((Floorchecker[3] == 0) &&
+         (Floorchecker[4] == 0) &&
+         (Floorchecker[5] == 0) &&
+         (Floorchecker[6] == 0) &&
+         (Floorchecker[7] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[12]);
+        }
+        //13 |  thumb 01347 ::  
+        if ((Floorchecker[0] == 0) &&
+            (Floorchecker[1] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[7] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[13]);
+        }
+        //14 |  thumb 12345 ::  
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[2] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[14]);
+        }
+        //15 |  thumb 14578 ::  
+        if ((Floorchecker[1] == 0) &&
+           (Floorchecker[4] == 0) &&
+           (Floorchecker[5] == 0) &&
+           (Floorchecker[7] == 0) &&
+           (Floorchecker[8] == 0))
+        {
+            ThumbPossibleRots.Add(Rotations[15]);
+        }
+
+
+        //num|  z       ::  
+        //4  |  z 0145  ::  
+        if ((Floorchecker[0] == 0) &&
+           (Floorchecker[1] == 0) &&
+           (Floorchecker[4] == 0) &&
+           (Floorchecker[5] == 0))
+        {
+            ZPossibleRots.Add(Rotations[4]);
+        }
+        //5  |  z 2457  ::  
+        if ((Floorchecker[2] == 0) &&
+           (Floorchecker[4] == 0) &&
+           (Floorchecker[5] == 0) &&
+           (Floorchecker[7] == 0))
+        {
+            ZPossibleRots.Add(Rotations[5]);
+        }
+        //6  |  z 3478  ::  
+        if ((Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[7] == 0) &&
+            (Floorchecker[8] == 0))
+        {
+            ZPossibleRots.Add(Rotations[6]);
+        }
+        //7  |  z 1346  :: 
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[6] == 0))
+        {
+            ZPossibleRots.Add(Rotations[7]);
+        }
+        //12 |  z 4567  ::  
+        if ((Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0) &&
+            (Floorchecker[6] == 0) &&
+            (Floorchecker[7] == 0))
+        {
+            ZPossibleRots.Add(Rotations[12]);
+        }
+        //13 |  z 0347  ::  
+        if ((Floorchecker[0] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[7] == 0))
+        {
+            ZPossibleRots.Add(Rotations[13]);
+        }
+        //14 |  z 1234  ::  
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[2] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0))
+        {
+            ZPossibleRots.Add(Rotations[14]);
+        }
+        //15 |  z 1458  ::  
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0) &&
+            (Floorchecker[8] == 0))
+        {
+            ZPossibleRots.Add(Rotations[15]);
+        }
+
+
+        //num|    t    ::   
+        //4  |  t 1345 ::   
+        //14 |  t 1345 ::  
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0) &&
+            (Floorchecker[3] == 0))
+        {
+            TPossibleRots.Add(Rotations[4]);
+            TPossibleRots.Add(Rotations[14]);
+        }
+        //5  |  t 1457 ::   
+        //15 |  t 1457 ::   
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0) &&
+            (Floorchecker[7] == 0))
+        {
+            TPossibleRots.Add(Rotations[5]);
+            TPossibleRots.Add(Rotations[15]);
+        }
+        //6  |  t 3457 ::   
+        //12 |  t 3457 ::   
+        if ((Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0) &&
+            (Floorchecker[7] == 0))
+        {
+            TPossibleRots.Add(Rotations[6]);
+            TPossibleRots.Add(Rotations[12]);
+        }
+        //7  |  t 1347 ::   
+        //13 |  t 1347 ::   
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[7] == 0))
+        {
+            TPossibleRots.Add(Rotations[7]);
+            TPossibleRots.Add(Rotations[13]);
+        }
+
+        //num|     u    ::   
+        //4  |  u 02345 ::   
+        //14 |  u 02345 ::   
+        if ((Floorchecker[0] == 0) &&
+        (Floorchecker[2] == 0) &&
+        (Floorchecker[3] == 0) &&
+        (Floorchecker[4] == 0) &&
+        (Floorchecker[5] == 0))
+        {
+            UPossibleRots.Add(Rotations[4]);
+            UPossibleRots.Add(Rotations[14]);
+        }
+        //5  |  u 12478 ::   
+        //15 |  u 12478 ::   
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[2] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[7] == 0) &&
+            (Floorchecker[8] == 0))
+        {
+            UPossibleRots.Add(Rotations[5]);
+            UPossibleRots.Add(Rotations[15]);
+        }
+        //6  |  u 34568 ::   
+        //12 |  u 34568 ::   
+        if ((Floorchecker[6] == 0) &&
+            (Floorchecker[8] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0))
+        {
+            UPossibleRots.Add(Rotations[6]);
+            UPossibleRots.Add(Rotations[12]);
+        }
+        //7  |  u 01467 ::   
+        //13 |  u 01467 ::   
+        if ((Floorchecker[0] == 0) &&
+            (Floorchecker[1] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[6] == 0) &&
+            (Floorchecker[7] == 0))
+        {
+            UPossibleRots.Add(Rotations[7]);
+            UPossibleRots.Add(Rotations[13]);
+        }
+
+
+
+        //num|    block
+        //4  |  b 012345
+        //14 |  b 012345
+        if ((Floorchecker[0] == 0) &&
+            (Floorchecker[1] == 0) &&
+            (Floorchecker[2] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0))
+        {
             BlockPossibleRots.Add(Rotations[4]);
             BlockPossibleRots.Add(Rotations[14]);
-            BlockPossibleRots.Add(Rotations[6]);
-            BlockPossibleRots.Add(Rotations[12]);
         }
-        //013467
-        //124578
-        //move leftright
-        if (((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0)) ||
-            ((Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0)))
+        //5  |  b 124578
+        //15 |  b 124578
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[2] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0) &&
+            (Floorchecker[7] == 0) &&
+            (Floorchecker[8] == 0))
         {
-            //block
-            BlockPossibleRots.Add(Rotations[7]);
-            BlockPossibleRots.Add(Rotations[13]);
             BlockPossibleRots.Add(Rotations[5]);
             BlockPossibleRots.Add(Rotations[15]);
         }
-
-
+        //6  |  b 345678
+        //12 |  b 345678
+        if ((Floorchecker[6] == 0) &&
+            (Floorchecker[7] == 0) &&
+            (Floorchecker[8] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[5] == 0))
+        {
+            BlockPossibleRots.Add(Rotations[4]);
+            BlockPossibleRots.Add(Rotations[14]);
+        }
+        //7  |  b 013467
+        //13 |  b 013467
+        if ((Floorchecker[1] == 0) &&
+            (Floorchecker[0] == 0) &&
+            (Floorchecker[4] == 0) &&
+            (Floorchecker[3] == 0) &&
+            (Floorchecker[7] == 0) &&
+            (Floorchecker[6] == 0))
+        {
+            BlockPossibleRots.Add(Rotations[7]);
+            BlockPossibleRots.Add(Rotations[13]);
+        }
     }
     void PossibleRotations()
     {
-
+        PossiblePOS = new List<Vector3>();
+        LPossibleRots = new List<Vector3>();
+        ThumbPossibleRots = new List<Vector3>();
+        ZPossibleRots = new List<Vector3>();
+        TPossibleRots = new List<Vector3>();
+        UPossibleRots = new List<Vector3>();
+        BlockPossibleRots = new List<Vector3>();
         //// all rotations                          //num| L      ::   ::       ||  thumb       ::       ||  z       ::       ||    t    ::        ||      u    ::       ||    block
         //Vector3 aaa = new Vector3(0, 0, 0);       //0  | L 345  ::   ::       ||  thumb 345   ::       ||  z  45   ::3      ||  t 345  ::        ||   u 345   ::       ||  b 345
         //Vector3 aba = new Vector3(0, 90, 0);      //1  | L 147  ::   ::       ||  thumb 147   ::       ||  z  47   ::1      ||  t 147  ::        ||   u 147   ::       ||  b 147
@@ -449,47 +1078,69 @@ public class blockspawner : MonoBehaviour
         Vector3 botright = new Vector3(-1, 0, -1);
 
         ScanfloortoRot();
-        int rotpos;
-        int myRandomblock = 5;
+
+        int myRandomblock = Random.Range(0, 6);
+        //select my block
         switch (myRandomblock)
         {
-            case 0://L
+            case 0://L   //------------------------------------------------check this
                 {
+
+
                     //num| L      ::   :: 
+
+
+                    //-------------------------------------------------------------------------------HORIZONTAL
+
                     //0  | L 345  ::   ::       //Vector3 aaa = new Vector3(0, 0, 0);    
-                    //1  | L 147  ::   ::       //Vector3 aba = new Vector3(0, 90, 0);   
                     //2  | L 345  ::   ::       //Vector3 aca = new Vector3(0, 180, 0);  
-                    //3  | L 147  ::   ::       //Vector3 ada = new Vector3(0, 270, 0);  
-                    //4  | L 0345 ::   ::       //Vector3 baa = new Vector3(90, 0, 0);   
-                    //5  | L 1247 ::   ::       //Vector3 bba = new Vector3(90, 90, 0);  
-                    //6  | L 3458 ::   ::       //Vector3 bca = new Vector3(90, 180, 0); 
-                    //7  | L 1467 ::   ::       //Vector3 bda = new Vector3(90, 270, 0); 
+
                     //8  | L 3    ::45 ::       //Vector3 caa = new Vector3(180, 0, 0);  
-                    //9  | L 1    ::47 ::       //Vector3 cba = new Vector3(180, 90, 0); 
                     //10 | L 5    ::34 ::       //Vector3 cca = new Vector3(180, 180, 0);
-                    //11 | L 7    ::14 ::       //Vector3 cda = new Vector3(180, 270, 0);
+
+                    //4  | L 0345 ::   ::       //Vector3 baa = new Vector3(90, 0, 0);   
+                    //6  | L 3458 ::   ::       //Vector3 bca = new Vector3(90, 180, 0); 
+
                     //12 | L 3456 ::   ::       //Vector3 daa = new Vector3(270, 0, 0);  
-                    //13 | L 0147 ::   ::       //Vector3 dba = new Vector3(270, 90, 0); 
                     //14 | L 2345 ::   ::       //Vector3 dca = new Vector3(270, 180, 0);
-                    //15 | L 1478 ::   ::       //Vector3 dda = new Vector3(270, 270, 0);
+
                     //16 | L 34   ::   ::       //Vector3 aab = new Vector3(0, 0, 90);   
-                    //17 | L 14   ::   ::       //Vector3 abb = new Vector3(0, 90, 90);  
                     //18 | L 45   ::   ::       //Vector3 acb = new Vector3(0, 180, 90); 
-                    //19 | L 47   ::   ::       //Vector3 adb = new Vector3(0, 270, 90); 
+
                     //20 | L 4    ::   ::5      //Vector3 aad = new Vector3(0, 0, 270);  
-                    //21 | L 4    ::   ::7      //Vector3 abd = new Vector3(0, 90, 270); 
                     //22 | L 4    ::   ::3      //Vector3 acd = new Vector3(0, 180, 270);
+
+                    //------------------------------------------------------------------------------------vERTICAL
+
+                    //1  | L 147  ::   ::       //Vector3 aba = new Vector3(0, 90, 0);   
+                    //3  | L 147  ::   ::       //Vector3 ada = new Vector3(0, 270, 0);  
+
+                    //5  | L 1247 ::   ::       //Vector3 bba = new Vector3(90, 90, 0);  
+                    //7  | L 1467 ::   ::       //Vector3 bda = new Vector3(90, 270, 0); 
+
+                    //9  | L 1    ::47 ::       //Vector3 cba = new Vector3(180, 90, 0); 
+                    //11 | L 7    ::14 ::       //Vector3 cda = new Vector3(180, 270, 0);
+
+                    //13 | L 0147 ::   ::       //Vector3 dba = new Vector3(270, 90, 0); 
+                    //15 | L 1478 ::   ::       //Vector3 dda = new Vector3(270, 270, 0);
+
+                    //17 | L 14   ::   ::       //Vector3 abb = new Vector3(0, 90, 90);  
+                    //19 | L 47   ::   ::       //Vector3 adb = new Vector3(0, 270, 90); 
+
+                    //21 | L 4    ::   ::7      //Vector3 abd = new Vector3(0, 90, 270); 
                     //23 | L 4    ::   ::1      //Vector3 add = new Vector3(0, 270, 270);
+
                     if (LPossibleRots.Count != 0)
                     {
-                        rotpos = Random.Range(0, LPossibleRots.Count);
+                         int rotpos = Random.Range(0, LPossibleRots.Count);
                         //theres no rotations
 
                         //num|       L::   :: 
                         //0  |   345  ::   :: 
                         //2  |   345  ::   :: 
-                        if ((LPossibleRots.Equals(Rotations[0])) ||
-                           (LPossibleRots.Equals(Rotations[2])))
+
+                        if ((LPossibleRots[rotpos].Equals(Rotations[0])) ||
+                           (LPossibleRots[rotpos].Equals(Rotations[2])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
                             {
@@ -505,7 +1156,7 @@ public class blockspawner : MonoBehaviour
                             }
                         }
                         //8  |   3    ::45 :: 
-                        if (LPossibleRots.Equals(Rotations[8]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[8]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 1) && (Floorchecker[2] == 1))
                             {
@@ -521,7 +1172,7 @@ public class blockspawner : MonoBehaviour
                             }
                         }
                         //10 |   5    ::34 :: 
-                        if (LPossibleRots.Equals(Rotations[10]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[10]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[1] == 1) && (Floorchecker[2] == 0))
                             {
@@ -538,7 +1189,7 @@ public class blockspawner : MonoBehaviour
                         }
 
                         //16 |   34   ::   :: 
-                        if (LPossibleRots.Equals(Rotations[16]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[16]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -568,7 +1219,7 @@ public class blockspawner : MonoBehaviour
                             }
                         }
                         //22 |   4    ::   ::3
-                        if (LPossibleRots.Equals(Rotations[22]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[22]))
                         {
                             if ((Floorchecker[0] == 2) && (Floorchecker[1] == 0))
                             {
@@ -599,7 +1250,7 @@ public class blockspawner : MonoBehaviour
                         }
 
                         //18 |   45   ::   :: 
-                        if (LPossibleRots.Equals(Rotations[18]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[18]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -630,7 +1281,7 @@ public class blockspawner : MonoBehaviour
                             }
                         }
                         //20 |   4    ::   ::5
-                        if (LPossibleRots.Equals(Rotations[20]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[20]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 2))
                             {
@@ -662,13 +1313,13 @@ public class blockspawner : MonoBehaviour
 
                         //1  |   147  ::   :: 
                         //3  |   147  ::   :: 
-                        if ((LPossibleRots.Equals(Rotations[1])) ||
-                        (LPossibleRots.Equals(Rotations[3])))
+                        if ((LPossibleRots[rotpos].Equals(Rotations[1])) ||
+                        (LPossibleRots[rotpos].Equals(Rotations[3])))
                         {
 
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
                             {
-                                PossiblePOS.Add(top);
+                                PossiblePOS.Add(left);
                             }
                             if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
                             {
@@ -676,16 +1327,16 @@ public class blockspawner : MonoBehaviour
                             }
                             if ((Floorchecker[2] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0))
                             {
-                                PossiblePOS.Add(bot);
+                                PossiblePOS.Add(right);
                             }
 
                         }
                         //9  |   1    ::47 :: 
-                        if (LPossibleRots.Equals(Rotations[9]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[9]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 1) && (Floorchecker[6] == 1))
                             {
-                                PossiblePOS.Add(top);
+                                PossiblePOS.Add(left);
                             }
                             if ((Floorchecker[1] == 0) && (Floorchecker[4] == 1) && (Floorchecker[7] == 1))
                             {
@@ -693,15 +1344,15 @@ public class blockspawner : MonoBehaviour
                             }
                             if ((Floorchecker[2] == 0) && (Floorchecker[5] == 1) && (Floorchecker[8] == 1))
                             {
-                                PossiblePOS.Add(bot);
+                                PossiblePOS.Add(right);
                             }
                         }
                         //11 |   7    ::14 :: 
-                        if (LPossibleRots.Equals(Rotations[11]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[11]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[3] == 1) && (Floorchecker[6] == 0))
                             {
-                                PossiblePOS.Add(top);
+                                PossiblePOS.Add(left);
                             }
                             if ((Floorchecker[1] == 1) && (Floorchecker[4] == 1) && (Floorchecker[7] == 0))
                             {
@@ -709,7 +1360,7 @@ public class blockspawner : MonoBehaviour
                             }
                             if ((Floorchecker[2] == 1) && (Floorchecker[5] == 1) && (Floorchecker[8] == 0))
                             {
-                                PossiblePOS.Add(bot);
+                                PossiblePOS.Add(right);
                             }
                         }
 
@@ -717,7 +1368,7 @@ public class blockspawner : MonoBehaviour
 
                         //17 |   14   ::   :: 
                         //23 |   4    ::   ::1
-                        if (LPossibleRots.Equals(Rotations[17]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[17]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -747,7 +1398,7 @@ public class blockspawner : MonoBehaviour
                             }
 
                         }
-                        if (LPossibleRots.Equals(Rotations[23]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[23]))
                         {
                             if ((Floorchecker[0] == 2) && (Floorchecker[3] == 0))
                             {
@@ -778,7 +1429,7 @@ public class blockspawner : MonoBehaviour
                         }
                         //19 |   47   ::   :: 
                         //21 |   4    ::   ::7
-                        if (LPossibleRots.Equals(Rotations[19]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[19]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -807,31 +1458,31 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(right);
                             }
                         }
-                        if (LPossibleRots.Equals(Rotations[21]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[21]))
                         {
-                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
+                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 2))
                             {
                                 PossiblePOS.Add(topleft);
                             }
-                            if ((Floorchecker[3] == 0) && (Floorchecker[6] == 0))
+                            if ((Floorchecker[3] == 0) && (Floorchecker[6] == 2))
                             {
                                 PossiblePOS.Add(left);
                             }
 
-                            if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0))
+                            if ((Floorchecker[1] == 0) && (Floorchecker[4] == 2))
                             {
                                 PossiblePOS.Add(top);
                             }
-                            if ((Floorchecker[4] == 0) && (Floorchecker[7] == 0))
+                            if ((Floorchecker[4] == 0) && (Floorchecker[7] == 2))
                             {
                                 PossiblePOS.Add(center);
                             }
 
-                            if ((Floorchecker[2] == 0) && (Floorchecker[5] == 0))
+                            if ((Floorchecker[2] == 0) && (Floorchecker[5] == 2))
                             {
                                 PossiblePOS.Add(topright);
                             }
-                            if ((Floorchecker[5] == 0) && (Floorchecker[8] == 0))
+                            if ((Floorchecker[5] == 0) && (Floorchecker[8] == 2))
                             {
                                 PossiblePOS.Add(right);
                             }
@@ -841,7 +1492,7 @@ public class blockspawner : MonoBehaviour
                         //14 |   2345 ::   :: 
                         //6  |   3458 ::   :: 
                         //12 |   3456 ::   :: 
-                        if (LPossibleRots.Equals(Rotations[4]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[4]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
@@ -852,18 +1503,18 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(bot);
                             }
                         }
-                        if (LPossibleRots.Equals(Rotations[14]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[14]))
                         {
                             if ((Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
                                 PossiblePOS.Add(center);
                             }
-                            if ((Floorchecker[3] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
+                            if ((Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
                             {
                                 PossiblePOS.Add(bot);
                             }
                         }
-                        if (LPossibleRots.Equals(Rotations[6]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[6]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[5] == 0))
                             {
@@ -874,7 +1525,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(center);
                             }
                         }
-                        if (LPossibleRots.Equals(Rotations[12]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[12]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0))
                             {
@@ -891,7 +1542,7 @@ public class blockspawner : MonoBehaviour
                         //13 |   0147 ::   :: 
                         //5  |   1247 ::   :: 
                         //15 |   1478 ::   :: 
-                        if (LPossibleRots.Equals(Rotations[7]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[7]))
                         {
                             if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -902,7 +1553,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(right);
                             }
                         }
-                        if (LPossibleRots.Equals(Rotations[13]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[13]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
                             {
@@ -913,7 +1564,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(right);
                             }
                         }
-                        if (LPossibleRots.Equals(Rotations[5]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[5]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
                             {
@@ -925,7 +1576,7 @@ public class blockspawner : MonoBehaviour
                             }
 
                         }
-                        if (LPossibleRots.Equals(Rotations[15]))
+                        if (LPossibleRots[rotpos].Equals(Rotations[15]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -937,47 +1588,74 @@ public class blockspawner : MonoBehaviour
                             }
                         }
 
+
+                        int posran = Random.Range(0, PossiblePOS.Count);
+
+                        Vector3 hey = PossiblePOS[posran];
+                        Vector3 hi = LPossibleRots[rotpos];
+                        INstanmyBLCK(myRandomblock, hey, hi);
                     }
                     break;
                 }
-            case 1://Thumb
+            case 1://Thumb 
                 {
                     //num|||  thumb       ::    
+
+                    //-----------------------------------------------------------------------------------------------HORIZONTAL
+
                     //0  |||  thumb 345   ::        //Vector3 aaa = new Vector3(0, 0, 0);    
-                    //1  |||  thumb 147   ::        //Vector3 aba = new Vector3(0, 90, 0);   
                     //2  |||  thumb 345   ::        //Vector3 aca = new Vector3(0, 180, 0);  
-                    //3  |||  thumb 147   ::        //Vector3 ada = new Vector3(0, 270, 0);  
-                    //4  |||  thumb 01345 ::        //Vector3 baa = new Vector3(90, 0, 0);   
-                    //5  |||  thumb 12457 ::        //Vector3 bba = new Vector3(90, 90, 0);  
-                    //6  |||  thumb 34578 ::        //Vector3 bca = new Vector3(90, 180, 0); 
-                    //7  |||  thumb 13467 ::        //Vector3 bda = new Vector3(90, 270, 0); 
+
                     //8  |||  thumb 34    ::5       //Vector3 caa = new Vector3(180, 0, 0);  
-                    //9  |||  thumb 14    ::7       //Vector3 cba = new Vector3(180, 90, 0); 
                     //10 |||  thumb 45    ::3       //Vector3 cca = new Vector3(180, 180, 0);
-                    //11 |||  thumb 47    ::1       //Vector3 cda = new Vector3(180, 270, 0);
-                    //12 |||  thumb 34567 ::        //Vector3 daa = new Vector3(270, 0, 0);  
-                    //13 |||  thumb 01347 ::        //Vector3 dba = new Vector3(270, 90, 0); 
-                    //14 |||  thumb 12345 ::        //Vector3 dca = new Vector3(270, 180, 0);
-                    //15 |||  thumb 14578 ::        //Vector3 dda = new Vector3(270, 270, 0);
+
                     //16 |||  thumb 34    ::        //Vector3 aab = new Vector3(0, 0, 90);   
-                    //17 |||  thumb 14    ::        //Vector3 abb = new Vector3(0, 90, 90);  
                     //18 |||  thumb 45    ::        //Vector3 acb = new Vector3(0, 180, 90); 
-                    //19 |||  thumb 47    ::        //Vector3 adb = new Vector3(0, 270, 90); 
+
                     //20 |||  thumb 4     ::5       //Vector3 aad = new Vector3(0, 0, 270);  
-                    //21 |||  thumb 4     ::7       //Vector3 abd = new Vector3(0, 90, 270); 
                     //22 |||  thumb 4     ::3       //Vector3 acd = new Vector3(0, 180, 270);
+
+                    //4  |||  thumb 01345 ::        //Vector3 baa = new Vector3(90, 0, 0);   
+                    //6  |||  thumb 34578 ::        //Vector3 bca = new Vector3(90, 180, 0); 
+
+                    //12 |||  thumb 34567 ::        //Vector3 daa = new Vector3(270, 0, 0);  
+                    //14 |||  thumb 12345 ::        //Vector3 dca = new Vector3(270, 180, 0);
+
+                    //----------------------------------------------------------------------------------------------vERTICAL
+
+                    //1  |||  thumb 147   ::        //Vector3 aba = new Vector3(0, 90, 0);   
+                    //3  |||  thumb 147   ::        //Vector3 ada = new Vector3(0, 270, 0);  
+
+                    //9  |||  thumb 14    ::7       //Vector3 cba = new Vector3(180, 90, 0); 
+                    //11 |||  thumb 47    ::1       //Vector3 cda = new Vector3(180, 270, 0);
+
+                    //17 |||  thumb 14    ::        //Vector3 abb = new Vector3(0, 90, 90);  
+                    //19 |||  thumb 47    ::        //Vector3 adb = new Vector3(0, 270, 90); 
+
+                    //21 |||  thumb 4     ::7       //Vector3 abd = new Vector3(0, 90, 270); 
                     //23 |||  thumb 4     ::1       //Vector3 add = new Vector3(0, 270, 270);
+
+                    //5  |||  thumb 12457 ::        //Vector3 bba = new Vector3(90, 90, 0);  
+                    //7  |||  thumb 13467 ::        //Vector3 bda = new Vector3(90, 270, 0); 
+
+                    //13 |||  thumb 01347 ::        //Vector3 dba = new Vector3(270, 90, 0); 
+                    //15 |||  thumb 14578 ::        //Vector3 dda = new Vector3(270, 270, 0);
+
+
+
+
+
                     if (ThumbPossibleRots.Count != 0)
                     {
-                        rotpos = Random.Range(0, ThumbPossibleRots.Count);
+                        int rotpos = Random.Range(0, ThumbPossibleRots.Count);
                         //theres no rotations
 
 
                         //num|||     thumb::
                         //0  |||  t 345   ::  
                         //2  |||  t 345   ::  
-                        if ((ThumbPossibleRots.Equals(Rotations[0])) ||
-                            (ThumbPossibleRots.Equals(Rotations[2])))
+                        if ((ThumbPossibleRots[rotpos].Equals(Rotations[0])) ||
+                            (ThumbPossibleRots[rotpos].Equals(Rotations[2])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
                             {
@@ -995,7 +1673,7 @@ public class blockspawner : MonoBehaviour
 
                         //8  |||  t 34    ::5 
                         //10 |||  t 45    ::3 
-                        if (ThumbPossibleRots.Equals(Rotations[8]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[8]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 1))
                             {
@@ -1010,7 +1688,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(bot);
                             }
                         }
-                        if (ThumbPossibleRots.Equals(Rotations[10]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[10]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
                             {
@@ -1027,7 +1705,7 @@ public class blockspawner : MonoBehaviour
                         }
                         //16 |||  t 34    ::  
                         //22 |||  t 4     ::3 
-                        if (ThumbPossibleRots.Equals(Rotations[16]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[16]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -1054,7 +1732,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(botright);
                             }
                         }
-                        if (ThumbPossibleRots.Equals(Rotations[22]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[22]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[1] == 0))
                             {
@@ -1083,7 +1761,7 @@ public class blockspawner : MonoBehaviour
                         }
                         //18 |||  t 45    ::  
                         //20 |||  t 4     ::5 
-                        if (ThumbPossibleRots.Equals(Rotations[18]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[18]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -1110,7 +1788,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(bot);
                             }
                         }
-                        if (ThumbPossibleRots.Equals(Rotations[20]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[20]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 1))
                             {
@@ -1140,8 +1818,8 @@ public class blockspawner : MonoBehaviour
 
                         //1  |||  t 147   ::  
                         //3  |||  t 147   ::  
-                        if ((ThumbPossibleRots.Equals(Rotations[1])) ||
-                            (ThumbPossibleRots.Equals(Rotations[3])))
+                        if ((ThumbPossibleRots[rotpos].Equals(Rotations[1])) ||
+                            (ThumbPossibleRots[rotpos].Equals(Rotations[3])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
                             {
@@ -1158,20 +1836,40 @@ public class blockspawner : MonoBehaviour
                         }
                         //9  |||  t 14    ::7 
                         //11 |||  t 47    ::1 
-                        if (ThumbPossibleRots.Equals(Rotations[9]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[9]))
                         {
-
+                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 1))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 1))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[2] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 1))
+                            {
+                                PossiblePOS.Add(right);
+                            }
                         }
-                        if (ThumbPossibleRots.Equals(Rotations[11]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[11]))
                         {
-
+                            if ((Floorchecker[0] == 1) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[1] == 1) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[2] == 1) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            }
                         }
 
                         //17 |||  t 14    ::  
                         //23 |||  t 4     ::1 
-                        //19 |||  t 47    ::  
-                        //21 |||  t 4     ::7 
-                        if (ThumbPossibleRots.Equals(Rotations[17]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[17]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -1198,7 +1896,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(botright);
                             }
                         }
-                        if (ThumbPossibleRots.Equals(Rotations[23]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[23]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[3] == 0))
                             {
@@ -1225,7 +1923,9 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(botright);
                             }
                         }
-                        if (ThumbPossibleRots.Equals(Rotations[19]))
+                        //19 |||  t 47    ::  
+                        //21 |||  t 4     ::7 
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[19]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -1252,7 +1952,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(right);
                             }
                         }
-                        if (ThumbPossibleRots.Equals(Rotations[21]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[21]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 1))
                             {
@@ -1282,7 +1982,7 @@ public class blockspawner : MonoBehaviour
 
 
                         //4  |||  t 01345 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[4]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[4]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
@@ -1295,7 +1995,7 @@ public class blockspawner : MonoBehaviour
 
                         }
                         //14 |||  t 12345 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[14]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[14]))
                         {
                             if ((Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
@@ -1309,7 +2009,7 @@ public class blockspawner : MonoBehaviour
                         }
 
                         //6  |||  t 34578 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[6]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[6]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
@@ -1322,7 +2022,7 @@ public class blockspawner : MonoBehaviour
 
                         }
                         //12 |||  t 34567 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[12]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[12]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0))
                             {
@@ -1336,7 +2036,7 @@ public class blockspawner : MonoBehaviour
                         }
 
                         //7  |||  t 13467 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[7]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[7]))
                         {
                             if ((Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -1349,7 +2049,7 @@ public class blockspawner : MonoBehaviour
 
                         }
                         //13 |||  t 01347 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[13]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[13]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
                             {
@@ -1363,7 +2063,7 @@ public class blockspawner : MonoBehaviour
                         }
 
                         //5  |||  t 12457 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[5]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[5]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0))
                             {
@@ -1377,7 +2077,7 @@ public class blockspawner : MonoBehaviour
 
                         }
                         //15 |||  t 14578 ::  
-                        if (ThumbPossibleRots.Equals(Rotations[15]))
+                        if (ThumbPossibleRots[rotpos].Equals(Rotations[15]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -1391,51 +2091,71 @@ public class blockspawner : MonoBehaviour
                         }
 
 
+                        int posran = Random.Range(0, PossiblePOS.Count);
 
+                        Vector3 hey = PossiblePOS[posran];
+                        Vector3 hi = ThumbPossibleRots[rotpos];
+                        INstanmyBLCK(myRandomblock, hey, hi);
                     }
                     break;
                 }
-            case 2://z
+            case 2://z            
                 {
                     //num|||  z       ::   
+
+                    //---------------------------------------------------------------------HORIZONTAL
+
                     //0  |||  z  45   ::3         //Vector3 aaa = new Vector3(0, 0, 0);    
-                    //1  |||  z  47   ::1         //Vector3 aba = new Vector3(0, 90, 0);   
-                    //2  |||  z  34   ::5         //Vector3 aca = new Vector3(0, 180, 0);  
-                    //3  |||  z  14   ::7         //Vector3 ada = new Vector3(0, 270, 0);  
-                    //4  |||  z 0145  ::          //Vector3 baa = new Vector3(90, 0, 0);   
-                    //5  |||  z 2457  ::          //Vector3 bba = new Vector3(90, 90, 0);  
-                    //6  |||  z 3478  ::          //Vector3 bca = new Vector3(90, 180, 0); 
-                    //7  |||  z 1346  ::          //Vector3 bda = new Vector3(90, 270, 0); 
-                    //8  |||  z  34   ::5         //Vector3 caa = new Vector3(180, 0, 0);  
-                    //9  |||  z  14   ::7         //Vector3 cba = new Vector3(180, 90, 0); 
                     //10 |||  z  45   ::3         //Vector3 cca = new Vector3(180, 180, 0);
-                    //11 |||  z  47   ::1         //Vector3 cda = new Vector3(180, 270, 0);
-                    //12 |||  z 4567  ::          //Vector3 daa = new Vector3(270, 0, 0);  
-                    //13 |||  z 0347  ::          //Vector3 dba = new Vector3(270, 90, 0); 
-                    //14 |||  z 1234  ::          //Vector3 dca = new Vector3(270, 180, 0);
-                    //15 |||  z 1458  ::          //Vector3 dda = new Vector3(270, 270, 0);
+                    //
+                    //2  |||  z  34   ::5         //Vector3 aca = new Vector3(0, 180, 0);  
+                    //8  |||  z  34   ::5         //Vector3 caa = new Vector3(180, 0, 0);  
+                    //
                     //16 |||  z 3     ::4         //Vector3 aab = new Vector3(0, 0, 90);   
-                    //17 |||  z 1     ::4         //Vector3 abb = new Vector3(0, 90, 90);  
                     //18 |||  z 5     ::4         //Vector3 acb = new Vector3(0, 180, 90); 
-                    //19 |||  z 7     ::4         //Vector3 adb = new Vector3(0, 270, 90); 
+                    //
                     //20 |||  z 4     ::5         //Vector3 aad = new Vector3(0, 0, 270);  
-                    //21 |||  z 4     ::7         //Vector3 abd = new Vector3(0, 90, 270); 
                     //22 |||  z 4     ::3         //Vector3 acd = new Vector3(0, 180, 270);
+                    //
+                    //4  |||  z 0145  ::          //Vector3 baa = new Vector3(90, 0, 0);   
+                    //6  |||  z 3478  ::          //Vector3 bca = new Vector3(90, 180, 0); 
+
+                    //5  |||  z 2457  ::          //Vector3 bba = new Vector3(90, 90, 0);  
+                    //7  |||  z 1346  ::          //Vector3 bda = new Vector3(90, 270, 0); 
+
+
+
+                    //------------------------------------------------------------------------------VERTICAL
+
+                    //1  |||  z  47   ::1         //Vector3 aba = new Vector3(0, 90, 0);   
+                    //11 |||  z  47   ::1         //Vector3 cda = new Vector3(180, 270, 0);
+
+                    //3  |||  z  14   ::7         //Vector3 ada = new Vector3(0, 270, 0);  
+                    //9  |||  z  14   ::7         //Vector3 cba = new Vector3(180, 90, 0); 
+
+                    //17 |||  z 1     ::4         //Vector3 abb = new Vector3(0, 90, 90);  
                     //23 |||  z 4     ::1         //Vector3 add = new Vector3(0, 270, 270);
+                    //19 |||  z 7     ::4         //Vector3 adb = new Vector3(0, 270, 90); 
+                    //21 |||  z 4     ::7         //Vector3 abd = new Vector3(0, 90, 270); 
+
+
+                    //12 |||  z 4567  ::          //Vector3 daa = new Vector3(270, 0, 0);  
+                    //14 |||  z 1234  ::          //Vector3 dca = new Vector3(270, 180, 0);
+
+                    //13 |||  z 0347  ::          //Vector3 dba = new Vector3(270, 90, 0); 
+                    //15 |||  z 1458  ::          //Vector3 dda = new Vector3(270, 270, 0);
+
                     if (ZPossibleRots.Count != 0)
                     {
-                        rotpos = Random.Range(0, ZPossibleRots.Count);
+                        int rotpos = Random.Range(0, ZPossibleRots.Count);
                         //theres no rotations
 
 
                         //num|||  z       :: 
                         //0  |||  z  45   ::3
                         //10 |||  z  45   ::3
-
-                        //2  |||  z  34   ::5
-                        //8  |||  z  34   ::5
-                        if ((ZPossibleRots.Equals(Rotations[0])) ||
-                        (ZPossibleRots.Equals(Rotations[10])))
+                        if ((ZPossibleRots[rotpos].Equals(Rotations[0])) ||
+                            (ZPossibleRots[rotpos].Equals(Rotations[10])))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
                             {
@@ -1451,8 +2171,11 @@ public class blockspawner : MonoBehaviour
                             }
                         }
 
-                        if ((ZPossibleRots.Equals(Rotations[2])) ||
-                        (ZPossibleRots.Equals(Rotations[8])))
+
+                        //2  |||  z  34   ::5
+                        //8  |||  z  34   ::5
+                        if ((ZPossibleRots[rotpos].Equals(Rotations[2])) ||
+                            (ZPossibleRots[rotpos].Equals(Rotations[8])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 1))
                             {
@@ -1470,9 +2193,7 @@ public class blockspawner : MonoBehaviour
 
                         //16 |||  z 3     ::4
                         //22 |||  z 4     ::3
-                        //18 |||  z 5     ::4
-                        //20 |||  z 4     ::5
-                        if (ZPossibleRots.Equals(Rotations[16]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[16]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 1))
                             {
@@ -1499,7 +2220,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(botright);
                             }
                         }
-                        if (ZPossibleRots.Equals(Rotations[22]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[22]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[1] == 0))
                             {
@@ -1526,7 +2247,9 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(botright);
                             }
                         }
-                        if (ZPossibleRots.Equals(Rotations[18]))
+                        //18 |||  z 5     ::4
+                        //20 |||  z 4     ::5
+                        if (ZPossibleRots[rotpos].Equals(Rotations[18]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[1] == 0))
                             {
@@ -1553,7 +2276,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(bot);
                             }
                         }
-                        if (ZPossibleRots.Equals(Rotations[20]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[20]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 1))
                             {
@@ -1584,8 +2307,8 @@ public class blockspawner : MonoBehaviour
 
                         //1  |||  z  47   ::1
                         //11 |||  z  47   ::1
-                        if ((ZPossibleRots.Equals(Rotations[1])) ||
-                        (ZPossibleRots.Equals(Rotations[11])))
+                        if ((ZPossibleRots[rotpos].Equals(Rotations[1])) ||
+                            (ZPossibleRots[rotpos].Equals(Rotations[11])))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
                             {
@@ -1602,8 +2325,8 @@ public class blockspawner : MonoBehaviour
                         }
                         //3  |||  z  14   ::7
                         //9  |||  z  14   ::7
-                        if ((ZPossibleRots.Equals(Rotations[3])) ||
-                        (ZPossibleRots.Equals(Rotations[9])))
+                        if ((ZPossibleRots[rotpos].Equals(Rotations[3])) ||
+                            (ZPossibleRots[rotpos].Equals(Rotations[9])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 1))
                             {
@@ -1621,7 +2344,7 @@ public class blockspawner : MonoBehaviour
 
                         //17 |||  z 1     ::4
                         //23 |||  z 4     ::1
-                        if (ZPossibleRots.Equals(Rotations[17]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[17]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 1))
                             {
@@ -1648,7 +2371,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(botright);
                             }
                         }
-                        if (ZPossibleRots.Equals(Rotations[23]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[23]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[3] == 0))
                             {
@@ -1677,7 +2400,7 @@ public class blockspawner : MonoBehaviour
                         }
                         //21 |||  z 4     ::7
                         //19 |||  z 7     ::4
-                        if (ZPossibleRots.Equals(Rotations[21]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[21]))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 1))
                             {
@@ -1704,7 +2427,7 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(right);
                             }
                         }
-                        if (ZPossibleRots.Equals(Rotations[19]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[19]))
                         {
                             if ((Floorchecker[0] == 1) && (Floorchecker[3] == 0))
                             {
@@ -1735,241 +2458,418 @@ public class blockspawner : MonoBehaviour
 
 
                         //4  |||  z 0145  :: 
-                        //14 |||  z 1234  :: 
-                        if (ZPossibleRots.Equals(Rotations[4]))
+                        //6  |||  z 3478  :: 
+                        if (ZPossibleRots[rotpos].Equals(Rotations[4]))
                         {
-                            if ((Floorchecker[0] == 1) && (Floorchecker[1] == 1) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1))
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
                                 PossiblePOS.Add(center);
                             }
-                            if ((Floorchecker[3] == 1) && (Floorchecker[4] == 1) && (Floorchecker[7] == 1) && (Floorchecker[8] == 1))
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
                             {
                                 PossiblePOS.Add(bot);
                             }
                         }
-                        if (ZPossibleRots.Equals(Rotations[14]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[6]))
                         {
-                            if ((Floorchecker[1] == 1) && (Floorchecker[2] == 1) && (Floorchecker[3] == 1) && (Floorchecker[4] == 1))
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
                             {
                                 PossiblePOS.Add(center);
                             }
-                            if ((Floorchecker[4] == 1) && (Floorchecker[5] == 1) && (Floorchecker[6] == 1) && (Floorchecker[7] == 1))
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
-                                PossiblePOS.Add(bot);
+                                PossiblePOS.Add(top);
                             }
                         }
 
-                        //6  |||  z 3478  :: 
+                        //14 |||  z 1234  :: 
                         //12 |||  z 4567  :: 
-                        if (ZPossibleRots.Equals(Rotations[6]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[14]))
                         {
-                            if ((Floorchecker[3] == 1) && (Floorchecker[4] == 1) && (Floorchecker[7] == 1) && (Floorchecker[8] == 1))
+                            if ((Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0))
                             {
                                 PossiblePOS.Add(center);
                             }
-                            if ((Floorchecker[0] == 1) && (Floorchecker[1] == 1) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1))
+                            if ((Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
-                                PossiblePOS.Add(top);
+                                PossiblePOS.Add(bot);
                             }
                         }
-                        if (ZPossibleRots.Equals(Rotations[12]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[12]))
                         {
-                            if ((Floorchecker[4] == 1) && (Floorchecker[5] == 1) && (Floorchecker[6] == 1) && (Floorchecker[7] == 1))
-                            {
-                                PossiblePOS.Add(center);
-                            }
-                            if ((Floorchecker[1] == 1) && (Floorchecker[2] == 1) && (Floorchecker[3] == 1) && (Floorchecker[4] == 1))
+                            if ((Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0))
                             {
                                 PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(center);
                             }
                         }
 
                         //7  |||  z 1346  :: 
-                        //13 |||  z 0347  :: 
-                        if (ZPossibleRots.Equals(Rotations[7]))
-                        {
-                            if ((Floorchecker[1] == 1) && (Floorchecker[3] == 1) && (Floorchecker[4] == 1) && (Floorchecker[6] == 1))
-                            {
-                                PossiblePOS.Add(center);
-                            }
-                            if ((Floorchecker[2] == 1) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1) && (Floorchecker[7] == 1))
-                            {
-                                PossiblePOS.Add(bot);
-                            }
-                        }
-                        if (ZPossibleRots.Equals(Rotations[13]))
-                        {
-                            if ((Floorchecker[0] == 1) && (Floorchecker[3] == 1) && (Floorchecker[4] == 1) && (Floorchecker[7] == 1))
-                            {
-                                PossiblePOS.Add(center);
-                            }
-                            if ((Floorchecker[1] == 1) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1) && (Floorchecker[8] == 1))
-                            {
-                                PossiblePOS.Add(bot);
-                            }
-                        }
-
                         //5  |||  z 2457  :: 
+                        if (ZPossibleRots[rotpos].Equals(Rotations[7]))
+                        {
+                            if ((Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[2] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            }
+                        }
+                        if (ZPossibleRots[rotpos].Equals(Rotations[5]))
+                        {
+                            if ((Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[2] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+
+                        }
+                        //13 |||  z 0347  :: 
                         //15 |||  z 1458  :: 
-                        if (ZPossibleRots.Equals(Rotations[5]))
+                        if (ZPossibleRots[rotpos].Equals(Rotations[13]))
                         {
-                            if ((Floorchecker[2] == 1) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1) && (Floorchecker[7] == 1))
+                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
                             {
                                 PossiblePOS.Add(center);
                             }
-                            if ((Floorchecker[1] == 1) && (Floorchecker[3] == 1) && (Floorchecker[4] == 1) && (Floorchecker[6] == 1))
+                            if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            }
+                        }
+                        if (ZPossibleRots[rotpos].Equals(Rotations[15]))
+                        {
+                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
                             {
                                 PossiblePOS.Add(left);
                             }
-
-                        }
-                        if (ZPossibleRots.Equals(Rotations[15]))
-                        {
-                            if ((Floorchecker[1] == 1) && (Floorchecker[4] == 1) && (Floorchecker[5] == 1) && (Floorchecker[8] == 1))
+                            if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0))
                             {
                                 PossiblePOS.Add(center);
                             }
-                            if ((Floorchecker[0] == 1) && (Floorchecker[3] == 1) && (Floorchecker[4] == 1) && (Floorchecker[7] == 1))
-                            {
-                                PossiblePOS.Add(left);
-                            }
                         }
 
+
+                        int posran = Random.Range(0, PossiblePOS.Count);
+
+                        Vector3 hey = PossiblePOS[posran];
+                        Vector3 hi = ZPossibleRots[rotpos];
+                        INstanmyBLCK(myRandomblock, hey, hi);
                     }
                     break;
                 }
             case 3://T
                 {
                     //num|||    t    ::   
+
+                    //-----------------------------------------------------------------HORIZONTAL
+
                     //0  |||  t 345  ::         //Vector3 aaa = new Vector3(0, 0, 0);    
-                    //1  |||  t 147  ::         //Vector3 aba = new Vector3(0, 90, 0);   
                     //2  |||  t 345  ::         //Vector3 aca = new Vector3(0, 180, 0);  
+
+                    //1  |||  t 147  ::         //Vector3 aba = new Vector3(0, 90, 0);   
                     //3  |||  t 147  ::         //Vector3 ada = new Vector3(0, 270, 0);  
+
                     //4  |||  t 1345 ::         //Vector3 baa = new Vector3(90, 0, 0);   
-                    //5  |||  t 1457 ::         //Vector3 bba = new Vector3(90, 90, 0);  
-                    //6  |||  t 3457 ::         //Vector3 bca = new Vector3(90, 180, 0); 
-                    //7  |||  t 1347 ::         //Vector3 bda = new Vector3(90, 270, 0); 
-                    //8  |||  t 4    ::35       //Vector3 caa = new Vector3(180, 0, 0);  
-                    //9  |||  t 4    ::17       //Vector3 cba = new Vector3(180, 90, 0); 
-                    //10 |||  t 4    ::35       //Vector3 cca = new Vector3(180, 180, 0);
-                    //11 |||  t 4    ::17       //Vector3 cda = new Vector3(180, 270, 0);
-                    //12 |||  t 3457 ::         //Vector3 daa = new Vector3(270, 0, 0);  
-                    //13 |||  t 1347 ::         //Vector3 dba = new Vector3(270, 90, 0); 
                     //14 |||  t 1345 ::         //Vector3 dca = new Vector3(270, 180, 0);
+
+                    //6  |||  t 3457 ::         //Vector3 bca = new Vector3(90, 180, 0); 
+                    //12 |||  t 3457 ::         //Vector3 daa = new Vector3(270, 0, 0);  
+
+                    //5  |||  t 1457 ::         //Vector3 bba = new Vector3(90, 90, 0);  
                     //15 |||  t 1457 ::         //Vector3 dda = new Vector3(270, 270, 0);
+
+                    //7  |||  t 1347 ::         //Vector3 bda = new Vector3(90, 270, 0); 
+                    //13 |||  t 1347 ::         //Vector3 dba = new Vector3(270, 90, 0); 
+
+                    //8  |||  t 4    ::35       //Vector3 caa = new Vector3(180, 0, 0);  
+                    //10 |||  t 4    ::35       //Vector3 cca = new Vector3(180, 180, 0);
+
+                    //9  |||  t 4    ::17       //Vector3 cba = new Vector3(180, 90, 0); 
+                    //11 |||  t 4    ::17       //Vector3 cda = new Vector3(180, 270, 0);
+
                     //16 |||  t 4    ::3        //Vector3 aab = new Vector3(0, 0, 90);   
-                    //17 |||  t 4    ::1        //Vector3 abb = new Vector3(0, 90, 90);  
-                    //18 |||  t 4    ::5        //Vector3 acb = new Vector3(0, 180, 90); 
-                    //19 |||  t 4    ::7        //Vector3 adb = new Vector3(0, 270, 90); 
-                    //20 |||  t 4    ::5        //Vector3 aad = new Vector3(0, 0, 270);  
-                    //21 |||  t 4    ::7        //Vector3 abd = new Vector3(0, 90, 270); 
                     //22 |||  t 4    ::3        //Vector3 acd = new Vector3(0, 180, 270);
+
+                    //18 |||  t 4    ::5        //Vector3 acb = new Vector3(0, 180, 90); 
+                    //20 |||  t 4    ::5        //Vector3 aad = new Vector3(0, 0, 270);  
+
+                    //17 |||  t 4    ::1        //Vector3 abb = new Vector3(0, 90, 90);  
                     //23 |||  t 4    ::1        //Vector3 add = new Vector3(0, 270, 270);
+
+                    //19 |||  t 4    ::7        //Vector3 adb = new Vector3(0, 270, 90); 
+                    //21 |||  t 4    ::7        //Vector3 abd = new Vector3(0, 90, 270); 
                     if (TPossibleRots.Count != 0)
                     {
-                        rotpos = Random.Range(0, TPossibleRots.Count);
+                        int rotpos = Random.Range(0, TPossibleRots.Count);
                         //theres no rotations
 
                         //num|||    t    ::        
                         //0  |||  t 345  ::        
                         //2  |||  t 345  ::        
+                        if ((TPossibleRots[rotpos].Equals(Rotations[0])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[2])))
+                        {
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
+                            {
+                                PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
+                        }
+
                         //8  |||  t 4    ::35      
                         //10 |||  t 4    ::35      
-                        if ((TPossibleRots.Equals(Rotations[0])) ||
-                        (TPossibleRots.Equals(Rotations[2])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[8])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[10])))
                         {
-
-                        }
-                        if ((TPossibleRots.Equals(Rotations[8])) ||
-                         (TPossibleRots.Equals(Rotations[10])))
-                        {
-
+                            if ((Floorchecker[0] == 1) && (Floorchecker[1] == 0) && (Floorchecker[2] == 1))
+                            {
+                                PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[3] == 1) && (Floorchecker[4] == 0) && (Floorchecker[5] == 1))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[6] == 1) && (Floorchecker[7] == 0) && (Floorchecker[8] == 1))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
                         }
 
                         //16 |||  t 4    ::3       
                         //22 |||  t 4    ::3       
-                        if ((TPossibleRots.Equals(Rotations[16])) ||
-                        (TPossibleRots.Equals(Rotations[22])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[16])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[22])))
                         {
 
+                            if ((Floorchecker[0] == 1) && (Floorchecker[1] == 0))
+                            {
+                                PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[1] == 1) && (Floorchecker[2] == 0))
+                            {
+                                PossiblePOS.Add(topright);
+                            }
+                            if ((Floorchecker[3] == 1) && (Floorchecker[4] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[4] == 1) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            }
+                            if ((Floorchecker[6] == 1) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
+                            if ((Floorchecker[7] == 1) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(botright);
+                            }
                         }
 
                         //18 |||  t 4    ::5       
                         //20 |||  t 4    ::5       
-                        if ((TPossibleRots.Equals(Rotations[18])) ||
-                        (TPossibleRots.Equals(Rotations[20])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[18])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[20])))
                         {
-
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 1))
+                            {
+                                PossiblePOS.Add(topleft);
+                            }
+                            if ((Floorchecker[1] == 0) && (Floorchecker[2] == 1))
+                            {
+                                PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 1))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[4] == 0) && (Floorchecker[5] == 1))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[6] == 0) && (Floorchecker[7] == 1))
+                            {
+                                PossiblePOS.Add(botleft);
+                            }
+                            if ((Floorchecker[7] == 0) && (Floorchecker[8] == 1))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
                         }
 
                         //1  |||  t 147  ::        
                         //3  |||  t 147  ::        
+                        if ((TPossibleRots[rotpos].Equals(Rotations[1])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[3])))
+                        {
+                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[2] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            }
+                        }
                         //9  |||  t 4    ::17      
                         //11 |||  t 4    ::17      
-                        if ((TPossibleRots.Equals(Rotations[1])) ||
-                        (TPossibleRots.Equals(Rotations[3])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[9])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[11])))
                         {
-
-                        }
-                        if ((TPossibleRots.Equals(Rotations[9])) ||
-                        (TPossibleRots.Equals(Rotations[11])))
-                        {
-
+                            if ((Floorchecker[0] == 1) && (Floorchecker[3] == 0) && (Floorchecker[6] == 1))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[1] == 1) && (Floorchecker[4] == 0) && (Floorchecker[7] == 1))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[2] == 1) && (Floorchecker[5] == 0) && (Floorchecker[8] == 1))
+                            {
+                                PossiblePOS.Add(right);
+                            }
                         }
 
                         //17 |||  t 4    ::1       
                         //23 |||  t 4    ::1       
-                        if ((TPossibleRots.Equals(Rotations[17])) ||
-                        (TPossibleRots.Equals(Rotations[23])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[17])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[23])))
                         {
+                            if ((Floorchecker[0] == 1) && (Floorchecker[3] == 0))
+                            {
+                                PossiblePOS.Add(left);
+                            }
+                            if ((Floorchecker[3] == 1) && (Floorchecker[6] == 0))
+                            {
+                                PossiblePOS.Add(botleft);
+                            }
 
+                            if ((Floorchecker[1] == 1) && (Floorchecker[4] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[4] == 1) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
+
+                            if ((Floorchecker[2] == 1) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(right);
+                            }
+                            if ((Floorchecker[5] == 1) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(botright);
+                            }
                         }
 
                         //19 |||  t 4    ::7       
                         //21 |||  t 4    ::7       
-                        if ((TPossibleRots.Equals(Rotations[19])) ||
-                        (TPossibleRots.Equals(Rotations[21])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[19])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[21])))
                         {
+                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 1))
+                            {
+                                PossiblePOS.Add(topleft);
+                            }
+                            if ((Floorchecker[3] == 0) && (Floorchecker[6] == 1))
+                            {
+                                PossiblePOS.Add(left);
+                            }
 
+                            if ((Floorchecker[1] == 0) && (Floorchecker[4] == 1))
+                            {
+                                PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[4] == 0) && (Floorchecker[7] == 1))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
+
+                            if ((Floorchecker[2] == 0) && (Floorchecker[5] == 1))
+                            {
+                                PossiblePOS.Add(topright);
+                            }
+                            if ((Floorchecker[5] == 0) && (Floorchecker[8] == 1))
+                            {
+                                PossiblePOS.Add(right);
+                            }
                         }
 
 
                         //4  |||  t 1345 ::        
                         //14 |||  t 1345 ::        
-                        if ((TPossibleRots.Equals(Rotations[4])) ||
-                        (TPossibleRots.Equals(Rotations[14])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[4])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[14])))
                         {
-
+                            if ((Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
                         }
 
                         //6  |||  t 3457 ::        
                         //12 |||  t 3457 ::                   
-                        if ((TPossibleRots.Equals(Rotations[6])) ||
-                        (TPossibleRots.Equals(Rotations[12])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[6])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[12])))
                         {
 
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[7] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[4] == 0))
+                            {
+                                PossiblePOS.Add(top);
+                            }
                         }
 
                         //7  |||  t 1347 ::                   
                         //13 |||  t 1347 ::                   
-                        if ((TPossibleRots.Equals(Rotations[7])) ||
-                        (TPossibleRots.Equals(Rotations[13])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[7])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[13])))
                         {
-                            if ((Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[5] == 0) && (Floorchecker[7] == 0))
+
+                            if ((Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[7] == 0))
                             {
                                 PossiblePOS.Add(center);
                             }
-                            if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0))
+                            if ((Floorchecker[2] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[8] == 0))
                             {
-                                PossiblePOS.Add(left);
+                                PossiblePOS.Add(right);
                             }
 
                         }
 
                         //5  |||  t 1457 ::                   
                         //15 |||  t 1457 ::                   
-                        if ((TPossibleRots.Equals(Rotations[5])) ||
-                        (TPossibleRots.Equals(Rotations[15])))
+                        if ((TPossibleRots[rotpos].Equals(Rotations[5])) ||
+                            (TPossibleRots[rotpos].Equals(Rotations[15])))
                         {
                             if ((Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[7] == 0))
                             {
@@ -1980,47 +2880,72 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(left);
                             }
                         }
+
+
+
+                        int posran = Random.Range(0,PossiblePOS.Count);
+
+                        Vector3 hey = PossiblePOS[posran];
+                        Vector3 hi = TPossibleRots[rotpos];
+                        INstanmyBLCK(myRandomblock, hey, hi);
                     }
                     break;
                 }
             case 4://U
                 {
                     //num| ||      u    :: 
+
+                    //---------------------------Horizontal
+
                     //0  | ||   u 345   ::         //Vector3 aaa = new Vector3(0, 0, 0);    
                     //2  | ||   u 345   ::         //Vector3 aca = new Vector3(0, 180, 0);  
-                    //1  | ||   u 147   ::         //Vector3 aba = new Vector3(0, 90, 0);   
-                    //3  | ||   u 147   ::         //Vector3 ada = new Vector3(0, 270, 0);  
-                    //4  | ||   u 02345 ::         //Vector3 baa = new Vector3(90, 0, 0);   
-                    //14 | ||   u 02345 ::         //Vector3 dca = new Vector3(270, 180, 0);
-                    //5  | ||   u 12478 ::         //Vector3 bba = new Vector3(90, 90, 0);  
-                    //15 | ||   u 12478 ::         //Vector3 dda = new Vector3(270, 270, 0);
-                    //6  | ||   u 34568 ::         //Vector3 bca = new Vector3(90, 180, 0); 
-                    //12 | ||   u 34568 ::         //Vector3 daa = new Vector3(270, 0, 0);  
-                    //7  | ||   u 01467 ::         //Vector3 bda = new Vector3(90, 270, 0); 
-                    //13 | ||   u 01467 ::         //Vector3 dba = new Vector3(270, 90, 0); 
+
                     //8  | ||   u 35    ::4        //Vector3 caa = new Vector3(180, 0, 0);  
-                    //9  | ||   u 17    ::4        //Vector3 cba = new Vector3(180, 90, 0); 
                     //10 | ||   u 35    ::4        //Vector3 cca = new Vector3(180, 180, 0);
-                    //11 | ||   u 17    ::4        //Vector3 cda = new Vector3(180, 270, 0);
+
                     //16 | ||   u 34    ::         //Vector3 aab = new Vector3(0, 0, 90);   
                     //22 | ||   u 34    ::         //Vector3 acd = new Vector3(0, 180, 270);
-                    //17 | ||   u 14    ::         //Vector3 abb = new Vector3(0, 90, 90);  
-                    //23 | ||   u 14    ::         //Vector3 add = new Vector3(0, 270, 270);
+
                     //18 | ||   u 45    ::         //Vector3 acb = new Vector3(0, 180, 90); 
                     //20 | ||   u 45    ::         //Vector3 aad = new Vector3(0, 0, 270);  
+
+                    //4  | ||   u 02345 ::         //Vector3 baa = new Vector3(90, 0, 0);   
+                    //14 | ||   u 02345 ::         //Vector3 dca = new Vector3(270, 180, 0);
+
+                    //6  | ||   u 34568 ::         //Vector3 bca = new Vector3(90, 180, 0); 
+                    //12 | ||   u 34568 ::         //Vector3 daa = new Vector3(270, 0, 0);  
+
+                    //-----------------------------Vertical
+
+                    //1  | ||   u 147   ::         //Vector3 aba = new Vector3(0, 90, 0);   
+                    //3  | ||   u 147   ::         //Vector3 ada = new Vector3(0, 270, 0);  
+
+                    //9  | ||   u 17    ::4        //Vector3 cba = new Vector3(180, 90, 0); 
+                    //11 | ||   u 17    ::4        //Vector3 cda = new Vector3(180, 270, 0);
+
+                    //17 | ||   u 14    ::         //Vector3 abb = new Vector3(0, 90, 90);  
+                    //23 | ||   u 14    ::         //Vector3 add = new Vector3(0, 270, 270); 
+
                     //19 | ||   u 47    ::         //Vector3 adb = new Vector3(0, 270, 90); 
                     //21 | ||   u 47    ::         //Vector3 abd = new Vector3(0, 90, 270); 
+
+                    //5  | ||   u 12478 ::         //Vector3 bba = new Vector3(90, 90, 0);  
+                    //15 | ||   u 12478 ::         //Vector3 dda = new Vector3(270, 270, 0);
+
+                    //7  | ||   u 01467 ::         //Vector3 bda = new Vector3(90, 270, 0); 
+                    //13 | ||   u 01467 ::         //Vector3 dba = new Vector3(270, 90, 0);                     
+
                     if (UPossibleRots.Count != 0)
                     {
-                        rotpos = Random.Range(0, UPossibleRots.Count);
+                       int rotpos = Random.Range(0, UPossibleRots.Count);
                         //theres no rotations
 
                         //num|||      u    ::       
                         //0  |||   u 345   ::       
                         //2  |||   u 345   ::       
 
-                        if ((UPossibleRots.Equals(Rotations[0])) ||
-                              (UPossibleRots.Equals(Rotations[2])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[0])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[2])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
                             {
@@ -2037,8 +2962,8 @@ public class blockspawner : MonoBehaviour
                         }
                         //8  |||   u 35    ::4      
                         //10 |||   u 35    ::4      
-                        if ((UPossibleRots.Equals(Rotations[8])) ||
-                        (UPossibleRots.Equals(Rotations[10])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[8])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[10])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 1) && (Floorchecker[2] == 0))
                             {
@@ -2056,8 +2981,8 @@ public class blockspawner : MonoBehaviour
 
                         //16 |||   u 34    ::       
                         //22 |||   u 34    ::       
-                        if ((UPossibleRots.Equals(Rotations[16])) ||
-                        (UPossibleRots.Equals(Rotations[22])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[16])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[22])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -2087,8 +3012,8 @@ public class blockspawner : MonoBehaviour
 
                         //18 |||   u 45    ::       
                         //20 |||   u 45    ::       
-                        if ((UPossibleRots.Equals(Rotations[18])) ||
-                        (UPossibleRots.Equals(Rotations[20])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[18])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[20])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -2117,8 +3042,8 @@ public class blockspawner : MonoBehaviour
                         }
                         //1  |||   u 147   ::       
                         //3  |||   u 147   ::       
-                        if ((UPossibleRots.Equals(Rotations[1])) ||
-                        (UPossibleRots.Equals(Rotations[3])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[1])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[3])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
                             {
@@ -2135,8 +3060,8 @@ public class blockspawner : MonoBehaviour
                         }
                         //9  |||   u 17    ::4      
                         //11 |||   u 17    ::4      
-                        if ((UPossibleRots.Equals(Rotations[9])) ||
-                        (UPossibleRots.Equals(Rotations[11])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[9])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[11])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 1) && (Floorchecker[6] == 0))
                             {
@@ -2154,8 +3079,8 @@ public class blockspawner : MonoBehaviour
 
                         //17 |||   u 14    ::       
                         //23 |||   u 14    ::       
-                        if ((UPossibleRots.Equals(Rotations[17])) ||
-                        (UPossibleRots.Equals(Rotations[23])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[17])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[23])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -2185,8 +3110,8 @@ public class blockspawner : MonoBehaviour
 
                         //19 |||   u 47    ::       
                         //21 |||   u 47    ::       
-                        if ((UPossibleRots.Equals(Rotations[19])) ||
-                        (UPossibleRots.Equals(Rotations[21])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[19])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[21])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -2217,8 +3142,8 @@ public class blockspawner : MonoBehaviour
 
                         //4  |||   u 02345 ::       
                         //14 |||   u 02345 ::       
-                        if ((UPossibleRots.Equals(Rotations[4])) ||
-                        (UPossibleRots.Equals(Rotations[14])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[4])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[14])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
                             {
@@ -2234,8 +3159,8 @@ public class blockspawner : MonoBehaviour
 
                         //6  |||   u 34568 ::       
                         //12 |||   u 34568 ::       
-                        if ((UPossibleRots.Equals(Rotations[6])) ||
-                        (UPossibleRots.Equals(Rotations[12])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[6])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[12])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[5] == 0))
                             {
@@ -2249,8 +3174,8 @@ public class blockspawner : MonoBehaviour
 
                         //7  |||   u 01467 ::       
                         //13 |||   u 01467 ::       
-                        if ((UPossibleRots.Equals(Rotations[7])) ||
-                        (UPossibleRots.Equals(Rotations[13])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[7])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[13])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -2264,8 +3189,8 @@ public class blockspawner : MonoBehaviour
                         }
                         //5  |||   u 12478 ::       
                         //15 |||   u 12478 ::       
-                        if ((UPossibleRots.Equals(Rotations[5])) ||
-                        (UPossibleRots.Equals(Rotations[15])))
+                        if ((UPossibleRots[rotpos].Equals(Rotations[5])) ||
+                            (UPossibleRots[rotpos].Equals(Rotations[15])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -2278,21 +3203,25 @@ public class blockspawner : MonoBehaviour
 
                         }
 
+
+                        int posran = Random.Range(0, PossiblePOS.Count);
+
+                        Vector3 hey = PossiblePOS[posran];
+                        Vector3 hi = UPossibleRots[rotpos];
+                        INstanmyBLCK(myRandomblock, hey, hi);
                     }
                     break;
                 }
             case 5://Block
                 {
                     //num||    block
+
+                    //--------------------------------------------------------------Horizontal
+
                     //0  ||  b 345             //Vector3 aaa = new Vector3(0, 0, 0);    
                     //2  ||  b 345             //Vector3 aca = new Vector3(0, 180, 0);  
                     //8  ||  b 345             //Vector3 caa = new Vector3(180, 0, 0);  
                     //10 ||  b 345             //Vector3 cca = new Vector3(180, 180, 0);
-
-                    //1  ||  b 147             //Vector3 aba = new Vector3(0, 90, 0);   
-                    //3  ||  b 147             //Vector3 ada = new Vector3(0, 270, 0);  
-                    //9  ||  b 147             //Vector3 cba = new Vector3(180, 90, 0); 
-                    //11 ||  b 147             //Vector3 cda = new Vector3(180, 270, 0);
 
                     //16 ||  b 34              //Vector3 aab = new Vector3(0, 0, 90);   
                     //22 ||  b 34              //Vector3 acd = new Vector3(0, 180, 270);
@@ -2300,36 +3229,44 @@ public class blockspawner : MonoBehaviour
                     //18 ||  b 45              //Vector3 acb = new Vector3(0, 180, 90); 
                     //20 ||  b 45              //Vector3 aad = new Vector3(0, 0, 270);  
 
+                    //4  ||  b 012345          //Vector3 baa = new Vector3(90, 0, 0);   
+                    //14 ||  b 012345          //Vector3 dca = new Vector3(270, 180, 0);
+
+                    //6  ||  b 345678          //Vector3 bca = new Vector3(90, 180, 0); 
+                    //12 ||  b 345678          //Vector3 daa = new Vector3(270, 0, 0);  
+
+                    //-----------------------------------------------------------------------Vertical
+
+                    //1  ||  b 147             //Vector3 aba = new Vector3(0, 90, 0);   
+                    //3  ||  b 147             //Vector3 ada = new Vector3(0, 270, 0);  
+                    //9  ||  b 147             //Vector3 cba = new Vector3(180, 90, 0); 
+                    //11 ||  b 147             //Vector3 cda = new Vector3(180, 270, 0);
+
                     //17 ||  b 14              //Vector3 abb = new Vector3(0, 90, 90);  
                     //23 ||  b 14              //Vector3 add = new Vector3(0, 270, 270);
 
                     //19 ||  b 47              //Vector3 adb = new Vector3(0, 270, 90); 
                     //21 ||  b 47              //Vector3 abd = new Vector3(0, 90, 270); 
 
-                    //4  ||  b 012345          //Vector3 baa = new Vector3(90, 0, 0);   
-                    //14 ||  b 012345          //Vector3 dca = new Vector3(270, 180, 0);
-
                     //5  ||  b 124578          //Vector3 bba = new Vector3(90, 90, 0);  
                     //15 ||  b 124578          //Vector3 dda = new Vector3(270, 270, 0);
 
-                    //6  ||  b 345678          //Vector3 bca = new Vector3(90, 180, 0); 
-                    //12 ||  b 345678          //Vector3 daa = new Vector3(270, 0, 0);  
-
                     //7  ||  b 013467          //Vector3 bda = new Vector3(90, 270, 0); 
                     //13 ||  b 013467          //Vector3 dba = new Vector3(270, 90, 0); 
+
                     if (BlockPossibleRots.Count != 0)
                     {
-                        rotpos = Random.Range(0, BlockPossibleRots.Count);
+                        int rotpos = Random.Range(0, BlockPossibleRots.Count);
 
                         //0  ||  b 345             //Vector3 aaa = new Vector3(0, 0, 0);    
                         //2  ||  b 345             //Vector3 aca = new Vector3(0, 180, 0);  
                         //8  ||  b 345             //Vector3 caa = new Vector3(180, 0, 0);  
                         //10 ||  b 345             //Vector3 cca = new Vector3(180, 180, 0);
 
-                        if ((BlockPossibleRots.Equals(Rotations[0])) ||
-                           (BlockPossibleRots.Equals(Rotations[2])) ||
-                           (BlockPossibleRots.Equals(Rotations[8])) ||
-                           (BlockPossibleRots.Equals(Rotations[10])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[0])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[2])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[8])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[10])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0))
                             {
@@ -2348,8 +3285,8 @@ public class blockspawner : MonoBehaviour
                         //16 ||  b 34              //Vector3 aab = new Vector3(0, 0, 90);   
                         //22 ||  b 34              //Vector3 acd = new Vector3(0, 180, 270);
 
-                        if ((BlockPossibleRots.Equals(Rotations[16])) ||
-                            (BlockPossibleRots.Equals(Rotations[22])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[16])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[22])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -2381,8 +3318,8 @@ public class blockspawner : MonoBehaviour
                         //18 ||  b 45              //Vector3 acb = new Vector3(0, 180, 90); 
                         //20 ||  b 45              //Vector3 aad = new Vector3(0, 0, 270);  
 
-                        if ((BlockPossibleRots.Equals(Rotations[18])) ||
-                            (BlockPossibleRots.Equals(Rotations[20])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[18])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[20])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0))
                             {
@@ -2410,15 +3347,49 @@ public class blockspawner : MonoBehaviour
                             }
                         }
 
+                        //4  ||  b 012345          //Vector3 baa = new Vector3(90, 0, 0);   
+                        //14 ||  b 012345          //Vector3 dca = new Vector3(270, 180, 0);
+
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[4])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[14])))
+                        {
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(bot);
+                            }
+                        }
+
+                        //6  ||  b 345678          //Vector3 bca = new Vector3(90, 180, 0); 
+                        //12 ||  b 345678          //Vector3 daa = new Vector3(270, 0, 0);  
+
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[6])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[12])))
+                        {
+                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
+                            {
+                                PossiblePOS.Add(top);
+                            }
+                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
+                            {
+                                PossiblePOS.Add(center);
+                            }
+                        }
+
+                        //------------------------------------------------------------------------------
+
                         //1  ||  b 147             //Vector3 aba = new Vector3(0, 90, 0);   
                         //3  ||  b 147             //Vector3 ada = new Vector3(0, 270, 0);  
                         //9  ||  b 147             //Vector3 cba = new Vector3(180, 90, 0); 
                         //11 ||  b 147             //Vector3 cda = new Vector3(180, 270, 0);
 
-                        if ((BlockPossibleRots.Equals(Rotations[1])) ||
-                           (BlockPossibleRots.Equals(Rotations[3])) ||
-                           (BlockPossibleRots.Equals(Rotations[9])) ||
-                           (BlockPossibleRots.Equals(Rotations[11])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[1])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[3])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[9])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[11])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0) && (Floorchecker[6] == 0))
                             {
@@ -2437,8 +3408,8 @@ public class blockspawner : MonoBehaviour
                         //17 ||  b 14              //Vector3 abb = new Vector3(0, 90, 90);  
                         //23 ||  b 14              //Vector3 add = new Vector3(0, 270, 270);
 
-                        if ((BlockPossibleRots.Equals(Rotations[17])) ||
-                           (BlockPossibleRots.Equals(Rotations[23])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[17])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[23])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -2469,8 +3440,8 @@ public class blockspawner : MonoBehaviour
                         //19 ||  b 47              //Vector3 adb = new Vector3(0, 270, 90); 
                         //21 ||  b 47              //Vector3 abd = new Vector3(0, 90, 270); 
 
-                        if ((BlockPossibleRots.Equals(Rotations[19])) ||
-                           (BlockPossibleRots.Equals(Rotations[21])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[19])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[21])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[3] == 0))
                             {
@@ -2498,43 +3469,11 @@ public class blockspawner : MonoBehaviour
                             }
                         }
 
-                        //4  ||  b 012345          //Vector3 baa = new Vector3(90, 0, 0);   
-                        //14 ||  b 012345          //Vector3 dca = new Vector3(270, 180, 0);
-
-                        if ((BlockPossibleRots.Equals(Rotations[4])) ||
-                           (BlockPossibleRots.Equals(Rotations[14])))
-                        {
-                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
-                            {
-                                PossiblePOS.Add(center);
-                            }
-                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
-                            {
-                                PossiblePOS.Add(bot);
-                            }
-                        }
-
-                        //6  ||  b 345678          //Vector3 bca = new Vector3(90, 180, 0); 
-                        //12 ||  b 345678          //Vector3 daa = new Vector3(270, 0, 0);  
-
-                        if ((BlockPossibleRots.Equals(Rotations[6])) ||
-                           (BlockPossibleRots.Equals(Rotations[12])))
-                        {
-                            if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[2] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0))
-                            {
-                                PossiblePOS.Add(top);
-                            }
-                            if ((Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[5] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0) && (Floorchecker[8] == 0))
-                            {
-                                PossiblePOS.Add(center);
-                            }
-                        }
-
                         //7  ||  b 013467          //Vector3 bda = new Vector3(90, 270, 0); 
                         //13 ||  b 013467          //Vector3 dba = new Vector3(270, 90, 0); 
 
-                        if ((BlockPossibleRots.Equals(Rotations[7])) ||
-                           (BlockPossibleRots.Equals(Rotations[13])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[7])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[13])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -2549,8 +3488,8 @@ public class blockspawner : MonoBehaviour
                         //5  ||  b 124578          //Vector3 bba = new Vector3(90, 90, 0);  
                         //15 ||  b 124578          //Vector3 dda = new Vector3(270, 270, 0);
 
-                        if ((BlockPossibleRots.Equals(Rotations[5])) ||
-                       (BlockPossibleRots.Equals(Rotations[15])))
+                        if ((BlockPossibleRots[rotpos].Equals(Rotations[5])) ||
+                            (BlockPossibleRots[rotpos].Equals(Rotations[15])))
                         {
                             if ((Floorchecker[0] == 0) && (Floorchecker[1] == 0) && (Floorchecker[3] == 0) && (Floorchecker[4] == 0) && (Floorchecker[6] == 0) && (Floorchecker[7] == 0))
                             {
@@ -2561,187 +3500,141 @@ public class blockspawner : MonoBehaviour
                                 PossiblePOS.Add(center);
                             }
                         }
+
+                        int posran = Random.Range(0, PossiblePOS.Count);
+
+                        Vector3 hey = PossiblePOS[posran];
+                        Vector3 hi = BlockPossibleRots[rotpos];
+                        INstanmyBLCK(myRandomblock, hey, hi);
                     }
+
                     break;
                 }
         }
+        //  int rotpos = Random.Range(0,Po;
 
     }
-    void MoreRegret()
-    {
-        int myrotation = Random.Range(0, 24);
-        //switch (myrotation)
-        //{
-        ////Vector3 a = new Vector3(90, 90, 0);     //1     1
-        ////Vector3 b = new Vector3(90, 0, 90);     //2       2
-        ////Vector3 c = new Vector3(90, 0, 0);      //3         3
-        ////Vector3 d = new Vector3(90, 0, 180);    //4           4
-        ////Vector3 e = new Vector3(0, 90, 0);      //5     1,2
-        ////Vector3 f = new Vector3(0, 90, 180);    //6     1,2
-        ////Vector3 g = new Vector3(0, 0, 0);       //7         3,4
-        ////Vector3 h = new Vector3(0, 0, 180);     //8         3,4
-        ////Vector3 i = new Vector3(0, 90, 90);     //9     1,2,3
-        ////Vector3 j = new Vector3(0, 90, 270);    //10    1,2,  4
-        ////Vector3 k = new Vector3(0, 0, 270);     //11    1,  3,4
-        ////Vector3 l = new Vector3(0, 0, 90);      //12      2,3,4
-        //    case 0:                    //1
-        //        // a;
-        //        ResetmyBool();
-        //        Transnegx = true;
-        //        break;
-        //    case 1:                    //2
-        //        //b;
-        //        ResetmyBool();
-        //        Transposx = true;
-        //        break;
-        //    case 2:                    //3
-        //        //c;
-        //        ResetmyBool();
-        //        Transnegz = true;
-        //        break;
-        //    case 3:                    //4
-        //        //d;
-        //        ResetmyBool();
-        //        Transposz = true;
-        //        break;
-        //    case 4:                    //1,2
-        //        //e;
-        //        ResetmyBool();
-        //        Transnegx = true;
-        //        Transposx = true;
-        //        break;
-        //    case 5:                  //1,2
-        //        //f;
-        //        ResetmyBool();
-        //        Transnegx = true;
-        //        Transposx = true;
-        //        break;
-        //    case 6:                    //3,4
-        //        //g;
-        //        ResetmyBool();
-        //        Transnegz = true;
-        //        Transposz = true;
-        //        break; 
-        //    case 7:                     //3,4
-        //        //h;
-        //        ResetmyBool();
-        //        Transnegz = true;
-        //        Transposz = true;
-        //        break;
-        //    case 8:                   //1,2,3
-        //        //i;
-        //        ResetmyBool();
-        //        Transnegx = true;
-        //        Transposx = true;
-        //        Transnegz = true;
-        //        break;
-        //    case 9:                      //1,2,4
-        //        //j;
-        //        ResetmyBool();
-        //        Transnegx = true;
-        //        Transposx = true;
+    //this block was selected
+    //void BLOCKSelected()//2x3
+    //{
 
-        //        Transposz = true;
-        //        break;
-        //    case 10:                   //1,3,4
-        //        //k;
-        //        ResetmyBool();
-        //        Transnegx = true;
-        //        Transnegz = true;
-        //        Transposz = true;
-        //        break;
-        //    case 11:          //2,3,4
-        //        //l;
-        //        ResetmyBool();
-        //        Transposx = true;
-        //        Transnegz = true;
-        //        Transposz = true;
-        //        break;
-        //}
-        Vector3 temp = Rotations[myrotation];
-        RotationOFF = Quaternion.Euler(temp);
-        Instantiatemyblock();
-    }
+    //}
+    //void TSelected()
+    //{
+
+    //}
+    //void ZSelected()
+    //{
+
+    //}
+    //void USelected()
+    //{
+
+    //}
+    //void LSelected()
+    //{
+
+    //}
+    //void THUMBSelected()
+    //{
+
+    //}
+    //void MoreRegret()
+    //{
+    //    int myrotation = Random.Range(0, 24);
+    //    //switch (myrotation)
+    //    //{
+    //    ////Vector3 a = new Vector3(90, 90, 0);     //1     1
+    //    ////Vector3 b = new Vector3(90, 0, 90);     //2       2
+    //    ////Vector3 c = new Vector3(90, 0, 0);      //3         3
+    //    ////Vector3 d = new Vector3(90, 0, 180);    //4           4
+    //    ////Vector3 e = new Vector3(0, 90, 0);      //5     1,2
+    //    ////Vector3 f = new Vector3(0, 90, 180);    //6     1,2
+    //    ////Vector3 g = new Vector3(0, 0, 0);       //7         3,4
+    //    ////Vector3 h = new Vector3(0, 0, 180);     //8         3,4
+    //    ////Vector3 i = new Vector3(0, 90, 90);     //9     1,2,3
+    //    ////Vector3 j = new Vector3(0, 90, 270);    //10    1,2,  4
+    //    ////Vector3 k = new Vector3(0, 0, 270);     //11    1,  3,4
+    //    ////Vector3 l = new Vector3(0, 0, 90);      //12      2,3,4
+    //    //    case 0:                    //1
+    //    //        // a;
+    //    //        ResetmyBool();
+    //    //        Transnegx = true;
+    //    //        break;
+    //    //    case 1:                    //2
+    //    //        //b;
+    //    //        ResetmyBool();
+    //    //        Transposx = true;
+    //    //        break;
+    //    //    case 2:                    //3
+    //    //        //c;
+    //    //        ResetmyBool();
+    //    //        Transnegz = true;
+    //    //        break;
+    //    //    case 3:                    //4
+    //    //        //d;
+    //    //        ResetmyBool();
+    //    //        Transposz = true;
+    //    //        break;
+    //    //    case 4:                    //1,2
+    //    //        //e;
+    //    //        ResetmyBool();
+    //    //        Transnegx = true;
+    //    //        Transposx = true;
+    //    //        break;
+    //    //    case 5:                  //1,2
+    //    //        //f;
+    //    //        ResetmyBool();
+    //    //        Transnegx = true;
+    //    //        Transposx = true;
+    //    //        break;
+    //    //    case 6:                    //3,4
+    //    //        //g;
+    //    //        ResetmyBool();
+    //    //        Transnegz = true;
+    //    //        Transposz = true;
+    //    //        break; 
+    //    //    case 7:                     //3,4
+    //    //        //h;
+    //    //        ResetmyBool();
+    //    //        Transnegz = true;
+    //    //        Transposz = true;
+    //    //        break;
+    //    //    case 8:                   //1,2,3
+    //    //        //i;
+    //    //        ResetmyBool();
+    //    //        Transnegx = true;
+    //    //        Transposx = true;
+    //    //        Transnegz = true;
+    //    //        break;
+    //    //    case 9:                      //1,2,4
+    //    //        //j;
+    //    //        ResetmyBool();
+    //    //        Transnegx = true;
+    //    //        Transposx = true;
+
+    //    //        Transposz = true;
+    //    //        break;
+    //    //    case 10:                   //1,3,4
+    //    //        //k;
+    //    //        ResetmyBool();
+    //    //        Transnegx = true;
+    //    //        Transnegz = true;
+    //    //        Transposz = true;
+    //    //        break;
+    //    //    case 11:          //2,3,4
+    //    //        //l;
+    //    //        ResetmyBool();
+    //    //        Transposx = true;
+    //    //        Transnegz = true;
+    //    //        Transposz = true;
+    //    //        break;
+    //    //}
+    //    Vector3 temp = Rotations[myrotation];
+    //    RotationOFF = Quaternion.Euler(temp);
+    //    Instantiatemyblock();
+    //}
     //step4 with the given possible outcomes have a random check what possibilty to spawn and spawn it
-    void Instantiatemyblock()
-    {
-        int blocknum = Random.Range(0, 9);
-        SetmyTranslations();
-        Roundoffandsetmypos();
-
-        Instantiate(Blockrefs[blocknum], this.gameObject.transform.position + myfinaltranslation, RotationOFF);
-    }
-
-
-
-    void SetmyTranslations()
-    {
-        Vector3 trantonegx = new Vector3(-1 * scaleof, 0, 0);
-        Vector3 trantoposx = new Vector3(1 * scaleof, 0, 0);
-        Vector3 nomove = new Vector3(0, 0, 0);
-        Vector3 trantonegz = new Vector3(0, 0, -1 * scaleof);
-        Vector3 trantoposz = new Vector3(0, 0, 1 * scaleof);
-
-        Vector3 tempx = new Vector3(0, 0, 0);
-        Vector3 tempz = new Vector3(0, 0, 0);
-        if (Transnegx && Transposx)
-        {
-
-            int leftorright = Random.Range(0, 3);
-            switch (leftorright)
-            {
-
-                case 0: //move left
-                    tempx = trantonegx;
-                    break;
-                case 1://stay center
-                    tempx = nomove;
-                    break;
-                case 2://move right
-                    tempx = trantoposx;
-                    break;
-            }
-
-        }
-        else if (Transposx)
-        {
-            tempx = trantoposx;
-        }
-        else if (Transnegx)
-        {
-            tempx = trantonegx;
-        }
-
-        if (Transnegz && Transposz)
-        {
-            int forwardorback = Random.Range(0, 3);
-            switch (forwardorback)
-            {
-
-                case 0: //move forward
-                    tempz = trantonegz;
-                    break;
-                case 1://stay center
-                    tempz = nomove;
-                    break;
-                case 2://move back
-                    tempz = trantoposz;
-                    break;
-            }
-        }
-        else if (Transnegz)
-        {
-            tempz = trantonegz;
-        }
-        else if (Transposz)
-        {
-            tempz = trantoposz;
-        }
-
-
-
-        myfinaltranslation = tempx + tempz;
-    }
     void Roundoffandsetmypos()
     {
         float myposx = this.gameObject.transform.position.x;
@@ -2755,7 +3648,92 @@ public class blockspawner : MonoBehaviour
         float mynewposz = fixz - myposz;
         this.gameObject.transform.Translate(mynewposx, 0, mynewposz, Space.World);
     }
+    void INstanmyBLCK(int blocknum, Vector3 pos, Vector3 rots)
+    {
+        RotationOFF = Quaternion.Euler(rots);
+        //  Instantiatemyblock();
+        Roundoffandsetmypos();
+        Instantiate(Blockrefs[blocknum], this.gameObject.transform.position + (pos * scaleof), RotationOFF);
+    }
+    //void Instantiatemyblock()
+    //{
+    //    int blocknum = Random.Range(0, 9);
+    //    SetmyTranslations();
+    //    Roundoffandsetmypos();
 
+    //    Instantiate(Blockrefs[blocknum], this.gameObject.transform.position + myfinaltranslation, RotationOFF);
+    //}
+    //--------------------------------------------------------------------------------
+    //void SetmyTranslations()
+    //{
+    //    Vector3 trantonegx = new Vector3(-1 * scaleof, 0, 0);
+    //    Vector3 trantoposx = new Vector3(1 * scaleof, 0, 0);
+    //    Vector3 nomove = new Vector3(0, 0, 0);
+    //    Vector3 trantonegz = new Vector3(0, 0, -1 * scaleof);
+    //    Vector3 trantoposz = new Vector3(0, 0, 1 * scaleof);
+
+    //    Vector3 tempx = new Vector3(0, 0, 0);
+    //    Vector3 tempz = new Vector3(0, 0, 0);
+    //    if (Transnegx && Transposx)
+    //    {
+
+    //        int leftorright = Random.Range(0, 3);
+    //        switch (leftorright)
+    //        {
+
+    //            case 0: //move left
+    //                tempx = trantonegx;
+    //                break;
+    //            case 1://stay center
+    //                tempx = nomove;
+    //                break;
+    //            case 2://move right
+    //                tempx = trantoposx;
+    //                break;
+    //        }
+
+    //    }
+    //    else if (Transposx)
+    //    {
+    //        tempx = trantoposx;
+    //    }
+    //    else if (Transnegx)
+    //    {
+    //        tempx = trantonegx;
+    //    }
+
+    //    if (Transnegz && Transposz)
+    //    {
+    //        int forwardorback = Random.Range(0, 3);
+    //        switch (forwardorback)
+    //        {
+
+    //            case 0: //move forward
+    //                tempz = trantonegz;
+    //                break;
+    //            case 1://stay center
+    //                tempz = nomove;
+    //                break;
+    //            case 2://move back
+    //                tempz = trantoposz;
+    //                break;
+    //        }
+    //    }
+    //    else if (Transnegz)
+    //    {
+    //        tempz = trantonegz;
+    //    }
+    //    else if (Transposz)
+    //    {
+    //        tempz = trantoposz;
+    //    }
+
+
+
+    //    myfinaltranslation = tempx + tempz;
+    //}
+
+    //------------------------------------------------------
     void Testing(RaycastHit hit)
     {
 
@@ -2766,14 +3744,14 @@ public class blockspawner : MonoBehaviour
 
                 Testmylowest(hit.distance);
                 Testmyhighest(hit.distance);
-                Debug.Log("HEY IM A BLOCK");
+              //  Debug.Log("HEY IM A BLOCK");
 
             }
             else//block is grounded
             {
 
                 counter++;
-                Debug.Log("RESTART RANDOM SPAWN - " + counter);
+              //  Debug.Log("RESTART RANDOM SPAWN - " + counter);
                 Theresablockhit = true;
             }
         }
