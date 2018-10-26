@@ -14,8 +14,8 @@ public class DestroyWhenCollide : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        transform.Rotate(new Vector3(0, 5, 0));
+    }
 
     private void OnTriggerEnter(Collider other)
     {
