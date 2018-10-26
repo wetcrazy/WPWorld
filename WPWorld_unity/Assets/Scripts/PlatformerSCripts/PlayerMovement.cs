@@ -81,8 +81,8 @@ public class PlayerMovement : MonoBehaviour {
         {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
-                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 45)
-                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 225))
+                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
+                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
                         n_Forward = Camera.main.transform.forward;
                     else
                         n_Forward = Camera.main.transform.up;
@@ -166,8 +166,8 @@ public class PlayerMovement : MonoBehaviour {
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
-                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 45)
-                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x > 225))
+                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
+                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
                         n_Forward = Camera.main.transform.forward;
                     else
                         n_Forward = Camera.main.transform.up;
