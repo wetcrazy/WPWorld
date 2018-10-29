@@ -5,73 +5,91 @@ using UnityEngine;
 // Hooming AI
 public class GhostAi : MonoBehaviour
 {
-    [Range(0.01f,0.05f)]
+    public enum STATE
+    {
+        STATE_IDLE,
+        STATE_FINDING,
+        STATE_FOLLOWING
+    }
+
+    //[Range(0.01f, 0.1f)]
     [SerializeField]
-    private float Speed;
-    [Range(0.1f,0.5f)]
+    private float Speed = 0.0f;
+    [Range(0.1f, 0.5f)]
     [SerializeField]
     private float Range;
     [SerializeField]
-    private float MAX_TIMER;
+    private float MAX_TIMER = 10;
 
     public bool isRelease = false;
-    
-    private float Timer = 0.0f;
+
+    public float Timer = 0.0f;
+    public STATE AI_STATE;
+    private Vector3 _newVect = new Vector3();
+
+    private void Awake()
+    {
+        AI_STATE = STATE.STATE_IDLE;
+    }
 
     private void Update()
-    {      
-        if (!isRelease)
-        {
-            return;
-        }
-
-        Vector3 _target = new Vector3();
+    {     
         var _player = GameObject.FindGameObjectWithTag("Player");
-
-        Collider[] _collided = Physics.OverlapSphere(transform.position, Range);
-
-        if(_collided.Length <= 2)
+        if (Timer > MAX_TIMER)
         {
-            _target = new Vector3(0, 0.2f, 0);
+            AI_STATE = STATE.STATE_FINDING;
+            Timer = 0.0f;
         }
-        else
-        {
-            foreach (Collider _col in _collided)
-            {
-                if (_col.gameObject == _player)
-                {
-                    _target = _player.transform.localPosition;
-                    break;
-                }
-            }
 
-            if(_target == new Vector3(0,0,0) && Timer > MAX_TIMER)
-            {
-                Timer = 0.0f;
-                Debug.Log("DING");
-                //_target = RandomTarget();
-            }
+        switch (AI_STATE)
+        {
+            case STATE.STATE_IDLE:             
+                RandomTarget();
+                break;
+
+            case STATE.STATE_FINDING:
+                Finding(_player.transform.position);
+                break;
+
+            case STATE.STATE_FOLLOWING:
+                MoveTo(_player.transform.position);
+                AI_STATE = STATE.STATE_FINDING;
+                break;
         }
 
         Timer += 0.1f;
-        GoTo(_target);
     }
 
-    private void GoTo(Vector3 _target)
+    private void MoveTo(Vector3 _target)
     {
-        var _newTar = new Vector3(_target.x, 0.2f, _target.z);
+        Speed = Random.Range(0.01f, 0.1f);
+        var _newTar = new Vector3(_target.x, _target.y, _target.z);
         gameObject.transform.LookAt(_newTar);
-        gameObject.transform.Translate(Vector3.forward * Speed);
+        //gameObject.transform.Translate(Vector3.forward * Speed);
+
+        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, _newTar, Speed);
     }
 
-    private Vector3 RandomTarget()
+    private void Finding(Vector3 _target)
     {
-        Vector3 _newTarget = new Vector3();
+        if(Vector3.Distance(transform.position,_target) < Range)
+        {
+            AI_STATE = STATE.STATE_FOLLOWING;
+        }
+        else
+        {            
+            AI_STATE = STATE.STATE_IDLE;
+        }
+    }
 
-        _newTarget.x = Random.Range(-30, 31);
-        _newTarget.z = Random.Range(-30, 31);
-        _newTarget.y = 0.2f;
-
-        return _newTarget;
+    private void RandomTarget()
+    {
+        if(transform.position == _newVect)
+        {
+            _newVect.x = Random.Range(-1.0f, 1.0f);
+            _newVect.z = Random.Range(-1.0f, 1.0f);
+            _newVect.y = 0;
+        }
+        MoveTo(_newVect);      
     }
 }
