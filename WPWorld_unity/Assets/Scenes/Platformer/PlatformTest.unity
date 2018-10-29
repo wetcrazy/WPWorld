@@ -669,7 +669,52 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1412294928852052, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198833603657300742, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 0.175
+      objectReference: {fileID: 0}
+    - target: {fileID: 198833603657300742, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 0.675
+      objectReference: {fileID: 0}
+    - target: {fileID: 198833603657300742, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShapeModule.m_Position.x
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 114685815407727114, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DeathCounter
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: m_Color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224876418566768812, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
@@ -1501,6 +1546,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf26cd611f6a754bbd4383055d9d91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Showing: 0
+  NormalHeart: {fileID: 1460232108945982, guid: f4fd63f40f4fdfb4eaa3bd91f9865b55,
+    type: 2}
+  DeathHeart: {fileID: 1277968001781324, guid: 3a92bd8903c338e4d8802f248663917d, type: 2}
 --- !u!1 &1598023410
 GameObject:
   m_ObjectHideFlags: 0
