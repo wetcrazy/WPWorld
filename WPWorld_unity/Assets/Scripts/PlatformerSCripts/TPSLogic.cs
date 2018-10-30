@@ -75,7 +75,8 @@ public class TPSLogic : MonoBehaviour
             {
                 if (!hit.transform.GetComponent<Renderer>() || !hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    IsGrounded = false;
+                    if(!hit.transform.name.Contains("Invisible") && !hit.transform.name.Contains("Coin"))
+                        IsGrounded = false;
                 }
             }
         }
@@ -124,6 +125,13 @@ public class TPSLogic : MonoBehaviour
                     {
                         if(Colliding)
                             IsGrounded = true;
+                    }
+                }
+                else
+                {
+                    if(hit.transform.name.Contains("Invisible") || hit.transform.name.Contains("Coin"))
+                    {
+                        IsGrounded = true;
                     }
                 }
             }
@@ -197,6 +205,10 @@ public class TPSLogic : MonoBehaviour
         
  
         GetComponent<PlayerMovement>().Respawn();
+
+        HealthPopup DeathUI = FindObjectOfType<HealthPopup>() as HealthPopup;
+        if (DeathUI != null)
+            DeathUI.ShowDisplay();
     }
 
     public bool GetJumpRestrict()
