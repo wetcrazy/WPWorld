@@ -9,15 +9,26 @@ public class SoundSystem : MonoBehaviour {
     [SerializeField]
     int MaximumSFXPlayingAtOnce = 10;
 
-    AudioSource BackgroundMusic;
+    GameObject BackgroundMusic;
+    AudioSource BackgroundMusicAudioSource = null;
     AudioClip[] AudioSounds;
-    AudioSource[] AudioSources;
+    GameObject[] AudioSources;
 
 	// Use this for initialization
 	void Start () {
         AudioSounds = Resources.LoadAll<AudioClip>("Audio");
-        AudioSources = new AudioSource[MaximumSFXPlayingAtOnce];
-        BackgroundMusic.loop = true;
+        AudioSources = new GameObject[MaximumSFXPlayingAtOnce];
+
+        for (int i = 0; i < AudioSources.Length; ++i)
+        {
+            AudioSources[i] = new GameObject();
+            AudioSources[i].AddComponent<AudioSource>();
+        }
+
+        BackgroundMusic = new GameObject();
+        BackgroundMusic.AddComponent<AudioSource>();
+        BackgroundMusicAudioSource = BackgroundMusic.GetComponent<AudioSource>();
+        BackgroundMusicAudioSource.loop = true;
     }
     
     public void PlayBGM(string BGMName)
@@ -29,13 +40,13 @@ public class SoundSystem : MonoBehaviour {
                 continue;
             }
 
-            if(BackgroundMusic.isPlaying)
+            if(BackgroundMusicAudioSource.isPlaying)
             {
-                BackgroundMusic.Stop();
+                BackgroundMusicAudioSource.Stop();
             }
 
-            BackgroundMusic.clip = audioClip;
-            BackgroundMusic.Play();
+            BackgroundMusicAudioSource.clip = audioClip;
+            BackgroundMusicAudioSource.Play();
             break;
         }
     }
@@ -49,8 +60,10 @@ public class SoundSystem : MonoBehaviour {
                 continue;
             }
 
-            foreach (AudioSource audioSource in AudioSources)
+            foreach (GameObject audioSourceGameObj in AudioSources)
             {
+                AudioSource audioSource = audioSourceGameObj.GetComponent<AudioSource>();
+
                 if(audioSource.isPlaying)
                 {
                     continue;
