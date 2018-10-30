@@ -46,7 +46,7 @@ public class ItemBoxSpawn : MonoBehaviour {
         }
         else
         {
-            transform.position = Vector3.Lerp(transform.position, TargetLocation, 3.0f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, TargetLocation, 3.5f * Time.deltaTime);
         }
 	}
 }
