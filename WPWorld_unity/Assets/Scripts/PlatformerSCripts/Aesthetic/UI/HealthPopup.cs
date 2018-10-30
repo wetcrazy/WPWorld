@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthPopup : MonoBehaviour {
-
+public class HealthPopup : MonoBehaviour
+{
     private Image ImageRef;
 
     private Color ColorRef;
 
-    private TPSLogic PlayerRef;
+    private GameObject PlayerRef;
+    private MovementAvaliability OrgAvaliability;
 
     //Debug Serialize
     [SerializeField]
@@ -22,21 +23,24 @@ public class HealthPopup : MonoBehaviour {
 
     private float TimeElapsed;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         ImageRef = GetComponent<Image>();
 
         ColorRef = ImageRef.color;
         ColorRef.a = 0;
         ImageRef.color = ColorRef;
 
-        PlayerRef = GameObject.FindGameObjectWithTag("Player").GetComponent<TPSLogic>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        PlayerRef = GameObject.FindGameObjectWithTag("Player");
+        OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         // Spawning
-        if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetDeaths()))
+        if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()))
         {
             if (transform.GetChild(0).childCount != 0)
                 for (int i = 0; i < transform.GetChild(0).childCount; i++)
@@ -51,9 +55,16 @@ public class HealthPopup : MonoBehaviour {
         ImageRef.color = ColorRef / 2;
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).GetComponent<Image>().color = ColorRef;
+            if (transform.GetChild(i).GetComponent<Image>() != null)
+                transform.GetChild(i).GetComponent<Image>().color = ColorRef;
+            if (transform.GetChild(i).GetComponent<Text>() != null)
+            {
+                Color TextColor = transform.GetChild(i).GetComponent<Text>().color;
+                TextColor.a = ColorRef.a;
+                transform.GetChild(i).GetComponent<Text>().color = TextColor;
+            }
 
-            for(int j = 0; j < transform.GetChild(i).childCount; j++)
+            for (int j = 0; j < transform.GetChild(i).childCount; j++)
             {
                 Color HeartColor = new Vector4(1, 1, 1, ColorRef.a);
                 transform.GetChild(i).GetChild(j).GetComponent<Image>().color = HeartColor;
@@ -61,11 +72,11 @@ public class HealthPopup : MonoBehaviour {
         }
 
         // Behaviour
-        if(Showing)
+        if (Showing)
         {
             if (ColorRef.a < 1)
             {
-                ColorRef.a += Time.deltaTime;
+                ColorRef.a += 2.0f * Time.deltaTime;
             }
             else
             {
@@ -73,25 +84,26 @@ public class HealthPopup : MonoBehaviour {
 
                 TimeElapsed += Time.deltaTime;
 
-                if(TimeElapsed > 1.0f)
+                if (TimeElapsed > 0.25f)
                 {
                     TimeElapsed = 0;
                     Showing = false;
                 }
             }
 
-            transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height * 0.5f), 1.5f * Time.deltaTime);
+            transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height * 0.5f), 3.0f * Time.deltaTime);
         }
         else
         {
             if (ColorRef.a > 0)
             {
-                ColorRef.a -= Time.deltaTime;
+                ColorRef.a -= 2.0f * Time.deltaTime;
 
-                transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height + transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y), 1.75f * Time.deltaTime);
+                transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height + transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y), 3.0f * Time.deltaTime);
             }
             else
             {
+                PlayerRef.GetComponent<PlayerMovement>().SetRestriction(OrgAvaliability);
                 ColorRef.a = 0;
                 transform.GetChild(0).transform.position = new Vector3(Screen.width / 2,
                     -transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y * 0.5f,
@@ -102,39 +114,49 @@ public class HealthPopup : MonoBehaviour {
 
     private void SpawnHearts()
     {
-        for (int i = 1; i <= Mathf.Abs(PlayerRef.GetDeaths()); ++i)
+        for (float y = 0; y < Mathf.Ceil(Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()) / Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); y++)
         {
-            GameObject SpawnHeart;
-            if (i == 1)
+            for (int x = 1; x <= Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()) - (y * Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); ++x)
             {
-                if (PlayerRef.GetDeaths() > 0)
+                if (x > Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x))
+                {
+                    continue;
+                }
+                GameObject SpawnHeart;
+                if (PlayerRef.GetComponent<TPSLogic>().GetDeaths() > 0)
                     SpawnHeart = Instantiate(DeathHeart, transform.GetChild(0).position, transform.rotation);
                 else
                     SpawnHeart = Instantiate(NormalHeart, transform.GetChild(0).position, transform.rotation);
+
+                if (y % 2 == 0 && y != 0)
+                    SpawnHeart.transform.position -= new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * (y / 2), 0);
+                else
+                    SpawnHeart.transform.position += new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * Mathf.Ceil(y / 2), 0);
+
+                if (x == 1)
+                {
+                    SpawnHeart.GetComponent<RectTransform>().SetParent(transform.GetChild(0));
+                    SpawnHeart.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                    continue;
+                }
+
+                if (x % 2 == 0)
+                    SpawnHeart.transform.position -= new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * (x / 2), 0, 0);
+                else
+                    SpawnHeart.transform.position += new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * Mathf.Floor(x / 2), 0, 0);
+
                 SpawnHeart.GetComponent<RectTransform>().SetParent(transform.GetChild(0));
                 SpawnHeart.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                continue;
             }
-
-            if (i % 2 == 0)
-            {
-                if (PlayerRef.GetDeaths() > 0)
-                    SpawnHeart = Instantiate(DeathHeart, transform.GetChild(0).position, transform.rotation);
-                else
-                    SpawnHeart = Instantiate(NormalHeart, transform.GetChild(0).position, transform.rotation);
-                SpawnHeart.transform.position -= new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * (i / 2), 0, 0);
-            }
-            else
-            {
-                if (PlayerRef.GetDeaths() > 0)
-                    SpawnHeart = Instantiate(DeathHeart, transform.GetChild(0).position, transform.rotation);
-                else
-                    SpawnHeart = Instantiate(NormalHeart, transform.GetChild(0).position, transform.rotation);
-                SpawnHeart.transform.position += new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * Mathf.Floor(i / 2), 0, 0);
-            }
-
-            SpawnHeart.GetComponent<RectTransform>().SetParent(transform.GetChild(0));
-            SpawnHeart.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
+    }
+
+    public void ShowDisplay()
+    {
+        if (ColorRef.a != 0)
+            return;
+        OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
+        PlayerRef.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
+        Showing = true;
     }
 }

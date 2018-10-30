@@ -12,10 +12,10 @@ public class TPSLogic : MonoBehaviour
     private bool RestrictJump = false;
     private bool Colliding = false;
     [SerializeField]
-    private AudioClip JumpSFX;
+    private string JumpSFX;
 
     [SerializeField]
-    private AudioClip DeathSFX;
+    private string DeathSFX;
 
     [SerializeField]
     private int Points = 0;
@@ -25,6 +25,7 @@ public class TPSLogic : MonoBehaviour
 
     private Rigidbody RigidRef;
     private PlayerMovement MovementRef;
+    private SoundSystem SoundSystemRef;
 
     [SerializeField]
     private float AirborneMovementSpeed;
@@ -35,6 +36,7 @@ public class TPSLogic : MonoBehaviour
     {
         RigidRef = GetComponent<Rigidbody>();
         MovementRef = GetComponent<PlayerMovement>();
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
         OrgSpeed = MovementRef.GetMovementSpeed();
 
@@ -75,7 +77,8 @@ public class TPSLogic : MonoBehaviour
             {
                 if (!hit.transform.GetComponent<Renderer>() || !hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    IsGrounded = false;
+                    if(!hit.transform.name.Contains("Invisible") && !hit.transform.name.Contains("Coin"))
+                        IsGrounded = false;
                 }
             }
         }
@@ -126,6 +129,13 @@ public class TPSLogic : MonoBehaviour
                             IsGrounded = true;
                     }
                 }
+                else
+                {
+                    if(hit.transform.name.Contains("Invisible") || hit.transform.name.Contains("Coin"))
+                    {
+                        IsGrounded = true;
+                    }
+                }
             }
         }
     }
@@ -135,8 +145,8 @@ public class TPSLogic : MonoBehaviour
         if (!IsGrounded || RestrictJump)
             return;
 
-        //if (JumpSFX != null && GameObject.Find("Sound System") != null)
-        //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+        if (JumpSFX != "")
+            SoundSystemRef.PlaySFX("Jump");
         PushUp();
     }
 
@@ -190,13 +200,14 @@ public class TPSLogic : MonoBehaviour
     public void Death()
     {
         DeathCounter++;
-        //if (DeathSFX != null && GameObject.Find("Sound System") != null)
- 
-          //  GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSFX);
- 
-        
- 
+        if (DeathSFX != "")
+            SoundSystemRef.PlaySFX("Giggs");
+
         GetComponent<PlayerMovement>().Respawn();
+
+        HealthPopup DeathUI = FindObjectOfType<HealthPopup>() as HealthPopup;
+        if (DeathUI != null)
+            DeathUI.ShowDisplay();
     }
 
     public bool GetJumpRestrict()

@@ -113,254 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1630270
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1630271}
-  - component: {fileID: 1630272}
-  m_Layer: 0
-  m_Name: SFX3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1630271
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1630270}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1630272
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1630270}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &11584771
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 11584772}
-  - component: {fileID: 11584773}
-  m_Layer: 0
-  m_Name: SFX9
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &11584772
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 11584771}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &11584773
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 11584771}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &137204581
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,14 +188,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 137204581}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -1.158, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1195993645}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &137204586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,267 +210,6 @@ MonoBehaviour:
   FocusTarget: {fileID: 0}
   DistanceToWait: 1
   FollowSpeed: 2.5
---- !u!1 &286425827
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 286425828}
-  - component: {fileID: 286425829}
-  m_Layer: 0
-  m_Name: BGM
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &286425828
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 286425827}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &286425829
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 286425827}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 0
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1001 &352731590
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137715303889693718, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_AABB.m_Extent.x
-      value: 4.999995
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137715303889693718, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_AABB.m_Extent.y
-      value: 0.00000005960466
-      objectReference: {fileID: 0}
-    - target: {fileID: 137715303889693718, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_AABB.m_Extent.z
-      value: 5.0000014
-      objectReference: {fileID: 0}
-    - target: {fileID: 137882308570776540, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_AABB.m_Extent.y
-      value: 0.0000012516995
-      objectReference: {fileID: 0}
-    - target: {fileID: 137882308570776540, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_AABB.m_Extent.z
-      value: 5.000005
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330192242447120, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 137882308570776540, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_AABB.m_Extent.x
-      value: 5.000008
-      objectReference: {fileID: 0}
-    - target: {fileID: 1738384618658990, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1412294928852052, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198833603657300742, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 0.175
-      objectReference: {fileID: 0}
-    - target: {fileID: 198833603657300742, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 0.675
-      objectReference: {fileID: 0}
-    - target: {fileID: 198833603657300742, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: ShapeModule.m_Position.x
-      value: 0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 114685815407727114, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: DeathCounter
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114139439517859034, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224876418566768812, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &472286431
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,254 +275,1610 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
---- !u!1 &665816218
-GameObject:
+--- !u!1001 &843019532
+Prefab:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 665816219}
-  - component: {fileID: 665816220}
-  m_Layer: 0
-  m_Name: SFX8
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &665816219
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 665816218}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &665816220
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 665816218}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalRotation.w
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &1085241541
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1085241542}
-  - component: {fileID: 1085241543}
-  m_Layer: 0
-  m_Name: SFX10
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1085241542
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1085241541}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1085241543
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1085241541}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589564632172138, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106775036957070, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 2.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106775036957070, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778509378778566, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Ground Blocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969200080903010, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Ground Blocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012075892327602, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Ground Blocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1366562807582568, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Ground Blocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721290895654630, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Ground Blocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1622634654931888, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Ground Blocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673606928456966, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Ground Blocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1816345280491154, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183555966556734, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1922463901508504, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737435150214484, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846873899285456, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1172979081723244, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1001119783323782, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1913374240664174, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910032761946490, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1885171651736270, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063885217280090, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1643199663054962, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1709478438364972, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779389183477330, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+      propertyPath: m_Name
+      value: Invisible Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231764796277586, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BGM
+      value: Platformer4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114157913160218660, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114426460283271548, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114097062763454942, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114521272885417540, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114811006123984560, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114536440237451440, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114548845779535076, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114397154270960432, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114882889653129090, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114172485387688550, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114375550062634614, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114323201981846900, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114882889653129090, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114172485387688550, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114375550062634614, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114323201981846900, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114747636284723972, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114891565293395854, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114513345124522302, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114334923705424470, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114511129002720634, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: RespawnSFX
+      value: APPROPRIATE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114007008691081964, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522510589372774, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296233935829950, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114211352262703348, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114718685211519690, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114210081678924518, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114195508273264490, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114524932357496050, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114619833581727858, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114996571894115282, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114009497162572368, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114850262312357082, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114502282129677544, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114355225827355212, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114727644623181174, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114075040162555454, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114030208265263796, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114348668905785778, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114651680318056282, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114937523055348866, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114546887454460444, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: JumpSFX
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 114546887454460444, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DeathSFX
+      value: Giggs
+      objectReference: {fileID: 0}
+    - target: {fileID: 114653607127767100, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114798833150989398, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114098573462051364, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114430735468058884, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114298516984892752, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114016481894769830, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114895927149588130, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114823163200777578, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114092971989294052, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114631793124845464, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114963187662206814, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114719481144745930, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114165327707820602, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114373093750420320, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114435823256525160, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114288153682227508, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114674120094425214, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114206402270528578, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114018240669303830, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114971430975231900, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114147656135512586, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114434921651948032, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649659884870198, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114732458347313270, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114087209543493972, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114391933358474068, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114612780681006176, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114306060456106074, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114466627125705616, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026575484074210, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114700460722450630, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114389093517349442, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114017895333774932, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114232401763298618, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114393260395101050, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114737134508912564, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114697915795236480, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114700460722450630, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114389093517349442, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114017895333774932, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114393260395101050, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114737134508912564, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114697915795236480, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114232401763298618, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114280938705663168, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277948879938158, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114947238595268464, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114084912070923996, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114314048970744586, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114981382122795330, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051433720964138, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114240519120599254, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114690294410456158, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026810390803574, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114379572871483958, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114722903958989924, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114660225792699272, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114427230481605900, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114345936815021348, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114114030368073554, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114667270429593862, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114535212435275454, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114645714472415912, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114931674356292182, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114825752109931820, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114185779453067942, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114252027435924232, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114621868368637168, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114125773397187182, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114479131482859816, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396539636840674, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114039340801320116, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114079302276611836, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114633450451906926, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114768636058790618, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114971174775121902, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114046372814289810, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052807565609450, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114157777404062018, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114384354711160824, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822158923145190, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114238365879485764, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114893406642864130, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: RespawnSFX
+      value: APPROPRIATE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114550620891773406, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114550610654532240, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114226047731798926, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114095574289089364, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114423405322033432, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597692485632046, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961228680848530, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251052010914518, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114081841998826504, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114573747302094190, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114237890058342946, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114780080888505024, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114629124990883016, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114993373598764696, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114109116193731092, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114127535917717296, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114125439621488998, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114545430477873810, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114631023001656242, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114858089942358662, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114738455703847308, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114019411801301644, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114646187295356834, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114253590958782350, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114748352486327404, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114470261045520364, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114105088226257320, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114293794992919126, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594113439844752, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884357285551266, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114008994000307070, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114302198598598384, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114745489791595368, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114097074319045202, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114720803872337438, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114755879317127906, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114354645486904056, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114724707632917240, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114212075752192880, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114028377627053136, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114530459630665324, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114827655369910496, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114355502678805484, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114081080036515030, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114056075731197640, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114498087599138772, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114778573683354574, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436547870195882, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114798600213309852, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344148616491448, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114721527113398662, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200873778579986, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114733578042003274, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114688073749986452, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114468317818984544, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114239654425435480, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114037271179566362, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114222295857217100, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114152395555768208, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114656792014137600, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114065338197178120, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114813270838405240, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200271815128002, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114358659828915524, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114810623314657196, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114386539514790274, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114818008105759650, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114452129243867554, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114942161384245004, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114328501077711044, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114632148213348438, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114562781550595654, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114655742698860230, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114937942672988922, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114617921803642426, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114234418450656312, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114120616933258166, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114809914400040436, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114268836460875862, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114960421537983374, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114626710322283668, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114652724782846618, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114049525637303164, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114497901278268258, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114135888306508698, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114790100753959250, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714763597469940, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114452179641584216, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114477248273579598, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114764860775366670, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114184504897988566, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114061665565258248, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114097157478622132, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114851733201253236, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594941774173446, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114275662644473114, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114695111415035146, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114648155245632558, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114308670699866214, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114929311750323102, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114990338682468966, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114679223755954432, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114071006180802600, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114106445218915268, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114604696859670580, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114539602825114896, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DestroySFX
+      value: DestroyBrick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114302952456877718, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714930796104788, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114652297981478016, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114777011206152988, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114893812510449712, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114943703980963126, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114894358095663568, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114640350650601966, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ShowSFX
+      value: Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 114636424659521348, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114759431295344530, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114386729422899952, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114541207694879884, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026796700741432, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114114553501668088, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114064866427859742, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114882605714675766, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114401380359330458, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114578710869490334, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058387581947154, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114767645777009722, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: BounceSFX
+      value: OOHKAYE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114933235822269144, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359680537517108, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114889664526366972, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114108990914928356, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200699025052398, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251567912483552, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114953296737189426, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CoinSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114933235822269144, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114359680537517108, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114889664526366972, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114108990914928356, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200699025052398, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114251567912483552, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114953296737189426, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: ItemEnemySFX
+      value: SpawnItemEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114177067765317302, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: RespawnSFX
+      value: APPROPRIATE
+      objectReference: {fileID: 0}
+    - target: {fileID: 114791718212581590, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: EnterSFX
+      value: ShortBlip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792476879689976, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114163529943473548, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114074042298257330, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114045061569484046, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114524462271849216, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114147811973518024, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114876268130616118, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114028036817970332, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231166785146364, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114757848922733828, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114863335458904268, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114850866893071914, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114903429833287116, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318829813280078, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114820228051158334, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114621971382175744, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114280963837027686, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341783556662978, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114127249945101928, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114319747002889176, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: CollectSFX
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907662306403802, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DeathSound
+      value: EnemyDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 114966196407285618, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DeathSound
+      value: EnemyDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 114726986190166994, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DeathSound
+      value: EnemyDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 114981419347231280, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DeathSound
+      value: EnemyDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 114713180874610648, guid: d7ed51f5fa2c2dd49b06815a4a135858,
+        type: 2}
+      propertyPath: DeathSound
+      value: EnemyDeath
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1195993644
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,7 +1890,7 @@ GameObject:
   - component: {fileID: 1195993646}
   m_Layer: 0
   m_Name: Sound System
-  m_TagString: Untagged
+  m_TagString: SoundSystem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1057,18 +1904,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 286425828}
-  - {fileID: 1391043877}
-  - {fileID: 1598023411}
-  - {fileID: 1630271}
-  - {fileID: 1913520857}
-  - {fileID: 1306412621}
-  - {fileID: 1944711143}
-  - {fileID: 1220271973}
-  - {fileID: 665816219}
-  - {fileID: 11584772}
-  - {fileID: 1085241542}
+  m_Children: []
   m_Father: {fileID: 137204585}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1083,19 +1919,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea60f1e4e5d3b6c47b0759aeb40a555a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: {fileID: 286425827}
   SFX:
-  - {fileID: 1391043876}
-  - {fileID: 1598023410}
-  - {fileID: 1630270}
-  - {fileID: 1913520856}
-  - {fileID: 1306412620}
-  - {fileID: 1944711142}
-  - {fileID: 1220271972}
-  - {fileID: 665816218}
-  - {fileID: 11584771}
-  - {fileID: 1085241541}
-  TestClip: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MaximumSFXPlayingAtOnce: 10
+  AudioSounds: []
 --- !u!1 &1202571949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,767 +1994,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1220271972
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1220271973}
-  - component: {fileID: 1220271974}
-  m_Layer: 0
-  m_Name: SFX7
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1220271973
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1220271972}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1220271974
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1220271972}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &1306412620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1306412621}
-  - component: {fileID: 1306412622}
-  m_Layer: 0
-  m_Name: SFX5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1306412621
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1306412620}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1306412622
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1306412620}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &1391043876
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1391043877}
-  - component: {fileID: 1391043878}
-  m_Layer: 0
-  m_Name: SFX1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1391043877
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1391043876}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1391043878
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1391043876}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &1424857368 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1738384618658990, guid: d7ed51f5fa2c2dd49b06815a4a135858,
-    type: 2}
-  m_PrefabInternal: {fileID: 352731590}
---- !u!114 &1424857370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1424857368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf26cd611f6a754bbd4383055d9d91f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Showing: 0
-  NormalHeart: {fileID: 1460232108945982, guid: f4fd63f40f4fdfb4eaa3bd91f9865b55,
-    type: 2}
-  DeathHeart: {fileID: 1277968001781324, guid: 3a92bd8903c338e4d8802f248663917d, type: 2}
---- !u!1 &1598023410
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1598023411}
-  - component: {fileID: 1598023412}
-  m_Layer: 0
-  m_Name: SFX2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1598023411
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1598023410}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1598023412
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1598023410}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &1913520856
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1913520857}
-  - component: {fileID: 1913520858}
-  m_Layer: 0
-  m_Name: SFX4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1913520857
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1913520856}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1913520858
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1913520856}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &1944711142
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1944711143}
-  - component: {fileID: 1944711144}
-  m_Layer: 0
-  m_Name: SFX6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1944711143
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1944711142}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1195993645}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1944711144
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1944711142}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ee0ff0f575eeca04db28439144c7b286, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.05
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4

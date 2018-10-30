@@ -7,11 +7,14 @@ public class ShowOnCollide : MonoBehaviour {
     private Renderer RenderRef;
 
     [SerializeField]
-    private AudioClip ShowSFX;
+    private string ShowSFX;
+
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
         RenderRef.enabled = false;
 	}
@@ -32,8 +35,8 @@ public class ShowOnCollide : MonoBehaviour {
                 {
                     GetComponent<Collider>().isTrigger = false;
 
-                    //if (ShowSFX != null && GameObject.Find("Sound System") != null)
-                    //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(ShowSFX);
+                    if (ShowSFX != "")
+                        SoundSystemRef.PlaySFX(ShowSFX);
 
                     Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
                     VelocityRef.y = -VelocityRef.y * 0.5f;

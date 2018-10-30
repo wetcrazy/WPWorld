@@ -11,21 +11,25 @@ public class SoundSystem : MonoBehaviour {
 
     GameObject BackgroundMusic;
     AudioSource BackgroundMusicAudioSource = null;
+    [SerializeField]
     AudioClip[] AudioSounds;
     GameObject[] AudioSources;
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         AudioSounds = Resources.LoadAll<AudioClip>("Audio");
         AudioSources = new GameObject[MaximumSFXPlayingAtOnce];
 
         for (int i = 0; i < AudioSources.Length; ++i)
         {
-            AudioSources[i] = new GameObject();
+            AudioSources[i] = new GameObject("SFX" + i);
+            AudioSources[i].transform.parent = transform;
+            AudioSources[i].transform.localPosition = Vector3.zero;
             AudioSources[i].AddComponent<AudioSource>();
         }
 
-        BackgroundMusic = new GameObject();
+        BackgroundMusic = new GameObject("BGM");
+        BackgroundMusic.transform.parent = transform;
+        BackgroundMusic.transform.localPosition = Vector3.zero;
         BackgroundMusic.AddComponent<AudioSource>();
         BackgroundMusicAudioSource = BackgroundMusic.GetComponent<AudioSource>();
         BackgroundMusicAudioSource.loop = true;

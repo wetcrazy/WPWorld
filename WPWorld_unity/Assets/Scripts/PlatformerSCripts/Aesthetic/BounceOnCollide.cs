@@ -8,7 +8,9 @@ public class BounceOnCollide : MonoBehaviour {
     private Vector3 OrgPos;
 
     [SerializeField]
-    private AudioClip BounceSFX;
+    private string BounceSFX;
+
+    private SoundSystem SoundSystemRef;
 
     private float TimeElapsed;
 
@@ -17,7 +19,9 @@ public class BounceOnCollide : MonoBehaviour {
         RigidRef = GetComponent<Rigidbody>();
 
         OrgPos = this.transform.position;
-	}
+
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -58,8 +62,8 @@ public class BounceOnCollide : MonoBehaviour {
                         RigidRef.AddForce(new Vector3(0, 50, 0));
                         RigidRef.useGravity = true;
 
-                        //if(BounceSFX != null && GameObject.Find("Sound System"))
-                        //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(BounceSFX);
+                        if (BounceSFX != "")
+                            SoundSystemRef.PlaySFX(BounceSFX);
 
                         Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
                         VelocityRef.y = -VelocityRef.y * 0.5f;
