@@ -191,7 +191,11 @@ public class TPSLogic : MonoBehaviour
     {
         DeathCounter++;
         //if (DeathSFX != null && GameObject.Find("Sound System") != null)
+<<<<<<< HEAD
           //  GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSFX);
+=======
+        //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSFX);
+>>>>>>> 9dc96347a4b37b0213714f70aaba8bb189bf665b
         GetComponent<PlayerMovement>().Respawn();
     }
 
