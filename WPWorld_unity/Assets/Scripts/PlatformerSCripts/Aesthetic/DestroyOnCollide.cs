@@ -11,14 +11,17 @@ public class DestroyOnCollide : MonoBehaviour {
     private GameObject Debris;
 
     [SerializeField]
-    private AudioClip DestroySFX;
+    private string DestroySFX;
 
     private Renderer RenderRef;
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
-	}
+
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -52,8 +55,8 @@ public class DestroyOnCollide : MonoBehaviour {
             {
                 RenderRef.enabled = false;
 
-                //if (DestroySFX != null && GameObject.Find("Sound System") != null)
-                //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DestroySFX);
+                if (DestroySFX != "")
+                    SoundSystemRef.PlaySFX(DestroySFX);
 
                 for (int i = 0; i < AmountOfDebris; i++)
                 {

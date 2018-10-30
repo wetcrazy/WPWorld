@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class HealthPopup : MonoBehaviour
 {
-
     private Image ImageRef;
 
     private Color ColorRef;
 
-    private TPSLogic PlayerRef;
+    private GameObject PlayerRef;
+    private MovementAvaliability OrgAvaliability;
 
     //Debug Serialize
     [SerializeField]
@@ -32,14 +32,15 @@ public class HealthPopup : MonoBehaviour
         ColorRef.a = 0;
         ImageRef.color = ColorRef;
 
-        PlayerRef = GameObject.FindGameObjectWithTag("Player").GetComponent<TPSLogic>();
+        PlayerRef = GameObject.FindGameObjectWithTag("Player");
+        OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Spawning
-        if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetDeaths()))
+        if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()))
         {
             if (transform.GetChild(0).childCount != 0)
                 for (int i = 0; i < transform.GetChild(0).childCount; i++)
@@ -75,7 +76,7 @@ public class HealthPopup : MonoBehaviour
         {
             if (ColorRef.a < 1)
             {
-                ColorRef.a += Time.deltaTime;
+                ColorRef.a += 2.0f * Time.deltaTime;
             }
             else
             {
@@ -83,25 +84,26 @@ public class HealthPopup : MonoBehaviour
 
                 TimeElapsed += Time.deltaTime;
 
-                if (TimeElapsed > 0.5f)
+                if (TimeElapsed > 0.25f)
                 {
                     TimeElapsed = 0;
                     Showing = false;
                 }
             }
 
-            transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height * 0.5f), 1.5f * Time.deltaTime);
+            transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height * 0.5f), 3.0f * Time.deltaTime);
         }
         else
         {
             if (ColorRef.a > 0)
             {
-                ColorRef.a -= Time.deltaTime;
+                ColorRef.a -= 2.0f * Time.deltaTime;
 
-                transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height + transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y), 1.75f * Time.deltaTime);
+                transform.GetChild(0).transform.position = Vector3.Lerp(transform.GetChild(0).transform.position, new Vector3(Screen.width * 0.5f, Screen.height + transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y), 3.0f * Time.deltaTime);
             }
             else
             {
+                PlayerRef.GetComponent<PlayerMovement>().SetRestriction(OrgAvaliability);
                 ColorRef.a = 0;
                 transform.GetChild(0).transform.position = new Vector3(Screen.width / 2,
                     -transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y * 0.5f,
@@ -112,16 +114,16 @@ public class HealthPopup : MonoBehaviour
 
     private void SpawnHearts()
     {
-        for (float y = 0; y < Mathf.Ceil(Mathf.Abs(PlayerRef.GetDeaths()) / Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); y++)
+        for (float y = 0; y < Mathf.Ceil(Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()) / Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); y++)
         {
-            for (int x = 1; x <= Mathf.Abs(PlayerRef.GetDeaths()) - (y * Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); ++x)
+            for (int x = 1; x <= Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()) - (y * Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); ++x)
             {
                 if (x > Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x))
                 {
                     continue;
                 }
                 GameObject SpawnHeart;
-                if (PlayerRef.GetDeaths() > 0)
+                if (PlayerRef.GetComponent<TPSLogic>().GetDeaths() > 0)
                     SpawnHeart = Instantiate(DeathHeart, transform.GetChild(0).position, transform.rotation);
                 else
                     SpawnHeart = Instantiate(NormalHeart, transform.GetChild(0).position, transform.rotation);
@@ -153,6 +155,8 @@ public class HealthPopup : MonoBehaviour
     {
         if (ColorRef.a != 0)
             return;
+        OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
+        PlayerRef.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
         Showing = true;
     }
 }

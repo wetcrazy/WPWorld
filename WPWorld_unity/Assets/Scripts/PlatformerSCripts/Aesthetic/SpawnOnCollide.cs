@@ -18,13 +18,13 @@ public class SpawnOnCollide : MonoBehaviour {
     private Material ChangedMaterial;
 
     [SerializeField]
-    private AudioClip CoinSFX;
+    private string CoinSFX;
 
     [SerializeField]
     private GameObject BounceCoin;
 
     [SerializeField]
-    private AudioClip ItemEnemySFX;
+    private string ItemEnemySFX;
 
     [SerializeField]
     private GameObject Item;
@@ -33,11 +33,13 @@ public class SpawnOnCollide : MonoBehaviour {
     private GameObject Enemy;
 
     private Renderer RenderRef;
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
-	}
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -65,8 +67,6 @@ public class SpawnOnCollide : MonoBehaviour {
                 }
                 else
                 {
-                    GameObject SoundSystemRef = GameObject.Find("Sound System");
-
                     RenderRef.material = ChangedMaterial;
 
                     if (GetComponent<SpawnOnCollide>().enabled)
@@ -74,18 +74,18 @@ public class SpawnOnCollide : MonoBehaviour {
                         switch (CurrSpawn)
                         {
                             case (SPAWNTYPE.COIN):
-                                ///if (CoinSFX != null && SoundSystemRef != null)
-                                //    SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(CoinSFX);
+                                if (CoinSFX != "")
+                                    SoundSystemRef.PlaySFX(CoinSFX);
                                 Instantiate(BounceCoin, transform.position, Quaternion.identity);
                                 break;
                             case (SPAWNTYPE.ITEM):
-                                //if (ItemEnemySFX != null && SoundSystemRef != null)
-                                 //   SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
+                                if (ItemEnemySFX != "")
+                                    SoundSystemRef.PlaySFX(ItemEnemySFX);
                                 Instantiate(Item, transform.position, transform.rotation);
                                 break;
                             case (SPAWNTYPE.ENEMY):
-                                //if (ItemEnemySFX != null && SoundSystemRef != null)
-                                  //  SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
+                                if (ItemEnemySFX != "")
+                                    SoundSystemRef.PlaySFX(ItemEnemySFX);
                                 Instantiate(Enemy, transform.position, transform.rotation);
                                 break;
                         }
