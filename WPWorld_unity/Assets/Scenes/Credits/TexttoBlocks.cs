@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System;
 
 public class TexttoBlocks : MonoBehaviour {
 
     public string helloworlds;
 
+    //Symbols
     public GameObject AA  ;
     public GameObject BB  ;
     public GameObject CC  ;
@@ -40,6 +43,7 @@ public class TexttoBlocks : MonoBehaviour {
     public GameObject YY  ;
     public GameObject ZZ  ;
 
+    //Alphabets
     public GameObject A;
     public GameObject B;
     public GameObject C;
@@ -67,7 +71,12 @@ public class TexttoBlocks : MonoBehaviour {
     public GameObject Y;
     public GameObject Z;
 
+    public GameObject nill;
+
     List<GameObject> alphabets = new List<GameObject>();
+    StreamReader a;
+    string line;
+    private IEnumerator coroutine;
 	// Use this for initialization
 	void Start () {
         alphabets.Add(AA);
@@ -131,20 +140,44 @@ public class TexttoBlocks : MonoBehaviour {
         alphabets.Add(Y);
         alphabets.Add(Z);
 
-        for(int i =0;i<helloworlds.Length;i++)
-        {
-            
-            helloworlds = helloworlds.ToUpper();
-            //Debug.Log(helloworlds[i].GetHashCode());
-           
-            Instantiate(alphabets[helloworlds[i].GetHashCode() - 32], this.gameObject.transform.position + (new Vector3(i,0,0) * 6), transform.rotation);
-            
-        }
+        coroutine = WaitAndPrint(5.0f);
+
+        a = new StreamReader("Assets/Resources/script.txt");
+        line = null;
+
+        StartCoroutine(coroutine);
+
+       
        // Debug.Log();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+
+
+    // every 2 seconds perform the print()
+    private IEnumerator WaitAndPrint(float waitTime)
+    {
+        while (true)
+        { 
+            while ((line = a.ReadLine()) != null)
+            {
+                line = line.ToUpper();
+                yield return new WaitForSeconds(waitTime);
+
+
+                for (int i = 0; i < line.Length; i++)
+                {
+                     if((line[i].GetHashCode()-32 >0 ) || (line[i].GetHashCode() - 32 < 59))
+                    Instantiate(alphabets[line[i].GetHashCode() - 32], this.gameObject.transform.position + (new Vector3(i, 0, 0) * 6), transform.rotation);
+                     else
+                         Instantiate(nill, this.gameObject.transform.position + (new Vector3(i, 0, 0) * 6), transform.rotation);
+                }
+
+
+            }
+        }
+    }
+    
+
+
+
 }
