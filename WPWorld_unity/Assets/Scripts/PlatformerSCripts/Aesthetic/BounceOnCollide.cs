@@ -58,8 +58,8 @@ public class BounceOnCollide : MonoBehaviour {
                         RigidRef.AddForce(new Vector3(0, 50, 0));
                         RigidRef.useGravity = true;
 
-                        if(BounceSFX != null && GameObject.Find("Sound System"))
-                            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(BounceSFX);
+                        //if(BounceSFX != null && GameObject.Find("Sound System"))
+                        //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(BounceSFX);
 
                         Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
                         VelocityRef.y = -VelocityRef.y * 0.5f;

@@ -135,8 +135,8 @@ public class TPSLogic : MonoBehaviour
         if (!IsGrounded || RestrictJump)
             return;
 
-        if (JumpSFX != null && GameObject.Find("Sound System") != null)
-            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+        //if (JumpSFX != null && GameObject.Find("Sound System") != null)
+        //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
         PushUp();
     }
 
@@ -190,8 +190,8 @@ public class TPSLogic : MonoBehaviour
     public void Death()
     {
         DeathCounter++;
-        if (DeathSFX != null && GameObject.Find("Sound System") != null)
-            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSFX);
+        //if (DeathSFX != null && GameObject.Find("Sound System") != null)
+          //  GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSFX);
         GetComponent<PlayerMovement>().Respawn();
     }
 

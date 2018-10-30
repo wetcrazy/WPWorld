@@ -42,10 +42,10 @@ public class RespawnPoint : MonoBehaviour {
             Interacted = true;
             other.GetComponent<PlayerMovement>().SetRespawn(this.transform.position);
 
-            if(RespawnSFX != null && GameObject.Find("Sound System") != null)
-            {
-                GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(RespawnSFX);
-            }
+            //if(RespawnSFX != null && GameObject.Find("Sound System") != null)
+            //{
+            //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(RespawnSFX);
+            //}
         }
     }
 }

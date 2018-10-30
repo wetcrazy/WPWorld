@@ -242,8 +242,8 @@ public class Enemy : MonoBehaviour {
 
                     CollidedObject.GetComponent<TPSLogic>().PushUp();
 
-                    if(GameObject.Find("Sound System") != null && DeathSound != null)
-                        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSound);
+                    //if(GameObject.Find("Sound System") != null && DeathSound != null)
+                      //  GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSound);
 
                     GameObject n_Score = Instantiate(ScorePopup, transform);
                     n_Score.transform.parent = null;

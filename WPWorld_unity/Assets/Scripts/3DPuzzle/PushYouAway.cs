@@ -6,12 +6,15 @@ public class PushYouAway : MonoBehaviour {
     Vector3 direction = new Vector3(0, 0, 90);
     float pushspeed = 2.0f;
 
-    [SerializeField]
-    private AudioClip what;
+    //[SerializeField]
+    //private AudioClip what;
+
+    SoundSystem ss;
     // Use this for initialization
     void Start () {
-		
-	}
+        ss = GameObject.Find("SoundSystem").GetComponent<SoundSystem>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,7 +25,7 @@ public class PushYouAway : MonoBehaviour {
     {
         if(collision.gameObject.name == "Player")
         {
-            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(what);
+           ss.PlaySFX("trolled");
             Debug.Log("GG");
             collision.transform.Translate(pushspeed,0,0);
 
