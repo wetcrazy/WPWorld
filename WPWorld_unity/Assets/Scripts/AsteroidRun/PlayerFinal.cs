@@ -17,11 +17,14 @@ public class PlayerFinal : MonoBehaviour {
     float DebuffDuration = 5;
     [SerializeField]
     float TurnSpeed = 0.5f;
+    [SerializeField]
+    AudioClip HealthPowerupHitSFX = null;
 
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
     Joystick JoysticControls;
     Vector3 PivotAxis;
+    SoundSystem soundSystem;
 
     public enum DEBUFF_EFFECT
     {
@@ -38,8 +41,10 @@ public class PlayerFinal : MonoBehaviour {
     // Use this for initialization
     void Start () {
         SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.1f, 0);
         JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+        soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.1f, 0);
     }
 	
 	// Update is called once per frame
@@ -238,6 +243,9 @@ public class PlayerFinal : MonoBehaviour {
         }
         else if (other.name == "HealthPowerup")
         {
+            //Play the sound effect
+            soundSystem.PlaySFX(HealthPowerupHitSFX);
+
             //Add health to the health bar
             CurrentHealth += other.gameObject.GetComponent<HealthPowerup>().HealthRegenAmount;
             //Set health powerup gameobject to false
