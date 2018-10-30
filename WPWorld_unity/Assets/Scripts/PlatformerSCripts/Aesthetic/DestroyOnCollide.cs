@@ -52,8 +52,8 @@ public class DestroyOnCollide : MonoBehaviour {
             {
                 RenderRef.enabled = false;
 
-                if (DestroySFX != null && GameObject.Find("Sound System") != null)
-                    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DestroySFX);
+                //if (DestroySFX != null && GameObject.Find("Sound System") != null)
+                //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DestroySFX);
 
                 for (int i = 0; i < AmountOfDebris; i++)
                 {

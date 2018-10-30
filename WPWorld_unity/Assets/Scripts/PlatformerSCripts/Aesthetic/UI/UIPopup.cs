@@ -28,10 +28,10 @@ public class UIPopup : MonoBehaviour {
         if (other.tag == "Player")
         {
             transform.GetChild(0).gameObject.SetActive(true);
-            if(EnterSFX != null && GameObject.Find("Sound System") != null)
-            {
-                GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(EnterSFX);
-            }
+            //if(EnterSFX != null && GameObject.Find("Sound System") != null)
+            //{
+            //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(EnterSFX);
+            //}
         }
     }
 

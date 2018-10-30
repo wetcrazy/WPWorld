@@ -3,43 +3,76 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundSystem : MonoBehaviour {
+    
+    [SerializeField]
+    private List<AudioSource> SFX = new List<AudioSource>();
+    [SerializeField]
+    int MaximumSFXPlayingAtOnce = 10;
 
-    [SerializeField]
-    private GameObject BGM;
-    [SerializeField]
-    private List<GameObject> SFX = new List<GameObject>();
-
-    [SerializeField]
-    private AudioClip TestClip;
+    GameObject BackgroundMusic;
+    AudioSource BackgroundMusicAudioSource = null;
+    AudioClip[] AudioSounds;
+    GameObject[] AudioSources;
 
 	// Use this for initialization
 	void Start () {
+        AudioSounds = Resources.LoadAll<AudioClip>("Audio");
+        AudioSources = new GameObject[MaximumSFXPlayingAtOnce];
 
-    }
-	
-	// Update is called once per frame
-	void Update () {
-
-    }
-
-    public void PlayBGM(AudioClip n_BGM)
-    {
-        BGM.GetComponent<AudioSource>().Stop();
-        BGM.GetComponent<AudioSource>().clip = n_BGM;
-        BGM.GetComponent<AudioSource>().Play();
-    }
-
-    public void PlaySFX(AudioClip n_SFX)
-    {
-        foreach(GameObject SFXRef in SFX)
+        for (int i = 0; i < AudioSources.Length; ++i)
         {
-            if (SFXRef.GetComponent<AudioSource>().isPlaying)
-                continue;
-            SFXRef.GetComponent<AudioSource>().clip = n_SFX;
-            SFXRef.GetComponent<AudioSource>().Play();
-            return;
+            AudioSources[i] = new GameObject();
+            AudioSources[i].AddComponent<AudioSource>();
         }
 
-        Debug.Log("No Audio Source Avaliable To Play!");
+        BackgroundMusic = new GameObject();
+        BackgroundMusic.AddComponent<AudioSource>();
+        BackgroundMusicAudioSource = BackgroundMusic.GetComponent<AudioSource>();
+        BackgroundMusicAudioSource.loop = true;
+    }
+    
+    public void PlayBGM(string BGMName)
+    {
+        foreach (AudioClip audioClip in AudioSounds)
+        {
+            if (audioClip.name != BGMName)
+            {
+                continue;
+            }
+
+            if(BackgroundMusicAudioSource.isPlaying)
+            {
+                BackgroundMusicAudioSource.Stop();
+            }
+
+            BackgroundMusicAudioSource.clip = audioClip;
+            BackgroundMusicAudioSource.Play();
+            break;
+        }
+    }
+
+    public void PlaySFX(string SFXName)
+    {
+        foreach (AudioClip audioClip in AudioSounds)
+        {
+            if(audioClip.name != SFXName)
+            {
+                continue;
+            }
+
+            foreach (GameObject audioSourceGameObj in AudioSources)
+            {
+                AudioSource audioSource = audioSourceGameObj.GetComponent<AudioSource>();
+
+                if(audioSource.isPlaying)
+                {
+                    continue;
+                }
+
+                audioSource.clip = audioClip;
+                audioSource.Play();
+                return;
+            }
+        }
     }
 }

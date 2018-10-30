@@ -59,7 +59,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f784e60c688e6264fb09bf8c7e52821b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AsteroidSpeed: 0.2
+  AsteroidHitSFX: {fileID: 8300000, guid: 82881b172f60ac54d87526dd510e3763, type: 3}
 --- !u!135 &135422427473754348
 SphereCollider:
   m_ObjectHideFlags: 1

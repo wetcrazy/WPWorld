@@ -5,12 +5,15 @@ using UnityEngine;
 public class DestroyWhenCollide : MonoBehaviour {
 
 
-    [SerializeField]
-    private AudioClip CollectSFX;
+    //[SerializeField]
+    //private AudioClip CollectSFX;
+
+    SoundSystem ss;
     // Use this for initialization
     void Start () {
-		
-	}
+        ss = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -23,7 +26,7 @@ public class DestroyWhenCollide : MonoBehaviour {
         { 
 
               //  if (CollectSFX != null && GameObject.Find("Sound System") != null)
-            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(CollectSFX);
+           ss.PlaySFX("you're_already_dead");
             Destroy(gameObject);
         }
     }

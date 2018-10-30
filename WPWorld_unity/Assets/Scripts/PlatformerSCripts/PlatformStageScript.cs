@@ -21,10 +21,10 @@ public class PlatformStageScript : MonoBehaviour {
         if (SpawnOnPlayer)
             transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
 
-        if (BGM != null && GameObject.Find("Sound System") != null)
-        {
-            GameObject.Find("Sound System").GetComponent<SoundSystem>().PlayBGM(BGM);
-        }
+        //if (BGM != null && GameObject.Find("Sound System") != null)
+        //{
+        //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlayBGM(BGM);
+        //}
     }
 
     private void Update()
