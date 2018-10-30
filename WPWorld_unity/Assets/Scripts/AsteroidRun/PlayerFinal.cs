@@ -17,8 +17,6 @@ public class PlayerFinal : MonoBehaviour {
     float DebuffDuration = 5;
     [SerializeField]
     float TurnSpeed = 0.5f;
-    [SerializeField]
-    AudioClip HealthPowerupHitSFX = null;
 
     float DebuffTimer = 0;
     SceneControlFinal SceneControllerScript = null;
@@ -244,7 +242,7 @@ public class PlayerFinal : MonoBehaviour {
         else if (other.name == "HealthPowerup")
         {
             //Play the sound effect
-            soundSystem.PlaySFX(HealthPowerupHitSFX);
+            soundSystem.PlaySFX("HealthPickup");
 
             //Add health to the health bar
             CurrentHealth += other.gameObject.GetComponent<HealthPowerup>().HealthRegenAmount;

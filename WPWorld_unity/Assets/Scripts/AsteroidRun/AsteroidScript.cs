@@ -24,12 +24,12 @@ public class AsteroidScript : MonoBehaviour {
             Destroy(gameObject);
 
             //Play the sound effect
-            soundSystem.PlaySFX(AsteroidHitSFX);
+            soundSystem.PlaySFX("Explosion");
         }
         else if (other.tag == "Player")
         {
             //Play the sound effect
-            soundSystem.PlaySFX(AsteroidHitSFX);
+            soundSystem.PlaySFX("Explosion");
         }
     }
 }
