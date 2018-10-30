@@ -27,7 +27,7 @@ public class TrapCollider : MonoBehaviour
         Renderout = gameObject.GetComponent<Renderer>();
         Renderout.enabled = false;
         TrapPos = transform.position;
-        ss = GameObject.Find("SoundSystem").GetComponent<SoundSystem>();
+        ss = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
     }
 
     private void OnCollisionEnter(Collision collision)
