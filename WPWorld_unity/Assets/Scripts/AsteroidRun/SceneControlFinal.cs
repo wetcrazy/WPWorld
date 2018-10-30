@@ -30,7 +30,7 @@ public class SceneControlFinal : MonoBehaviour
 
     //Initial values
     string StartingTime;
-    Vector3 PlayerStartingPos;
+    Vector3 PlayerStartingUnitVec;
     Vector3 PlayerStartingForward;
 
     int TimerMinute = 0, TimerSecond = 0;
@@ -48,7 +48,7 @@ public class SceneControlFinal : MonoBehaviour
         TimerMinute = int.Parse(StartingTime.Substring(0, 2));
         TimerSecond = int.Parse(StartingTime.Substring(3));
 
-        PlayerStartingPos = Playerobject.transform.position;
+        PlayerStartingUnitVec = Playerobject.transform.position - PlanetObject.transform.position;
         PlayerStartingForward = Playerobject.transform.forward;
 
         HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
@@ -261,7 +261,7 @@ public class SceneControlFinal : MonoBehaviour
         HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
         TimerIsCountingDown = true;
 
-        Playerobject.transform.position = PlayerStartingPos;
+        Playerobject.transform.position = PlayerStartingUnitVec;
         Playerobject.transform.forward = PlayerStartingForward;
         Playerobject.GetComponent<PlayerFinal>().ResetHealth();
     }

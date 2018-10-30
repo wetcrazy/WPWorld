@@ -30,8 +30,8 @@ public class CollectOnCollide : MonoBehaviour {
                 RenderRef.enabled = false;
                 other.GetComponent<TPSLogic>().SetPoints(other.GetComponent<TPSLogic>().GetPoints() + PointsToAdd);
 
-                if(CollectSFX != null && GameObject.Find("Sound System") != null)
-                    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(CollectSFX);
+                //if(CollectSFX != null && GameObject.Find("Sound System") != null)
+                //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(CollectSFX);
             }
         }
     }
