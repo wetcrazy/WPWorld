@@ -52,6 +52,12 @@ public class DSPlayer : MonoBehaviour
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
                     _hitedObjScript.m_isTriggered = true;                   
+
+                    if(_hitedObjScript.m_BlockType == Dungeonsweeper2.BlockType.NUMBERED)
+                    {
+                        var ManagerScript = Manager.GetComponent<Dungeonsweeper2>();
+                        ManagerScript.currTimer = ManagerScript.TimerBar.maxValue;
+                    }
                 }               
             }
         }
