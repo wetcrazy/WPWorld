@@ -63,7 +63,7 @@ public class PuzzleSceneManage : MonoBehaviour {
     {
         Players.transform.position = PlayerStartpos;
         Players.transform.forward = Vector3.forward;
-        GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(Youarealreadydead);
+        //GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(Youarealreadydead);
         for (int i = 0; i < Traps.transform.childCount; ++i)
         {
             TrapCollider theTrap = Traps.transform.GetChild(i).gameObject.GetComponent<TrapCollider>();
