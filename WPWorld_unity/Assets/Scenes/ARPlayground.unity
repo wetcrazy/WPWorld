@@ -908,19 +908,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea60f1e4e5d3b6c47b0759aeb40a555a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: {fileID: 1746702350}
   SFX:
-  - {fileID: 1506735364}
-  - {fileID: 798643007}
-  - {fileID: 2127682679}
-  - {fileID: 1108245950}
-  - {fileID: 812173641}
-  - {fileID: 130734600}
-  - {fileID: 372595394}
-  - {fileID: 1076250204}
-  - {fileID: 337933886}
-  - {fileID: 1518959856}
-  TestClip: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MaximumSFXPlayingAtOnce: 10
+  AudioSounds: []
 --- !u!1 &424056732
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +932,7 @@ GameObject:
   - component: {fileID: 424056736}
   - component: {fileID: 424056735}
   - component: {fileID: 424056734}
+  - component: {fileID: 424056737}
   m_Layer: 5
   m_Name: ToUniverseButton
   m_TagString: Untagged
@@ -1053,6 +1054,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 424056732}
+--- !u!114 &424056737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424056732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &460268551
 GameObject:
   m_ObjectHideFlags: 0
@@ -2013,6 +2044,7 @@ GameObject:
   - component: {fileID: 816372076}
   - component: {fileID: 816372075}
   - component: {fileID: 816372074}
+  - component: {fileID: 816372077}
   m_Layer: 5
   m_Name: ToSelectionButton
   m_TagString: Untagged
@@ -2134,6 +2166,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 816372072}
+--- !u!114 &816372077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 816372072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &840743614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,6 +2207,7 @@ GameObject:
   - component: {fileID: 840743617}
   - component: {fileID: 840743616}
   - component: {fileID: 840743615}
+  - component: {fileID: 840743619}
   m_Layer: 5
   m_Name: Restart Button
   m_TagString: Untagged
@@ -2191,7 +2254,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1443994253}
         m_MethodName: RestartLevel
         m_Mode: 1
         m_Arguments:
@@ -2255,6 +2318,36 @@ RectTransform:
   m_AnchoredPosition: {x: -44.6, y: -5.49995}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &840743619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 840743614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &884167315
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,6 +2503,7 @@ GameObject:
   - component: {fileID: 957634360}
   - component: {fileID: 957634359}
   - component: {fileID: 957634358}
+  - component: {fileID: 957634362}
   m_Layer: 5
   m_Name: WorldSelectButton
   m_TagString: Untagged
@@ -2531,6 +2625,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &957634362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 957634357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &975768377
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,6 +2734,7 @@ GameObject:
   - component: {fileID: 986299933}
   - component: {fileID: 986299932}
   - component: {fileID: 986299931}
+  - component: {fileID: 986299935}
   m_Layer: 5
   m_Name: ExitToSelection Button
   m_TagString: Untagged
@@ -2742,6 +2867,36 @@ RectTransform:
   m_AnchoredPosition: {x: -30, y: -5.5}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &986299935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 986299930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &998485357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2753,6 +2908,7 @@ GameObject:
   - component: {fileID: 998485361}
   - component: {fileID: 998485360}
   - component: {fileID: 998485359}
+  - component: {fileID: 998485362}
   m_Layer: 5
   m_Name: ResetAnchor
   m_TagString: Untagged
@@ -2863,6 +3019,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 998485357}
+--- !u!114 &998485362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 998485357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1011284144
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,7 +3794,7 @@ MonoBehaviour:
   MainCameraRef: {fileID: 884167315}
   Arr_LevelsOBJ:
   - {fileID: 1099948451218754, guid: 80467e09d08985e439991754fa19b32f, type: 2}
-  - {fileID: 1572759448610620, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
+  - {fileID: 0}
   - {fileID: 1702827417383946, guid: 1995217a28c0aff48a9a74c933073cc9, type: 2}
   - {fileID: 1817083448585300, guid: 21951c6a1be626f4c87cee389334f992, type: 2}
   AnchorRef: {fileID: 1880939052}
@@ -4061,6 +4247,7 @@ GameObject:
   - component: {fileID: 1543289110}
   - component: {fileID: 1543289109}
   - component: {fileID: 1543289108}
+  - component: {fileID: 1543289111}
   m_Layer: 5
   m_Name: ToGameButton
   m_TagString: Untagged
@@ -4183,6 +4370,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1543289106}
+--- !u!114 &1543289111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1543289106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1637264497
 GameObject:
   m_ObjectHideFlags: 0
@@ -4600,6 +4817,7 @@ GameObject:
   - component: {fileID: 1683223823}
   - component: {fileID: 1683223822}
   - component: {fileID: 1683223821}
+  - component: {fileID: 1683223824}
   m_Layer: 5
   m_Name: ToSelectionStageButton
   m_TagString: Untagged
@@ -4721,6 +4939,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1683223819}
+--- !u!114 &1683223824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1683223819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1443994253}
+          m_MethodName: PlayButtonSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1746702350
 GameObject:
   m_ObjectHideFlags: 0
