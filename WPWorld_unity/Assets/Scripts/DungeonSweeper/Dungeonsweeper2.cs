@@ -105,20 +105,20 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[0], 0, 10, 6);
+                    GridSetup(List_GridSizesPrefab[0], 0, 5, 6);
                     AnchorMovement(0);
                 }
                 // 2nd anchor
                 if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 1, 15, 6);
+                    GridSetup(List_GridSizesPrefab[1], 1, 10, 6);
                     AnchorMovement(1);
                 }
                 if (!List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[1].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[2], 2, 20, 6);
+                    GridSetup(List_GridSizesPrefab[2], 2, 15, 6);
                     AnchorMovement(2);
                 }
                 break;
@@ -127,26 +127,26 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[0], 0, 10, 6);
+                    GridSetup(List_GridSizesPrefab[0], 0, 5, 6);
                     AnchorMovement(0);
                 }
                 // 2nd anchor
                 if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 1, 15, 6);
+                    GridSetup(List_GridSizesPrefab[1], 1, 10, 6);
                     AnchorMovement(1);
                 }
                 if (!List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[1].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[2], 2, 20, 6);
+                    GridSetup(List_GridSizesPrefab[2], 2, 15, 6);
                     AnchorMovement(2);
                 }
                 if (!List_Anchors[3].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[2].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[3].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[2], 3, 25, 6);
+                    GridSetup(List_GridSizesPrefab[2], 3, 20, 6);
                     AnchorMovement(3);
                 }
                 break;
@@ -219,7 +219,7 @@ public class Dungeonsweeper2 : MonoBehaviour
         {
             var _tempText = Lose_text.GetComponent<Text>();
             _tempText.enabled = true;
-            Reset_Level();
+            //Reset_Level();
         }
     }
 
