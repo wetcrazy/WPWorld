@@ -259,15 +259,6 @@ public class Enemy : MonoBehaviour {
                     CollidedObject.GetComponent<TPSLogic>().Death();
                 }
             }
-
-            if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2
-                >= transform.position.y + transform.lossyScale.y / 2)
-            {
-                Vector3 Knockback_Y = RigidRef.velocity;
-                Knockback_Y *= -2;
-
-                RigidRef.AddForce(Knockback_Y, ForceMode.VelocityChange);
-            }
         }
     }
 }

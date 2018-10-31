@@ -40,7 +40,7 @@ public class TPSLogic : MonoBehaviour
 
         OrgSpeed = MovementRef.GetMovementSpeed();
 
-        Physics.gravity = new Vector3(0, -5, 0);
+        Physics.gravity = new Vector3(0, -5 * transform.parent.parent.lossyScale.y, 0);
     }
 
     // Update is called once per frame
@@ -77,7 +77,7 @@ public class TPSLogic : MonoBehaviour
             {
                 if (!hit.transform.GetComponent<Renderer>() || !hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    if(!hit.transform.name.Contains("Invisible") && !hit.transform.name.Contains("Coin"))
+                    if(!hit.transform.name.Contains("Invisible"))
                         IsGrounded = false;
                 }
             }
@@ -119,7 +119,8 @@ public class TPSLogic : MonoBehaviour
                         {
                             if ((hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible) &&
                                 (hit2.transform.GetComponent<Renderer>() && hit2.transform.GetComponent<Renderer>().isVisible) &&
-                                (hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible))
+                                (hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible) &&
+                                (hit.transform.name == hit2.transform.name && hit.transform.name == hit3.transform.name))
                                 IsGrounded = true;
                         }
                     }
@@ -131,10 +132,8 @@ public class TPSLogic : MonoBehaviour
                 }
                 else
                 {
-                    if(hit.transform.name.Contains("Invisible") || hit.transform.name.Contains("Coin"))
-                    {
+                    if(hit.transform.name.Contains("Invisible"))
                         IsGrounded = true;
-                    }
                 }
             }
         }
