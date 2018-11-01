@@ -73,6 +73,8 @@ public class TexttoBlocks : MonoBehaviour {
 
     public GameObject nill;
 
+    public GameObject containwer;
+
     List<GameObject> alphabets = new List<GameObject>();
     StreamReader a;
     string line;
