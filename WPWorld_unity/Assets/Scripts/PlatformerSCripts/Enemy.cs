@@ -47,14 +47,16 @@ public class Enemy : MonoBehaviour {
     private int Score;
 
     [SerializeField]
-    private AudioClip DeathSound;
+    private string DeathSound;
 
     private Rigidbody RigidRef;
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
         OrgSize = transform.lossyScale;
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 	}
 	
 	// Update is called once per frame
@@ -242,8 +244,8 @@ public class Enemy : MonoBehaviour {
 
                     CollidedObject.GetComponent<TPSLogic>().PushUp();
 
-                    //if(GameObject.Find("Sound System") != null && DeathSound != null)
-                      //  GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSound);
+                    if (DeathSound != "")
+                        SoundSystemRef.PlaySFX(DeathSound);
 
                     GameObject n_Score = Instantiate(ScorePopup, transform);
                     n_Score.transform.parent = null;
@@ -256,15 +258,6 @@ public class Enemy : MonoBehaviour {
                 {
                     CollidedObject.GetComponent<TPSLogic>().Death();
                 }
-            }
-
-            if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2
-                >= transform.position.y + transform.lossyScale.y / 2)
-            {
-                Vector3 Knockback_Y = RigidRef.velocity;
-                Knockback_Y *= -2;
-
-                RigidRef.AddForce(Knockback_Y, ForceMode.VelocityChange);
             }
         }
     }

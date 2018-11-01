@@ -175,7 +175,7 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!1001 &282393699
+--- !u!1001 &103715678
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -217,6 +217,16 @@ Prefab:
     - target: {fileID: 1043360052426398, guid: 897d3bdfeb02752458967254cac08bf2, type: 2}
       propertyPath: m_Name
       value: World04_Stage01
+      objectReference: {fileID: 0}
+    - target: {fileID: 224998221039429494, guid: 897d3bdfeb02752458967254cac08bf2,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224998221039429494, guid: 897d3bdfeb02752458967254cac08bf2,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 897d3bdfeb02752458967254cac08bf2, type: 2}

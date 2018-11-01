@@ -49,19 +49,23 @@ public class Dungeonsweeper2 : MonoBehaviour
     [Tooltip("Current Level")]
     public LevelType Curr_Level;
 
-    public GameObject PlatformManager;
-
-    // public object _objScript { get; private set; }
-
+    // Text Stuff
     public Text RC_Count, RC_Point;
     public GameObject Lose_text;
     public GameObject Win_text;
 
-    //private 
+    // Timer Stuff
+    public Slider TimerBar;  
+    public float currTimer;
+    private const float TIMER = 60;
+
+    // Conditions
+    public bool is_lose = false;
 
     private void Awake()
     {
-        //GridSetup(List_GridSizesPrefab[1], 0, 10, 6);
+        currTimer = TIMER;
+        TimerBar.maxValue = TIMER;
     }
 
     private void Update()
@@ -101,20 +105,20 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[0], 0, 10, 6);
+                    GridSetup(List_GridSizesPrefab[0], 0, 5, 6);
                     AnchorMovement(0);
                 }
                 // 2nd anchor
                 if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 1, 15, 6);
+                    GridSetup(List_GridSizesPrefab[1], 1, 10, 6);
                     AnchorMovement(1);
                 }
                 if (!List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[1].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[2], 2, 20, 6);
+                    GridSetup(List_GridSizesPrefab[2], 2, 15, 6);
                     AnchorMovement(2);
                 }
                 break;
@@ -123,26 +127,26 @@ public class Dungeonsweeper2 : MonoBehaviour
                 if (!List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied)
                 {
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[0], 0, 10, 6);
+                    GridSetup(List_GridSizesPrefab[0], 0, 5, 6);
                     AnchorMovement(0);
                 }
                 // 2nd anchor
                 if (!List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[0].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[1], 1, 15, 6);
+                    GridSetup(List_GridSizesPrefab[1], 1, 10, 6);
                     AnchorMovement(1);
                 }
                 if (!List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[1].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[2], 2, 20, 6);
+                    GridSetup(List_GridSizesPrefab[2], 2, 15, 6);
                     AnchorMovement(2);
                 }
                 if (!List_Anchors[3].GetComponent<AnchorPoint>().m_isGridApplied && List_Anchors[2].GetComponent<AnchorPoint>().m_isdone) // if the previous one is done then build this up
                 {
                     List_Anchors[3].GetComponent<AnchorPoint>().m_isGridApplied = true;
-                    GridSetup(List_GridSizesPrefab[2], 3, 25, 6);
+                    GridSetup(List_GridSizesPrefab[2], 3, 20, 6);
                     AnchorMovement(3);
                 }
                 break;
@@ -182,7 +186,7 @@ public class Dungeonsweeper2 : MonoBehaviour
             {
                 if (_blockScript.m_BlockType == BlockType.NUMBERED)
                 {
-                    _count += 1;
+                    _count += 1;                
                 }             
             }
             else
@@ -190,9 +194,8 @@ public class Dungeonsweeper2 : MonoBehaviour
                 // BOMB LOSE CONDITION
                 if (_blockScript.m_BlockType == BlockType.BOMB)
                 {
-                    var _tempText = Lose_text.GetComponent<Text>();
-                    _tempText.enabled = true;
-                }
+                    is_lose = true;
+                }               
             }
         }
         RC_Count.text = _count.ToString();
@@ -201,6 +204,22 @@ public class Dungeonsweeper2 : MonoBehaviour
         if(_count == 0 && _anchor.GetComponent<AnchorPoint>().m_isTypeApplied)
         {
             _anchor.GetComponent<AnchorPoint>().m_isdone = true;
+        }
+
+        // Timer UI
+        currTimer -= 0.1f;
+        TimerBar.value = currTimer;
+        if(currTimer <= 0)
+        {
+            is_lose = true; 
+        }
+
+        // Lose condition
+        if (is_lose)
+        {
+            var _tempText = Lose_text.GetComponent<Text>();
+            _tempText.enabled = true;
+            //Reset_Level();
         }
     }
 
@@ -554,5 +573,9 @@ public class Dungeonsweeper2 : MonoBehaviour
 
         var _tempText = Lose_text.GetComponent<Text>();
         _tempText.enabled = false;
+
+        // Ui Timer slider
+        is_lose = false;
+        currTimer = TIMER;
     }
 }

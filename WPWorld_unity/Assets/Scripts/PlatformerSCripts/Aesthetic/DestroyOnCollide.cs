@@ -11,14 +11,17 @@ public class DestroyOnCollide : MonoBehaviour {
     private GameObject Debris;
 
     [SerializeField]
-    private AudioClip DestroySFX;
+    private string DestroySFX;
 
     private Renderer RenderRef;
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
-	}
+
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -36,40 +39,33 @@ public class DestroyOnCollide : MonoBehaviour {
     {
         GameObject CollidedObject = collision.gameObject;
 
-        if(CollidedObject.tag == "Player")
+        if (CollidedObject.tag == "Player")
         {
-            Debug.Log(CollidedObject.GetComponent<Rigidbody>().velocity);
-        }
-
-        if (CollidedObject.tag == "Player" // If Player
-            && RenderRef.isVisible // Check if the block is visible
-            && !CollidedObject.GetComponent<TPSLogic>().GetGrounded() // Checks if the player is grounded
-            && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0) // Checks if the velocity of the player isn't falling
-        {
-            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2 <= transform.position.y - transform.lossyScale.y / 2
-                && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x * 0.5f
-                && Mathf.Abs(CollidedObject.transform.position.z - transform.position.z) < transform.lossyScale.z * 0.5f)
+            if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded() // Grounded Check
+                && CollidedObject.transform.localPosition.y + CollidedObject.transform.localScale.y * 0.5f <= transform.localPosition.y - transform.localScale.y * 0.5f // Check if the bottom of the gameobject is colliding with the top of the player
+                && Mathf.Abs(CollidedObject.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.5f // Check if the player is within a certain x range to trigger
+                && Mathf.Abs(CollidedObject.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.5f // Check if the player is within a certain z range to trigger
+                && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0 // Check if the player is jumping and not falling
+                )
             {
                 RenderRef.enabled = false;
 
-                //if (DestroySFX != null && GameObject.Find("Sound System") != null)
-                //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DestroySFX);
+                if (DestroySFX != "")
+                    SoundSystemRef.PlaySFX(DestroySFX);
 
                 for (int i = 0; i < AmountOfDebris; i++)
                 {
                     GameObject n_Debris = Instantiate(Debris, this.transform);
                     Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
-                    RigidRef.AddForce(new Vector3(Random.Range(-50, 50),
-                        Random.Range(25, 50),
-                        Random.Range(-50, 50)));
+                    RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
+                        Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
+                        Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
                 }
 
-                if(CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
-                {
-                    Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                if (VelocityRef.y > 0)
                     VelocityRef.y = -VelocityRef.y * 0.5f;
-                    CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
-                }
+                CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
             }
         }
     }

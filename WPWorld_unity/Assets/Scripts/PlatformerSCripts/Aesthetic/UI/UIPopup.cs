@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class UIPopup : MonoBehaviour {
 
     [SerializeField]
-    private AudioClip EnterSFX;
+    private string EnterSFX;
+
+    private SoundSystem SoundSystemRef;
 
     private void Awake()
     {
@@ -15,8 +17,8 @@ public class UIPopup : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-	}
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,10 +30,8 @@ public class UIPopup : MonoBehaviour {
         if (other.tag == "Player")
         {
             transform.GetChild(0).gameObject.SetActive(true);
-            //if(EnterSFX != null && GameObject.Find("Sound System") != null)
-            //{
-            //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(EnterSFX);
-            //}
+            if (EnterSFX != "")
+                SoundSystemRef.PlaySFX(EnterSFX);
         }
     }
 

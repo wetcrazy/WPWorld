@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1441316469815204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6, y: 0.1, z: -2.88}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   TimeToDecay: 2
   ScorePopup: {fileID: 1701056272419974, guid: 1b74302078d463a45afd120f9163d72b, type: 2}
   Score: 200
-  DeathSound: {fileID: 8300000, guid: 0dcf0c0485d50b84d80047bf031d5849, type: 3}
+  DeathSound: EnemyDeath
 --- !u!114 &114171954345069920
 MonoBehaviour:
   m_ObjectHideFlags: 1

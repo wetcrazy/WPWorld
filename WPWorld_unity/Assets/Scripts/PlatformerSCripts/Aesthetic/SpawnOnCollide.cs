@@ -18,13 +18,13 @@ public class SpawnOnCollide : MonoBehaviour {
     private Material ChangedMaterial;
 
     [SerializeField]
-    private AudioClip CoinSFX;
+    private string CoinSFX;
 
     [SerializeField]
     private GameObject BounceCoin;
 
     [SerializeField]
-    private AudioClip ItemEnemySFX;
+    private string ItemEnemySFX;
 
     [SerializeField]
     private GameObject Item;
@@ -33,11 +33,13 @@ public class SpawnOnCollide : MonoBehaviour {
     private GameObject Enemy;
 
     private Renderer RenderRef;
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
-	}
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -48,56 +50,43 @@ public class SpawnOnCollide : MonoBehaviour {
     {
         GameObject CollidedObject = collision.gameObject;
 
-        if (CollidedObject.tag == "Player" && !CollidedObject.GetComponent<TPSLogic>().GetGrounded())
+        if (CollidedObject.tag == "Player")
         {
-            if (CollidedObject.transform.position.y + CollidedObject.transform.lossyScale.y / 2 <= transform.position.y - transform.lossyScale.y / 2
-                && Mathf.Abs(CollidedObject.transform.position.x - transform.position.x) < transform.lossyScale.x / 2
-                && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
+            if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded() // Grounded Check
+                && CollidedObject.transform.localPosition.y + CollidedObject.transform.localScale.y * 0.5f <= transform.localPosition.y - transform.localScale.y * 0.5f // Check if the bottom of the gameobject is colliding with the top of the player
+                && Mathf.Abs(CollidedObject.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.5f // Check if the player is within a certain x range to trigger
+                && Mathf.Abs(CollidedObject.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.5f // Check if the player is within a certain z range to trigger
+                && CollidedObject.GetComponent<Rigidbody>().velocity.y > 0 // Check if the player is jumping and not falling
+                )
             {
-                if(RenderRef.material.name.Contains(ChangedMaterial.name))
+                if (!RenderRef.material.name.Contains(ChangedMaterial.name))
                 {
-                    if(CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
-                    {
-                        Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
-                        VelocityRef.y = -VelocityRef.y * 0.5f;
-                        CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
-                    }
-                }
-                else
-                {
-                    GameObject SoundSystemRef = GameObject.Find("Sound System");
-
                     RenderRef.material = ChangedMaterial;
 
-                    if (GetComponent<SpawnOnCollide>().enabled)
+                    switch (CurrSpawn)
                     {
-                        switch (CurrSpawn)
-                        {
-                            case (SPAWNTYPE.COIN):
-                                ///if (CoinSFX != null && SoundSystemRef != null)
-                                //    SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(CoinSFX);
-                                Instantiate(BounceCoin, transform.position, Quaternion.identity);
-                                break;
-                            case (SPAWNTYPE.ITEM):
-                                //if (ItemEnemySFX != null && SoundSystemRef != null)
-                                 //   SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
-                                Instantiate(Item, transform.position, transform.rotation);
-                                break;
-                            case (SPAWNTYPE.ENEMY):
-                                //if (ItemEnemySFX != null && SoundSystemRef != null)
-                                  //  SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(ItemEnemySFX);
-                                Instantiate(Enemy, transform.position, transform.rotation);
-                                break;
-                        }
-                    }
-
-                    if (CollidedObject.GetComponent<Rigidbody>().velocity.y > 0)
-                    {
-                        Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
-                        VelocityRef.y = -VelocityRef.y * 0.5f;
-                        CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
+                        case (SPAWNTYPE.COIN):
+                            if (CoinSFX != "")
+                                SoundSystemRef.PlaySFX(CoinSFX);
+                            Instantiate(BounceCoin, transform.position, Quaternion.identity);
+                            break;
+                        case (SPAWNTYPE.ITEM):
+                            if (ItemEnemySFX != "")
+                                SoundSystemRef.PlaySFX(ItemEnemySFX);
+                            Instantiate(Item, transform.position, transform.rotation);
+                            break;
+                        case (SPAWNTYPE.ENEMY):
+                            if (ItemEnemySFX != "")
+                                SoundSystemRef.PlaySFX(ItemEnemySFX);
+                            Instantiate(Enemy, transform.position, transform.rotation);
+                            break;
                     }
                 }
+
+                Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
+                if (VelocityRef.y > 0)
+                    VelocityRef.y = -VelocityRef.y * 0.5f;
+                CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
             }
         }
     }

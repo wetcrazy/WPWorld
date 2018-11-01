@@ -38,7 +38,6 @@ public class ArcoreDeployer : MonoBehaviour
     private Vector3 FirstTouchWorldPoint = new Vector3();
     
     // UI Objects
-    //[SerializeField]
     [SerializeField]
     GameObject UniverseObj;
     [SerializeField]
@@ -77,6 +76,8 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     int World05NumStages_AsteroidRun = 1;
 
+    SoundSystem soundSystem = null;
+
     private void Start()
     {
         SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
@@ -84,6 +85,7 @@ public class ArcoreDeployer : MonoBehaviour
         SelectionScreen_StageObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Stage");
         GameMoveAnchorObjects = GameObject.FindGameObjectsWithTag("GameMoveAnchorScreen");
         GameScreenObjects = GameObject.FindGameObjectsWithTag("GameScreen");
+        soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
         ExitSelectionScreen_Planet();
         ExitSelectionScreen_Stage();
@@ -664,5 +666,16 @@ public class ArcoreDeployer : MonoBehaviour
         {
             Vector3.Lerp(_GroundObject.transform.position, FirstTouchWorldPoint, 0.1f);
         }
+    }
+
+    //UI BUTTON SOUNDS
+    public void PlayButtonSound()
+    {
+        soundSystem.PlaySFX("UIButton");
+    }
+
+    public void PlayDPadSound()
+    {
+        soundSystem.PlaySFX("");
     }
 }

@@ -12,10 +12,10 @@ public class TPSLogic : MonoBehaviour
     private bool RestrictJump = false;
     private bool Colliding = false;
     [SerializeField]
-    private AudioClip JumpSFX;
+    private string JumpSFX;
 
     [SerializeField]
-    private AudioClip DeathSFX;
+    private string DeathSFX;
 
     [SerializeField]
     private int Points = 0;
@@ -25,6 +25,7 @@ public class TPSLogic : MonoBehaviour
 
     private Rigidbody RigidRef;
     private PlayerMovement MovementRef;
+    private SoundSystem SoundSystemRef;
 
     [SerializeField]
     private float AirborneMovementSpeed;
@@ -35,10 +36,11 @@ public class TPSLogic : MonoBehaviour
     {
         RigidRef = GetComponent<Rigidbody>();
         MovementRef = GetComponent<PlayerMovement>();
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
         OrgSpeed = MovementRef.GetMovementSpeed();
 
-        Physics.gravity = new Vector3(0, -5, 0);
+        Physics.gravity = new Vector3(0, -5 * transform.parent.parent.lossyScale.y, 0);
     }
 
     // Update is called once per frame
@@ -75,7 +77,7 @@ public class TPSLogic : MonoBehaviour
             {
                 if (!hit.transform.GetComponent<Renderer>() || !hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    if(!hit.transform.name.Contains("Invisible") && !hit.transform.name.Contains("Coin"))
+                    if(!hit.transform.name.Contains("Invisible"))
                         IsGrounded = false;
                 }
             }
@@ -117,7 +119,8 @@ public class TPSLogic : MonoBehaviour
                         {
                             if ((hit.transform.GetComponent<Renderer>() && hit.transform.GetComponent<Renderer>().isVisible) &&
                                 (hit2.transform.GetComponent<Renderer>() && hit2.transform.GetComponent<Renderer>().isVisible) &&
-                                (hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible))
+                                (hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible) &&
+                                (hit.transform.name == hit2.transform.name && hit.transform.name == hit3.transform.name))
                                 IsGrounded = true;
                         }
                     }
@@ -129,10 +132,8 @@ public class TPSLogic : MonoBehaviour
                 }
                 else
                 {
-                    if(hit.transform.name.Contains("Invisible") || hit.transform.name.Contains("Coin"))
-                    {
+                    if(hit.transform.name.Contains("Invisible"))
                         IsGrounded = true;
-                    }
                 }
             }
         }
@@ -143,8 +144,8 @@ public class TPSLogic : MonoBehaviour
         if (!IsGrounded || RestrictJump)
             return;
 
-        //if (JumpSFX != null && GameObject.Find("Sound System") != null)
-        //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(JumpSFX);
+        if (JumpSFX != "")
+            SoundSystemRef.PlaySFX("Jump");
         PushUp();
     }
 
@@ -198,12 +199,9 @@ public class TPSLogic : MonoBehaviour
     public void Death()
     {
         DeathCounter++;
-        //if (DeathSFX != null && GameObject.Find("Sound System") != null)
- 
-          //  GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(DeathSFX);
- 
-        
- 
+        if (DeathSFX != "")
+            SoundSystemRef.PlaySFX("Giggs");
+
         GetComponent<PlayerMovement>().Respawn();
 
         HealthPopup DeathUI = FindObjectOfType<HealthPopup>() as HealthPopup;

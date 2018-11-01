@@ -10,11 +10,13 @@ public class RespawnPoint : MonoBehaviour {
     private Vector3 InteractedFlagVelocity;
 
     [SerializeField]
-    private AudioClip RespawnSFX;
+    private string RespawnSFX;
+
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
-
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
     }
 	
 	// Update is called once per frame
@@ -42,10 +44,8 @@ public class RespawnPoint : MonoBehaviour {
             Interacted = true;
             other.GetComponent<PlayerMovement>().SetRespawn(this.transform.position);
 
-            //if(RespawnSFX != null && GameObject.Find("Sound System") != null)
-            //{
-            //    GameObject.Find("Sound System").GetComponent<SoundSystem>().PlaySFX(RespawnSFX);
-            //}
+            if (RespawnSFX != "")
+                SoundSystemRef.PlaySFX(RespawnSFX);
         }
     }
 }
