@@ -214,7 +214,7 @@ public class TPSLogic : MonoBehaviour
         return RestrictJump;
     }
 
-    public void SetJumpRestrict(bool n_Restrict)
+    public void SetJumpRestrict(bool n_Restrict) // True = Cannot Jump, False = Can Jump
     {
         RestrictJump = n_Restrict;
     }

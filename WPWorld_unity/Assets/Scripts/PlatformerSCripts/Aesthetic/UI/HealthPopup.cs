@@ -15,6 +15,7 @@ public class HealthPopup : MonoBehaviour
     //Debug Serialize
     [SerializeField]
     private bool Showing = false;
+    private bool HasReset = true;
 
     [SerializeField]
     private GameObject NormalHeart;
@@ -103,11 +104,16 @@ public class HealthPopup : MonoBehaviour
             }
             else
             {
-                PlayerRef.GetComponent<PlayerMovement>().SetRestriction(OrgAvaliability);
                 ColorRef.a = 0;
                 transform.GetChild(0).transform.position = new Vector3(Screen.width / 2,
                     -transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y * 0.5f,
                     0);
+                if(!HasReset)
+                {
+                    PlayerRef.GetComponent<PlayerMovement>().SetRestriction(OrgAvaliability);
+                    PlayerRef.GetComponent<TPSLogic>().SetJumpRestrict(false);
+                    HasReset = true;
+                }
             }
         }
     }
@@ -157,6 +163,8 @@ public class HealthPopup : MonoBehaviour
             return;
         OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
         PlayerRef.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
+        PlayerRef.GetComponent<TPSLogic>().SetJumpRestrict(true);
         Showing = true;
+        HasReset = false;
     }
 }
