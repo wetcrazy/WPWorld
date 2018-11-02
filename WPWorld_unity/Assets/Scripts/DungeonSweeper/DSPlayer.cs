@@ -7,15 +7,20 @@ public class DSPlayer : MonoBehaviour
     public float JumpSpeed;
     public float MAX_UPSPEED;
     public GameObject Manager;
+    public bool isPlayedOnce = false;
 
     private bool isInAir = false;
     private bool isGrounded = true;
     private bool isDoubleJUmp = false;
     private Rigidbody Rb;
+ 
+
+    SoundSystem ss;
 
     private void Awake()
     {
         Rb = GetComponent<Rigidbody>();
+        ss = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
     }
 
     /// <summary>
@@ -52,17 +57,33 @@ public class DSPlayer : MonoBehaviour
                 {
                     var _hitedObjScript = _hit.transform.gameObject.GetComponent<Blocks>();
                                 
+                    // When the block is number and not triggered, reset the timer
                     if(_hitedObjScript.m_BlockType == Dungeonsweeper2.BlockType.NUMBERED && !_hitedObjScript.m_isTriggered)
                     {                     
                         var ManagerScript = Manager.GetComponent<Dungeonsweeper2>();
                         ManagerScript.currTimer = ManagerScript.TimerBar.maxValue;
-                    }
+                    }                  
 
                     _hitedObjScript.m_isTriggered = true;
                 }               
             }
         }
-
+        
+        // Send the player flying after losing
+        if(Manager.GetComponent<Dungeonsweeper2>().is_lose)
+        {          
+            if (!isPlayedOnce)
+            {              
+                Explosion();
+                ss.PlaySFX("Explosion");
+                isPlayedOnce = true;
+            }
+        }
+        else
+        {                    
+            isPlayedOnce = false;
+        }
+      
         // Speed bumper
         if (Rb.velocity.y > MAX_UPSPEED || Rb.velocity.y < -MAX_UPSPEED)
         {
@@ -80,6 +101,11 @@ public class DSPlayer : MonoBehaviour
     /// </summary>
     private void Jump()
     {
+        if(Manager.GetComponent<Dungeonsweeper2>().is_lose)
+        {
+            return;
+        }
+
         // 1st Jump 
         if (isGrounded)
         {
@@ -87,6 +113,7 @@ public class DSPlayer : MonoBehaviour
             isInAir = true;
             Rb.velocity = Vector3.zero;
             Rb.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
+            ss.PlaySFX("Jump");
         }
         // 2nd Jump (ground pound)
         else
@@ -94,7 +121,7 @@ public class DSPlayer : MonoBehaviour
             if (isInAir)
             {              
                 Rb.velocity = Vector3.zero;
-                Rb.AddForce(-Vector3.up * JumpSpeed, ForceMode.Impulse);
+                Rb.AddForce(-transform.up * JumpSpeed, ForceMode.Impulse);
                 isDoubleJUmp = true;
             }
         }
@@ -115,16 +142,28 @@ public class DSPlayer : MonoBehaviour
     {   
         isInAir = false;
         isGrounded = true;
-        isDoubleJUmp = false;
+        isDoubleJUmp = false;       
 
         if (other.gameObject.tag == "Killbox")
-        {
-            //var _pos = Manager.GetComponent<Dungeonsweeper2>().Get_Player_AnchorPosition(gameObject.transform);
-            //Debug.Log(_pos);
+        {          
             var _pos = new Vector3(0, 0, 0);
             _pos.y = 0.5f;
             Rb.MovePosition(_pos + transform.forward * Time.deltaTime);
         }
     }
 
+    /// <summary>
+    /// Explosion
+    /// </summary>
+    private void Explosion()
+    {
+        Vector3 _pos = new Vector3();
+        RaycastHit _ray;
+        if (Physics.Raycast(transform.position, -transform.up, out _ray))
+        {
+            _pos = _ray.transform.position;
+        }
+
+        Rb.AddExplosionForce(10.0f, _pos, 5.0f, 5.0f, ForceMode.Impulse);
+    }
 }

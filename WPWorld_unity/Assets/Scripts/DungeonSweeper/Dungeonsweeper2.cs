@@ -51,7 +51,6 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     // Text Stuff
     public Text RC_Count, RC_Point;
-    public GameObject Lose_text;
     public GameObject Win_text;
 
     // Timer Stuff
@@ -61,6 +60,10 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     // Conditions
     public bool is_lose = false;
+
+    // Reset Level Stuff
+    private float waitTimer = 0.0f;
+    private const float MAX_WAITTIMER = 5.0f;
 
     private void Awake()
     {
@@ -200,27 +203,38 @@ public class Dungeonsweeper2 : MonoBehaviour
         }
         RC_Count.text = _count.ToString();
 
-        // I got lazy so this is the grid finish condition
+        // Check if the grid has been cleared
         if(_count == 0 && _anchor.GetComponent<AnchorPoint>().m_isTypeApplied)
         {
             _anchor.GetComponent<AnchorPoint>().m_isdone = true;
         }
 
-        // Timer UI
-        currTimer -= 0.1f;
-        TimerBar.value = currTimer;
-        if(currTimer <= 0)
-        {
-            is_lose = true; 
-        }
-
         // Lose condition
         if (is_lose)
-        {
-            var _tempText = Lose_text.GetComponent<Text>();
-            _tempText.enabled = true;
-            //Reset_Level();
+        {         
+            if(waitTimer >= MAX_WAITTIMER)
+            {
+                Reset_Level();
+            }
+            else
+            {
+                waitTimer += 1.0f * Time.deltaTime;
+            }
         }
+        else
+        {
+            // Timer UI    
+            TimerBar.value = currTimer;
+            if (currTimer <= 0)
+            {
+                is_lose = true;
+            }
+            else
+            {
+                currTimer -= 0.1f;
+            }
+        }
+       
     }
 
     // Spawns the grid and save the data
@@ -524,7 +538,7 @@ public class Dungeonsweeper2 : MonoBehaviour
         Curr_Level = _level;
     }
 
-
+    // Gets the anchor the player is standing on 
     public Vector3 Get_Player_AnchorPosition(Transform _playerposition)
     {     
         GameObject _closestobj = null;
@@ -553,26 +567,27 @@ public class Dungeonsweeper2 : MonoBehaviour
         var _player = GameObject.FindGameObjectWithTag("Player");
         var _playerRB = _player.GetComponent<Rigidbody>();
 
-        foreach(GameObject _anchor in List_Anchors)
+        // Delete all blocks
+        foreach (GameObject _anchor in List_Anchors)
         {
             var _anchorScript = _anchor.GetComponent<AnchorPoint>();
-            if(_anchor.transform.childCount == 1)
+            if (_anchor.transform.childCount == 1)
             {
                 DestroyImmediate(_anchor.transform.GetChild(0).gameObject);
             }
-           
+
             _anchorScript.mList_Blocks.Clear();
             _anchorScript.Reset_Variables();
         }
 
         // Player position
         var _pos = Get_Player_AnchorPosition(_player.transform);
-  
         _pos.y = 0.5f;
         _playerRB.MovePosition(_pos + transform.forward * Time.deltaTime);
 
-        var _tempText = Lose_text.GetComponent<Text>();
-        _tempText.enabled = false;
+        // Wait timer
+
+        waitTimer = 0.0f;
 
         // Ui Timer slider
         is_lose = false;
