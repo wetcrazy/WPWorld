@@ -9,8 +9,17 @@ public class TextBlocksBehaviour : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Killbox"))
         {
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
 
     }
+   
+    private void Update()
+    {
+        this.gameObject.transform.Translate(Vector3.up*0.1f);
+       
+    }
+
+
 }
+
