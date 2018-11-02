@@ -28,7 +28,7 @@ public class TexttoBlocks : MonoBehaviour {
        // Instantiate(lmao, this.gameObject.transform.position + (new Vector3(-15, 0, 0)), transform.rotation);
         // containwer.gameObject.;
         //for(int i = 0; i<containwer.)
-        coroutine = WaitAndPrint(5.0f);
+        coroutine = WaitAndPrint(2.5f);
 
         a = new StreamReader("Assets/Resources/script.txt");
         line = null;
@@ -46,7 +46,7 @@ public class TexttoBlocks : MonoBehaviour {
     {
         while (true)
         { 
-            while ((line = a.ReadLine()) != null)
+            while ((line = a.ReadLine()) != "END")
             {
                 line = line.ToUpper();
                 yield return new WaitForSeconds(waitTime);

@@ -40,7 +40,7 @@ public class Filereader : MonoBehaviour {
     {
         while (true)
         {
-            while ((line = a.ReadLine()) != null)
+            while ((line = a.ReadLine()) != "END")
             {
                 Debug.Log("waiting");
             yield return new WaitForSeconds(waitTime);
