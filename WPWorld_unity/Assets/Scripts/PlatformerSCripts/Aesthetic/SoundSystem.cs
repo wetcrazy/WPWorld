@@ -55,6 +55,11 @@ public class SoundSystem : MonoBehaviour {
         }
     }
 
+    public void ChangeBGMVolume(float n_Volume) // Changes the volume of the BGM Object
+    {
+        BackgroundMusicAudioSource.volume = n_Volume;
+    }
+
     public void PlaySFX(string SFXName)
     {
         foreach (AudioClip audioClip in AudioSounds)
@@ -77,6 +82,16 @@ public class SoundSystem : MonoBehaviour {
                 audioSource.Play();
                 return;
             }
+        }
+    }
+
+    public void ChangeSFXVolume(float n_Volume) // Changes the volumes of all the SFX Objects
+    {
+        foreach(GameObject audioSourceGameObj in AudioSources)
+        {
+            AudioSource audioRef = audioSourceGameObj.GetComponent<AudioSource>();
+
+            audioRef.volume = n_Volume;
         }
     }
 }
