@@ -16,7 +16,7 @@ public class TextBlocksBehaviour : MonoBehaviour {
    
     private void Update()
     {
-        this.gameObject.transform.Translate(Vector3.up*0.1f);
+        this.gameObject.transform.Translate(Vector3.up*0.55f);
        
     }
 
