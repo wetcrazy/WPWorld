@@ -333,7 +333,7 @@ public class ArcoreDeployer : MonoBehaviour
                 theStageSelectBtn.name = "Stage0" + (i + 1).ToString();
                 theStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ExitSelectionScreen_Stage(true); });
                 theStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { SelectStage(theStageSelectBtn.name); });
-                theStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameScreen(); });
+                theStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameMoveAnchor(); });
                 theStageSelectBtn.transform.GetChild(0).GetComponent<Text>().text = "Stage 0" + (i + 1).ToString();
             }
         }
