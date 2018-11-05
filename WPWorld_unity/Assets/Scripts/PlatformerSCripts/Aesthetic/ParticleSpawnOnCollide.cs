@@ -23,6 +23,8 @@ public class ParticleSpawnOnCollide : MonoBehaviour {
 
     private void OnParticleCollision(GameObject other)
     {
+        if(other.tag == "Killbox")
+            return;
         int numCollisionEvents = PSRef.GetCollisionEvents(other, PSCollisions);
         int i = 0;
 
@@ -32,5 +34,10 @@ public class ParticleSpawnOnCollide : MonoBehaviour {
             n_PS.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             i++;
         }
+    }
+
+    private void OnParticleTrigger()
+    {
+        Debug.Log("PArticle Trigger Hit");
     }
 }

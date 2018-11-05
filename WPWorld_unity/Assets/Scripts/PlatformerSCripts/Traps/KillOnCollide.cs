@@ -14,13 +14,11 @@ public class KillOnCollide : MonoBehaviour {
 		
 	}
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject CollisionRef = collision.gameObject;
-
-        if(CollisionRef.tag == "Player")
+        if(other.tag == "Player")
         {
-            CollisionRef.GetComponent<TPSLogic>().Death();
+            other.GetComponent<TPSLogic>().Death();
         }
     }
 }
