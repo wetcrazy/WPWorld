@@ -203,6 +203,7 @@ public class TPSLogic : MonoBehaviour
             SoundSystemRef.PlaySFX("Giggs");
 
         GetComponent<PlayerMovement>().Respawn();
+        RigidRef.velocity = Vector3.zero;
 
         HealthPopup DeathUI = FindObjectOfType<HealthPopup>() as HealthPopup;
         if (DeathUI != null)

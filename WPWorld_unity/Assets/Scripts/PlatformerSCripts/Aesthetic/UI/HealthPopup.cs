@@ -138,9 +138,9 @@ public class HealthPopup : MonoBehaviour
                 SpawnHeart.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 
                 if (y % 2 == 0 && y != 0)
-                    SpawnHeart.transform.position -= new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * (y / 2), 0);
+                    SpawnHeart.transform.localPosition -= new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * (y / 2), 0);
                 else
-                    SpawnHeart.transform.position += new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * Mathf.Ceil(y / 2), 0);
+                    SpawnHeart.transform.localPosition += new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * Mathf.Ceil(y / 2), 0);
 
                 if (x == 1)
                 {
@@ -148,9 +148,9 @@ public class HealthPopup : MonoBehaviour
                 }
 
                 if (x % 2 == 0)
-                    SpawnHeart.transform.position -= new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * (x / 2), 0, 0);
+                    SpawnHeart.transform.localPosition -= new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * (x / 2), 0, 0);
                 else
-                    SpawnHeart.transform.position += new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * Mathf.Floor(x / 2), 0, 0);
+                    SpawnHeart.transform.localPosition += new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * Mathf.Floor(x / 2), 0, 0);
             }
         }
     }
