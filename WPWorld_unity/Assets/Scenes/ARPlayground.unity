@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 6930576}
   - component: {fileID: 6930575}
   m_Layer: 5
-  m_Name: DPad_Down
+  m_Name: DPad_Backward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,6 +171,17 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2094170917}
           m_MethodName: MoveAnchorBackward
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2094170917}
+          m_MethodName: PlayDPadSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -536,7 +547,7 @@ GameObject:
   - component: {fileID: 224883579}
   - component: {fileID: 224883578}
   m_Layer: 5
-  m_Name: DPad_Down (1)
+  m_Name: DPad_Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -580,6 +591,17 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2094170917}
           m_MethodName: MoveAnchorDownward
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2094170917}
+          m_MethodName: PlayDPadSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2432,6 +2454,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 2094170917}
+          m_MethodName: PlayDPadSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
@@ -3576,7 +3609,7 @@ GameObject:
   - component: {fileID: 1473900910}
   - component: {fileID: 1473900909}
   m_Layer: 5
-  m_Name: DPad_Up
+  m_Name: DPad_Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3620,6 +3653,17 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2094170917}
           m_MethodName: MoveAnchorForward
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2094170917}
+          m_MethodName: PlayDPadSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4151,7 +4195,7 @@ GameObject:
   - component: {fileID: 1712733760}
   - component: {fileID: 1712733759}
   m_Layer: 5
-  m_Name: DPad_Up (1)
+  m_Name: DPad_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4195,6 +4239,17 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2094170917}
           m_MethodName: MoveAnchorUpward
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2094170917}
+          m_MethodName: PlayDPadSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4618,6 +4673,17 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2094170917}
           m_MethodName: MoveAnchorRightward
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2094170917}
+          m_MethodName: PlayDPadSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5218,7 +5284,7 @@ MonoBehaviour:
   - {fileID: 1331476305739088, guid: 80467e09d08985e439991754fa19b32f, type: 2}
   - {fileID: 1365385162507574, guid: b6640f312a7df034da37ce0801e1f751, type: 2}
   - {fileID: 1523283533954908, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-  - {fileID: 1132073049699338, guid: 57de27558763f2046852ed018fc93c0f, type: 2}
+  - {fileID: 0}
   - {fileID: 1476475063470346, guid: 1995217a28c0aff48a9a74c933073cc9, type: 2}
   - {fileID: 1605851642734376, guid: 08f2553acd05fa44ebfe4e123ab1d145, type: 2}
   - {fileID: 1863581000636978, guid: 25f71e4ae75a13745b77edb52aff697d, type: 2}
