@@ -120,6 +120,8 @@ public class Joystick : MonoBehaviour
 
         //Vector3 OldPos = JoystickBall.transform.position;
 
+        Vector3 NewJoystickPos;
+
         //Determine which axis the ball is travelling on
 
         if (Vector3.Angle(Up, DragDirection) <= 45)
@@ -196,15 +198,22 @@ public class Joystick : MonoBehaviour
         if (Vector3.Distance(InputPos, JoystickBackgroundPosition) < JoystickBallDragLengthLimit)
         {
             //Snap the joystick ball pos to the cursor if within the joystick background space
-            JoystickBall.transform.position = InputPos;
+            NewJoystickPos = InputPos;
         }
         else
         {
-            JoystickBall.transform.position = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
+            NewJoystickPos = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
         }
 
+        if (joystickDirection == JoystickDirection.DIR_FORWARD || joystickDirection == JoystickDirection.DIR_BACK)
+            NewJoystickPos.x = JoystickBackgroundPosition.x;
+        else
+            NewJoystickPos.y = JoystickBackgroundPosition.y;
+
+        JoystickBall.transform.position = NewJoystickPos;
+
         Vector4 DataPacket = new Vector4(DragDirection.x, DragDirection.y, DragDirection.z, (float)joystickDirection);
-        float Multiplier = Vector3.Distance(JoystickBall.transform.position, JoystickBackgroundPosition) / JoystickBallDragLengthLimit * 2;
+        float Multiplier = Vector3.Distance(JoystickBall.transform.position, JoystickBackgroundPosition) / JoystickBallDragLengthLimit;
 
         //Send the dragging direction and angle to the player
         PlayerObject.SendMessage("GetJoystickInput", DataPacket);
