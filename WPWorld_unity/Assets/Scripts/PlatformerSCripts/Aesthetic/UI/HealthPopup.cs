@@ -134,25 +134,23 @@ public class HealthPopup : MonoBehaviour
                 else
                     SpawnHeart = Instantiate(NormalHeart, transform.GetChild(0).position, transform.rotation);
 
+                SpawnHeart.GetComponent<RectTransform>().SetParent(transform.GetChild(0));
+                SpawnHeart.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
                 if (y % 2 == 0 && y != 0)
-                    SpawnHeart.transform.position -= new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * (y / 2), 0);
+                    SpawnHeart.transform.localPosition -= new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * (y / 2), 0);
                 else
-                    SpawnHeart.transform.position += new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * Mathf.Ceil(y / 2), 0);
+                    SpawnHeart.transform.localPosition += new Vector3(0, SpawnHeart.GetComponent<RectTransform>().sizeDelta.y * Mathf.Ceil(y / 2), 0);
 
                 if (x == 1)
                 {
-                    SpawnHeart.GetComponent<RectTransform>().SetParent(transform.GetChild(0));
-                    SpawnHeart.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
                     continue;
                 }
 
                 if (x % 2 == 0)
-                    SpawnHeart.transform.position -= new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * (x / 2), 0, 0);
+                    SpawnHeart.transform.localPosition -= new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * (x / 2), 0, 0);
                 else
-                    SpawnHeart.transform.position += new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * Mathf.Floor(x / 2), 0, 0);
-
-                SpawnHeart.GetComponent<RectTransform>().SetParent(transform.GetChild(0));
-                SpawnHeart.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+                    SpawnHeart.transform.localPosition += new Vector3(SpawnHeart.GetComponent<RectTransform>().sizeDelta.x * Mathf.Floor(x / 2), 0, 0);
             }
         }
     }

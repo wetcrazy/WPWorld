@@ -676,6 +676,6 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void PlayDPadSound()
     {
-        soundSystem.PlaySFX("");
+        soundSystem.PlaySFX("DPadClickSound");
     }
 }
