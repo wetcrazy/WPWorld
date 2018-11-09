@@ -151,6 +151,7 @@ public class TPSLogic : MonoBehaviour
 
     public void PushUp()
     {
+        RigidRef.velocity = Vector3.zero;
         RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
         IsGrounded = false;
     }
@@ -200,7 +201,7 @@ public class TPSLogic : MonoBehaviour
     {
         DeathCounter++;
         if (DeathSFX != "")
-            SoundSystemRef.PlaySFX("Giggs");
+            SoundSystemRef.PlaySFX(DeathSFX);
 
         GetComponent<PlayerMovement>().Respawn();
         RigidRef.velocity = Vector3.zero;

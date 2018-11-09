@@ -24,10 +24,12 @@ public class PatrolBlock : MonoBehaviour {
 
     private bool HasCollided;
 
+    private Transform OrgParent;
+
 	// Use this for initialization
 	void Start () {
-        FirstPatrolPoint = this.transform.position + FirstPoint;
-        SecondPatrolPoint = this.transform.position + SecondPoint;
+        FirstPatrolPoint = this.transform.localPosition + FirstPoint;
+        SecondPatrolPoint = this.transform.localPosition + SecondPoint;
 	}
 	
 	// Update is called once per frame
@@ -39,9 +41,9 @@ public class PatrolBlock : MonoBehaviour {
 
         if (TravelToSecond)
         {
-            if(Vector3.Distance(transform.position, SecondPatrolPoint) > transform.lossyScale.magnitude)
+            if(Vector3.Distance(transform.localPosition, SecondPatrolPoint) > transform.lossyScale.magnitude)
             {
-                transform.position = Vector3.Lerp(transform.position, SecondPatrolPoint, Time.deltaTime * MovementSpeed);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, SecondPatrolPoint, Time.deltaTime * MovementSpeed);
             }
             else
             {
@@ -50,9 +52,9 @@ public class PatrolBlock : MonoBehaviour {
         }
         else
         {
-            if (Vector3.Distance(transform.position, FirstPatrolPoint) > transform.lossyScale.magnitude)
+            if (Vector3.Distance(transform.localPosition, FirstPatrolPoint) > transform.lossyScale.magnitude)
             {
-                transform.position = Vector3.Lerp(transform.position, FirstPatrolPoint, Time.deltaTime * MovementSpeed);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, FirstPatrolPoint, Time.deltaTime * MovementSpeed);
             }
             else
             {
@@ -70,22 +72,31 @@ public class PatrolBlock : MonoBehaviour {
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
-        {
-            if(CollideToStart)
-                HasCollided = true;
+        GameObject CollidedObject = collision.gameObject;
 
-            collision.gameObject.transform.parent = transform;
+        if(CollidedObject.tag == "Player")
+        {
+            if(CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
+            {
+                if (CollideToStart)
+                    HasCollided = true;
+
+                OrgParent = CollidedObject.transform.parent;
+
+                CollidedObject.transform.parent = transform;
+            }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
+        GameObject CollidedObject = collision.gameObject;
+
+        if (CollidedObject.tag == "Player")
         {
-            collision.gameObject.transform.parent = null;
+            CollidedObject.transform.parent = OrgParent;
         }
     }
 }

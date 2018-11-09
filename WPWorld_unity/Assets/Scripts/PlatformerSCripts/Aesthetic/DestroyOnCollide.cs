@@ -66,6 +66,20 @@ public class DestroyOnCollide : MonoBehaviour {
                 if (VelocityRef.y > 0)
                     VelocityRef.y = -VelocityRef.y * 0.5f;
                 CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
+
+                // Checks if there is an enemy to kill on top of the block
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.up, out hit, transform.localScale.y)
+                    || Physics.Raycast(transform.position, transform.up + transform.forward * 0.5f, out hit, transform.localScale.y)
+                    || Physics.Raycast(transform.position, transform.up - transform.forward * 0.5f, out hit, transform.localScale.y)
+                    || Physics.Raycast(transform.position, transform.up + transform.right * 0.5f, out hit, transform.localScale.y)
+                    || Physics.Raycast(transform.position, transform.up - transform.right * 0.5f, out hit, transform.localScale.y))
+                    // Kill Enemy if there is an enemy on top of the bounce block
+                    if (hit.transform.name.Contains("Enemy"))
+                    {
+                        hit.transform.GetComponent<Enemy>().AirborneDeath();
+                        hit.transform.GetComponent<Rigidbody>().AddForce(0, 50 * transform.parent.parent.lossyScale.y, 0);
+                    }
             }
         }
     }

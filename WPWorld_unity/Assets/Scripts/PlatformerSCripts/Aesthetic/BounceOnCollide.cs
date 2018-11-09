@@ -41,7 +41,15 @@ public class BounceOnCollide : MonoBehaviour {
                 }
             }
         }
-	}
+
+        Debug.DrawRay(transform.position, transform.up.normalized * transform.lossyScale.y, Color.green);
+
+        Debug.DrawRay(transform.position, (transform.up - transform.right * 0.5f).normalized * transform.lossyScale.y, Color.red);
+        Debug.DrawRay(transform.position, (transform.up + transform.right * 0.5f).normalized * transform.lossyScale.y, Color.blue);
+
+        Debug.DrawRay(transform.position, (transform.up - transform.forward * 0.5f).normalized * transform.lossyScale.y, Color.red);
+        Debug.DrawRay(transform.position, (transform.up + transform.forward * 0.5f).normalized * transform.lossyScale.y, Color.blue);
+    }
 
     private void OnCollisionStay(Collision collision)
     {
@@ -58,20 +66,36 @@ public class BounceOnCollide : MonoBehaviour {
             {
                 if (Vector3.Distance(this.transform.position, OrgPos) < 0.05f && TimeElapsed == 0)
                 {
+                    // Releases the constraints of the rigidbody and pushes the force upwards
                     RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                    RigidRef.AddForce(new Vector3(0, 50 * transform.parent.parent.lossyScale.y, 0));
+                    RigidRef.AddForce(0, 25 * transform.parent.parent.lossyScale.y, 0);
                     RigidRef.useGravity = true;
-
+                    
+                    // Plays the sound if it has been issued one
                     if (BounceSFX != "")
                         SoundSystemRef.PlaySFX(BounceSFX);
 
+                    // Bounce back effect
                     Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
                     if (VelocityRef.y > 0)
                         VelocityRef.y = -VelocityRef.y * 0.5f;
                     CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
+
+                    // Checks if there is an enemy to kill on top of the block
+                    RaycastHit hit;
+                    if(Physics.Raycast(transform.position, transform.up, out hit, transform.localScale.y)
+                        || Physics.Raycast(transform.position, transform.up + transform.forward * 0.5f, out hit, transform.localScale.y)
+                        || Physics.Raycast(transform.position, transform.up - transform.forward * 0.5f, out hit, transform.localScale.y)
+                        || Physics.Raycast(transform.position, transform.up + transform.right * 0.5f, out hit, transform.localScale.y)
+                        || Physics.Raycast(transform.position, transform.up - transform.right * 0.5f, out hit, transform.localScale.y))
+                        // Kill Enemy if there is an enemy on top of the bounce block
+                        if(hit.transform.name.Contains("Enemy"))
+                        {
+                            hit.transform.GetComponent<Enemy>().AirborneDeath();
+                            hit.transform.GetComponent<Rigidbody>().AddForce(0, 50 * transform.parent.parent.lossyScale.y, 0);
+                        }
                 }
             }
         }
     }
-
 }

@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
-        OrgSize = transform.lossyScale;
+        OrgSize = transform.localScale;
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 	}
 	
@@ -225,40 +225,75 @@ public class Enemy : MonoBehaviour {
         {
             if (CollidedObject.tag == "Player")
             {
-                if (CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
+                if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded()
+                    && CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
                 {
                     CurrType = ENEMYTYPES.DEAD;
                     GetComponent<Collider>().isTrigger = true;
                     if(IsGrounded)
                     {
-                        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-                        transform.localScale *= 0.5f;
-                        transform.localScale = new Vector3(OrgSize.x, transform.localScale.y, OrgSize.z);
-
-                        transform.position -= new Vector3(0, transform.lossyScale.y * 0.5f, 0);
+                        GroundDeath();
                     }
                     else
                     {
-                        RigidRef.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+                        AirborneDeath();
                     }
 
                     CollidedObject.GetComponent<TPSLogic>().PushUp();
-
-                    if (DeathSound != "")
-                        SoundSystemRef.PlaySFX(DeathSound);
-
-                    GameObject n_Score = Instantiate(ScorePopup, transform);
-                    n_Score.transform.parent = null;
-                    n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                    n_Score.transform.position = this.transform.position;
-
-                    n_Score.GetComponent<TextMesh>().text = Score.ToString();
                 }
                 else
                 {
                     CollidedObject.GetComponent<TPSLogic>().Death();
                 }
             }
+            else
+            {
+                if(Mathf.Abs(transform.position.y - CollidedObject.transform.position.y) < CollidedObject.transform.lossyScale.y / 2)
+                {
+                    Debug.Log("Change Walk Speed");
+                    WalkSpeed = -WalkSpeed;
+                }
+            }
         }
+    }
+
+    public void GroundDeath()
+    {
+        CurrType = ENEMYTYPES.DEAD;
+        GetComponent<Collider>().isTrigger = true;
+
+        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+        transform.localScale *= 0.5f;
+        transform.localScale = new Vector3(OrgSize.x, transform.localScale.y, OrgSize.z);
+
+        transform.position -= new Vector3(0, transform.lossyScale.y * 0.5f, 0);
+
+        if (DeathSound != "")
+            SoundSystemRef.PlaySFX(DeathSound);
+
+        GameObject n_Score = Instantiate(ScorePopup, transform);
+        n_Score.transform.parent = null;
+        n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        n_Score.transform.position = this.transform.position;
+
+        n_Score.GetComponent<TextMesh>().text = Score.ToString();
+    }
+
+    public void AirborneDeath()
+    {
+        CurrType = ENEMYTYPES.DEAD;
+        GetComponent<Collider>().isTrigger = true;
+
+        RigidRef.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+
+        if (DeathSound != "")
+            SoundSystemRef.PlaySFX(DeathSound);
+
+        GameObject n_Score = Instantiate(ScorePopup, transform);
+        n_Score.transform.parent = null;
+        n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        n_Score.transform.position = this.transform.position;
+
+        n_Score.GetComponent<TextMesh>().text = Score.ToString();
     }
 }
