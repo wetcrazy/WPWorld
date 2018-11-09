@@ -22,7 +22,7 @@ public class ArcoreDeployer : MonoBehaviour
     }
     STATE_SCREEN ScreenState;
 
-    // Game Objects
+    //----GAME OBJECTS----//
     [SerializeField]
     Camera MainCamera;
     [SerializeField]
@@ -32,12 +32,18 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     GameObject AnchorRef;
 
-    private List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
-    private GameObject GameObjPrefab = null;
-    private bool isSpawned = false;
-    private Vector3 FirstTouchWorldPoint = new Vector3();
+    GameObject GameObjPrefab = null;
+    SoundSystem soundSystem = null;
     
-    // UI Objects
+    //Reference to the clone of GameObjPrefab
+    GameObject _GroundObject = null;
+    Anchor _anchor;
+
+    bool isSpawned = false;
+    Vector3 FirstTouchWorldPoint = new Vector3();
+    List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
+
+    //----UI OBJECTS----//
     [SerializeField]
     GameObject UniverseObj;
     [SerializeField]
@@ -50,17 +56,17 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject StageSelect;
     [SerializeField]
     GameObject StageSelectBtn;
-
     [SerializeField]
     Text DebugText;
 
+    //Arrays that store the individual objects in each screen
     private GameObject[] SplashScreenObjects;
     private GameObject[] SelectionScreen_PlanetsObjects;
     private GameObject[] SelectionScreen_StageObjects;
     private GameObject[] GameMoveAnchorObjects;
     private GameObject[] GameScreenObjects;
 
-    //UI Logic Variables
+    //----UI LOGIC VARIABLES----//
     [SerializeField]
     float WorldRotationSpeed = 10;
     [SerializeField]
@@ -76,10 +82,9 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     int World05NumStages_AsteroidRun = 1;
 
-    SoundSystem soundSystem = null;
-
     private void Start()
     {
+        //Define the game object references
         SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
         SelectionScreen_PlanetsObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Planets");
         SelectionScreen_StageObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Stage");
@@ -87,12 +92,14 @@ public class ArcoreDeployer : MonoBehaviour
         GameScreenObjects = GameObject.FindGameObjectsWithTag("GameScreen");
         soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
+        //Initialise the screens
         ExitSelectionScreen_Planet();
         ExitSelectionScreen_Stage();
         ExitGameMoveAnchor(true);
         ExitGameScreen();
         ToSplashScreen();
-
+        
+        //Make the world selection button invisible
         Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
         Color NewColor = WorldSelectButtonImage.color;
         NewColor.a = 0;
@@ -101,6 +108,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void Update()
     {
+        //Update the current screen
         switch (ScreenState)
         {
             case STATE_SCREEN.SCREEN_SPLASH:
@@ -136,8 +144,10 @@ public class ArcoreDeployer : MonoBehaviour
     //-----SPLASH SCREEN FUNCTIONS-----//
     private void ToSplashScreen()
     {
+        //Change the screen state to the current one
         ScreenState = STATE_SCREEN.SCREEN_SPLASH;
 
+        //Set all splash screen objects to active
         foreach (GameObject obj in SplashScreenObjects)
         {
             obj.SetActive(true);
@@ -148,6 +158,7 @@ public class ArcoreDeployer : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
+            //Change to the universe screen
             ExitSplashScreen();
             ToSelectionScreen_Universe();
 
@@ -158,6 +169,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void ExitSplashScreen()
     {
+        //Set all splash screen objects to inactive
         foreach (GameObject obj in SplashScreenObjects)
         {
             obj.SetActive(false);
@@ -168,6 +180,7 @@ public class ArcoreDeployer : MonoBehaviour
     //-----SELECTION SCREEN UNIVERSE FUNCTIONS-----//
     public void ToSelectionScreen_Universe()
     {
+        //Ground object is the object spawned by touch, so check if it is null first
         if (_GroundObject != null)
         {
             _GroundObject.SetActive(true);
@@ -178,37 +191,52 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void SelectionScreenUpdate_Universe()
     {
+        //Check if universe has been spawned yet
         if (!isSpawned && Input.touchCount > 0)
         {
+            //Spawn the universe
             GameObjPrefab = UniverseObj;
             Spawner(Input.GetTouch(0), UniverseObj);
         }
+        //Shoot a raycast from the point where the touch occured on the screen and into the 3D space
         else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
+            //Get the touch information
             Touch theTouch = Input.GetTouch(0);
 
+            //The camera has a farclipplane which is a plane where any game objects beyond this plane will not be rendered to save resources i.e. object culling
+            //The nearcliplane is the plane where any objects behind it will not be rendered
+            //Create a position vector on each plane by moving the xy touch coordinates from the screen to the planes
             Vector3 touchPosFar = new Vector3(theTouch.position.x, theTouch.position.y, MainCamera.farClipPlane);
             Vector3 touchPosNear = new Vector3(theTouch.position.x, theTouch.position.y, MainCamera.nearClipPlane);
 
+            //Convert the position vectors to world space coordinates
             Vector3 touchPosF = MainCamera.ScreenToWorldPoint(touchPosFar);
             Vector3 touchPosN = MainCamera.ScreenToWorldPoint(touchPosNear);
 
+            //Create the raycast
             RaycastHit hit;
 
+            //Create a line and check if the line collides with a game object
             if (Physics.Raycast(touchPosN, touchPosF - touchPosN, out hit))
             {
+                //Checks if the line collides with a planet in the universe
                 if (hit.transform.gameObject.tag == "Planet")
                 {
+                    //Changes the name of the world to what was selected
                     CurrentWorldName.text = hit.transform.gameObject.name;
+                    //Change the material of the selected world in the UI to the same as the one that was selected in the universe
                     SelectedWorld.GetComponent<MeshRenderer>().material = hit.transform.gameObject.GetComponent<MeshRenderer>().material;
 
+                    //Change the current screen to the planet selection
                     ExitSelectionScreen_Universe();
                     ToSelectionScreen_Planet();
                 }
             }
         }
-        else if (isSpawned)
+        else if (isSpawned) //Universe is already spawned
         {
+            //Rotate each planet in the universe for visual effect
             for (int i = 0; i < UniverseObj.transform.childCount; ++i)
             {
                 _GroundObject.transform.GetChild(i).transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
@@ -220,18 +248,20 @@ public class ArcoreDeployer : MonoBehaviour
             //If tracking has stopped, return to selection screen
             if (List_AllPlanes[i].TrackingState == TrackingState.Stopped)
             {
-                DestroyCurrentLevel();
+                ExitSelectionScreen_Universe(true);
             }
         }
     }
 
     public void ExitSelectionScreen_Universe(bool DestroyUniverse = false)
     {
+        //If universe is marked to be destroyed, then destroy it
         if (DestroyUniverse)
         {
             DestroyCurrentLevel();
         }
-        else if (_GroundObject != null)
+        //If not, just set the universe to inactive
+        else if (_GroundObject != null) 
         {
             _GroundObject.SetActive(false);
         }
@@ -241,6 +271,7 @@ public class ArcoreDeployer : MonoBehaviour
     //-----SELECTION SCREEN PLANET FUNCTIONS-----//
     public void ToSelectionScreen_Planet()
     {
+        //Set all selection planet screen objects to active
         foreach (GameObject obj in SelectionScreen_PlanetsObjects)
         {
             obj.SetActive(true);
@@ -251,16 +282,19 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void SelectionScreenUpdate_Planet()
     {
+        //Rotate the selected planet for visual effect
         SelectedWorld.transform.Rotate(gameObject.transform.up, WorldRotationSpeed * Time.deltaTime);
     }
 
     public void ExitSelectionScreen_Planet(bool DestroyUniverse = false)
     {
+        //If marked to destroy universe, destroy the universe
         if (DestroyUniverse)
         {
             DestroyCurrentLevel();
         }
 
+        //Set all selection planet screen objects to inactive
         foreach (GameObject obj in SelectionScreen_PlanetsObjects)
         {
             obj.SetActive(false);
@@ -272,8 +306,10 @@ public class ArcoreDeployer : MonoBehaviour
     //-----SELECTION SCREEN STAGE FUNCTIONS-----//
     public void ToSelectionScreen_Stage(bool checkObject = false)
     {
+        //Check if the ground object is null
         if(checkObject)
         {
+            
             if(_GroundObject == null)
             {
                 return;
@@ -285,7 +321,7 @@ public class ArcoreDeployer : MonoBehaviour
         }
 
         int NumOfStages = 0;
-
+        
         switch (CurrentWorldName.text)
         {
             case "Puzzle Maze World":
@@ -313,6 +349,7 @@ public class ArcoreDeployer : MonoBehaviour
                 break;
         }
 
+        //Create the first stage select button
         GameObject FirstStageSelectBtn = Instantiate(StageSelectBtn, StageSelect.transform, false);
         FirstStageSelectBtn.GetComponent<RectTransform>().localPosition = new Vector3(0, (NumOfStages - 1) * (DistanceBetweenStageSelectButtons * 0.5f), 0);
         FirstStageSelectBtn.name = "Stage01";
@@ -320,9 +357,9 @@ public class ArcoreDeployer : MonoBehaviour
         FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ExitSelectionScreen_Stage(true); });
         FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { SelectStage(FirstStageSelectBtn.name); });
         FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameMoveAnchor(); });
-        //FirstStageSelectBtn.GetComponent<Button>().onClick.AddListener(delegate { ToGameScreen(); });
         Vector3 localPos = FirstStageSelectBtn.GetComponent<RectTransform>().localPosition;
 
+        //If there is more than 1 stage, create more stage select buttons
         if (NumOfStages > 1)
         {
             for (int i = 1; i < NumOfStages; ++i)
@@ -338,6 +375,7 @@ public class ArcoreDeployer : MonoBehaviour
             }
         }
 
+        //Set all stage selection screen objects to active
         foreach (GameObject obj in SelectionScreen_StageObjects)
         {
             obj.SetActive(true);
@@ -350,6 +388,7 @@ public class ArcoreDeployer : MonoBehaviour
     {
         string WorldNum = "";
 
+        //Get the world number
         switch (CurrentWorldName.text)
         {
             case "Puzzle Maze World":
@@ -377,6 +416,7 @@ public class ArcoreDeployer : MonoBehaviour
                 break;
         }
         
+        //Set the next level to be spawned
         SetNextObject(WorldNum + '_' + StageNum);
     }
 
@@ -392,6 +432,7 @@ public class ArcoreDeployer : MonoBehaviour
             Destroy(StageSelect.transform.GetChild(i).gameObject);
         }
 
+        //Set all stage selection screen objects to inactive
         foreach (GameObject obj in SelectionScreen_StageObjects)
         {
             obj.SetActive(false);
@@ -402,11 +443,13 @@ public class ArcoreDeployer : MonoBehaviour
     //-----GAME MOVE ANCHOR FUNCTIONS-----//
     public void ToGameMoveAnchor()
     {
+        //Set all game move anchor screen objects to active
         foreach (GameObject obj in GameMoveAnchorObjects)
         {
             obj.SetActive(true);
         }
 
+        //Set the anchor reference object to be invisible first
         AnchorRef.GetComponent<MeshRenderer>().enabled = false;
         ScreenState = STATE_SCREEN.SCREEN_GAME_MOVEANCHOR;
         isSpawned = false;
@@ -414,7 +457,9 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void GameMoveAnchorUpdate()
     {
+        //Set the Main camera refence object to always be in the same pos of the camera
         MainCameraRef.transform.position = MainCamera.transform.position;
+        //Set the forward to always be in the direction of camera but never allow the y axis to change to ensure the game anchor object to only move on the xz plane
         MainCameraRef.transform.forward = new Vector3(MainCamera.transform.forward.x, MainCamera.transform.position.y, MainCamera.transform.forward.z);
 
         if(_GroundObject != null)
@@ -425,6 +470,7 @@ public class ArcoreDeployer : MonoBehaviour
 
         if (!isSpawned && Input.touchCount > 0)
         {
+            //Spawn the anchor game object
             Spawner(Input.GetTouch(0), AnchorRef);
             _GroundObject.GetComponent<MeshRenderer>().enabled = true;
         }
@@ -470,6 +516,7 @@ public class ArcoreDeployer : MonoBehaviour
         _GroundObject.transform.position -= MainCameraRef.transform.up * Time.deltaTime;
     }
 
+    //Reset the anchor game object
     public void Reset_Anchor()
     {
         Destroy(_GroundObject);
@@ -484,6 +531,7 @@ public class ArcoreDeployer : MonoBehaviour
             return;
         }
 
+        //Set all game move anchor screen objects to inactive
         foreach (GameObject obj in GameMoveAnchorObjects)
         {
             obj.SetActive(false);
@@ -494,6 +542,7 @@ public class ArcoreDeployer : MonoBehaviour
     //-----GAME SCREEN FUNCTIONS-----//
     public void ToGameScreen()
     {
+        //Don't go to game screen if ground object is null
         if (_GroundObject == null)
         {
             return;
@@ -501,6 +550,7 @@ public class ArcoreDeployer : MonoBehaviour
 
         Reset_Anchor();
 
+        //Set all game screen objects to active
         foreach (GameObject obj in GameScreenObjects)
         {
             obj.SetActive(true);
@@ -509,6 +559,7 @@ public class ArcoreDeployer : MonoBehaviour
         ScreenState = STATE_SCREEN.SCREEN_GAME;
         isSpawned = false;
 
+        //Spawn the level
         SpawnLevel(Input.GetTouch(0));
     }
 
@@ -540,6 +591,7 @@ public class ArcoreDeployer : MonoBehaviour
         DestroyCurrentLevel();
         isSpawned = false;
 
+        //Set all game move anchor screen objects to inactive
         foreach (GameObject obj in GameScreenObjects)
         {
             obj.SetActive(false);
@@ -560,7 +612,7 @@ public class ArcoreDeployer : MonoBehaviour
             GameObjPrefab = null;
         }
 
-        if(FirstTouchWorldPoint !=null)
+        if(FirstTouchWorldPoint != null)
         {
             FirstTouchWorldPoint = new Vector3();
         }
@@ -604,41 +656,8 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void SpawnLevel(Touch _touch)
     {
-        //// Raycast from point on screen to real world
-        //TrackableHit _hit;
-        //var _raycastFilter = TrackableHitFlags.PlaneWithinPolygon | TrackableHitFlags.FeaturePointWithSurfaceNormal;
-        //if (Frame.Raycast(_touch.position.x, _touch.position.y, _raycastFilter, out _hit))
-        //{
-        //    // Check if it the raycast is hitting the back of the plane 
-        //    if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(MainCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
-        //    {
-        //        Debug.Log("Hit at back of the current DetectedPlane");
-        //    }
-        //    else
-        //    {
-        //        // Instantiate the object at where it is hit
-        //        _GroundObject = Instantiate(GameObjPrefab, AnchorRef.transform.position, AnchorRef.transform.rotation);
-
-        //        // Get the position in the world space
-        //        FirstTouchWorldPoint = _hit.Pose.position;
-
-        //        // Create an anchor for ARCore to track the point of the real world
-        //       var _anchor = _hit.Trackable.CreateAnchor(_hit.Pose);
-
-        //        // Make the ground object the child of the anchor
-        //        _GroundObject.transform.parent = _anchor.transform;
-        //        isSpawned = true;
-        //    }
-        //}
-
-        
-
         _GroundObject = Instantiate(GameObjPrefab, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
     }
-
-        //Reference to the clone of GameObjPrefab
-        GameObject _GroundObject = null;
-    Anchor _anchor;
 
     // oooooooooooooooooooooooooooooooooooooooo
     //            <Public Stuff> 
