@@ -9,13 +9,18 @@ public class SoundSystem : MonoBehaviour {
     [SerializeField]
     int MaximumSFXPlayingAtOnce = 10;
 
-    GameObject BackgroundMusic;
-    AudioSource BackgroundMusicAudioSource = null;
+    bool isMuted_BGM, isMuted_SFX;
+
     [SerializeField]
     AudioClip[] AudioSounds;
     GameObject[] AudioSources;
+
+    GameObject BackgroundMusic;
+    AudioSource BackgroundMusicAudioSource = null;
+    
     // Use this for initialization
     void Start () {
+        isMuted_BGM = isMuted_SFX = false;
         AudioSounds = Resources.LoadAll<AudioClip>("Audio");
         AudioSources = new GameObject[MaximumSFXPlayingAtOnce];
 
@@ -37,6 +42,11 @@ public class SoundSystem : MonoBehaviour {
     
     public void PlayBGM(string BGMName)
     {
+        if(isMuted_BGM)
+        {
+            return;
+        }
+
         foreach (AudioClip audioClip in AudioSounds)
         {
             if (audioClip.name != BGMName)
@@ -62,6 +72,11 @@ public class SoundSystem : MonoBehaviour {
 
     public void PlaySFX(string SFXName)
     {
+        if(isMuted_SFX)
+        {
+            return;
+        }
+
         foreach (AudioClip audioClip in AudioSounds)
         {
             if(audioClip.name != SFXName)
