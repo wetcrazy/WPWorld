@@ -12,6 +12,6 @@ public class UniverseSelectionText : MonoBehaviour {
 
     void LateUpdate()
     {
-        gameObject.transform.LookAt(CameraObject.transform.position);
+        gameObject.transform.forward = (gameObject.transform.position - CameraObject.transform.position).normalized;
     }
 }
