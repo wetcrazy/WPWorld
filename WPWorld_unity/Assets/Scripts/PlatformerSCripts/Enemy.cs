@@ -226,7 +226,9 @@ public class Enemy : MonoBehaviour {
             if (CollidedObject.tag == "Player")
             {
                 if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded()
-                    && CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2)
+                    && CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2
+                    && CollidedObject.GetComponent<Rigidbody>().velocity.y <= 0
+                    )
                 {
                     CurrType = ENEMYTYPES.DEAD;
                     GetComponent<Collider>().isTrigger = true;
@@ -248,11 +250,9 @@ public class Enemy : MonoBehaviour {
             }
             else
             {
+                // Change Walk Direction if bumped into something
                 if(Mathf.Abs(transform.position.y - CollidedObject.transform.position.y) < CollidedObject.transform.lossyScale.y / 2)
-                {
-                    Debug.Log("Change Walk Speed");
                     WalkSpeed = -WalkSpeed;
-                }
             }
         }
     }

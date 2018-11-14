@@ -32,6 +32,9 @@ public class SpawnOnCollide : MonoBehaviour {
     [SerializeField]
     private GameObject Enemy;
 
+    [SerializeField]
+    private float AmountToSpawn = 1;
+
     private Renderer RenderRef;
     private SoundSystem SoundSystemRef;
 
@@ -61,26 +64,30 @@ public class SpawnOnCollide : MonoBehaviour {
             {
                 if (!RenderRef.material.name.Contains(ChangedMaterial.name))
                 {
-                    RenderRef.material = ChangedMaterial;
-
-                    switch (CurrSpawn)
+                    AmountToSpawn--;
+                    if(AmountToSpawn == 0)
                     {
-                        case (SPAWNTYPE.COIN):
-                            if (CoinSFX != "")
-                                SoundSystemRef.PlaySFX(CoinSFX);
-                            Instantiate(BounceCoin, transform.position, Quaternion.identity);
-                            break;
-                        case (SPAWNTYPE.ITEM):
-                            if (ItemEnemySFX != "")
-                                SoundSystemRef.PlaySFX(ItemEnemySFX);
-                            Instantiate(Item, transform.position, transform.rotation);
-                            break;
-                        case (SPAWNTYPE.ENEMY):
-                            if (ItemEnemySFX != "")
-                                SoundSystemRef.PlaySFX(ItemEnemySFX);
-                            Instantiate(Enemy, transform.position, transform.rotation);
-                            break;
+                        RenderRef.material = ChangedMaterial;
                     }
+
+                    GameObject ToSpawn;
+                    if(CurrSpawn == SPAWNTYPE.COIN)
+                    {
+                        if (CoinSFX != "")
+                            SoundSystemRef.PlaySFX(CoinSFX);
+                        ToSpawn = Instantiate(BounceCoin, transform.position, Quaternion.identity);
+                    }
+                    else
+                    {
+                        if (ItemEnemySFX != "")
+                            SoundSystemRef.PlaySFX(ItemEnemySFX);
+                        if (CurrSpawn == SPAWNTYPE.ENEMY)
+                            ToSpawn = Instantiate(Enemy, transform.position, transform.rotation);
+                        else
+                            ToSpawn = Instantiate(Item, transform.position, transform.rotation);
+                    }
+
+                    ToSpawn.transform.parent = GameObject.Find("Characters").transform;
                 }
 
                 Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;

@@ -35,9 +35,4 @@ public class ParticleSpawnOnCollide : MonoBehaviour {
             i++;
         }
     }
-
-    private void OnParticleTrigger()
-    {
-        Debug.Log("PArticle Trigger Hit");
-    }
 }
