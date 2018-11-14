@@ -17304,7 +17304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4edf00c3dd58666448d6e11e3f20e49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 0.375
+  MovementSpeed: 0.25
   MovementDir: {x: 0, y: 0, z: 0}
   MovementMultiplier: 0
   CurrAvaliability: 1
@@ -17431,7 +17431,7 @@ MonoBehaviour:
   DeathSFX: Giggs
   Points: 0
   DeathCounter: -9
-  AirborneMovementSpeed: 0.425
+  AirborneMovementSpeed: 0.35
 --- !u!114 &114129907023611066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17480,8 +17480,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: There are hidden stuff all over the level, such as these. Just because you
-    can't see them doesn't mean they don't exist!
+  m_Text: There are hidden stuff all over the levels, such as these. Just because
+    you can't see them doesn't mean they don't exist!
 --- !u!114 &114152975453290266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17896,7 +17896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrType: 0
-  WalkSpeed: -0.25
+  WalkSpeed: -0.2
   JumpSpeed: 0
   PatrolPointA: {fileID: 0}
   PatrolPointB: {fileID: 0}
@@ -18084,6 +18084,7 @@ MonoBehaviour:
   ItemEnemySFX: SpawnItemEnemy
   Item: {fileID: 0}
   Enemy: {fileID: 0}
+  AmountToSpawn: 1
 --- !u!114 &114451670810387044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18126,6 +18127,7 @@ MonoBehaviour:
   ItemEnemySFX: SpawnItemEnemy
   Item: {fileID: 0}
   Enemy: {fileID: 1441316469815204, guid: 444c6a29ec22c894c9bacda1bf7d72cf, type: 2}
+  AmountToSpawn: 1
 --- !u!114 &114467609743492442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18243,6 +18245,7 @@ MonoBehaviour:
   ItemEnemySFX: SpawnItemEnemy
   Item: {fileID: 0}
   Enemy: {fileID: 1441316469815204, guid: 444c6a29ec22c894c9bacda1bf7d72cf, type: 2}
+  AmountToSpawn: 1
 --- !u!114 &114530931132759186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18478,6 +18481,7 @@ MonoBehaviour:
   ItemEnemySFX: SpawnItemEnemy
   Item: {fileID: 0}
   Enemy: {fileID: 0}
+  AmountToSpawn: 1
 --- !u!114 &114655920613721884
 MonoBehaviour:
   m_ObjectHideFlags: 1

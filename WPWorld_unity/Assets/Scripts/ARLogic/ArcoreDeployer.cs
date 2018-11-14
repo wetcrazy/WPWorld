@@ -72,15 +72,17 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     float DistanceBetweenStageSelectButtons = 10;
     [SerializeField]
+    int World00NumStages_Tutorial = 1;
+    [SerializeField]
     int World01NumStages_PuzzleMaze = 3;
     [SerializeField]
-    int World02NumStages_Tetris = 3;
+    int World02NumStages_Platformer = 3;
     [SerializeField]
-    int World03NumStages_Platformer = 3;
+    int World03NumStages_DungeonSweeper = 3;
     [SerializeField]
-    int World04NumStages_DungeonSweeper = 1;
+    int World04NumStages_AsteroidRun = 1;
     [SerializeField]
-    int World05NumStages_AsteroidRun = 1;
+    int World05NumStages_Credits = 1;
 
     private void Start()
     {
@@ -302,14 +304,12 @@ public class ArcoreDeployer : MonoBehaviour
     }
     //-----------------------------------------------------------------//
 
-
     //-----SELECTION SCREEN STAGE FUNCTIONS-----//
     public void ToSelectionScreen_Stage(bool checkObject = false)
     {
         //Check if the ground object is null
         if(checkObject)
         {
-            
             if(_GroundObject == null)
             {
                 return;
@@ -324,6 +324,11 @@ public class ArcoreDeployer : MonoBehaviour
         
         switch (CurrentWorldName.text)
         {
+            case "Tutorial World":
+                {
+                    NumOfStages = World00NumStages_Tutorial;
+                    break;
+                }
             case "Puzzle Maze World":
                 {
                     NumOfStages = World01NumStages_PuzzleMaze;
@@ -331,18 +336,22 @@ public class ArcoreDeployer : MonoBehaviour
                 }
             case "Platformer World":
                 {
-                    NumOfStages = World03NumStages_Platformer;
+                    NumOfStages = World02NumStages_Platformer;
                     break;
                 }
             case "DungeonSweeper World":
                 {
-                    NumOfStages = World04NumStages_DungeonSweeper;
+                    NumOfStages = World03NumStages_DungeonSweeper;
                     break;
                 }
-
             case "Asteroid World":
                 {
-                    NumOfStages = World05NumStages_AsteroidRun;
+                    NumOfStages = World04NumStages_AsteroidRun;
+                    break;
+                }
+            case "Credits World":
+                {
+                    NumOfStages = World05NumStages_Credits;
                     break;
                 }
             default:
@@ -391,6 +400,11 @@ public class ArcoreDeployer : MonoBehaviour
         //Get the world number
         switch (CurrentWorldName.text)
         {
+            case "Tutorial World":
+                {
+                    WorldNum = "World00";
+                    break;
+                }
             case "Puzzle Maze World":
                 {
                     WorldNum = "World01";
@@ -398,16 +412,20 @@ public class ArcoreDeployer : MonoBehaviour
                 }
             case "Platformer World":
                 {
-                    WorldNum = "World03";
+                    WorldNum = "World02";
                     break;
                 }
             case "DungeonSweeper World":
                 {
+                    WorldNum = "World03";
+                    break;
+                }
+            case "Asteroid World":
+                {
                     WorldNum = "World04";
                     break;
                 }
-            
-            case "Asteroid World":
+            case "Credits World":
                 {
                     WorldNum = "World05";
                     break;
