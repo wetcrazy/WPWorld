@@ -53,7 +53,7 @@ public class SoundSystem : MonoBehaviour {
         BackgroundMusicAudioSource = BackgroundMusic.GetComponent<AudioSource>();
         BackgroundMusicAudioSource.loop = true;
     }
-    
+
     public void PlayBGM(string BGMName)
     {
         if(BGM_muted)
