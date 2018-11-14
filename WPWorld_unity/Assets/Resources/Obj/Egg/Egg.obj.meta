@@ -6,17 +6,29 @@ ModelImporter:
     100000: Egg
     100002: //RootNode
     100004: Egg_Beak
+    100006: Egg_Lefteye
+    100008: Egg_Righteye
     400000: Egg
     400002: //RootNode
     400004: Egg_Beak
+    400006: Egg_Lefteye
+    400008: Egg_Righteye
     2100000: EggMat
     2100002: Egg_BeakMat
+    2100004: Egg_LefteyeMat
+    2100006: Egg_RighteyeMat
     2300000: Egg
     2300002: Egg_Beak
+    2300004: Egg_Lefteye
+    2300006: Egg_Righteye
     3300000: Egg
     3300002: Egg_Beak
+    3300004: Egg_Lefteye
+    3300006: Egg_Righteye
     4300000: Egg
     4300002: Egg_Beak
+    4300004: Egg_Lefteye
+    4300006: Egg_Righteye
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -27,6 +39,16 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Egg_BeakMat
+    second: {fileID: 2100000, guid: 0417223b40fe8ed4a84374a5708e9d0f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Egg_LefteyeMat
+    second: {fileID: 2100000, guid: 0417223b40fe8ed4a84374a5708e9d0f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Egg_RighteyeMat
     second: {fileID: 2100000, guid: 0417223b40fe8ed4a84374a5708e9d0f, type: 2}
   materials:
     importMaterials: 1
