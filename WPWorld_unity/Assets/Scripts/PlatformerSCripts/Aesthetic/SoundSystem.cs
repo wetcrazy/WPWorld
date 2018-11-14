@@ -3,13 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundSystem : MonoBehaviour {
-    
+
     [SerializeField]
     private List<AudioSource> SFX = new List<AudioSource>();
     [SerializeField]
     int MaximumSFXPlayingAtOnce = 10;
 
-    bool isMuted_BGM, isMuted_SFX;
+    //bool isMuted_BGM, isMuted_SFX;
+
+    bool BGM_muted, SFX_muted;
+    
+    public bool isMuted_BGM
+    {
+        get { return BGM_muted; }
+        set { BGM_muted = value; }
+    }
+
+    public bool isMuted_SFX
+    {
+        get { return SFX_muted; }
+        set { SFX_muted = value; }
+    }
 
     [SerializeField]
     AudioClip[] AudioSounds;
@@ -20,7 +34,7 @@ public class SoundSystem : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
-        isMuted_BGM = isMuted_SFX = false;
+        BGM_muted = SFX_muted = false;
         AudioSounds = Resources.LoadAll<AudioClip>("Audio");
         AudioSources = new GameObject[MaximumSFXPlayingAtOnce];
 
@@ -42,7 +56,7 @@ public class SoundSystem : MonoBehaviour {
     
     public void PlayBGM(string BGMName)
     {
-        if(isMuted_BGM)
+        if(BGM_muted)
         {
             return;
         }
@@ -70,9 +84,14 @@ public class SoundSystem : MonoBehaviour {
         BackgroundMusicAudioSource.volume = n_Volume;
     }
 
+    public void StopBGM()
+    {
+        BackgroundMusicAudioSource.Stop();
+    }
+
     public void PlaySFX(string SFXName)
     {
-        if(isMuted_SFX)
+        if(SFX_muted)
         {
             return;
         }

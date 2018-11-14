@@ -9,6 +9,14 @@ public class SettingsManager : MonoBehaviour {
     Slider BGM_slider;
     [SerializeField]
     Slider SFX_slider;
+    [SerializeField]
+    Image BGM_SoundIcon;
+    [SerializeField]
+    Image SFX_SoundIcon;
+    [SerializeField]
+    Sprite SoundOnSprite;
+    [SerializeField]
+    Sprite SoundOffSprite;
 
     SoundSystem soundSystem = null;
     bool hasBGMVolumeChange, hasSFXVolumeChange;
@@ -18,7 +26,6 @@ public class SettingsManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-        gameObject.SetActive(false);
     }
 
     public void OpenSettings()
@@ -31,11 +38,33 @@ public class SettingsManager : MonoBehaviour {
     public void hasBGMChanged()
     {
         hasBGMVolumeChange = true;
+
+        if (BGM_slider.value == 0)
+        {
+            soundSystem.isMuted_BGM = true;
+            BGM_SoundIcon.sprite = SoundOffSprite;
+        }
+        else if (BGM_SoundIcon.sprite == SoundOffSprite)
+        {
+            soundSystem.isMuted_BGM = false;
+            BGM_SoundIcon.sprite = SoundOnSprite;
+        }
     }
 
     public void hasSFXChanged()
     {
         hasSFXVolumeChange = true;
+
+        if(SFX_slider.value == 0)
+        {
+            soundSystem.isMuted_SFX = true;
+            SFX_SoundIcon.sprite = SoundOffSprite;
+        }
+        else if (SFX_SoundIcon.sprite == SoundOffSprite)
+        {
+            soundSystem.isMuted_SFX = false;
+            SFX_SoundIcon.sprite = SoundOnSprite;
+        }
     }
 
     public void ApplyAndClose()
@@ -57,6 +86,11 @@ public class SettingsManager : MonoBehaviour {
 
     public void CancelAndClose()
     {
+        if(!gameObject.activeSelf)
+        {
+            return;
+        }
+
         hasBGMVolumeChange = false;
         hasSFXVolumeChange = false;
         gameObject.SetActive(false);

@@ -934,6 +934,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BGM_slider: {fileID: 1303876076}
   SFX_slider: {fileID: 356382444}
+  BGM_SoundIcon: {fileID: 329478374}
+  SFX_SoundIcon: {fileID: 304764484}
+  SoundOnSprite: {fileID: 21300000, guid: 6cca4fd0ff4f8e34e9d98ebaee209e43, type: 3}
+  SoundOffSprite: {fileID: 21300000, guid: 4e9ea12c3a7c1714d8f9c82e9905f059, type: 3}
 --- !u!1 &304764482
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,7 +2160,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &667354007
 RectTransform:
@@ -2522,6 +2526,17 @@ MonoBehaviour:
       - m_Target: {fileID: 2094170917}
         m_MethodName: ToSelectionScreen_Stage
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 274995077}
+        m_MethodName: CancelAndClose
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6978,15 +6993,16 @@ MonoBehaviour:
   MainCamera: {fileID: 1586502945}
   MainCameraRef: {fileID: 1836942799}
   Arr_LevelsOBJ:
-  - {fileID: 1625577442376948, guid: 7a341dafd944af544807fd46d1a87347, type: 2}
-  - {fileID: 1570637891420728, guid: 80467e09d08985e439991754fa19b32f, type: 2}
-  - {fileID: 1365385162507574, guid: b6640f312a7df034da37ce0801e1f751, type: 2}
-  - {fileID: 1052225291074176, guid: d7ed51f5fa2c2dd49b06815a4a135858, type: 2}
-  - {fileID: 1922116852910554, guid: 57de27558763f2046852ed018fc93c0f, type: 2}
+  - {fileID: 1519828616589436, guid: 7a341dafd944af544807fd46d1a87347, type: 2}
+  - {fileID: 1625577442376948, guid: 80467e09d08985e439991754fa19b32f, type: 2}
+  - {fileID: 1570637891420728, guid: b6640f312a7df034da37ce0801e1f751, type: 2}
+  - {fileID: 1365385162507574, guid: e3fe21de04bc8d64083355e06ad36eb6, type: 2}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1095714214983454, guid: 97ddf65df92cd6a4d897ad73d3ead8c6, type: 2}
+  - {fileID: 1949271761276654, guid: 8a9304be8979b844c813dac2dd39e726, type: 2}
+  - {fileID: 1265473624432774, guid: 96cfd0fc2763f1542aa3b9c60e458f16, type: 2}
+  - {fileID: 1867159456858982, guid: edc38b8d9908202478fe4b283aef232d, type: 2}
   - {fileID: 1817083448585300, guid: 21951c6a1be626f4c87cee389334f992, type: 2}
   AnchorRef: {fileID: 503694280}
   UniverseObj: {fileID: 1586531558205422, guid: c8f8242d9b728d74680817922d9d1669,
@@ -7001,9 +7017,9 @@ MonoBehaviour:
   WorldRotationSpeed: 10
   DistanceBetweenStageSelectButtons: 300
   World00NumStages_Tutorial: 1
-  World01NumStages_PuzzleMaze: 3
-  World02NumStages_Platformer: 3
-  World03NumStages_DungeonSweeper: 3
+  World01NumStages_PuzzleMaze: 4
+  World02NumStages_Platformer: 2
+  World03NumStages_DungeonSweeper: 4
   World04NumStages_AsteroidRun: 1
   World05NumStages_Credits: 1
 --- !u!4 &2094170918
