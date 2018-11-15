@@ -33,14 +33,14 @@ public class SoundSystem : MonoBehaviour {
     AudioSource BackgroundMusicAudioSource = null;
     
     // Use this for initialization
-    void Start () {
+    private void Awake () {
         BGM_muted = SFX_muted = false;
         AudioSounds = Resources.LoadAll<AudioClip>("Audio");
         AudioSources = new GameObject[MaximumSFXPlayingAtOnce];
 
         for (int i = 0; i < AudioSources.Length; ++i)
         {
-            AudioSources[i] = new GameObject("SFX" + i);
+            AudioSources[i] = new GameObject("SFX" + i.ToString());
             AudioSources[i].transform.parent = transform;
             AudioSources[i].transform.localPosition = Vector3.zero;
             AudioSources[i].AddComponent<AudioSource>();
@@ -54,7 +54,7 @@ public class SoundSystem : MonoBehaviour {
         BackgroundMusicAudioSource.loop = true;
     }
 
-    public void PlayBGM(string BGMName)
+    public void PlayBGM(string BGMName, float volume = 1.0f)
     {
         if(BGM_muted)
         {
@@ -74,6 +74,7 @@ public class SoundSystem : MonoBehaviour {
             }
 
             BackgroundMusicAudioSource.clip = audioClip;
+            BackgroundMusicAudioSource.volume = volume;
             BackgroundMusicAudioSource.Play();
             break;
         }

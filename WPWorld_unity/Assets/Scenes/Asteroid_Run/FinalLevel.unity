@@ -263,7 +263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea60f1e4e5d3b6c47b0759aeb40a555a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: {fileID: 0}
   SFX:
   - {fileID: 0}
   - {fileID: 0}
@@ -275,7 +274,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  TestClip: {fileID: 0}
+  MaximumSFXPlayingAtOnce: 10
+  AudioSounds: []
 --- !u!4 &1446675644
 Transform:
   m_ObjectHideFlags: 0

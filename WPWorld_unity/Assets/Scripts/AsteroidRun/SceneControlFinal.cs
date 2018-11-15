@@ -58,6 +58,8 @@ public class SceneControlFinal : MonoBehaviour
         {
             SpawnObstacle();
         }
+
+        GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>().PlayBGM("Platformer4");
     }
 
     // Update is called once per frame
