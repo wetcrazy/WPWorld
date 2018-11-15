@@ -26,6 +26,7 @@ public class SettingsManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+        gameObject.SetActive(false);
     }
 
     public void OpenSettings()
@@ -93,9 +94,10 @@ public class SettingsManager : MonoBehaviour {
 
         hasBGMVolumeChange = false;
         hasSFXVolumeChange = false;
-        gameObject.SetActive(false);
 
         BGM_slider.value = OriginalBGMVolume;
         SFX_slider.value = OriginalSFXVolume;
+
+        gameObject.SetActive(false);
     }
 }
