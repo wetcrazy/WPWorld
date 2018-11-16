@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour {
 
     private bool Hidden = true;
 
-    private Vector3 OrgSize;
     private float TimeElapsed;
     [SerializeField]
     private float TimeToDecay;
@@ -52,11 +51,19 @@ public class Enemy : MonoBehaviour {
     private Rigidbody RigidRef;
     private SoundSystem SoundSystemRef;
 
+    // Reset Variables
+    private Vector3 OrgPos;
+    private Vector3 OrgSize;
+    private ENEMYTYPES OrgType;
+
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
-        OrgSize = transform.localScale;
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+
+        OrgPos = transform.localPosition;
+        OrgSize = transform.localScale;
+        OrgType = CurrType;
 	}
 	
 	// Update is called once per frame
@@ -180,7 +187,10 @@ public class Enemy : MonoBehaviour {
                 if(TimeElapsed >= TimeToDecay)
                 {
                     transform.localScale = OrgSize;
-                    GetComponent<Renderer>().enabled = false;
+                    if (transform.name.Contains("Clone"))
+                        Destroy(this.gameObject);
+                    else
+                        GetComponent<Renderer>().enabled = false;
                 }
                 else
                 {
@@ -295,5 +305,12 @@ public class Enemy : MonoBehaviour {
         n_Score.transform.position = this.transform.position;
 
         n_Score.GetComponent<TextMesh>().text = Score.ToString();
+    }
+
+    public void Reset()
+    {
+        transform.localPosition = OrgPos;
+        CurrType = OrgType;
+        transform.localScale = OrgSize;
     }
 }
