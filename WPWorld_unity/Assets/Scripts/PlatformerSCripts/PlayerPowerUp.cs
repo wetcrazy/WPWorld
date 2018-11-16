@@ -69,11 +69,14 @@ public class PlayerPowerUp : MonoBehaviour {
 
                 break;
             case (POWERUPS.INVISIBILITY):
-                Color ColorRef = GetComponent<MeshRenderer>().material.color;
+                Color ColorRef = transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
                 ColorRef.a = Mathf.Lerp(ColorRef.a, 0, Time.deltaTime);
 
-                GetComponent<MeshRenderer>().material.color = ColorRef;
-                Debug.Log(ColorRef);
+                for(int i = 0; i < transform.childCount; i++)
+                {
+                    transform.GetChild(0).GetComponent<MeshRenderer>().material.color = ColorRef;
+                }
+
                 break;
             case (POWERUPS.INSTANTDEATH):
                 break;
