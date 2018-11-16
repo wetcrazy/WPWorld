@@ -38,4 +38,9 @@ public class CollectOnCollide : MonoBehaviour {
             }
         }
     }
+
+    public void Reset()
+    {
+        RenderRef.enabled = true;
+    }
 }

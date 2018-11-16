@@ -31,7 +31,7 @@ public class ShowOnCollide : MonoBehaviour {
             Collided = false;
         }
         else
-            GetComponent<Collider>().isTrigger = true;
+            ColliderRef.isTrigger = true;
     }
 
     private void OnTriggerStay(Collider other)
@@ -79,5 +79,11 @@ public class ShowOnCollide : MonoBehaviour {
                 CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
             }
         }
+    }
+
+    public void Reset()
+    {
+        Collided = false;
+        RenderRef.enabled = false;
     }
 }

@@ -83,4 +83,9 @@ public class DestroyOnCollide : MonoBehaviour {
             }
         }
     }
+
+    public void Reset()
+    {
+        RenderRef.enabled = true;
+    }
 }
