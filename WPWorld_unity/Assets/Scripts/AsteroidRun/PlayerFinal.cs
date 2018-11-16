@@ -42,7 +42,7 @@ public class PlayerFinal : MonoBehaviour {
         JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.1f, 0);
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0, -0.3f, 0);
     }
 	
 	// Update is called once per frame
