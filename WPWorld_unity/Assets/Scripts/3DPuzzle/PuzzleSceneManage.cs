@@ -7,14 +7,18 @@ public class PuzzleSceneManage : MonoBehaviour {
     private GameObject Players;
     private GameObject Traps;
     private GameObject dummer;
-    [SerializeField]
-    private AudioClip Youarealreadydead;
+
+    SoundSystem soundSystem;
+
     // Use this for initialization
     void Start () {
         Players = GameObject.FindGameObjectWithTag("Player");
         PlayerStartpos = Players.transform.position;
         Traps = GameObject.FindGameObjectWithTag("PuzzleTrap");
         dummer = GameObject.FindGameObjectWithTag("DumbAI");
+        soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+
+        soundSystem.PlayBGM("Stage_1");
 	}
 	
 	// Update is called once per frame
