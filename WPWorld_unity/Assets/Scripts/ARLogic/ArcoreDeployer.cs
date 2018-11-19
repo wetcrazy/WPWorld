@@ -64,6 +64,8 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     Text UnlockedText;
     [SerializeField]
+    GameObject WinScreen;
+    [SerializeField]
     Text DebugText;
 
     //Arrays that store the individual objects in each screen
@@ -117,8 +119,11 @@ public class ArcoreDeployer : MonoBehaviour
         NewColor.a = 0;
         WorldSelectButtonImage.color = NewColor;
 
-        //Make the Unocked Screen inactive
+        //Make the Unlocked Screen inactive
         UnlockedBackground.SetActive(false);
+        
+        //Make the Win Screen inactive
+        WinScreen.SetActive(false);
     }
 
     private void Update()
@@ -600,7 +605,10 @@ public class ArcoreDeployer : MonoBehaviour
         if(isWon)
         {
             //Win Screen here
-
+            if(!WinScreen.activeSelf)
+            {
+                WinScreen.SetActive(true);
+            }
             return;
         }
 
@@ -653,6 +661,11 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void RestartLevel()
     {
+        if(WinScreen.activeSelf)
+        {
+            WinScreen.SetActive(false);
+        }
+
         _GroundObject.SendMessage("Reset_Level");
     }
 
@@ -675,6 +688,7 @@ public class ArcoreDeployer : MonoBehaviour
             UnlockedText.text = CurrentWorldNum + " has been completed!\n\nNext World Unlocked!";
         }
 
+        WinScreen.SetActive(false);
         UnlockedBackground.SetActive(true);
     }
 
