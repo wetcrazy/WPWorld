@@ -40,8 +40,11 @@ public class ArcoreDeployer : MonoBehaviour
     Anchor _anchor;
 
     bool isSpawned = false;
+    public bool isWon;
     Vector3 FirstTouchWorldPoint = new Vector3();
     List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
+    string CurrentWorldNum, CurrentStageNum;
+    int NumOfStages;
 
     //----UI OBJECTS----//
     [SerializeField]
@@ -57,6 +60,12 @@ public class ArcoreDeployer : MonoBehaviour
     [SerializeField]
     GameObject StageSelectBtn;
     [SerializeField]
+    GameObject UnlockedBackground;
+    [SerializeField]
+    Text UnlockedText;
+    [SerializeField]
+    GameObject WinScreen;
+    [SerializeField]
     Text DebugText;
 
     //Arrays that store the individual objects in each screen
@@ -67,6 +76,8 @@ public class ArcoreDeployer : MonoBehaviour
     private GameObject[] GameScreenObjects;
 
     //----UI LOGIC VARIABLES----//
+    [SerializeField]
+    int TotalNumOfWorlds = 6;
     [SerializeField]
     float WorldRotationSpeed = 10;
     [SerializeField]
@@ -101,11 +112,18 @@ public class ArcoreDeployer : MonoBehaviour
         ExitGameScreen();
         ToSplashScreen();
         
+        //Initialise UI Gameobjects
         //Make the world selection button invisible
         Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
         Color NewColor = WorldSelectButtonImage.color;
         NewColor.a = 0;
         WorldSelectButtonImage.color = NewColor;
+
+        //Make the Unlocked Screen inactive
+        UnlockedBackground.SetActive(false);
+        
+        //Make the Win Screen inactive
+        WinScreen.SetActive(false);
     }
 
     private void Update()
@@ -320,7 +338,7 @@ public class ArcoreDeployer : MonoBehaviour
             }
         }
 
-        int NumOfStages = 0;
+        NumOfStages = 0;
         
         switch (CurrentWorldName.text)
         {
@@ -395,39 +413,40 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void SelectStage(string StageNum)
     {
-        string WorldNum = "";
+        CurrentWorldNum = "";
+        CurrentStageNum = StageNum;
 
         //Get the world number
         switch (CurrentWorldName.text)
         {
             case "Tutorial World":
                 {
-                    WorldNum = "World00";
+                    CurrentWorldNum = "World00";
                     break;
                 }
             case "Puzzle Maze World":
                 {
-                    WorldNum = "World01";
+                    CurrentWorldNum = "World01";
                     break;
                 }
             case "Platformer World":
                 {
-                    WorldNum = "World02";
+                    CurrentWorldNum = "World02";
                     break;
                 }
             case "DungeonSweeper World":
                 {
-                    WorldNum = "World03";
+                    CurrentWorldNum = "World03";
                     break;
                 }
             case "Asteroid World":
                 {
-                    WorldNum = "World04";
+                    CurrentWorldNum = "World04";
                     break;
                 }
             case "Credits World":
                 {
-                    WorldNum = "World05";
+                    CurrentWorldNum = "World05";
                     break;
                 }
             default:
@@ -435,7 +454,7 @@ public class ArcoreDeployer : MonoBehaviour
         }
         
         //Set the next level to be spawned
-        SetNextObject(WorldNum + '_' + StageNum);
+        SetNextObject(CurrentWorldNum + '_' + StageNum);
     }
 
     public void ExitSelectionScreen_Stage(bool DestroyUniverse = false)
@@ -583,13 +602,17 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void GameScreenUpdate()
     {
-        // Gets all Planes that are track and put it into the list
-        //Session.GetTrackables(List_AllPlanes);
+        if(isWon)
+        {
+            //Win Screen here
+            if(!WinScreen.activeSelf)
+            {
+                WinScreen.SetActive(true);
+            }
+            return;
+        }
 
-        //if (!isSpawned && Input.touchCount > 0)
-        //{
-        //    SpawnLevel(Input.GetTouch(0));
-        //}
+        _GroundObject.SendMessage("CheckIsWon", isWon);
 
         foreach (DetectedPlane thePlane in List_AllPlanes)
         {
@@ -638,7 +661,40 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void RestartLevel()
     {
+        if(WinScreen.activeSelf)
+        {
+            WinScreen.SetActive(false);
+        }
+
         _GroundObject.SendMessage("Reset_Level");
+    }
+
+    public void CompleteStage()
+    {
+        ExitGameScreen();
+        ToSelectionScreen_Stage();
+
+        //Check if it's the last stage/last world
+        if (CurrentStageNum.EndsWith(NumOfStages.ToString()))
+        {
+            UnlockedText.text = CurrentStageNum + " has been completed!\n\nNext Stage Unlocked!";
+        }
+        else if (CurrentWorldNum.EndsWith((TotalNumOfWorlds - 1).ToString()))
+        {
+            UnlockedText.text = CurrentWorldNum + " has been completed!";
+        }
+        else
+        {
+            UnlockedText.text = CurrentWorldNum + " has been completed!\n\nNext World Unlocked!";
+        }
+
+        WinScreen.SetActive(false);
+        UnlockedBackground.SetActive(true);
+    }
+
+    public void CloseUnlock()
+    {
+        UnlockedBackground.SetActive(false);
     }
 
     // Add a new Object using point on screen and ARCore
