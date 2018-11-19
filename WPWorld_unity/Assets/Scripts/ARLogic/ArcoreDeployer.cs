@@ -40,6 +40,7 @@ public class ArcoreDeployer : MonoBehaviour
     Anchor _anchor;
 
     bool isSpawned = false;
+    public bool isWon;
     Vector3 FirstTouchWorldPoint = new Vector3();
     List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     string CurrentWorldNum, CurrentStageNum;
@@ -596,13 +597,14 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void GameScreenUpdate()
     {
-        // Gets all Planes that are track and put it into the list
-        //Session.GetTrackables(List_AllPlanes);
+        if(isWon)
+        {
+            //Win Screen here
 
-        //if (!isSpawned && Input.touchCount > 0)
-        //{
-        //    SpawnLevel(Input.GetTouch(0));
-        //}
+            return;
+        }
+
+        _GroundObject.SendMessage("CheckIsWon", isWon);
 
         foreach (DetectedPlane thePlane in List_AllPlanes)
         {
@@ -672,6 +674,13 @@ public class ArcoreDeployer : MonoBehaviour
         {
             UnlockedText.text = CurrentWorldNum + " has been completed!\n\nNext World Unlocked!";
         }
+
+        UnlockedBackground.SetActive(true);
+    }
+
+    public void CloseUnlock()
+    {
+        UnlockedBackground.SetActive(false);
     }
 
     // Add a new Object using point on screen and ARCore
