@@ -225,6 +225,11 @@ public class TPSLogic : MonoBehaviour
             if (ClonedEnemy.name.Contains("Clone"))
                 Destroy(ClonedEnemy.gameObject);
         }
+
+        foreach(GivePowerUpOnCollide PowerUpRef in FindObjectsOfType(typeof(GivePowerUpOnCollide)) as GivePowerUpOnCollide[])
+        {
+            Destroy(PowerUpRef.gameObject);
+        }
     }
 
     public void Win()

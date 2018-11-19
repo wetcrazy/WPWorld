@@ -79,6 +79,8 @@ public class PlayerPowerUp : MonoBehaviour {
 
                 break;
             case (POWERUPS.INSTANTDEATH):
+                GetComponent<TPSLogic>().Death();
+                CurrPowerUp = POWERUPS.NONE;
                 break;
         }
     }
@@ -103,6 +105,7 @@ public class PlayerPowerUp : MonoBehaviour {
                 >= transform.position.y - transform.lossyScale.y / 2 && !GetComponent<TPSLogic>().GetGrounded())
             {
                 GetComponent<TPSLogic>().Death();
+                CurrPowerUp = POWERUPS.NONE;
             }
         }
         else if (CurrPowerUp == POWERUPS.SUPERSPEED)
@@ -110,6 +113,7 @@ public class PlayerPowerUp : MonoBehaviour {
             if (Mathf.Abs(CollisionRef.transform.position.y - transform.position.y) < CollisionRef.transform.lossyScale.y / 2)
             {
                 GetComponent<TPSLogic>().Death();
+                CurrPowerUp = POWERUPS.NONE;
             }
         }
     }
