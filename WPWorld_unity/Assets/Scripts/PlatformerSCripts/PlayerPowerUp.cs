@@ -57,7 +57,7 @@ public class PlayerPowerUp : MonoBehaviour {
                 {
                     if(TimeElapsed <= 0)
                     {
-                        Vector3 SpawnPosition = transform.position + (transform.right * 0.1f);
+                        Vector3 SpawnPosition = transform.position + (transform.forward * 0.1f);
 
                         GameObject n_Fireball = Instantiate(FireBallPrefab, SpawnPosition, transform.rotation);
 
@@ -69,12 +69,16 @@ public class PlayerPowerUp : MonoBehaviour {
 
                 break;
             case (POWERUPS.INVISIBILITY):
-                Color ColorRef = GetComponent<MeshRenderer>().material.color;
+                Color ColorRef = transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
                 ColorRef.a = Mathf.Lerp(ColorRef.a, 0, Time.deltaTime);
 
-                GetComponent<MeshRenderer>().material.color = ColorRef;
+                for(int i = 0; i < transform.childCount; i++)
+                {
+                    transform.GetChild(0).GetComponent<MeshRenderer>().material.color = ColorRef;
+                }
+
                 break;
-            default:
+            case (POWERUPS.INSTANTDEATH):
                 break;
         }
     }

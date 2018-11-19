@@ -17,8 +17,10 @@ public class TPSLogic : MonoBehaviour
     [SerializeField]
     private string DeathSFX;
 
+    private int PrevPoints;
+
     [SerializeField]
-    private int Points = 0;
+    private int CurrPoints = 0;
 
     [SerializeField]
     private int DeathCounter = 0;
@@ -31,6 +33,12 @@ public class TPSLogic : MonoBehaviour
     private float AirborneMovementSpeed;
     private float OrgSpeed;
 
+    private List<CollectOnCollide> ListOfCoins = new List<CollectOnCollide>();
+    private List<DestroyOnCollide> ListOfBricks = new List<DestroyOnCollide>();
+    private List<ShowOnCollide> ListOfTrolls = new List<ShowOnCollide>();
+    private List<SpawnOnCollide> ListOfSpawns = new List<SpawnOnCollide>();
+    private List<Enemy> ListOfEnemies = new List<Enemy>();
+
     // Use this for initialization
     void Start()
     {
@@ -41,6 +49,12 @@ public class TPSLogic : MonoBehaviour
         OrgSpeed = MovementRef.GetMovementSpeed();
 
         Physics.gravity = new Vector3(0, -5 * transform.parent.parent.lossyScale.y, 0);
+
+        ListOfCoins.AddRange(FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[]);
+        ListOfBricks.AddRange(FindObjectsOfType(typeof(DestroyOnCollide)) as DestroyOnCollide[]);
+        ListOfTrolls.AddRange(FindObjectsOfType(typeof(ShowOnCollide)) as ShowOnCollide[]);
+        ListOfSpawns.AddRange(FindObjectsOfType(typeof(SpawnOnCollide)) as SpawnOnCollide[]);
+        ListOfEnemies.AddRange(FindObjectsOfType(typeof(Enemy)) as Enemy[]);
     }
 
     // Update is called once per frame
@@ -50,14 +64,6 @@ public class TPSLogic : MonoBehaviour
 
         if (IsGrounded)
         {
-            Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
-
-            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
-            Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
-
-            Debug.DrawRay(transform.position, (-transform.up - transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
-            Debug.DrawRay(transform.position, (-transform.up + transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
-
             MovementRef.SetMovementSpeed(OrgSpeed);
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -65,6 +71,7 @@ public class TPSLogic : MonoBehaviour
                 Jump();
             }
 
+            // If none of the raycast is hitting the ground, automatically convert grounded to false
             if (!Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
                 && !Physics.Raycast(transform.position, (-transform.up - transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
                 && !Physics.Raycast(transform.position, (-transform.up + transform.right).normalized, out hit, transform.lossyScale.y * 1.5f)
@@ -75,6 +82,7 @@ public class TPSLogic : MonoBehaviour
             }
             else
             {
+                // If one of the hit is currently hitting something, check if it is invisible or even has a renderer component
                 if (!hit.transform.GetComponent<Renderer>() || !hit.transform.GetComponent<Renderer>().isVisible)
                 {
                     if(!hit.transform.name.Contains("Invisible"))
@@ -84,19 +92,6 @@ public class TPSLogic : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(transform.position, -transform.up.normalized * transform.lossyScale.y * 1.5f, Color.green);
-
-            Debug.DrawRay(transform.position, (-transform.up - transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
-            Debug.DrawRay(transform.position, (-transform.up + transform.right * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
-
-            Debug.DrawRay(transform.position, (-transform.up - transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.red);
-            Debug.DrawRay(transform.position, (-transform.up + transform.forward * (transform.lossyScale.x * 10)).normalized * transform.lossyScale.y * 1.5f, Color.blue);
-
-            Debug.DrawRay(transform.position, -transform.right.normalized * transform.lossyScale.x * 1.1f, Color.cyan);
-            Debug.DrawRay(transform.position, transform.right.normalized * transform.lossyScale.x * 1.1f, Color.cyan);
-            Debug.DrawRay(transform.position, -transform.forward.normalized * transform.lossyScale.z * 1.1f, Color.cyan);
-            Debug.DrawRay(transform.position, transform.forward.normalized * transform.lossyScale.z * 1.1f, Color.cyan);
-
             MovementRef.SetMovementSpeed(AirborneMovementSpeed);
 
             RaycastHit hit2, hit3;
@@ -158,12 +153,12 @@ public class TPSLogic : MonoBehaviour
 
     public void SetPoints(int n_Points)
     {
-        Points = n_Points;
+        CurrPoints = n_Points;
     }
 
     public int GetPoints()
     {
-        return Points;
+        return CurrPoints;
     }
 
     public int GetDeaths()
@@ -209,6 +204,32 @@ public class TPSLogic : MonoBehaviour
         HealthPopup DeathUI = FindObjectOfType<HealthPopup>() as HealthPopup;
         if (DeathUI != null)
             DeathUI.ShowDisplay();
+
+        foreach(CollectOnCollide CoinRef in ListOfCoins)
+            CoinRef.Reset();
+
+        foreach(DestroyOnCollide BrickRef in ListOfBricks)
+            BrickRef.Reset();
+
+        foreach(ShowOnCollide TrollRef in ListOfTrolls)
+            TrollRef.Reset();
+
+        foreach (SpawnOnCollide SpawnRef in ListOfSpawns)
+            SpawnRef.Reset();
+
+        foreach (Enemy EnemyRef in ListOfEnemies)
+            EnemyRef.Reset();
+
+        foreach(Enemy ClonedEnemy in FindObjectsOfType(typeof(Enemy)) as Enemy[])
+        {
+            if (ClonedEnemy.name.Contains("Clone"))
+                Destroy(ClonedEnemy.gameObject);
+        }
+    }
+
+    public void Win()
+    {
+        // Show off Win Screen
     }
 
     public bool GetJumpRestrict()

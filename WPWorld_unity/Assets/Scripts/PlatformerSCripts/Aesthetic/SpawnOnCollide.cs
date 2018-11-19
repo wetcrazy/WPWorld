@@ -14,6 +14,8 @@ public class SpawnOnCollide : MonoBehaviour {
     [SerializeField]
     private SPAWNTYPE CurrSpawn;
 
+    private Material OrgMaterial;
+
     [SerializeField]
     private Material ChangedMaterial;
 
@@ -33,15 +35,21 @@ public class SpawnOnCollide : MonoBehaviour {
     private GameObject Enemy;
 
     [SerializeField]
-    private float AmountToSpawn = 1;
+    private int AmountToSpawn = 1;
 
     private Renderer RenderRef;
     private SoundSystem SoundSystemRef;
 
-	// Use this for initialization
-	void Start () {
+    // Reset Variables
+    private int OrgAmount;
+
+    // Use this for initialization
+    void Start () {
         RenderRef = GetComponent<Renderer>();
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+
+        OrgMaterial = RenderRef.material;
+        OrgAmount = AmountToSpawn;
     }
 	
 	// Update is called once per frame
@@ -96,5 +104,11 @@ public class SpawnOnCollide : MonoBehaviour {
                 CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
             }
         }
+    }
+
+    public void Reset()
+    {
+        RenderRef.material = OrgMaterial;
+        AmountToSpawn = OrgAmount;
     }
 }
