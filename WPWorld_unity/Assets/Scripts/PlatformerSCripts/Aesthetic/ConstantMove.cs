@@ -50,8 +50,6 @@ public class ConstantMove : MonoBehaviour {
             if(AfterLeaveZ)
                 PlayerPos.z = transform.position.z;
             other.transform.position = PlayerPos;
-
-            GetComponent<Collider>().isTrigger = false;
         }
     }
 }

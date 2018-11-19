@@ -257,6 +257,11 @@ public class PlayerMovement : MonoBehaviour {
         RespawnPoint = n_Respawn;
     }
 
+    public Vector3 GetRespawn()
+    {
+        return RespawnPoint;
+    }
+
     public void Respawn()
     {
         this.transform.position = RespawnPoint;

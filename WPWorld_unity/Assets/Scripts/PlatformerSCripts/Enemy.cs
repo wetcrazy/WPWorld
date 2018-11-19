@@ -40,8 +40,12 @@ public class Enemy : MonoBehaviour {
     private float TimeToDecay;
 
     [SerializeField]
-    private GameObject ScorePopup;
+    private bool IsImmortal;
+    private ENEMYTYPES PrevType;
+    private RigidbodyConstraints PrevConstraints;
 
+    [SerializeField]
+    private GameObject ScorePopup;
     [SerializeField]
     private int Score;
 
@@ -186,11 +190,23 @@ public class Enemy : MonoBehaviour {
             case (ENEMYTYPES.DEAD):
                 if(TimeElapsed >= TimeToDecay)
                 {
-                    transform.localScale = OrgSize;
-                    if (transform.name.Contains("Clone"))
-                        Destroy(this.gameObject);
+                    if(!IsImmortal)
+                    {
+                        transform.localScale = OrgSize;
+                        if (transform.name.Contains("Clone"))
+                            Destroy(this.gameObject);
+                        else
+                            GetComponent<Renderer>().enabled = false;
+                    }
                     else
-                        GetComponent<Renderer>().enabled = false;
+                    {
+                        transform.localScale = OrgSize;
+                        CurrType = PrevType;
+                        GetComponent<Collider>().isTrigger = false;
+                        transform.position += new Vector3(0, transform.lossyScale.y * 0.5f, 0);
+                        RigidRef.constraints = PrevConstraints;
+                        TimeElapsed = 0;
+                    }
                 }
                 else
                 {
@@ -240,16 +256,15 @@ public class Enemy : MonoBehaviour {
                     && CollidedObject.GetComponent<Rigidbody>().velocity.y <= 0
                     )
                 {
+                    PrevType = CurrType;
                     CurrType = ENEMYTYPES.DEAD;
                     GetComponent<Collider>().isTrigger = true;
-                    if(IsGrounded)
+                    if(IsGrounded || IsImmortal)
                     {
                         GroundDeath();
                     }
                     else
-                    {
                         AirborneDeath();
-                    }
 
                     CollidedObject.GetComponent<TPSLogic>().PushUp();
                 }
@@ -271,6 +286,8 @@ public class Enemy : MonoBehaviour {
     {
         CurrType = ENEMYTYPES.DEAD;
         GetComponent<Collider>().isTrigger = true;
+
+        PrevConstraints = RigidRef.constraints;
 
         RigidRef.constraints = RigidbodyConstraints.FreezeAll;
         transform.localScale *= 0.5f;
@@ -312,5 +329,8 @@ public class Enemy : MonoBehaviour {
         transform.localPosition = OrgPos;
         CurrType = OrgType;
         transform.localScale = OrgSize;
+        if(RigidRef.constraints == RigidbodyConstraints.FreezeAll)
+            RigidRef.constraints = PrevConstraints;
+        TimeElapsed = 0;
     }
 }
