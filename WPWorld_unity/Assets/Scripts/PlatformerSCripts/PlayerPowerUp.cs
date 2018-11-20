@@ -52,18 +52,6 @@ public class PlayerPowerUp : MonoBehaviour {
                 {
                     TimeElapsed -= Time.deltaTime;
                 }
-
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    if(TimeElapsed <= 0)
-                    {
-                        Vector3 SpawnPosition = transform.position + (transform.forward * 0.1f);
-
-                        GameObject n_Fireball = Instantiate(FireBallPrefab, SpawnPosition, transform.rotation);
-
-                        TimeElapsed += FireballDelay;
-                    }
-                }
                 break;
             case (POWERUPS.SUPERJUMP):
 
@@ -115,6 +103,18 @@ public class PlayerPowerUp : MonoBehaviour {
                 GetComponent<TPSLogic>().Death();
                 CurrPowerUp = POWERUPS.NONE;
             }
+        }
+    }
+
+    private void ShootFireball()
+    {
+        if (TimeElapsed <= 0)
+        {
+            Vector3 SpawnPosition = transform.position + (transform.forward * 0.1f);
+
+            GameObject n_Fireball = Instantiate(FireBallPrefab, SpawnPosition, transform.rotation);
+
+            TimeElapsed += FireballDelay;
         }
     }
 }

@@ -25,6 +25,8 @@ public class ItemBoxSpawn : MonoBehaviour {
             GetComponent<Enemy>().enabled = false;
         if (GetComponent<Collider>())
             GetComponent<Collider>().enabled = false;
+        if (GetComponent<GivePowerUpOnCollide>())
+            GetComponent<GivePowerUpOnCollide>().enabled = false;
     }
 	
 	// Update is called once per frame
@@ -41,6 +43,8 @@ public class ItemBoxSpawn : MonoBehaviour {
                 GetComponent<Enemy>().enabled = true;
             if (GetComponent<Collider>())
                 GetComponent<Collider>().enabled = true;
+            if (GetComponent<GivePowerUpOnCollide>())
+                GetComponent<GivePowerUpOnCollide>().enabled = true;
 
             this.enabled = false;
         }

@@ -6,54 +6,62 @@ public class Fireball : MonoBehaviour {
 
     private Rigidbody RigidRef;
 
-    private bool Triggered;
+    private bool Triggered = false;
 
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
 
-        RigidRef.AddForce(transform.right * 40);
+        RigidRef.AddForce(transform.forward * 10);
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Killbox")
+            Destroy(this.gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (Triggered)
-            return;
-
         GameObject CollisionRef = collision.gameObject;
 
-        if(CollisionRef.tag == "Player")
+        if(CollisionRef.tag == "Player" || CollisionRef.name.Contains("Enemy"))
         {
             Destroy(this.gameObject);
-            CollisionRef.GetComponent<TPSLogic>().Death();
-            return;
-        }
-
-        RigidRef.velocity = Vector3.zero;
-
-        if(Mathf.Abs(CollisionRef.transform.position.y - transform.position.y) < CollisionRef.transform.lossyScale.y / 2)
-        {
-            transform.eulerAngles -= new Vector3(0, 180, 0);
-            RigidRef.AddForce(transform.right * 40);
+            if (CollisionRef.tag == "Player")
+                CollisionRef.GetComponent<TPSLogic>().Death();
+            else
+            {
+                CollisionRef.GetComponent<Enemy>().AirborneDeath();
+            }
         }
         else
         {
-            RigidRef.AddForce(transform.right * 40);
-            RigidRef.AddForce(transform.up * 40);
+            RigidRef.velocity = Vector3.zero;
+            if(Mathf.Abs(transform.position.y - CollisionRef.transform.position.y) < CollisionRef.transform.localScale.y / 2.5f)
+            {
+                Debug.Log(CollisionRef.name + " LR, " + Mathf.Abs(transform.position.y - CollisionRef.transform.position.y) + " - " + CollisionRef.transform.localScale.y / 2.5f);
+                transform.forward = -transform.forward;
+            }
+            else
+            {
+                Debug.Log(CollisionRef.name + " UD, " + Mathf.Abs(transform.position.y - CollisionRef.transform.position.y) + " - " + CollisionRef.transform.localScale.y / 2.5f);
+                
+                if(transform.position.y > CollisionRef.transform.position.y) // Down
+                {
+                    RigidRef.AddForce(transform.up * 20);
+                }
+                else // Up
+                {
+                    RigidRef.AddForce(-transform.up * 20);
+                }
+            }
+            RigidRef.AddForce(transform.forward * 20);
         }
-
-        Triggered = true;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (!Triggered)
-            return;
-
-        Triggered = false;
     }
 }
