@@ -678,16 +678,26 @@ public class ArcoreDeployer : MonoBehaviour
         if (CurrentStageNum.EndsWith(NumOfStages.ToString()))
         {
             UnlockedText.text = CurrentStageNum + " has been completed!\n\nNext Stage Unlocked!";
+            PlayerPrefs.SetInt("LastCompletedStage", CurrentStageNum[CurrentStageNum.Length - 1] - '0');
+            
         }
         else if (CurrentWorldNum.EndsWith((TotalNumOfWorlds - 1).ToString()))
         {
             UnlockedText.text = CurrentWorldNum + " has been completed!";
+            PlayerPrefs.SetInt("LastCompletedWorld", CurrentWorldNum[CurrentWorldNum.Length - 1] - '0');
+            PlayerPrefs.SetInt("LastCompletedStage", CurrentStageNum[CurrentStageNum.Length - 1] - '0');
+
+            
         }
         else
         {
             UnlockedText.text = CurrentWorldNum + " has been completed!\n\nNext World Unlocked!";
-        }
 
+            PlayerPrefs.SetInt("LastCompletedWorld", CurrentWorldNum[CurrentWorldNum.Length - 1] - '0');
+            PlayerPrefs.SetInt("LastCompletedStage", 0);
+            PlayerPrefs.SetString("CurrentWorld", CurrentWorldName.text);
+        }
+        PlayerPrefs.Save();
         WinScreen.SetActive(false);
         UnlockedBackground.SetActive(true);
     }
