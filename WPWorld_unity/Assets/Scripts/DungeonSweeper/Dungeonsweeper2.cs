@@ -51,7 +51,6 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     // Text Stuff
     public Text RC_Count, RC_Point;
-    public GameObject Win_text;
 
     // Timer Stuff
     public Slider TimerBar;  
@@ -60,6 +59,7 @@ public class Dungeonsweeper2 : MonoBehaviour
 
     // Conditions
     public bool is_lose = false;
+    public bool isWin = false;
 
     // Reset Level Stuff
     private float waitTimer = 0.0f;
@@ -85,7 +85,12 @@ public class Dungeonsweeper2 : MonoBehaviour
                     List_Anchors[0].GetComponent<AnchorPoint>().m_isGridApplied = true;
                     GridSetup(List_GridSizesPrefab[0], 0, 5, 6);
                     AnchorMovement(0);
-                }          
+                }
+                // Win conidition
+                if(List_Anchors[0].GetComponent<AnchorPoint>().m_isdone)
+                {
+                    isWin = true;
+                }
                 break;
             case LevelType.LEVEL_TWO:
                 // 1st anchor
@@ -101,6 +106,11 @@ public class Dungeonsweeper2 : MonoBehaviour
                     List_Anchors[1].GetComponent<AnchorPoint>().m_isGridApplied = true;
                     GridSetup(List_GridSizesPrefab[0], 1, 10, 6);
                     AnchorMovement(1);
+                }
+                // Win conidition
+                if (List_Anchors[1].GetComponent<AnchorPoint>().m_isdone)
+                {
+                    isWin = true;
                 }
                 break;
             case LevelType.LEVEL_THREE:
@@ -123,6 +133,11 @@ public class Dungeonsweeper2 : MonoBehaviour
                     List_Anchors[2].GetComponent<AnchorPoint>().m_isGridApplied = true;
                     GridSetup(List_GridSizesPrefab[2], 2, 15, 6);
                     AnchorMovement(2);
+                }
+                // Win conidition
+                if (List_Anchors[2].GetComponent<AnchorPoint>().m_isdone)
+                {
+                    isWin = true;
                 }
                 break;
             case LevelType.LEVEL_FOUR:
@@ -151,6 +166,11 @@ public class Dungeonsweeper2 : MonoBehaviour
                     List_Anchors[3].GetComponent<AnchorPoint>().m_isGridApplied = true;
                     GridSetup(List_GridSizesPrefab[2], 3, 20, 6);
                     AnchorMovement(3);
+                }
+                // Win conidition
+                if (List_Anchors[3].GetComponent<AnchorPoint>().m_isdone)
+                {
+                    isWin = true;
                 }
                 break;
         }
