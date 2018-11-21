@@ -332,5 +332,7 @@ public class Enemy : MonoBehaviour {
         if(RigidRef.constraints == RigidbodyConstraints.FreezeAll)
             RigidRef.constraints = PrevConstraints;
         TimeElapsed = 0;
+        GetComponent<Collider>().isTrigger = false;
+        GetComponent<Renderer>().enabled = true;
     }
 }
