@@ -21,6 +21,8 @@ public class CollectOnCollide : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!RenderRef.isVisible)
+            return;
         transform.Rotate(new Vector3(0, 5, 0));
 	}
 
