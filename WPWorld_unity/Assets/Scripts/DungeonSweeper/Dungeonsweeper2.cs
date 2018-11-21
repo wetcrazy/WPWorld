@@ -613,4 +613,10 @@ public class Dungeonsweeper2 : MonoBehaviour
         is_lose = false;
         currTimer = TIMER;
     }
+
+    // Check lose Condition
+    public void CheckIsLose(bool _isWon)
+    {
+        _isWon = isWin;
+    }
 }
