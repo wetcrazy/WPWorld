@@ -26,15 +26,4 @@ public class GivePowerUpOnCollide : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        GameObject CollidedObject = collision.gameObject;
-
-        if(CollidedObject.tag == "Player")
-        {
-            CollidedObject.GetComponent<PlayerPowerUp>().SetPowerUp(PowerUpToGive);
-            Destroy(this.gameObject);
-        }
-    }
 }

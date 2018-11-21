@@ -10,7 +10,7 @@ public class DebugPos : MonoBehaviour {
 
     private Text TextRef;
 
-	// Use this for initialization
+	// Use this for initialization 
 	void Start () {
         TextRef = GetComponent<Text>();
 	}
