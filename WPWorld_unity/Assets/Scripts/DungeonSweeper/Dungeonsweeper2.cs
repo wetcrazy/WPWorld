@@ -619,4 +619,10 @@ public class Dungeonsweeper2 : MonoBehaviour
     {
         _isWon = isWin;
     }
+
+    // Check win condition
+    public void CheckIsWon(ref bool _isWon)
+    {
+        _isWon = isWin;
+    }
 }
