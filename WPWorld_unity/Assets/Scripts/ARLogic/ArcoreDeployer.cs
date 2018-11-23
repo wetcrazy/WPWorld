@@ -133,12 +133,12 @@ public class ArcoreDeployer : MonoBehaviour
         //}
         if(!PlayerPrefs.HasKey("CurrentStageName"))
         {
-            PlayerPrefs.SetInt("CurrentStageNum", 0);
+            PlayerPrefs.SetInt("CurrentStageNum", 1);
             PlayerPrefs.Save();
         }
         if (!PlayerPrefs.HasKey("CurrentWorldName"))
         {
-            PlayerPrefs.SetString("CurrentWorldName", "World01");
+            PlayerPrefs.SetString("CurrentWorldName", "World05");
             PlayerPrefs.Save();
         }
     }
@@ -230,7 +230,7 @@ public class ArcoreDeployer : MonoBehaviour
         {
             GameObject World = UniverseObj.transform.GetChild(i).gameObject;
 
-            string WorldNameText = World.transform.GetChild(0).GetComponent<Text>().text;
+            string WorldNameText = World.transform.GetChild(0).GetComponent<TextMesh>().text;
             if (WorldNameText[WorldNameText.Length - 1] - '0' > CurrentWorld[CurrentWorld.Length - 1] - '0')
             {
                 World.SetActive(false);
@@ -705,26 +705,31 @@ public class ArcoreDeployer : MonoBehaviour
         ExitGameScreen();
         ToSelectionScreen_Stage();
 
-        //Check if it's the last stage/last world
-        if (CurrentStageNum.EndsWith(NumOfStages.ToString()))
-        {
-            UnlockedText.text = CurrentStageNum + " has been completed!\n\nNext Stage Unlocked!";
-            PlayerPrefs.SetInt("CurrentStageNum", (CurrentStageNum[CurrentStageNum.Length - 1] - '0') + 1);
-            
-        }
-        else if (CurrentWorldNum.EndsWith((TotalNumOfWorlds - 1).ToString()))
-        {
-            UnlockedText.text = CurrentWorldNum + " has been completed!";
-            PlayerPrefs.SetInt("CurrentStageNum", (CurrentStageNum[CurrentStageNum.Length - 1] - '0') + 1);
-        }
-        else
-        {
-            UnlockedText.text = CurrentWorldNum + " has been completed!\n\nNext World Unlocked!";
-            
-            PlayerPrefs.SetInt("CurrentStageNum", 0);
-            PlayerPrefs.SetString("CurrentWorldName", CurrentWorldName.text);
-        }
+        int CurrentStageNum_Int = CurrentStageNum[CurrentStageNum.Length - 1] - '0';
 
+        if (PlayerPrefs.GetInt("CurrentStageNum") < CurrentStageNum_Int)
+        {
+            if (CurrentStageNum.EndsWith(NumOfStages.ToString())) //Check if the stage completed is the last one in the world
+            {
+                if (CurrentWorldNum.EndsWith((TotalNumOfWorlds - 1).ToString())) //Last world of the game
+                {
+                    UnlockedText.text = CurrentWorldNum + " has been completed!";
+                    PlayerPrefs.SetInt("CurrentStageNum", CurrentStageNum_Int + 1);
+                }
+                else //Unlocking next world
+                {
+                    UnlockedText.text = CurrentWorldNum + " has been completed!\n\nNext World Unlocked!";
+
+                    PlayerPrefs.SetInt("CurrentStageNum", 0);
+                    PlayerPrefs.SetString("CurrentWorldName", CurrentWorldName.text);
+                }
+            }
+            else //Unlock the next stage
+            {
+                UnlockedText.text = CurrentStageNum + " has been completed!\n\nNext Stage Unlocked!";
+                PlayerPrefs.SetInt("CurrentStageNum", CurrentStageNum_Int + 1);
+            }
+        }
         PlayerPrefs.Save();
         WinScreen.SetActive(false);
         UnlockedBackground.SetActive(true);

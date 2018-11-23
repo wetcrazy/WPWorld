@@ -10,10 +10,12 @@ public class AsteroidScript : MonoBehaviour {
     AudioClip AsteroidHitSFX = null;
 
     SoundSystem soundSystem;
+    SceneControlFinal SceneControllerScript = null;
 
     private void Start()
     {
         soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+        SceneControllerScript = GameObject.Find("Scripts").GetComponent<SceneControlFinal>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,6 +32,8 @@ public class AsteroidScript : MonoBehaviour {
         {
             //Play the sound effect
             soundSystem.PlaySFX("Explosion");
+            //Reset level
+            SceneControllerScript.Reset_Level();
         }
     }
 }
