@@ -38,6 +38,7 @@ public class TPSLogic : MonoBehaviour
     private List<ShowOnCollide> ListOfTrolls = new List<ShowOnCollide>();
     private List<SpawnOnCollide> ListOfSpawns = new List<SpawnOnCollide>();
     private List<Enemy> ListOfEnemies = new List<Enemy>();
+    private List<FallOnCollide> ListOfFalling = new List<FallOnCollide>();
 
     // Use this for initialization
     void Start()
@@ -55,6 +56,7 @@ public class TPSLogic : MonoBehaviour
         ListOfTrolls.AddRange(FindObjectsOfType(typeof(ShowOnCollide)) as ShowOnCollide[]);
         ListOfSpawns.AddRange(FindObjectsOfType(typeof(SpawnOnCollide)) as SpawnOnCollide[]);
         ListOfEnemies.AddRange(FindObjectsOfType(typeof(Enemy)) as Enemy[]);
+        ListOfFalling.AddRange(FindObjectsOfType(typeof(FallOnCollide)) as FallOnCollide[]);
     }
 
     // Update is called once per frame
@@ -219,6 +221,9 @@ public class TPSLogic : MonoBehaviour
 
         foreach (Enemy EnemyRef in ListOfEnemies)
             EnemyRef.Reset();
+
+        foreach (FallOnCollide FallBlock in ListOfFalling)
+            FallBlock.Reset();
 
         foreach(Enemy ClonedEnemy in FindObjectsOfType(typeof(Enemy)) as Enemy[])
         {

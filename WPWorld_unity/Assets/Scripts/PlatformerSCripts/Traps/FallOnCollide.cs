@@ -6,54 +6,59 @@ public class FallOnCollide : MonoBehaviour {
 
     private Rigidbody RigidRef;
     private Renderer RenderRef;
+    private Collider ColliderRef;
+
+    private bool Falling;
+    private Vector3 OrgPos;
 
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
-
         RenderRef = GetComponent<Renderer>();
+        ColliderRef = GetComponent<Collider>();
+
+        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+        RigidRef.useGravity = true;
+        OrgPos = transform.position;
+        Falling = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Killbox")
         {
-            Debug.Log("Stopped");
             RenderRef.enabled = false;
-            RigidRef.useGravity = false;
-
             RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-
-            foreach(Transform n_Child in transform)
-            {
-                n_Child.GetComponent<Renderer>().enabled = false;
-                Physics.IgnoreCollision(n_Child.GetComponent<Collider>(), GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>());
-            }
-
-            Physics.IgnoreCollision(GetComponent<Collider>(), GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>());
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
-        {
-            if (collision.gameObject.transform.position.y - collision.gameObject.transform.lossyScale.y / 2
-                >= transform.position.y + transform.lossyScale.y / 2)
-            {
-                RigidRef.useGravity = true;
+        RaycastHit hit;
 
+        if (Physics.Raycast(transform.position, transform.up, out hit, transform.localScale.y)
+            || Physics.Raycast(transform.position, transform.up + transform.forward * 0.5f, out hit, transform.localScale.y)
+            || Physics.Raycast(transform.position, transform.up - transform.forward * 0.5f, out hit, transform.localScale.y)
+            || Physics.Raycast(transform.position, transform.up + transform.right * 0.5f, out hit, transform.localScale.y)
+            || Physics.Raycast(transform.position, transform.up - transform.right * 0.5f, out hit, transform.localScale.y))
+        {
+            if (hit.transform.tag == "Player")
+            {
+                ColliderRef.isTrigger = true;
                 RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
             }
         }
-        else if (collision.gameObject.tag != "Enemy")
-        {
-            Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
-        }
+    }
+
+    public void Reset()
+    {
+        ColliderRef.isTrigger = false;
+        RenderRef.enabled = true;
+        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+        transform.position = OrgPos;
     }
 }
