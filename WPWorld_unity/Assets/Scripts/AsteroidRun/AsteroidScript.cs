@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AsteroidScript : MonoBehaviour {
+public class AsteroidScript : MonoBehaviour
+{
 
     [SerializeField]
     public float AsteroidSpeed;
@@ -20,7 +21,7 @@ public class AsteroidScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.name == "Planet")
+        if (other.name == "Planet")
         {
             //Destroy the asteroid if it collides with the planet
             Destroy(gameObject);

@@ -34,7 +34,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     GameObject GameObjPrefab = null;
     SoundSystem soundSystem = null;
-    
+
     //Reference to the clone of GameObjPrefab
     GameObject _GroundObject = null;
     Anchor _anchor;
@@ -111,7 +111,7 @@ public class ArcoreDeployer : MonoBehaviour
         ExitGameMoveAnchor(true);
         ExitGameScreen();
         ToSplashScreen();
-        
+
         //Initialise UI Gameobjects
         //Make the world selection button invisible
         Image WorldSelectButtonImage = WorldSelectBtn.GetComponent<Image>();
@@ -121,7 +121,7 @@ public class ArcoreDeployer : MonoBehaviour
 
         //Make the Unlocked Screen inactive
         UnlockedBackground.SetActive(false);
-        
+
         //Make the Win Screen inactive
         WinScreen.SetActive(false);
 
@@ -131,7 +131,7 @@ public class ArcoreDeployer : MonoBehaviour
         //    PlayerPrefs.SetInt("LastCompletedWorld", -1);
         //    PlayerPrefs.Save();
         //}
-        if(!PlayerPrefs.HasKey("CurrentStageName"))
+        if (!PlayerPrefs.HasKey("CurrentStageName"))
         {
             PlayerPrefs.SetInt("CurrentStageNum", 1);
             PlayerPrefs.Save();
@@ -312,7 +312,7 @@ public class ArcoreDeployer : MonoBehaviour
             DestroyCurrentLevel();
         }
         //If not, just set the universe to inactive
-        else if (_GroundObject != null) 
+        else if (_GroundObject != null)
         {
             _GroundObject.SetActive(false);
         }
@@ -357,9 +357,9 @@ public class ArcoreDeployer : MonoBehaviour
     public void ToSelectionScreen_Stage(bool checkObject = false)
     {
         //Check if the ground object is null
-        if(checkObject)
+        if (checkObject)
         {
-            if(_GroundObject == null)
+            if (_GroundObject == null)
             {
                 return;
             }
@@ -370,7 +370,7 @@ public class ArcoreDeployer : MonoBehaviour
         }
 
         NumOfStages = 0;
-        
+
         switch (CurrentWorldName.text)
         {
             case "Tutorial World":
@@ -483,7 +483,7 @@ public class ArcoreDeployer : MonoBehaviour
             default:
                 break;
         }
-        
+
         //Set the next level to be spawned
         SetNextObject(CurrentWorldNum + '_' + StageNum);
     }
@@ -530,7 +530,7 @@ public class ArcoreDeployer : MonoBehaviour
         //Set the forward to always be in the direction of camera but never allow the y axis to change to ensure the game anchor object to only move on the xz plane
         MainCameraRef.transform.forward = new Vector3(MainCamera.transform.forward.x, MainCamera.transform.position.y, MainCamera.transform.forward.z);
 
-        if(_GroundObject != null)
+        if (_GroundObject != null)
         {
             AnchorRef.transform.position = _GroundObject.transform.position;
             UpdateOffSet();
@@ -594,7 +594,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void ExitGameMoveAnchor(bool isStartFunc = false)
     {
-        if(_GroundObject == null && !isStartFunc)
+        if (_GroundObject == null && !isStartFunc)
         {
             return;
         }
@@ -633,10 +633,10 @@ public class ArcoreDeployer : MonoBehaviour
 
     private void GameScreenUpdate()
     {
-        if(isWon)
+        if (isWon)
         {
             //Win Screen here
-            if(!WinScreen.activeSelf)
+            if (!WinScreen.activeSelf)
             {
                 WinScreen.SetActive(true);
             }
@@ -655,7 +655,7 @@ public class ArcoreDeployer : MonoBehaviour
             }
         }
 
-       UpdateOffSet();
+        UpdateOffSet();
     }
 
     public void ExitGameScreen()
@@ -684,7 +684,7 @@ public class ArcoreDeployer : MonoBehaviour
             GameObjPrefab = null;
         }
 
-        if(FirstTouchWorldPoint != null)
+        if (FirstTouchWorldPoint != null)
         {
             FirstTouchWorldPoint = new Vector3();
         }
@@ -692,7 +692,7 @@ public class ArcoreDeployer : MonoBehaviour
 
     public void RestartLevel()
     {
-        if(WinScreen.activeSelf)
+        if (WinScreen.activeSelf)
         {
             WinScreen.SetActive(false);
         }
@@ -798,7 +798,7 @@ public class ArcoreDeployer : MonoBehaviour
     // Shifts the object back if there is an offset
     private void UpdateOffSet()
     {
-        if(_GroundObject.transform.position != FirstTouchWorldPoint)
+        if (_GroundObject.transform.position != FirstTouchWorldPoint)
         {
             Vector3.Lerp(_GroundObject.transform.position, FirstTouchWorldPoint, 0.1f);
         }
