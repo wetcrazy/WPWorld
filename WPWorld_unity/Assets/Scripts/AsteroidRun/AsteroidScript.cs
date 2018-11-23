@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AsteroidScript : MonoBehaviour
 {
-
     [SerializeField]
     public float AsteroidSpeed;
     [SerializeField]
