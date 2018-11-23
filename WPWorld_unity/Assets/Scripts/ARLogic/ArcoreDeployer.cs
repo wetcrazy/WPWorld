@@ -420,7 +420,7 @@ public class ArcoreDeployer : MonoBehaviour
         //If there is more than 1 stage, create more stage select buttons
         if (NumOfStages > 1)
         {
-            for (int i = 1; i < PlayerPrefs.GetInt("CurrentStageNum") + 1; ++i)
+            for (int i = 1; i < NumOfStages; ++i)
             {
                 GameObject theStageSelectBtn = Instantiate(StageSelectBtn, StageSelect.transform, false);
                 localPos.y -= (DistanceBetweenStageSelectButtons);

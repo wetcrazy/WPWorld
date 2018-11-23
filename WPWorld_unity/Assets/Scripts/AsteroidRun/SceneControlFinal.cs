@@ -263,7 +263,7 @@ public class SceneControlFinal : MonoBehaviour
         HealthPowerupSpawnTimer = HealthPowerupSpawnDuration;
         TimerIsCountingDown = true;
 
-        Playerobject.transform.position = PlayerStartingUnitVec;
+        Playerobject.transform.position = PlanetObject.transform.position + PlayerStartingUnitVec;
         Playerobject.transform.forward = PlayerStartingForward;
         Playerobject.GetComponent<PlayerFinal>().ResetHealth();
     }
