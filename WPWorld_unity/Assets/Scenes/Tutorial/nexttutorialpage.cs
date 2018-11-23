@@ -27,7 +27,6 @@ public class nexttutorialpage : MonoBehaviour {
         Pages.Add(c);
         Pages.Add(d);
         Pages.Add(e);
-        Pages.Add(f);
         for(int i = 0; i< Pages.Count; i++)
         {
             Pages[i].SetActive(false);
