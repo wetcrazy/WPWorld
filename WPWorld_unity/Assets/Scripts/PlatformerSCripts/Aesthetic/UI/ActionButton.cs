@@ -20,7 +20,7 @@ public class ActionButton : MonoBehaviour {
 
     public void onActionButtonDown()
     {
-        if (PlayerObject.GetComponent<PlayerPowerUp>() != null && PlayerObject.GetComponent<PlayerPowerUp>().GetPowerUp() == POWERUPS.FIREBALL)
+        if (PlayerObject.GetComponent<PlayerPowerUp>() && PlayerObject.GetComponent<PlayerPowerUp>().GetPowerUp() == POWERUPS.FIREBALL)
         {
             if(SoundToPlay != "")
                 SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(SoundToPlay);

@@ -4,34 +4,27 @@ using UnityEngine;
 
 public class ShowOnCollide : MonoBehaviour {
 
-    private Renderer RenderRef;
     private Collider ColliderRef;
 
     [SerializeField]
     private string ShowSFX;
 
-    private bool Collided;
+    private bool Collided = false;
 
     private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
-        RenderRef = GetComponent<Renderer>();
         ColliderRef = GetComponent<Collider>();
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
-        RenderRef.enabled = false;
-	}
+        for (int i = 0; i < transform.childCount; i++)
+            transform.GetChild(i).GetComponent<Renderer>().enabled = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (RenderRef.isVisible)
-        {
-            ColliderRef.isTrigger = false;
-            Collided = false;
-        }
-        else
-            ColliderRef.isTrigger = true;
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -39,23 +32,25 @@ public class ShowOnCollide : MonoBehaviour {
         if(other.tag == "Player")
         {
             if (!other.GetComponent<TPSLogic>().GetGrounded() // Grounded Check
-                && other.transform.localPosition.y + other.transform.localScale.y * 0.5f <= transform.localPosition.y - transform.localScale.y * 0.25f // Check if the bottom of the gameobject is colliding with the top of the player
+                && other.transform.localPosition.y + other.transform.localScale.y * 0.5f >= transform.localPosition.y - transform.localScale.y * 0.5f
                 && Mathf.Abs(other.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.5f // Check if the player is within a certain x range to trigger
-                && Mathf.Abs(other.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.5f // Check if the player is within a certain x range to trigger
+                && Mathf.Abs(other.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.5f // Check if the player is within a certain z range to trigger
                 && other.GetComponent<Rigidbody>().velocity.y > 0 // Check if the player is jumping and not falling
-                && !Collided // Prevents sound from being played a second time
+                && !Collided
                 )
             {
                 if (ShowSFX != "")
                     SoundSystemRef.PlaySFX(ShowSFX);
 
+                Collided = true;
+                for (int i = 0; i < transform.childCount; i++)
+                    transform.GetChild(i).GetComponent<Renderer>().enabled = true;
+                ColliderRef.isTrigger = false;
+
                 Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
                 if (VelocityRef.y > 0)
                     VelocityRef.y = -VelocityRef.y * 0.5f;
                 other.GetComponent<Rigidbody>().velocity = VelocityRef;
-
-                Collided = true;
-                RenderRef.enabled = true;
             }
         }
     }
@@ -64,7 +59,7 @@ public class ShowOnCollide : MonoBehaviour {
     {
         GameObject CollidedObject = collision.gameObject;
 
-        if (CollidedObject.tag == "Player")
+        if(CollidedObject.tag == "Player")
         {
             if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded() // Grounded Check
                 && CollidedObject.transform.localPosition.y + CollidedObject.transform.localScale.y * 0.5f <= transform.localPosition.y - transform.localScale.y * 0.5f // Check if the bottom of the gameobject is colliding with the top of the player
@@ -74,7 +69,7 @@ public class ShowOnCollide : MonoBehaviour {
                 )
             {
                 Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
-                if(VelocityRef.y > 0)
+                if (VelocityRef.y > 0)
                     VelocityRef.y = -VelocityRef.y * 0.5f;
                 CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
             }
@@ -84,6 +79,8 @@ public class ShowOnCollide : MonoBehaviour {
     public void Reset()
     {
         Collided = false;
-        RenderRef.enabled = false;
+        for (int i = 0; i < transform.childCount; i++)
+            transform.GetChild(i).GetComponent<Renderer>().enabled = false;
+        ColliderRef.isTrigger = true;
     }
 }
