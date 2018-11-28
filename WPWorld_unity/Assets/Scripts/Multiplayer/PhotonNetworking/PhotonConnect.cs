@@ -16,8 +16,6 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-   
-
     //Attempt to connect to photon servers
     public void ConnectToPhoton()
     {
@@ -55,28 +53,28 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         switch (cause)
         {
             case DisconnectCause.ExceptionOnConnect:
-                Debug.Log("Error: Connection Exception\nPlease Check Your Internet Connection");
+                Debug.Log("Photon: Connection Exception\nPlease Check Your Internet Connection");
                 break;
             case DisconnectCause.ServerTimeout:
-                Debug.Log("Error: Server Timeout");
+                Debug.Log("Photon: Server Timeout");
                 break;
             case DisconnectCause.ClientTimeout:
-                Debug.Log("Error: Client Timeout");
+                Debug.Log("Photon: Client Timeout");
                 break;
             case DisconnectCause.InvalidAuthentication:
-                Debug.Log("Error: Invalid AppID");
+                Debug.Log("Photon: Invalid AppID");
                 break;
             case DisconnectCause.MaxCcuReached:
-                Debug.Log("Error: Server Limit Reached");
+                Debug.Log("Photon: Server Limit Reached");
                 break;
             case DisconnectCause.InvalidRegion:
-                Debug.Log("Error: Invalid Region");
+                Debug.Log("Photon: Invalid Region");
                 break;
             case DisconnectCause.DisconnectByClientLogic:
-                Debug.Log("Error: Client Disconnected");
+                Debug.Log("Photon: Client Disconnected");
                 break;
             default:
-                Debug.Log("Error: " + cause);
+                Debug.Log("Photon: " + cause);
                 break;
         }
     }

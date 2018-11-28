@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class PhotonSceneController : MonoBehaviour {
     
@@ -26,8 +27,22 @@ public class PhotonSceneController : MonoBehaviour {
             InputPlayerNamePanel.SetActive(false);
             PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
         }
+    }
+
+    private void ConfirmUsername()
+    {
+        InputField inputField = InputPlayerNamePanel.GetComponent<InputField>();
+        string NewName = inputField.text;
+
+        if (string.IsNullOrEmpty(NewName))
+        {
+            return;
+        }
         else
         {
+            PlayerPrefs.SetString("PlayerUsername", NewName);
         }
+
+        CheckForExistingUsername();
     }
 }
