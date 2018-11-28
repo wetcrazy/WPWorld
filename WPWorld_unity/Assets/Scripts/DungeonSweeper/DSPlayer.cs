@@ -14,7 +14,6 @@ public class DSPlayer : MonoBehaviour
     private bool isDoubleJUmp = false;
     private Rigidbody Rb;
  
-
     SoundSystem ss;
 
     private void Awake()
@@ -142,13 +141,14 @@ public class DSPlayer : MonoBehaviour
     {   
         isInAir = false;
         isGrounded = true;
-        isDoubleJUmp = false;       
+        isDoubleJUmp = false;          
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.gameObject.tag == "Killbox")
-        {          
-            var _pos = new Vector3(0, 0, 0);
-            _pos.y = 0.5f;
-            Rb.MovePosition(_pos + transform.forward * Time.deltaTime);
+        {
+            this.gameObject.GetComponent<GridBaseMovement>().Respawn();
         }
     }
 
