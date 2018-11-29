@@ -9,10 +9,12 @@ public class PhotonSceneController : MonoBehaviour {
     //Scene Objects & Variables (Gameobjects, Canvas,etc)
     [SerializeField]
     GameObject InputPlayerNamePanel;
+    [SerializeField]
+    GameObject InputFieldUsername;
 
     // Use this for initialization
     void Start () {
-		
+        CheckForExistingUsername();
 	}
 	
 	// Update is called once per frame
@@ -29,9 +31,9 @@ public class PhotonSceneController : MonoBehaviour {
         }
     }
 
-    private void ConfirmUsername()
+    public void ConfirmUsername()
     {
-        InputField inputField = InputPlayerNamePanel.GetComponent<InputField>();
+        InputField inputField = InputFieldUsername.GetComponent<InputField>();
         string NewName = inputField.text;
 
         if (string.IsNullOrEmpty(NewName))
@@ -44,5 +46,11 @@ public class PhotonSceneController : MonoBehaviour {
         }
 
         CheckForExistingUsername();
+    }
+
+    public void ClearUsernamePref()
+    {
+        PlayerPrefs.DeleteKey("PlayerUsername");
+        PhotonNetwork.NickName = "";
     }
 }
