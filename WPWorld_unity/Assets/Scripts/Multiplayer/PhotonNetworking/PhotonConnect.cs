@@ -14,6 +14,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        ConnectToPhoton();
     }
 
     //Attempt to connect to photon servers
@@ -44,6 +45,11 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     #region MonoBehaviourPunCallbacks Callbacks
     
     public override void OnConnectedToMaster()
+    {
+        Debug.Log("Connection to servers established!");
+    }
+
+    public override void OnConnected()
     {
         Debug.Log("Connection to servers established!");
     }
