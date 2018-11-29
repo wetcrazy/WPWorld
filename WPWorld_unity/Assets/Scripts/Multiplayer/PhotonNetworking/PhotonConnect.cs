@@ -17,11 +17,27 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         ConnectToPhoton();
     }
 
+    private void Update()
+    {
+        Debug.Log(PhotonNetwork.ResentReliableCommands);
+
+        if (PhotonNetwork.IsConnected)
+        {
+            //Debug.Log("Is Connected");
+        }
+
+        if(PhotonNetwork.IsConnectedAndReady)
+        {
+            Debug.Log("Is connected & Ready");
+        }
+    }
+
     //Attempt to connect to photon servers
     public void ConnectToPhoton()
     {
         Debug.Log("Connecting to photon servers...");
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.ConnectToBestCloudServer();
     }
     
     public void CreateGameRoom()
