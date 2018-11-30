@@ -3,10 +3,19 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhotonConnect : MonoBehaviourPunCallbacks
 {
+    //Scene Objects & Variables (Gameobjects, Canvas,etc)
+    [Header("Scene Objects")]
+    [SerializeField]
+    Text LoadingText;
+    [SerializeField]
+    GameObject OfflineScreen;
+
     //Photon Variable Values
+    [Header("Variables")]
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players")]
     [SerializeField]
     byte MaximumPlayersInRoom = 2;
@@ -14,14 +23,26 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        ConnectToPhoton();
+    }
+
+    private void Start()
+    {
+        //Set OfflineScreen to be in active frist 
+        OfflineScreen.SetActive(false);
+    }
+
+    private void Update()
+    {
     }
 
     //Attempt to connect to photon servers
     public void ConnectToPhoton()
     {
-        Debug.Log("Connecting to photon servers...");
+        LoadingText.text = "Connecting to Photon servers...";
+        //Debug.Log(LoadingText.text);
         PhotonNetwork.ConnectUsingSettings();
+        LoadingText.text = "Finding Best Region...";
+        PhotonNetwork.ConnectToBestCloudServer();
     }
     
     public void CreateGameRoom()
@@ -51,11 +72,14 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnConnected()
     {
-        Debug.Log("Connection to servers established!");
+        LoadingText.gameObject.SetActive(false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        LoadingText.text = cause.ToString();
+        OfflineScreen.SetActive(true);
+
         switch (cause)
         {
             case DisconnectCause.ExceptionOnConnect:
