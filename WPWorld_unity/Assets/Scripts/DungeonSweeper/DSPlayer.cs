@@ -5,7 +5,7 @@ using UnityEngine;
 public class DSPlayer : MonoBehaviour
 {
     public float JumpSpeed;
-    public float MAX_UPSPEED;
+    //public float MAX_UPSPEED;
     public GameObject Manager;
     public bool isPlayedOnce = false;
 
@@ -83,12 +83,12 @@ public class DSPlayer : MonoBehaviour
             isPlayedOnce = false;
         }
       
-        // Speed bumper
-        if (Rb.velocity.y > MAX_UPSPEED || Rb.velocity.y < -MAX_UPSPEED)
-        {
-            Rb.velocity = Vector3.zero;
-            Rb.velocity.Set(0, MAX_UPSPEED, 0);
-        }
+        //// Speed bumper
+        //if (Rb.velocity.y > MAX_UPSPEED || Rb.velocity.y < -MAX_UPSPEED)
+        //{
+        //    Rb.velocity = Vector3.zero;
+        //    Rb.velocity.Set(0, MAX_UPSPEED, 0);
+        //}
     }
 
     // 000000000000000000000000000000000000000000
@@ -118,7 +118,8 @@ public class DSPlayer : MonoBehaviour
         else
         {
             if (isInAir)
-            {              
+            {
+                this.transform.GetComponent<GridBaseMovement>().SetIsDisable(true);
                 Rb.velocity = Vector3.zero;
                 Rb.AddForce(-transform.up * JumpSpeed, ForceMode.Impulse);
                 isDoubleJUmp = true;
@@ -138,7 +139,8 @@ public class DSPlayer : MonoBehaviour
     /// Resets variables when hit the ground 
     /// </summary>   
     private void OnCollisionEnter(Collision other)
-    {   
+    {
+        this.transform.GetComponent<GridBaseMovement>().SetIsDisable(false);
         isInAir = false;
         isGrounded = true;
         isDoubleJUmp = false;          

@@ -15,7 +15,7 @@ public class GridBaseMovement : MonoBehaviour
     Joystick joystickControl;
     private Vector3 respawnPos;
 
-    private bool isLose = false;
+    private bool isDisable = false;
 
 	void Start ()
     {
@@ -26,19 +26,16 @@ public class GridBaseMovement : MonoBehaviour
 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 	}
-	
+
     void FixedUpdate()
     {
-        if (!isLose)
-        {
-            rb.MovePosition(rb.position + movementDir * movementSpeed * Time.fixedDeltaTime);
-        }
+        rb.MovePosition(rb.position + movementDir * movementSpeed * Time.fixedDeltaTime);
     }
 
     public void GetJoystickInput(Vector4 DragInfo)
     {
         // Joystick Input
-        if (DragInfo.Equals(Vector4.zero))
+        if (DragInfo.Equals(Vector4.zero) || isDisable)
         {
             PositionSnap();
             movementDir = Vector4.zero;
@@ -180,15 +177,11 @@ public class GridBaseMovement : MonoBehaviour
         this.transform.position = respawnPos;
     }
     // Lose Locker
-    public void SetIsLose(bool _Boolvalue)
+    public void SetIsDisable(bool _Boolvalue)
     {
-        isLose = _Boolvalue;
+        isDisable = _Boolvalue;
     }
-    // Reset this script
-    public void ResetScript()
-    {
-      
-    }
+   
     // Snap the position
     private void PositionSnap()
     {  
@@ -196,7 +189,7 @@ public class GridBaseMovement : MonoBehaviour
         RaycastHit ray;
         if (Physics.Raycast(this.transform.position, -Vector3.up, out ray, Block.transform.localScale.x))  // down
         {
-            Debug.Log("Snaped!  " + ray.transform.gameObject.tag);
+            //Debug.Log("Snaped!  " + ray.transform.gameObject.tag);
             if (ray.transform.gameObject.tag == "Blocks")
             {
                 newPos = ray.transform.position;
