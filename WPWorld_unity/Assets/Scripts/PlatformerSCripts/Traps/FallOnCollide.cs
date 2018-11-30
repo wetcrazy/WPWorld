@@ -8,7 +8,6 @@ public class FallOnCollide : MonoBehaviour {
     private Renderer RenderRef;
     private Collider ColliderRef;
 
-    private bool Falling;
     private Vector3 OrgPos;
 
 	// Use this for initialization
@@ -20,7 +19,6 @@ public class FallOnCollide : MonoBehaviour {
         RigidRef.constraints = RigidbodyConstraints.FreezeAll;
         RigidRef.useGravity = true;
         OrgPos = transform.position;
-        Falling = false;
     }
 	
 	// Update is called once per frame

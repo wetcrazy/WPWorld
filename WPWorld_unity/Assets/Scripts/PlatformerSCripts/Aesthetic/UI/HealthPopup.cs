@@ -41,7 +41,7 @@ public class HealthPopup : MonoBehaviour
     void Update()
     {
         // Spawning
-        if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()))
+        if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().DeathCounterPub))
         {
             if (transform.GetChild(0).childCount != 0)
                 for (int i = 0; i < transform.GetChild(0).childCount; i++)
@@ -111,7 +111,7 @@ public class HealthPopup : MonoBehaviour
                 if(!HasReset)
                 {
                     PlayerRef.GetComponent<PlayerMovement>().SetRestriction(OrgAvaliability);
-                    PlayerRef.GetComponent<TPSLogic>().SetJumpRestrict(false);
+                    PlayerRef.GetComponent<TPSLogic>().AbleToJumpPub = true;
                     HasReset = true;
                 }
             }
@@ -120,16 +120,16 @@ public class HealthPopup : MonoBehaviour
 
     private void SpawnHearts()
     {
-        for (float y = 0; y < Mathf.Ceil(Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()) / Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); y++)
+        for (float y = 0; y < Mathf.Ceil(Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().DeathCounterPub) / Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); y++)
         {
-            for (int x = 1; x <= Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().GetDeaths()) - (y * Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); ++x)
+            for (int x = 1; x <= Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().DeathCounterPub) - (y * Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x)); ++x)
             {
                 if (x > Mathf.Round(Screen.width / DeathHeart.GetComponent<RectTransform>().sizeDelta.x))
                 {
                     continue;
                 }
                 GameObject SpawnHeart;
-                if (PlayerRef.GetComponent<TPSLogic>().GetDeaths() > 0)
+                if (PlayerRef.GetComponent<TPSLogic>().DeathCounterPub > 0)
                     SpawnHeart = Instantiate(DeathHeart, transform.GetChild(0).position, transform.rotation);
                 else
                     SpawnHeart = Instantiate(NormalHeart, transform.GetChild(0).position, transform.rotation);
@@ -161,7 +161,7 @@ public class HealthPopup : MonoBehaviour
             return;
         OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
         PlayerRef.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
-        PlayerRef.GetComponent<TPSLogic>().SetJumpRestrict(true);
+        PlayerRef.GetComponent<TPSLogic>().AbleToJumpPub = false;
         Showing = true;
         HasReset = false;
     }
