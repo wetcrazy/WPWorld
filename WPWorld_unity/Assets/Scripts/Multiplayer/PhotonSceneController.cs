@@ -5,21 +5,27 @@ using Photon.Pun;
 using UnityEngine.UI;
 
 public class PhotonSceneController : MonoBehaviour {
-    
+
     //Scene Objects & Variables (Gameobjects, Canvas,etc)
+    [Header("Scene Objects")]
     [SerializeField]
     GameObject InputPlayerNamePanel;
     [SerializeField]
     GameObject InputFieldUsername;
 
+    //Script Object Variables
+    [Header("Script Objects")]
+    [SerializeField]
+    PhotonConnect photonConnect;
+
     // Use this for initialization
     void Start () {
         CheckForExistingUsername();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+        if(PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
+        }
 	}
 
      private void CheckForExistingUsername()
@@ -27,7 +33,6 @@ public class PhotonSceneController : MonoBehaviour {
         if (PlayerPrefs.HasKey("PlayerUsername"))
         {
             InputPlayerNamePanel.SetActive(false);
-            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
         }
     }
 
@@ -45,12 +50,21 @@ public class PhotonSceneController : MonoBehaviour {
             PlayerPrefs.SetString("PlayerUsername", NewName);
         }
 
-        CheckForExistingUsername();
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
+        }
+        InputPlayerNamePanel.SetActive(false);
     }
 
     public void ClearUsernamePref()
     {
         PlayerPrefs.DeleteKey("PlayerUsername");
         PhotonNetwork.NickName = "";
+    }
+
+    public void TryGoOnline()
+    {
+        photonConnect.ConnectToPhoton();
     }
 }
