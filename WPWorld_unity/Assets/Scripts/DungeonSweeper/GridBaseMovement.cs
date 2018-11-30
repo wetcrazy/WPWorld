@@ -5,27 +5,17 @@ using UnityEngine;
 public class GridBaseMovement : MonoBehaviour
 {
     [SerializeField]
-    private GameObject blockObj1;
-    [SerializeField]
-    private GameObject blockObj2;  
+    private GameObject Block;
     [SerializeField]
     private Vector3 movementDir;
     [SerializeField]
-    private float movementSpeed;
+    private float movementSpeed = 0.5f;
 
     private Rigidbody rb;
     Joystick joystickControl;
     private Vector3 respawnPos;
 
-    // Distance Check
-    public float distance = 0.0f;
-    public float distanceCovered = 0.0f;
-    public Vector3 lastBlockpos = Vector3.zero;
-    // Direction
-    public Joystick.JoystickDirection currDirection = Joystick.JoystickDirection.DIR_NONE;
-    public Joystick.JoystickDirection nextDirection = Joystick.JoystickDirection.DIR_NONE;
     private bool isLose = false;
-    private bool isWalking = false;
 
 	void Start ()
     {
@@ -33,27 +23,16 @@ public class GridBaseMovement : MonoBehaviour
         joystickControl = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         gameObject.transform.forward = Vector3.forward;
         respawnPos = this.transform.position;
-        distance = Vector3.Distance(blockObj1.transform.localPosition, blockObj2.transform.localPosition);
 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 	}
 	
     void FixedUpdate()
     {
-        if(!isLose)
+        if (!isLose)
         {
-            if(isWalking)
-            {
-                rb.MovePosition(rb.position + movementDir * movementSpeed * Time.fixedDeltaTime);
-            }
-
-            if (distanceCovered >= distance)
-            {
-                currDirection = Joystick.JoystickDirection.DIR_NONE;
-                distanceCovered = 0.0f;
-                lastBlockpos = this.transform.localPosition;
-            }
-        }    
+            rb.MovePosition(rb.position + movementDir * movementSpeed * Time.fixedDeltaTime);
+        }
     }
 
     public void GetJoystickInput(Vector4 DragInfo)
@@ -61,14 +40,9 @@ public class GridBaseMovement : MonoBehaviour
         // Joystick Input
         if (DragInfo.Equals(Vector4.zero))
         {
+            PositionSnap();
             movementDir = Vector4.zero;
             return;
-        }
-
-        if(currDirection == Joystick.JoystickDirection.DIR_NONE)
-        {
-            currDirection = (Joystick.JoystickDirection)DragInfo.w;
-            lastBlockpos = this.transform.localPosition;
         }
 
         Vector3 n_Forward;
@@ -195,22 +169,6 @@ public class GridBaseMovement : MonoBehaviour
             default:
                 break;
         }
-
-        distanceCovered = Vector3.Distance(lastBlockpos, this.transform.position);
-        nextDirection = (Joystick.JoystickDirection)DragInfo.w;
-
-        if (distanceCovered < distance)
-        {
-            if (currDirection != nextDirection)
-            {
-                isWalking = false;
-            }
-            else
-            {
-                isWalking = true;    
-            }
-        }
-
         //Move towards the new direction the player is facing
         movementDir = gameObject.transform.forward;
     }
@@ -221,8 +179,31 @@ public class GridBaseMovement : MonoBehaviour
     {     
         this.transform.position = respawnPos;
     }
+    // Lose Locker
     public void SetIsLose(bool _Boolvalue)
     {
         isLose = _Boolvalue;
+    }
+    // Reset this script
+    public void ResetScript()
+    {
+      
+    }
+    // Snap the position
+    private void PositionSnap()
+    {  
+        Vector3 newPos = new Vector3();
+        RaycastHit ray;
+        if (Physics.Raycast(this.transform.position, -Vector3.up, out ray, Block.transform.localScale.x))  // down
+        {
+            Debug.Log("Snaped!  " + ray.transform.gameObject.tag);
+            if (ray.transform.gameObject.tag == "Blocks")
+            {
+                newPos = ray.transform.position;
+                newPos.y = this.transform.position.y;
+                this.transform.position = newPos;
+            }
+        }
+    
     }
 }

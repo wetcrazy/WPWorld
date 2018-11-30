@@ -251,7 +251,7 @@ public class Dungeonsweeper2 : MonoBehaviour
             }
             else
             {
-                currTimer -= 0.1f;
+                //currTimer -= 0.1f;
             }
         }
        
@@ -601,9 +601,7 @@ public class Dungeonsweeper2 : MonoBehaviour
         }
 
         // Player position
-        var _pos = Get_Player_AnchorPosition(_player.transform);
-        _pos.y = 0.5f;
-        _playerRB.MovePosition(_pos + transform.forward * Time.deltaTime);
+        _player.GetComponent<GridBaseMovement>().Respawn();
 
         // Wait timer
 
