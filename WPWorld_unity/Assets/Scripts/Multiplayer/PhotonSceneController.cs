@@ -86,6 +86,29 @@ public class PhotonSceneController : MonoBehaviour {
         }
     }
 
+    public string RandomAlphanumericString(int length)
+    {
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        string AlphaNumString = "";
+        
+        System.Random random = new System.Random();
+
+        for (int i = 0; i < length; ++i)
+        {
+            AlphaNumString += chars[random.Next(chars.Length)];
+        }
+
+        return AlphaNumString;
+    }
+
+    public void CreateGameRoom()
+    {
+        string RoomID = RandomAlphanumericString(6);
+        photonConnect.CreateGameRoom(RoomID);
+        photonConnect.JoinGameRoom(RoomID);
+        
+    }
+
     public void ClearUsernamePref()
     {
         PlayerPrefs.DeleteKey("PlayerUsername");
