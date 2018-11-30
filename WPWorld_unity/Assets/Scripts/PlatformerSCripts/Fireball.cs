@@ -6,8 +6,6 @@ public class Fireball : MonoBehaviour {
 
     private Rigidbody RigidRef;
 
-    private bool Triggered = false;
-
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();

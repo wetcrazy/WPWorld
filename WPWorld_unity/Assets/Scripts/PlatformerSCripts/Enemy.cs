@@ -252,8 +252,9 @@ public class Enemy : MonoBehaviour {
             if (CollidedObject.tag == "Player")
             {
                 if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded()
-                    && CollidedObject.transform.position.y - CollidedObject.transform.lossyScale.y / 2 >= transform.position.y + transform.lossyScale.y / 2
-                    && CollidedObject.GetComponent<Rigidbody>().velocity.y <= 0
+                    && CollidedObject.transform.localPosition.y - CollidedObject.transform.localScale.y <= transform.localPosition.y + transform.localScale.y // Check if the top of the object is colliding with the bottom of the player
+                    && Mathf.Abs(CollidedObject.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.5f // Check if the player is within a certain x range to trigger
+                    && Mathf.Abs(CollidedObject.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.5f // Check if the player is within a certain z range to trigger
                     )
                 {
                     PrevType = CurrType;
@@ -270,14 +271,15 @@ public class Enemy : MonoBehaviour {
                 }
                 else
                 {
+                    Debug.Log(CollidedObject.GetComponent<Rigidbody>().velocity.y);
                     CollidedObject.GetComponent<TPSLogic>().Death();
                 }
             }
             else
             {
                 // Change Walk Direction if bumped into something
-                if(Mathf.Abs(transform.position.y - CollidedObject.transform.position.y) < CollidedObject.transform.lossyScale.y / 2)
-                    WalkSpeed = -WalkSpeed;
+                if (Mathf.Abs(transform.position.y - CollidedObject.transform.position.y) < CollidedObject.transform.lossyScale.y / 2)
+                    transform.forward = -transform.forward;
             }
         }
     }

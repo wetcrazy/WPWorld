@@ -9,7 +9,18 @@ public class TPSLogic : MonoBehaviour
     private float JumpSpeed;
     [SerializeField]
     private bool IsGrounded = false;
-    private bool RestrictJump = false;
+    private bool AbleToJump = true;
+    public bool AbleToJumpPub
+    {
+        get
+        {
+            return AbleToJump;
+        }
+        set
+        {
+            AbleToJump = value;
+        }
+    }
     private bool Colliding = false;
     [SerializeField]
     private string JumpSFX;
@@ -21,9 +32,33 @@ public class TPSLogic : MonoBehaviour
 
     [SerializeField]
     private int CurrPoints = 0;
+    public int CurrPointsPub
+    {
+        get
+        {
+            return CurrPoints;
+        }
+
+        set
+        {
+            CurrPoints = value;
+        }
+    }
 
     [SerializeField]
     private int DeathCounter = 0;
+    public int DeathCounterPub
+    {
+        get
+        {
+            return DeathCounter;
+        }
+
+        set
+        {
+            DeathCounter = value;
+        }
+    }
 
     private Rigidbody RigidRef;
     private PlayerMovement MovementRef;
@@ -138,7 +173,7 @@ public class TPSLogic : MonoBehaviour
 
     public void Jump()
     {
-        if (!IsGrounded || RestrictJump)
+        if (!IsGrounded || !AbleToJump)
             return;
 
         if (JumpSFX != "")
@@ -151,21 +186,6 @@ public class TPSLogic : MonoBehaviour
         RigidRef.velocity = Vector3.zero;
         RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
         IsGrounded = false;
-    }
-
-    public void SetPoints(int n_Points)
-    {
-        CurrPoints = n_Points;
-    }
-
-    public int GetPoints()
-    {
-        return CurrPoints;
-    }
-
-    public int GetDeaths()
-    {
-        return DeathCounter;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -240,16 +260,6 @@ public class TPSLogic : MonoBehaviour
     public void Win()
     {
         // Show off Win Screen
-    }
-
-    public bool GetJumpRestrict()
-    {
-        return RestrictJump;
-    }
-
-    public void SetJumpRestrict(bool n_Restrict) // True = Cannot Jump, False = Can Jump
-    {
-        RestrictJump = n_Restrict;
     }
 
     private void GetJumpButtonInput()

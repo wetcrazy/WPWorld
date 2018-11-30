@@ -5,8 +5,6 @@ using UnityEngine;
 public class SoundSystem : MonoBehaviour {
 
     [SerializeField]
-    private List<AudioSource> SFX = new List<AudioSource>();
-    [SerializeField]
     int MaximumSFXPlayingAtOnce = 10;
 
     //bool isMuted_BGM, isMuted_SFX;

@@ -33,7 +33,7 @@ public class CollectOnCollide : MonoBehaviour {
             if(RenderRef.isVisible)
             {
                 RenderRef.enabled = false;
-                other.GetComponent<TPSLogic>().SetPoints(other.GetComponent<TPSLogic>().GetPoints() + PointsToAdd);
+                other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
 
                 if (CollectSFX != "")
                     SoundSystemRef.PlaySFX(CollectSFX);
