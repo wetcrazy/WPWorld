@@ -229,6 +229,7 @@ public class Dungeonsweeper2 : MonoBehaviour
             _anchor.GetComponent<AnchorPoint>().m_isdone = true;
         }
 
+        _player.GetComponent<GridBaseMovement>().SetIsDisable(is_lose);
         // Lose condition
         if (is_lose)
         {         
@@ -251,7 +252,7 @@ public class Dungeonsweeper2 : MonoBehaviour
             }
             else
             {
-                //currTimer -= 0.1f;
+                currTimer -= 0.1f;
             }
         }
        
@@ -603,8 +604,8 @@ public class Dungeonsweeper2 : MonoBehaviour
         // Player position
         _player.GetComponent<GridBaseMovement>().Respawn();
 
-        // Wait timer
 
+        // Wait timer
         waitTimer = 0.0f;
 
         // Ui Timer slider
