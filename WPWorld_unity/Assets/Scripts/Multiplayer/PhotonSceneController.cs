@@ -12,6 +12,8 @@ public class PhotonSceneController : MonoBehaviour {
     GameObject InputPlayerNamePanel;
     [SerializeField]
     GameObject InputFieldUsername;
+    [SerializeField]
+    GameObject OfflineScreen;
 
     //Script Object Variables
     [Header("Script Objects")]
@@ -19,52 +21,74 @@ public class PhotonSceneController : MonoBehaviour {
     PhotonConnect photonConnect;
 
     // Use this for initialization
-    void Start () {
-        CheckForExistingUsername();
-
-        if(PhotonNetwork.IsConnectedAndReady)
-        {
-            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
-        }
-	}
-
-     private void CheckForExistingUsername()
+    void Start ()
     {
-        if (PlayerPrefs.HasKey("PlayerUsername"))
+        //Check if player already has a username
+        if (CheckForExistingUsername())
         {
-            InputPlayerNamePanel.SetActive(false);
+            //Try to connect to Photon servers
+            TryGoOnline();
         }
     }
 
+    //Check if a username exists in PlayerPrefs
+    private bool CheckForExistingUsername()
+    {
+        if (PlayerPrefs.HasKey("PlayerUsername"))
+        {
+            //If there's already a username, no need for username input
+            InputPlayerNamePanel.SetActive(false);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //Player's confirmation after inputting a username
     public void ConfirmUsername()
     {
+        //Get the username input by player
         InputField inputField = InputFieldUsername.GetComponent<InputField>();
         string NewName = inputField.text;
-
+        
+        //If input field is empty
         if (string.IsNullOrEmpty(NewName))
         {
             return;
         }
         else
         {
+            //Set the input username into PlayerPrefs
             PlayerPrefs.SetString("PlayerUsername", NewName);
         }
 
+        //Set the username input panel to inactive
+        InputPlayerNamePanel.SetActive(false);
+        //Try to connect to photon servers
+        TryGoOnline();
+    }
+
+    //Attempt to connect to Photon servers
+    public void TryGoOnline()
+    {
+        //Set OfflineScreen to be inactive frist 
+        OfflineScreen.SetActive(false);
+
+        //Connect to Photon Servers
+        photonConnect.ConnectToPhoton();
+
+        //If connection is successful, set the network name from the playerprefs
         if (PhotonNetwork.IsConnectedAndReady)
         {
             PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
         }
-        InputPlayerNamePanel.SetActive(false);
     }
 
     public void ClearUsernamePref()
     {
         PlayerPrefs.DeleteKey("PlayerUsername");
         PhotonNetwork.NickName = "";
-    }
-
-    public void TryGoOnline()
-    {
-        photonConnect.ConnectToPhoton();
     }
 }
