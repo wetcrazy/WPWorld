@@ -13,12 +13,19 @@ public class PhotonSceneController : MonoBehaviour {
     [SerializeField]
     GameObject InputFieldUsername;
     [SerializeField]
+    GameObject InputRoomIDPanel;
+    [SerializeField]
+    GameObject InputFieldRoomID;
+    [SerializeField]
     GameObject OfflineScreen;
 
     //Script Object Variables
     [Header("Script Objects")]
     [SerializeField]
     PhotonConnect photonConnect;
+
+    [HideInInspector]
+    public string RoomID;
 
     // Use this for initialization
     void Start ()
@@ -29,6 +36,8 @@ public class PhotonSceneController : MonoBehaviour {
             //Try to connect to Photon servers
             TryGoOnline();
         }
+        
+        InputRoomIDPanel.SetActive(false);
     }
 
     //Check if a username exists in PlayerPrefs
@@ -103,10 +112,24 @@ public class PhotonSceneController : MonoBehaviour {
 
     public void CreateGameRoom()
     {
-        string RoomID = RandomAlphanumericString(6);
+        RoomID = RandomAlphanumericString(6);
         photonConnect.CreateGameRoom(RoomID);
-        photonConnect.JoinGameRoom(RoomID);
-        
+    }
+
+    public void OpenJoinRoom()
+    {
+        InputFieldRoomID.SetActive(true);
+    }
+
+    public void ConfirmJoinRoom()
+    {
+        photonConnect.JoinGameRoom(InputFieldRoomID.GetComponent<InputField>().text);
+        InputRoomIDPanel.SetActive(false);
+    }
+
+    public void CancelJoinRoom()
+    {
+        InputRoomIDPanel.SetActive(false);
     }
 
     public void ClearUsernamePref()
