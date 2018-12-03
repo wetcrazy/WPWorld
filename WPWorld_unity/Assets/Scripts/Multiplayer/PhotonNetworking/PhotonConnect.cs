@@ -15,10 +15,14 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     GameObject OfflineScreen;
     [SerializeField]
     GameObject RoomScreen;
+    [SerializeField]
+    GameObject LobbyScreen;
 
     [Header("Script Objects")]
     [SerializeField]
     PhotonRoomController RoomController;
+    [SerializeField]
+    PhotonSceneController SceneController;
 
     //Photon Variable Values
     [Header("Variables")]
@@ -51,8 +55,6 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
         LoadingText.text = "Finding Best Region...";
         PhotonNetwork.ConnectToBestCloudServer();
-        LoadingText.text = "Joining Lobby...";
-        PhotonNetwork.JoinLobby();
     }
     
     public void CreateGameRoom(string RoomID)
@@ -78,6 +80,9 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         LoadingText.text = "Connection to master servers established!";
+
+        LoadingText.text = "Joining Lobby...";
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnConnected()
@@ -128,6 +133,10 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         RoomScreen.SetActive(true);
+        LobbyScreen.SetActive(false);
+        LoadingText.text = "";
+
+        RoomController.InitRoom();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -138,6 +147,11 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Failed to join random room!\nError Code:" + returnCode.ToString() + "\n" + message);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        JoinGameRoom(SceneController.RoomID);
     }
     #endregion
 }

@@ -26,11 +26,7 @@ public class PhotonRoomController : MonoBehaviour {
 
     public void TransferHost(int ActorNumber)
     {
-        
-
         Player NewHost = PhotonNetwork.CurrentRoom.GetPlayer(ActorNumber);
         PhotonNetwork.CurrentRoom.SetMasterClient(NewHost);
     }
-
-    
 }
