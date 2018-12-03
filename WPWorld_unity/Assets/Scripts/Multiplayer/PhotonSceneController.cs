@@ -23,9 +23,14 @@ public class PhotonSceneController : MonoBehaviour {
     [Header("Script Objects")]
     [SerializeField]
     PhotonConnect photonConnect;
+    
+    private string RoomID;
 
-    [HideInInspector]
-    public string RoomID;
+    public string GetRoomID
+    {
+        get { return RoomID; }
+    }
+
 
     // Use this for initialization
     void Start ()

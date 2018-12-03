@@ -151,7 +151,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        JoinGameRoom(SceneController.RoomID);
+        JoinGameRoom(SceneController.GetRoomID);
     }
     #endregion
 }
