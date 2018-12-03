@@ -10,6 +10,14 @@ public class FallOnCollide : MonoBehaviour {
 
     private Vector3 OrgPos;
 
+    [SerializeField]
+    private float TimeToFall;
+
+    private float TimeElapsed;
+
+    [SerializeField]
+    private bool IsFalling = false;
+
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
@@ -23,6 +31,23 @@ public class FallOnCollide : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(IsFalling)
+        {
+            if(TimeToFall > TimeElapsed)
+            {
+                TimeElapsed += Time.deltaTime;
+
+                transform.localPosition += Random.insideUnitSphere * transform.localScale.x * transform.localScale.y * transform.localScale.z;
+            }
+            else
+            {
+                transform.position = OrgPos;
+                RigidRef.constraints = RigidbodyConstraints.None;
+                ColliderRef.isTrigger = true;
+
+                IsFalling = false;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,6 +61,9 @@ public class FallOnCollide : MonoBehaviour {
 
     private void OnCollisionStay(Collision collision)
     {
+        if (IsFalling || TimeElapsed >= TimeToFall)
+            return;
+
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.up, out hit, transform.localScale.y)
@@ -46,17 +74,19 @@ public class FallOnCollide : MonoBehaviour {
         {
             if (hit.transform.tag == "Player")
             {
-                ColliderRef.isTrigger = true;
-                RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
+                IsFalling = true;
             }
         }
     }
 
     public void Reset()
     {
-        ColliderRef.isTrigger = false;
-        RenderRef.enabled = true;
         RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+        RenderRef.enabled = true;
+        ColliderRef.isTrigger = false;
+        IsFalling = false;
+        TimeElapsed = 0;
+
         transform.position = OrgPos;
     }
 }

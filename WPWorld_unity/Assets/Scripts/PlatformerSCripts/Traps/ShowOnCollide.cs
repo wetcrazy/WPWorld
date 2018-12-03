@@ -37,7 +37,6 @@ public class ShowOnCollide : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
         if (other.tag == "Player")
         {
             if(other.GetComponent<Rigidbody>().velocity.y > 0)
