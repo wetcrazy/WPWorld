@@ -37,7 +37,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        //Set OfflineScreen to be in active frist 
+        //Set OfflineScreen to be in active first 
         OfflineScreen.SetActive(false);
 
         RoomScreen.SetActive(false);
@@ -127,7 +127,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         LoadingText.text = "";
-        RoomController.InitRoom();
+        LobbyScreen.SetActive(true);
     }
 
     public override void OnJoinedRoom()
@@ -152,6 +152,27 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         JoinGameRoom(SceneController.GetRoomID);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        RoomController.UpdatePlayerList();
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        RoomController.UpdatePlayerList();
+    }
+
+    //public override void OnMasterClientSwitched(Player newMasterClient)
+    //{
+    //    RoomController.UpdatePlayerList();
+    //}
+
+    public override void OnLeftRoom()
+    {
+        RoomScreen.SetActive(false);
+        LobbyScreen.SetActive(true);
     }
     #endregion
 }
