@@ -172,8 +172,7 @@ public class GridMovementScript : MonoBehaviour
 
 
         this.transform.forward = lookDir;
-        target = this.transform.position + lookDir * Block.transform.localScale.x;
-    
+        target = this.transform.position + lookDir * Block.transform.localScale.x;   
     }
     public void SetMovementMultiplier(float _multiplier)
     {
