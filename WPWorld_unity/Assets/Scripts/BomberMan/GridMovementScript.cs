@@ -19,32 +19,63 @@ public class GridMovementScript : MonoBehaviour
     public Vector3 target;
     private Vector3 respawnPoint;
     private Vector3 firstPos;
-    
-	void Start ()
+    Vector3 Targetstore;
+    Vector3 StartPos;
+
+    private bool ismoving;
+    [SerializeField]
+    private float movetime; // time it takes for  character to move
+    float movetimer; // count from zero to movetime
+
+    void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         joyStick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         lookDir = new Vector3();
         target = new Vector3();
         currlookDir = new Vector3();
         respawnPoint = this.transform.position;
+
+        StartPos = transform.position;
+        Targetstore = StartPos;
     }
 
 
     void FixedUpdate()
     {
-      
+
     }
 
+    private void Update()
+    {
+        if (ismoving)
+        {
+            movetimer += Time.deltaTime;
+        }
+        if (movetimer >= movetime)
+        {
+            StartPos = transform.position;
+            Targetstore = this.transform.position + this.transform.forward;
+            movetimer = 0;
+            ismoving = false;
+        }
+        this.transform.position = Vector3.Lerp(StartPos, Targetstore, movetimer / movetime);
+
+
+    }
 
     public void GetJoystickInput(Vector4 DragInfo)
     {
         if (DragInfo == Vector4.zero)
         {
-            this.transform.position = target;
+            //  this.transform.position = target;
             lookDir = Vector3.zero;
             return;
+        }
+        else
+        {
+            ismoving = true;
         }
 
         Vector3 n_Forward = new Vector3();
@@ -173,7 +204,7 @@ public class GridMovementScript : MonoBehaviour
 
         this.transform.forward = lookDir;
         target = this.transform.position + lookDir * Block.transform.localScale.x;
-    
+
     }
     public void SetMovementMultiplier(float _multiplier)
     {
