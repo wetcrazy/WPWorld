@@ -5,7 +5,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class PhotonRoomController : MonoBehaviour {
+public class PhotonRoomController : MonoBehaviour
+{
 
     [Header("Scene Objects")]
     [SerializeField]
@@ -26,7 +27,7 @@ public class PhotonRoomController : MonoBehaviour {
     {
         PlayerTextList = new Text[PlayerListPanel.transform.childCount];
         PlayerTextList = PlayerListPanel.GetComponentsInChildren<Text>();
-        
+
         RoomIDText.text += PhotonNetwork.CurrentRoom.Name;
         UpdatePlayerList();
 
@@ -51,12 +52,12 @@ public class PhotonRoomController : MonoBehaviour {
             StartGameButton.SetActive(true);
         }
     }
-    
+
     public void UpdatePlayerList()
     {
         for (int i = 0; i < PlayerTextList.Length; ++i)
         {
-            if(i < PhotonNetwork.CurrentRoom.PlayerCount)
+            if (i < PhotonNetwork.CurrentRoom.PlayerCount)
             {
                 PlayerTextList[i].text = PhotonNetwork.CurrentRoom.Players[i].NickName;
             }
@@ -70,8 +71,8 @@ public class PhotonRoomController : MonoBehaviour {
     public void SetRoomVisibility()
     {
         PhotonNetwork.CurrentRoom.IsVisible = !PhotonNetwork.CurrentRoom.IsVisible;
-        
-        if(PhotonNetwork.CurrentRoom.IsVisible)
+
+        if (PhotonNetwork.CurrentRoom.IsVisible)
         {
             RoomVisibilityText.text = "Visibility: Public";
         }
@@ -106,12 +107,21 @@ public class PhotonRoomController : MonoBehaviour {
     //{
     //    TransferHost();
     //    Wait(2.0f);
-    { 
+    {
         PhotonNetwork.LeaveRoom();
     }
 
     IEnumerator Wait(float seconds)
     {
         yield return new WaitForSecondsRealtime(2.0f);
+    }
+
+    public void StartNetworkGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("PhotonGameTest");
+        }
+
     }
 }
