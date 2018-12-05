@@ -13,7 +13,7 @@ public class JumpButton : MonoBehaviour {
 	
 	public void onJumpButtonDown()
     {
-        if (PlayerObject.GetComponent<TPSLogic>() != null || PlayerObject.GetComponent<MSJump>() != null || PlayerObject.GetComponent<DSPlayer>() != null)
+        if (PlayerObject.GetComponent<TPSLogic>() != null || PlayerObject.GetComponent<DSPlayer>() != null)
         {
             PlayerObject.SendMessage("GetJumpButtonInput");
         }
