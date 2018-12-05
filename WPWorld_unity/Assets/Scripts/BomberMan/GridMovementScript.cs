@@ -5,10 +5,9 @@ using UnityEngine;
 public class GridMovementScript : MonoBehaviour
 {
     [SerializeField]
-    private GameObject Block;
+    private GameObject Blockprefab;
     [SerializeField]
     private Vector3 lookDir;
-    public Vector3 currlookDir;
     [SerializeField]
     private float movementSpeed = 1.0f;
     [SerializeField]
@@ -16,13 +15,13 @@ public class GridMovementScript : MonoBehaviour
 
     private Joystick joyStick;
     private Rigidbody rb;
-    public Vector3 target;
+    private Vector3 target;
     private Vector3 respawnPoint;
     private Vector3 firstPos;
     Vector3 Targetstore;
     Vector3 StartPos;
-
     private bool ismoving;
+
     [SerializeField]
     private float movetime; // time it takes for  character to move
     float movetimer; // count from zero to movetime
@@ -33,8 +32,7 @@ public class GridMovementScript : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         joyStick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         lookDir = new Vector3();
-        target = new Vector3();
-        currlookDir = new Vector3();
+        target = new Vector3();     
         respawnPoint = this.transform.position;
 
         StartPos = transform.position;
@@ -61,15 +59,14 @@ public class GridMovementScript : MonoBehaviour
             ismoving = false;
         }
         this.transform.position = Vector3.Lerp(StartPos, Targetstore, movetimer / movetime);
-
-
+        //this.transform.position = Vector3.Lerp(StartPos, Targetstore, movetimer / movementSpeed * movementMultiplier);
     }
 
     public void GetJoystickInput(Vector4 DragInfo)
     {
         if (DragInfo == Vector4.zero)
         {
-            //  this.transform.position = target;
+            //this.transform.position = target;
             lookDir = Vector3.zero;
             return;
         }
@@ -203,7 +200,7 @@ public class GridMovementScript : MonoBehaviour
 
 
         this.transform.forward = lookDir;
-        target = this.transform.position + lookDir * Block.transform.localScale.x;
+        target = this.transform.position + lookDir * Blockprefab.transform.localScale.x;
 
     }
     public void SetMovementMultiplier(float _multiplier)
