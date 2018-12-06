@@ -252,9 +252,7 @@ public class Enemy : MonoBehaviour {
             if (CollidedObject.tag == "Player")
             {
                 if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded()
-                    && CollidedObject.transform.localPosition.y - CollidedObject.transform.localScale.y <= transform.localPosition.y + transform.localScale.y // Check if the top of the object is colliding with the bottom of the player
-                    && Mathf.Abs(CollidedObject.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.5f // Check if the player is within a certain x range to trigger
-                    && Mathf.Abs(CollidedObject.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.5f // Check if the player is within a certain z range to trigger
+                    && CollidedObject.transform.localPosition.y - CollidedObject.transform.localScale.y * 0.5f >= transform.localPosition.y + transform.localScale.y * 0.5f // Check if the top of the object is colliding with the bottom of the player
                     )
                 {
                     PrevType = CurrType;
