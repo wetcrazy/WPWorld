@@ -7,9 +7,11 @@ public class Bomb : MonoBehaviour
     public GameObject BombFirePrefab;
     public GameObject BlockPrefab;
 
+    [SerializeField]
+    private int firePower;
+
     private float currTimer;
     private float MAX_TIMER = 3.0f;
-    private int firePower;
 
     private void Start()
     {
@@ -38,7 +40,10 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, Vector3.right, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                continue;
+                if(hit.transform.gameObject.tag != "BombFire")
+                {
+                    continue;
+                }             
             }
             else
             {
@@ -51,7 +56,10 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, -Vector3.right, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                continue;
+                if (hit.transform.gameObject.tag != "BombFire")
+                {
+                    continue;
+                }
             }
             else
             {
@@ -64,7 +72,10 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, Vector3.forward, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                continue;
+                if (hit.transform.gameObject.tag != "BombFire")
+                {
+                    continue;
+                }
             }
             else
             {
@@ -77,7 +88,10 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, -Vector3.forward, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                continue;
+                if (hit.transform.gameObject.tag != "BombFire")
+                {
+                    continue;
+                }
             }
             else
             {
@@ -85,7 +99,7 @@ public class Bomb : MonoBehaviour
                 Instantiate(newBomb, this.transform.position + -Vector3.forward * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
             }
         }
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
     public void SetBombPower(int _newPower)

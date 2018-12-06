@@ -43,8 +43,8 @@ public class DestroyOnCollide : MonoBehaviour {
         {
             if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded() // Grounded Check
                 && CollidedObject.transform.localPosition.y + CollidedObject.transform.localScale.y * 0.5f <= transform.localPosition.y - transform.localScale.y * 0.5f // Check if the bottom of the gameobject is colliding with the top of the player
-                && Mathf.Abs(CollidedObject.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.5f // Check if the player is within a certain x range to trigger
-                && Mathf.Abs(CollidedObject.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.5f // Check if the player is within a certain z range to trigger
+                && Mathf.Abs(CollidedObject.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.4f // Check if the player is within a certain x range to trigger
+                && Mathf.Abs(CollidedObject.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.4f // Check if the player is within a certain z range to trigger
                 )
             {
                 RenderRef.enabled = false;

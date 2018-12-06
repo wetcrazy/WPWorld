@@ -7,21 +7,17 @@ public class PlatformStageScript : MonoBehaviour {
     [SerializeField]
     private string BGM;
 
-    [SerializeField]
-    private bool SpawnOnPlayer;
-
     private SoundSystem SoundSystemRef;
 
     private void Awake()
     {
-        if(SpawnOnPlayer)
-            transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
+        transform.eulerAngles = Vector3.zero;
     }
 
     private void Start()
     {
-        if (SpawnOnPlayer)
-            transform.position = new Vector3(Camera.main.transform.position.x, transform.position.y, Camera.main.transform.position.z);
+        transform.eulerAngles = Vector3.zero;
+
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
         if(BGM != "")
             SoundSystemRef.PlayBGM(BGM);
