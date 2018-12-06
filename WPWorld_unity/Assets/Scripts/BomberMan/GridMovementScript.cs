@@ -49,8 +49,10 @@ public class GridMovementScript : MonoBehaviour
     {
         if (ismoving)
         {
-            movetimer += Time.deltaTime;
+            movetimer += Time.deltaTime;         
         }
+     
+        
         if (movetimer >= movetime)
         {
             StartPos = transform.position;
@@ -58,8 +60,9 @@ public class GridMovementScript : MonoBehaviour
             movetimer = 0;
             ismoving = false;
         }
-        this.transform.position = Vector3.Lerp(StartPos, Targetstore, movetimer / movetime);
         //this.transform.position = Vector3.Lerp(StartPos, Targetstore, movetimer / movementSpeed * movementMultiplier);
+
+        this.transform.position = Vector3.Lerp(StartPos, Targetstore, movetimer / movetime);
     }
 
     public void GetJoystickInput(Vector4 DragInfo)
