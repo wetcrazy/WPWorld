@@ -16,6 +16,10 @@ public class FallOnCollide : MonoBehaviour {
     private float TimeElapsed;
 
     [SerializeField]
+    private string InteractedSFX;
+
+    private SoundSystem SoundSystemRef;
+
     private bool IsFalling = false;
 
 	// Use this for initialization
@@ -27,6 +31,8 @@ public class FallOnCollide : MonoBehaviour {
         RigidRef.constraints = RigidbodyConstraints.FreezeAll;
         RigidRef.useGravity = true;
         OrgPos = transform.position;
+
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
     }
 	
 	// Update is called once per frame
@@ -75,6 +81,8 @@ public class FallOnCollide : MonoBehaviour {
             if (hit.transform.tag == "Player")
             {
                 IsFalling = true;
+                if (InteractedSFX != "")
+                    SoundSystemRef.PlaySFX(InteractedSFX);
             }
         }
     }

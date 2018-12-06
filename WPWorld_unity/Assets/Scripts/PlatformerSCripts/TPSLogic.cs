@@ -6,7 +6,7 @@ public class TPSLogic : MonoBehaviour
 {
 
     [SerializeField]
-    private float JumpSpeed;
+    private float JumpForce;
     [SerializeField]
     private bool IsGrounded = false;
     private bool AbleToJump = true;
@@ -64,10 +64,6 @@ public class TPSLogic : MonoBehaviour
     private PlayerMovement MovementRef;
     private SoundSystem SoundSystemRef;
 
-    [SerializeField]
-    private float AirborneMovementSpeed;
-    private float OrgSpeed;
-
     private List<CollectOnCollide> ListOfCoins = new List<CollectOnCollide>();
     private List<DestroyOnCollide> ListOfBricks = new List<DestroyOnCollide>();
     private List<ShowOnCollide> ListOfTrolls = new List<ShowOnCollide>();
@@ -83,9 +79,7 @@ public class TPSLogic : MonoBehaviour
         MovementRef = GetComponent<PlayerMovement>();
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
-        OrgSpeed = MovementRef.GetMovementSpeed();
-
-        Physics.gravity = new Vector3(0, -5 * transform.parent.parent.lossyScale.y, 0);
+        Physics.gravity = new Vector3(0, -5f * transform.parent.parent.lossyScale.y, 0);
 
         ListOfCoins.AddRange(FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[]);
         ListOfBricks.AddRange(FindObjectsOfType(typeof(DestroyOnCollide)) as DestroyOnCollide[]);
@@ -103,8 +97,6 @@ public class TPSLogic : MonoBehaviour
 
         if (IsGrounded)
         {
-            MovementRef.SetMovementSpeed(OrgSpeed);
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
@@ -117,6 +109,7 @@ public class TPSLogic : MonoBehaviour
                 && !Physics.Raycast(transform.position, (-transform.up - transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f)
                 && !Physics.Raycast(transform.position, (-transform.up + transform.forward).normalized, out hit, transform.lossyScale.y * 1.5f))
             {
+                MovementRef.SetMovementSpeed(MovementRef.GetMovementSpeed() * 1.5f);
                 IsGrounded = false;
             }
             else
@@ -124,15 +117,16 @@ public class TPSLogic : MonoBehaviour
                 // If one of the hit is currently hitting something, check if it is invisible or even has a renderer component
                 if (!hit.transform.GetComponent<Renderer>() || !hit.transform.GetComponent<Renderer>().isVisible)
                 {
-                    if(!hit.transform.name.Contains("Invisible"))
+                    if(!hit.transform.name.Contains("Invisible") && !hit.transform.name.Contains("Boundary"))
+                    {
+                        MovementRef.SetMovementSpeed(MovementRef.GetMovementSpeed() * 1.5f);
                         IsGrounded = false;
+                    }
                 }
             }
         }
         else
         {
-            MovementRef.SetMovementSpeed(AirborneMovementSpeed);
-
             RaycastHit hit2, hit3;
 
             if (Physics.Raycast(transform.position, -transform.up.normalized, out hit, transform.lossyScale.y * 1.5f)
@@ -155,19 +149,28 @@ public class TPSLogic : MonoBehaviour
                                 (hit2.transform.GetComponent<Renderer>() && hit2.transform.GetComponent<Renderer>().isVisible) &&
                                 (hit3.transform.GetComponent<Renderer>() && hit3.transform.GetComponent<Renderer>().isVisible) &&
                                 (hit.transform.name == hit2.transform.name && hit.transform.name == hit3.transform.name))
+                            {
+                                MovementRef.SetMovementSpeed(MovementRef.GetMovementSpeed() / 1.5f);
                                 IsGrounded = true;
+                            }
                         }
                     }
                     else
                     {
                         if(Colliding)
+                        {
+                            MovementRef.SetMovementSpeed(MovementRef.GetMovementSpeed() / 1.5f);
                             IsGrounded = true;
+                        }
                     }
                 }
                 else
                 {
                     if(hit.transform.name.Contains("Invisible"))
+                    {
+                        MovementRef.SetMovementSpeed(MovementRef.GetMovementSpeed() / 1.5f);
                         IsGrounded = true;
+                    }
                 }
             }
         }
@@ -186,8 +189,7 @@ public class TPSLogic : MonoBehaviour
     public void PushUp()
     {
         RigidRef.velocity = Vector3.zero;
-        RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-        IsGrounded = false;
+        RigidRef.AddForce(transform.up * JumpForce, ForceMode.VelocityChange);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -224,6 +226,7 @@ public class TPSLogic : MonoBehaviour
 
         GetComponent<PlayerMovement>().Respawn();
         RigidRef.velocity = Vector3.zero;
+        IsGrounded = true;
 
         HealthPopup DeathUI = FindObjectOfType<HealthPopup>() as HealthPopup;
         if (DeathUI != null)
@@ -260,11 +263,8 @@ public class TPSLogic : MonoBehaviour
         {
             Destroy(PowerUpRef.gameObject);
         }
-    }
 
-    public void Win()
-    {
-        // Show off Win Screen
+        GetComponent<PlayerPowerUp>().Reset();
     }
 
     private void GetJumpButtonInput()
@@ -275,5 +275,15 @@ public class TPSLogic : MonoBehaviour
     public bool GetGrounded()
     {
         return IsGrounded;
+    }
+
+    public float GetJumpForce()
+    {
+        return JumpForce;
+    }
+
+    public void SetJumpForce(float n_JumpForce)
+    {
+        JumpForce = n_JumpForce;
     }
 }

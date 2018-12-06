@@ -17,11 +17,15 @@ public class PlayerPowerUp : MonoBehaviour {
     [SerializeField]
     private POWERUPS CurrPowerUp;
 
-    [SerializeField]
-    private float SuperMovementSpeed;
+    private POWERUPS PrevPowerUp;
 
     [SerializeField]
-    private float SuperJumpSpeed;
+    private float SuperMovementSpeed;
+    private float OrgMovementSpeed;
+
+    [SerializeField]
+    private float SuperJumpForce;
+    private float OrgJumpForce;
 
     [SerializeField]
     private float FireballDelay;
@@ -33,44 +37,30 @@ public class PlayerPowerUp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        PrevPowerUp = CurrPowerUp;
+
+        OrgMovementSpeed = GetComponent<PlayerMovement>().GetMovementSpeed();
+        OrgJumpForce = GetComponent<TPSLogic>().GetJumpForce();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        switch (CurrPowerUp)
+        if(CurrPowerUp != PrevPowerUp)
         {
-            case (POWERUPS.SUPERSPEED):
-                GetComponent<PlayerMovement>().SetMovementSpeed(SuperMovementSpeed);
-                break;
-            case (POWERUPS.FIREBALL):
-                if(TimeElapsed < 0)
-                {
-                    TimeElapsed = 0;
-                }
-                else
-                {
-                    TimeElapsed -= Time.deltaTime;
-                }
-                break;
-            case (POWERUPS.SUPERJUMP):
-
-                break;
-            case (POWERUPS.INVISIBILITY):
-                Color ColorRef = transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
-                ColorRef.a = Mathf.Lerp(ColorRef.a, 0, Time.deltaTime);
-
-                for(int i = 0; i < transform.childCount; i++)
-                {
-                    transform.GetChild(0).GetComponent<MeshRenderer>().material.color = ColorRef;
-                }
-
-                break;
-            case (POWERUPS.INSTANTDEATH):
-                GetComponent<TPSLogic>().Death();
-                CurrPowerUp = POWERUPS.NONE;
-                break;
+            switch(CurrPowerUp)
+            {
+                case (POWERUPS.SUPERSPEED):
+                    GetComponent<PlayerMovement>().SetMovementSpeed(SuperMovementSpeed);
+                    break;
+                case (POWERUPS.SUPERJUMP):
+                    GetComponent<TPSLogic>().SetJumpForce(SuperJumpForce);
+                    break;
+                case (POWERUPS.INSTANTDEATH):
+                    GetComponent<TPSLogic>().Death();
+                    break;
+            }
         }
+        PrevPowerUp = CurrPowerUp;
     }
 
     public void SetPowerUp(POWERUPS n_PowerUp)
@@ -89,11 +79,10 @@ public class PlayerPowerUp : MonoBehaviour {
 
         if(CurrPowerUp == POWERUPS.SUPERJUMP)
         {
-            if (CollisionRef.transform.position.y + CollisionRef.transform.lossyScale.y / 2
-                >= transform.position.y - transform.lossyScale.y / 2 && !GetComponent<TPSLogic>().GetGrounded())
+            if (CollisionRef.transform.position.y + CollisionRef.transform.lossyScale.y / 2 >= transform.position.y - transform.lossyScale.y / 2
+                && !GetComponent<TPSLogic>().GetGrounded())
             {
                 GetComponent<TPSLogic>().Death();
-                CurrPowerUp = POWERUPS.NONE;
             }
         }
         else if (CurrPowerUp == POWERUPS.SUPERSPEED)
@@ -101,7 +90,6 @@ public class PlayerPowerUp : MonoBehaviour {
             if (Mathf.Abs(CollisionRef.transform.position.y - transform.position.y) < CollisionRef.transform.lossyScale.y / 2)
             {
                 GetComponent<TPSLogic>().Death();
-                CurrPowerUp = POWERUPS.NONE;
             }
         }
     }
@@ -116,5 +104,12 @@ public class PlayerPowerUp : MonoBehaviour {
 
             TimeElapsed += FireballDelay;
         }
+    }
+
+    public void Reset()
+    {
+        GetComponent<PlayerMovement>().SetMovementSpeed(OrgMovementSpeed);
+        GetComponent<TPSLogic>().SetJumpForce(OrgJumpForce);
+        CurrPowerUp = POWERUPS.NONE;
     }
 }
