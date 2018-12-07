@@ -22,7 +22,7 @@ public class UIPopup : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.GetChild(0).LookAt(2 * transform.position - Camera.main.transform.position);
+        transform.GetChild(0).LookAt(2 * transform.GetChild(0).transform.position - Camera.main.transform.position);
 	}
 
     private void OnTriggerEnter(Collider other)

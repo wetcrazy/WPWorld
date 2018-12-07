@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BombFire : MonoBehaviour
-{
-    
+{  
     private float SCALING_SPEED = 1.0f;
     private Vector3 subtractScaling;
 

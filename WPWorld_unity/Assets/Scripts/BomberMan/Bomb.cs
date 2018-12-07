@@ -6,15 +6,22 @@ public class Bomb : MonoBehaviour
 {
     public GameObject BombFirePrefab;
     public GameObject BlockPrefab;
+  
+    public GameObject Manager; // Need for power up block spawner
 
     [SerializeField]
     private int firePower;
-
+    [SerializeField]
+    private GameObject Owner;
     private float currTimer;
     private float MAX_TIMER = 3.0f;
+    private Collider col;
 
     private void Start()
     {
+        Manager = GameObject.FindGameObjectWithTag("BombermanManager");
+        col = this.transform.GetComponent<Collider>();
+        col.isTrigger = true;
         currTimer = 0.0f;
     }
 
@@ -32,6 +39,8 @@ public class Bomb : MonoBehaviour
 
     public void BlowUp()
     {
+        //Manager.GetComponent<BombermanManager>().DestoryMyBombCount(Owner);
+
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
         // + X
@@ -40,14 +49,13 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, Vector3.right, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                if(hit.transform.gameObject.tag != "BombFire")
-                {
-                    continue;
+                if(hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+                {                  
+                    Instantiate(newBomb, this.transform.position + Vector3.right * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
                 }             
             }
             else
-            {
-                var _newBomb = BombFirePrefab;
+            {               
                 Instantiate(newBomb, this.transform.position + Vector3.right * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
             }
         }
@@ -56,14 +64,13 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, -Vector3.right, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                if (hit.transform.gameObject.tag != "BombFire")
-                {
-                    continue;
+                if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+                {                
+                    Instantiate(newBomb, this.transform.position + -Vector3.right * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
                 }
             }
             else
-            {
-                var _newBomb = BombFirePrefab;
+            {              
                 Instantiate(newBomb, this.transform.position + -Vector3.right * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
             }
         }
@@ -72,14 +79,13 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, Vector3.forward, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                if (hit.transform.gameObject.tag != "BombFire")
-                {
-                    continue;
+                if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+                {                  
+                    Instantiate(newBomb, this.transform.position + Vector3.forward * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
                 }
             }
             else
-            {
-                var _newBomb = BombFirePrefab;
+            {               
                 Instantiate(newBomb, this.transform.position + Vector3.forward * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
             }
         }
@@ -88,14 +94,13 @@ public class Bomb : MonoBehaviour
         {
             if (Physics.Raycast(this.transform.position, -Vector3.forward, out hit, BlockPrefab.transform.localScale.x * i))
             {
-                if (hit.transform.gameObject.tag != "BombFire")
-                {
-                    continue;
+                if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+                {                 
+                    Instantiate(newBomb, this.transform.position + -Vector3.forward * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
                 }
             }
             else
-            {
-                var _newBomb = BombFirePrefab;
+            {               
                 Instantiate(newBomb, this.transform.position + -Vector3.forward * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
             }
         }
@@ -110,5 +115,15 @@ public class Bomb : MonoBehaviour
     public void SetBombTimer(int _newTime)
     {
         MAX_TIMER = _newTime;
+    }
+
+    private void OnTriggerExit()
+    {
+        col.isTrigger = false;
+    }
+
+    public void SetBombOwner(GameObject _newOwner)
+    {
+        Owner = _newOwner;
     }
 }
