@@ -11,7 +11,7 @@ public class BomberManPlayer : MonoBehaviour
 
     private void Start()
     {
-        firePower = 1;
+        firePower = 10; // Default 1, can be increased
         Lives = 3;
     }
 

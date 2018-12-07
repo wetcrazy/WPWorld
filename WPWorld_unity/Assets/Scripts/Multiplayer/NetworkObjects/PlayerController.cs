@@ -5,9 +5,19 @@ using Photon.Pun;
 
 public class PlayerController :  MonoBehaviourPun, IPunObservable{
 
-	// Use this for initialization
-	void Start () {
-		
+
+    public static GameObject LocalPlayerInstance;
+
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
