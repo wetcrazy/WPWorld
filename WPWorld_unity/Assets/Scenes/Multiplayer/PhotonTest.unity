@@ -479,7 +479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &150436165
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1749,7 +1749,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 866930885}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1206076926}
+        m_MethodName: StartNetworkGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &866930885
@@ -2167,12 +2178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bf885add0a84a4da1baef0b43864c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputPlayerNamePanel: {fileID: 0}
-  InputFieldUsername: {fileID: 0}
-  InputRoomIDPanel: {fileID: 0}
-  InputFieldRoomID: {fileID: 0}
-  OfflineScreen: {fileID: 0}
-  photonConnect: {fileID: 0}
+  InputPlayerNamePanel: {fileID: 1974327280}
+  InputFieldUsername: {fileID: 2095832920}
+  InputRoomIDPanel: {fileID: 1120881672}
+  InputFieldRoomID: {fileID: 1288361303}
+  OfflineScreen: {fileID: 1721641416}
+  photonConnect: {fileID: 2143610150}
 --- !u!1 &1048782448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2689,11 +2700,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63af2d7ddafca21448407170972fb77e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomIDText: {fileID: 0}
-  TransferHostButton: {fileID: 0}
-  RoomVisibilityText: {fileID: 0}
-  StartGameButton: {fileID: 0}
-  PlayerListPanel: {fileID: 0}
+  RoomIDText: {fileID: 1669252046}
+  TransferHostButton: {fileID: 548500647}
+  RoomVisibilityText: {fileID: 1830944654}
+  StartGameButton: {fileID: 866930882}
+  PlayerListPanel: {fileID: 725296350}
 --- !u!224 &1206076927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3735,7 +3746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1721641417
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3920,7 +3931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1974327281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4203,12 +4214,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37576aa06b87d82429e9d46908632e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingText: {fileID: 0}
-  OfflineScreen: {fileID: 0}
-  RoomScreen: {fileID: 0}
-  LobbyScreen: {fileID: 0}
-  RoomController: {fileID: 0}
-  SceneController: {fileID: 0}
+  LoadingText: {fileID: 1048782450}
+  OfflineScreen: {fileID: 1721641416}
+  RoomScreen: {fileID: 1206697324}
+  LobbyScreen: {fileID: 150436164}
+  RoomController: {fileID: 1206076926}
+  SceneController: {fileID: 986695794}
   MaximumPlayersInRoom: 2
 --- !u!4 &2143610151
 Transform:

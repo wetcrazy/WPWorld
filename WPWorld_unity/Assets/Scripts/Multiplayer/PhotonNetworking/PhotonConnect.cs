@@ -82,12 +82,15 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         LoadingText.text = "Connection to master servers established!";
 
         LoadingText.text = "Joining Lobby...";
+
+        Debug.Log("Connected To Master");
         PhotonNetwork.JoinLobby();
     }
 
     public override void OnConnected()
     {
         LoadingText.text = "Connection to servers established!";
+        Debug.Log("Connected");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -128,6 +131,8 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     {
         LoadingText.text = "";
         LobbyScreen.SetActive(true);
+
+        Debug.Log("Joined Lobby");
     }
 
     public override void OnJoinedRoom()
@@ -137,6 +142,9 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         LoadingText.text = "";
 
         RoomController.InitRoom();
+
+
+        Debug.Log("Joined Room");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -151,17 +159,24 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        JoinGameRoom(SceneController.GetRoomID);
+        //JoinGameRoom(SceneController.GetRoomID);
+
+        Debug.Log("Created Room");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         RoomController.UpdatePlayerList();
+
+
+        Debug.Log("Someone joined");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomController.UpdatePlayerList();
+
+        Debug.Log("Someone left");
     }
 
     //public override void OnMasterClientSwitched(Player newMasterClient)
@@ -173,6 +188,8 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     {
         RoomScreen.SetActive(false);
         LobbyScreen.SetActive(true);
+
+        Debug.Log("Left Room");
     }
     #endregion
 }

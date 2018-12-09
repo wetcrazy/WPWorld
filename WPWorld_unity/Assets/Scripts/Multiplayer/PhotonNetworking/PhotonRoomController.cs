@@ -59,7 +59,7 @@ public class PhotonRoomController : MonoBehaviour
         {
             if (i < PhotonNetwork.CurrentRoom.PlayerCount)
             {
-                PlayerTextList[i].text = PhotonNetwork.CurrentRoom.Players[i].NickName;
+                PlayerTextList[i].text = PhotonNetwork.CurrentRoom.Players[i].NickName; //Error
             }
             else
             {
