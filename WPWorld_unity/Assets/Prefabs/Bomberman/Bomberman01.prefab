@@ -3263,7 +3263,6 @@ GameObject:
   - component: {fileID: 222425210952598170}
   - component: {fileID: 114894203524936110}
   - component: {fileID: 114313079682694236}
-  - component: {fileID: 114871245405673930}
   m_Layer: 0
   m_Name: Bomb Button
   m_TagString: Untagged
@@ -20247,25 +20246,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114871245405673930
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1815374935344760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  delegates: []
 --- !u!114 &114894203524936110
 MonoBehaviour:
   m_ObjectHideFlags: 1
