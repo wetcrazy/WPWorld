@@ -35,7 +35,7 @@ public class Fireball : MonoBehaviour {
                 CollisionRef.GetComponent<TPSLogic>().Death();
             else
             {
-                CollisionRef.GetComponent<Enemy>().AirborneDeath();
+                //CollisionRef.GetComponent<Enemy>().AirborneDeath();
             }
         }
         else

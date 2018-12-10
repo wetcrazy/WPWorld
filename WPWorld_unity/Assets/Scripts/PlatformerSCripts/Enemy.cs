@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,324 +16,130 @@ public enum ENEMYTYPES
 
 public class Enemy : MonoBehaviour {
 
-    [SerializeField]
-    private ENEMYTYPES CurrType;
+	public ENEMYTYPES CurrType;
 
-    [SerializeField]
-    private float WalkSpeed;
+	// Walk Variables
+	public float MovementSpeed;
+	private Vector3 MoveDir;
 
-    [SerializeField]
-    private float JumpSpeed;
+	// Patrol Variables
+	public Vector3 PatrolPointA;
+	private Vector3 PatrolMarkerA;
+	public Vector3 PatrolPointB;
+	private Vector3 PatrolMarkerB;
+	private bool PatrolFirstIteration = true; // True = Move towards A, False = Move towards B
 
-    private bool IsGrounded;
+	// Jump Variables
+	public float JumpSpeed;
 
-    [SerializeField]
-    private GameObject PatrolPointA;
-    [SerializeField]
-    private GameObject PatrolPointB;
-    [SerializeField]
-    private bool PatrolToA = false;
+	// Death Variables
+	public bool IsImmortal;
+	public int ScoreAmount;
+	public GameObject ScoreUI;
 
-    private bool Hidden = true;
+	// Hidden Variables
+	private bool IsConcealing;
 
-    private float TimeElapsed;
-    [SerializeField]
-    private float TimeToDecay;
+	// Reset Variables
+	private Vector3 OrgPos;
+	private Vector3 OrgSize;
+	private ENEMYTYPES OrgType;
 
-    [SerializeField]
-    private bool IsImmortal;
-    private ENEMYTYPES PrevType;
-    private RigidbodyConstraints PrevConstraints;
+	// Variables to grab
+	private Rigidbody RigidRef;
+	private Renderer RenderRef;
 
-    [SerializeField]
-    private GameObject ScorePopup;
-    [SerializeField]
-    private int Score;
+	void Start() {
+		PatrolMarkerA = transform.localPosition + PatrolPointA;
+		PatrolMarkerB = transform.localPosition + PatrolPointB;
 
-    [SerializeField]
-    private string DeathSound;
+		OrgPos = transform.localPosition;
+		OrgSize = transform.localScale;
+		OrgType = CurrType;
 
-    private Rigidbody RigidRef;
-    private SoundSystem SoundSystemRef;
-
-    // Reset Variables
-    private Vector3 OrgPos;
-    private Vector3 OrgSize;
-    private ENEMYTYPES OrgType;
-
-	// Use this for initialization
-	void Start () {
-        RigidRef = GetComponent<Rigidbody>();
-        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-
-        OrgPos = transform.localPosition;
-        OrgSize = transform.localScale;
-        OrgType = CurrType;
+		RigidRef = GetComponent<Rigidbody>();
+		RenderRef = GetComponent<Renderer>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
+	void Update() {
+		if (CurrType == ENEMYTYPES.WALK
+			|| CurrType == ENEMYTYPES.WALKJUMP
+			|| CurrType == ENEMYTYPES.HIDDENWALKJUMP)
+		{
+			MoveDir = transform.forward;
+		}
+		else
+		{
+			if (PatrolFirstIteration)
+			{
+				if (Vector3.Distance(transform.localPosition, PatrolMarkerA) < transform.localScale.x)
+					PatrolFirstIteration = false;
+				else
+					MoveDir = Vector3.Lerp(transform.localPosition, PatrolMarkerA, Time.deltaTime).normalized;
+			}
+			else
+			{
+				if (Vector3.Distance(transform.localPosition, PatrolMarkerB) < transform.localScale.x)
+					PatrolFirstIteration = true;
+				else
+					MoveDir = Vector3.Lerp(transform.localPosition, PatrolMarkerB, Time.deltaTime).normalized;
+			}
+		}
 	}
 
     private void FixedUpdate()
     {
-        IsGrounded = Physics.Raycast(transform.position, -transform.up, transform.lossyScale.y / 2* 1.001f);
-        Debug.DrawRay(transform.position, -transform.up * (transform.lossyScale.y / 2 * 1.001f), Color.white);
-
-        switch (CurrType)
-        {
-            case (ENEMYTYPES.WALK):
-                RigidRef.MovePosition(transform.position + transform.forward * WalkSpeed * Time.fixedDeltaTime);
-                break;
-            case (ENEMYTYPES.PATROL):
-                if(PatrolToA)
-                {
-                    if(Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.1f)
-                    {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
-                    }
-                    else
-                    {
-                        PatrolToA = false;
-                    }
-                }
-                else
-                {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.1f)
-                    {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
-                    }
-                    else
-                    {
-                        PatrolToA = true;
-                    }
-                }
-                break;
-            case (ENEMYTYPES.WALKJUMP):
-                RigidRef.MovePosition(transform.position + transform.forward * WalkSpeed * Time.fixedDeltaTime);
-                if (IsGrounded)
-                {
-                    RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                }
-                break;
-            case (ENEMYTYPES.PATROLJUMP):
-                if (PatrolToA)
-                {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.5f)
-                    {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
-                        if (IsGrounded)
-                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                    }
-                    else
-                    {
-                        if(IsGrounded)
-                            PatrolToA = false;
-                    }
-                }
-                else
-                {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.5f)
-                    {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
-                        if (IsGrounded)
-                        {
-                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                        }
-                    }
-                    else
-                    {
-                        if (IsGrounded)
-                            PatrolToA = true;
-                    }
-                }
-                break;
-            case (ENEMYTYPES.HIDDENWALKJUMP):
-                RigidRef.MovePosition(transform.position + transform.forward * WalkSpeed * Time.fixedDeltaTime);
-                if (IsGrounded && !Hidden)
-                {
-                    RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                }
-                break;
-            case (ENEMYTYPES.HIDDENPATROLJUMP):
-                if (PatrolToA)
-                {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointA.transform.position) > transform.lossyScale.x * 0.5f)
-                    {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointA.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
-                        if (IsGrounded && !Hidden)
-                        {
-                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                        }
-                    }
-                    else
-                    {
-                        PatrolToA = false;
-                    }
-                }
-                else
-                {
-                    if (Vector3.Distance(RigidRef.position, PatrolPointB.transform.position) > transform.lossyScale.x * 0.5f)
-                    {
-                        RigidRef.MovePosition(RigidRef.position + (PatrolPointB.transform.position - RigidRef.position).normalized * Mathf.Abs(WalkSpeed) * Time.fixedDeltaTime);
-                        if (IsGrounded && !Hidden)
-                        {
-                            RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
-                        }
-                    }
-                    else
-                    {
-                        PatrolToA = true;
-                    }
-                }
-                break;
-            case (ENEMYTYPES.DEAD):
-                if(TimeElapsed >= TimeToDecay)
-                {
-                    if(!IsImmortal)
-                    {
-                        transform.localScale = OrgSize;
-                        if (transform.name.Contains("Clone"))
-                            Destroy(this.gameObject);
-                        else
-                            GetComponent<Renderer>().enabled = false;
-                    }
-                    else
-                    {
-                        transform.localScale = OrgSize;
-                        CurrType = PrevType;
-                        GetComponent<Collider>().isTrigger = false;
-                        transform.position += new Vector3(0, transform.lossyScale.y * 0.5f, 0);
-                        RigidRef.constraints = PrevConstraints;
-                        TimeElapsed = 0;
-                    }
-                }
-                else
-                {
-                    TimeElapsed += Time.deltaTime;
-                }
-                break;
-        }
+		RigidRef.MovePosition(RigidRef.position + MoveDir * MovementSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            if (CurrType.ToString().Contains("HIDDEN"))
-            {
-                RaycastHit hit;
-                if(Physics.Raycast(transform.position, other.gameObject.transform.position - transform.position, out hit))
-                {
-                    if(hit.transform.tag == "Player")
-                    {
-                        Hidden = false;
-                    }
-                }
-            }
-        }
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.tag == "Player")
+		{
+			if (CurrType == ENEMYTYPES.HIDDENWALKJUMP
+				|| CurrType == ENEMYTYPES.HIDDENPATROLJUMP)
+				IsConcealing = true;
+		}
 
-        if (other.tag == "Killbox")
-        {
-            CurrType = ENEMYTYPES.DEAD;
-            RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-            GetComponent<Collider>().isTrigger = true;
+		if (other.tag == "Killbox")
+		{
+			RenderRef.enabled = false;
+			RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+		}
+	}
 
-            TimeElapsed = TimeToDecay;
-        }
-    }
+	private void OnCollisionEnter(Collision collision)
+	{
+		GameObject CollidedRef = collision.gameObject;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        GameObject CollidedObject = collision.gameObject;
+		if (CollidedRef.tag != "Player")
+		{
+			if (CurrType == ENEMYTYPES.WALK
+				&& transform.localPosition.y + transform.localScale.y * 0.5f >= CollidedRef.transform.position.y
+				&& transform.localPosition.y - transform.localScale.y * 0.5f <= CollidedRef.transform.position.y)
+			{
+				transform.forward *= -1.0f;
+			}
+		}
+	}
 
-        if(CurrType != ENEMYTYPES.DEAD)
-        {
-            if (CollidedObject.tag == "Player")
-            {
-                if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded()
-                    && CollidedObject.transform.localPosition.y - CollidedObject.transform.localScale.y * 0.5f >= transform.localPosition.y + transform.localScale.y * 0.5f // Check if the top of the object is colliding with the bottom of the player
-                    )
-                {
-                    PrevType = CurrType;
-                    CurrType = ENEMYTYPES.DEAD;
-                    GetComponent<Collider>().isTrigger = true;
-                    if(IsGrounded || IsImmortal)
-                    {
-                        GroundDeath();
-                    }
-                    else
-                        AirborneDeath();
+	private void OnCollisionStay(Collision collision)
+	{
+		GameObject CollidedRef = collision.gameObject;
 
-                    CollidedObject.GetComponent<TPSLogic>().PushUp();
-                }
-                else
-                {
-                    Debug.Log(CollidedObject.GetComponent<Rigidbody>().velocity.y);
-                    CollidedObject.GetComponent<TPSLogic>().Death();
-                }
-            }
-            else
-            {
-                // Change Walk Direction if bumped into something
-                if (Mathf.Abs(transform.position.y - CollidedObject.transform.position.y) < CollidedObject.transform.lossyScale.y / 2)
-                    transform.forward = -transform.forward;
-            }
-        }
-    }
+		if (CollidedRef.tag == "Player")
+		{
 
-    public void GroundDeath()
-    {
-        CurrType = ENEMYTYPES.DEAD;
-        GetComponent<Collider>().isTrigger = true;
+		}
+	}
 
-        PrevConstraints = RigidRef.constraints;
+	public void Reset()
+	{
+		transform.localPosition = OrgPos;
+		transform.localScale = OrgSize;
+		CurrType = OrgType;
 
-        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-        transform.localScale *= 0.5f;
-        transform.localScale = new Vector3(OrgSize.x, transform.localScale.y, OrgSize.z);
+		RenderRef.enabled = true;
 
-        transform.position -= new Vector3(0, transform.lossyScale.y * 0.5f, 0);
-
-        if (DeathSound != "")
-            SoundSystemRef.PlaySFX(DeathSound);
-
-        GameObject n_Score = Instantiate(ScorePopup, transform);
-        n_Score.transform.parent = null;
-        n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        n_Score.transform.position = this.transform.position;
-
-        n_Score.GetComponent<TextMesh>().text = Score.ToString();
-    }
-
-    public void AirborneDeath()
-    {
-        CurrType = ENEMYTYPES.DEAD;
-        GetComponent<Collider>().isTrigger = true;
-
-        RigidRef.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
-
-        if (DeathSound != "")
-            SoundSystemRef.PlaySFX(DeathSound);
-
-        GameObject n_Score = Instantiate(ScorePopup, transform);
-        n_Score.transform.parent = null;
-        n_Score.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        n_Score.transform.position = this.transform.position;
-
-        n_Score.GetComponent<TextMesh>().text = Score.ToString();
-    }
-
-    public void Reset()
-    {
-        transform.localPosition = OrgPos;
-        CurrType = OrgType;
-        transform.localScale = OrgSize;
-        if(RigidRef.constraints == RigidbodyConstraints.FreezeAll)
-            RigidRef.constraints = PrevConstraints;
-        TimeElapsed = 0;
-        GetComponent<Collider>().isTrigger = false;
-        GetComponent<Renderer>().enabled = true;
-    }
+	}
 }

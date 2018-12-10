@@ -65,11 +65,11 @@ public class TPSLogic : MonoBehaviour
     private SoundSystem SoundSystemRef;
 
     private List<CollectOnCollide> ListOfCoins = new List<CollectOnCollide>();
-    private List<DestroyOnCollide> ListOfBricks = new List<DestroyOnCollide>();
-    private List<ShowOnCollide> ListOfTrolls = new List<ShowOnCollide>();
-    private List<SpawnOnCollide> ListOfSpawns = new List<SpawnOnCollide>();
+    private List<DestroyOnHit> ListOfBricks = new List<DestroyOnHit>();
+    private List<ShowOnHit> ListOfTrolls = new List<ShowOnHit>();
+    private List<SpawnOnHit> ListOfSpawns = new List<SpawnOnHit>();
     private List<Enemy> ListOfEnemies = new List<Enemy>();
-    private List<FallOnCollide> ListOfFalling = new List<FallOnCollide>();
+    private List<FallOnTop> ListOfFalling = new List<FallOnTop>();
     private List<MoveOnCollide> ListOfMoving = new List<MoveOnCollide>();
 
     // Use this for initialization
@@ -82,11 +82,11 @@ public class TPSLogic : MonoBehaviour
         Physics.gravity = new Vector3(0, -5f * transform.parent.parent.lossyScale.y, 0);
 
         ListOfCoins.AddRange(FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[]);
-        ListOfBricks.AddRange(FindObjectsOfType(typeof(DestroyOnCollide)) as DestroyOnCollide[]);
-        ListOfTrolls.AddRange(FindObjectsOfType(typeof(ShowOnCollide)) as ShowOnCollide[]);
-        ListOfSpawns.AddRange(FindObjectsOfType(typeof(SpawnOnCollide)) as SpawnOnCollide[]);
+        ListOfBricks.AddRange(FindObjectsOfType(typeof(DestroyOnHit)) as DestroyOnHit[]);
+        ListOfTrolls.AddRange(FindObjectsOfType(typeof(ShowOnHit)) as ShowOnHit[]);
+        ListOfSpawns.AddRange(FindObjectsOfType(typeof(SpawnOnHit)) as SpawnOnHit[]);
         ListOfEnemies.AddRange(FindObjectsOfType(typeof(Enemy)) as Enemy[]);
-        ListOfFalling.AddRange(FindObjectsOfType(typeof(FallOnCollide)) as FallOnCollide[]);
+        ListOfFalling.AddRange(FindObjectsOfType(typeof(FallOnTop)) as FallOnTop[]);
         ListOfMoving.AddRange(FindObjectsOfType(typeof(MoveOnCollide)) as MoveOnCollide[]);
     }
 
@@ -235,19 +235,19 @@ public class TPSLogic : MonoBehaviour
         foreach(CollectOnCollide CoinRef in ListOfCoins)
             CoinRef.Reset();
 
-        foreach(DestroyOnCollide BrickRef in ListOfBricks)
+        foreach(DestroyOnHit BrickRef in ListOfBricks)
             BrickRef.Reset();
 
-        foreach(ShowOnCollide TrollRef in ListOfTrolls)
+        foreach(ShowOnHit TrollRef in ListOfTrolls)
             TrollRef.Reset();
 
-        foreach (SpawnOnCollide SpawnRef in ListOfSpawns)
+        foreach (SpawnOnHit SpawnRef in ListOfSpawns)
             SpawnRef.Reset();
 
         foreach (Enemy EnemyRef in ListOfEnemies)
             EnemyRef.Reset();
 
-        foreach (FallOnCollide FallBlock in ListOfFalling)
+        foreach (FallOnTop FallBlock in ListOfFalling)
             FallBlock.Reset();
 
         foreach (MoveOnCollide MoveBlock in ListOfMoving)
