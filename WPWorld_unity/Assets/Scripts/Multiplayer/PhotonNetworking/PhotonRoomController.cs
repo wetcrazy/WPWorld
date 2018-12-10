@@ -22,6 +22,7 @@ public class PhotonRoomController : MonoBehaviour
 
     //List<Text> PlayerTextList = new List<Text>();
     Text[] PlayerTextList;
+    private Dictionary<int, Player> players = new Dictionary<int, Player>();
 
     public void InitRoom()
     {
@@ -30,11 +31,6 @@ public class PhotonRoomController : MonoBehaviour
 
         RoomIDText.text += PhotonNetwork.CurrentRoom.Name;
         UpdatePlayerList();
-
-        //for (int i = 0; i < PlayerListPanel.transform.childCount; ++i)
-        //{
-        //    PlayerTextList.Add(PlayerListPanel.transform.GetChild(0).gameObject);
-        //}
 
         //Is not host of room
         if (!PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -55,11 +51,16 @@ public class PhotonRoomController : MonoBehaviour
 
     public void UpdatePlayerList()
     {
+        if(!PhotonNetwork.InRoom)
+        {
+            Debug.Log("Updating player list while not in room");
+        }
+
         for (int i = 0; i < PlayerTextList.Length; ++i)
         {
             if (i < PhotonNetwork.CurrentRoom.PlayerCount)
             {
-                PlayerTextList[i].text = PhotonNetwork.CurrentRoom.Players[i].NickName; //Error
+                PlayerTextList[i].text = PhotonNetwork.PlayerList[i].NickName;
             }
             else
             {
