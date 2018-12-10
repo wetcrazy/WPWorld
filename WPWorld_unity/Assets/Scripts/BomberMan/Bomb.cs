@@ -39,7 +39,7 @@ public class Bomb : MonoBehaviour
 
     public void BlowUp()
     {
-        //Manager.GetComponent<BombermanManager>().DestoryMyBombCount(Owner);
+        Owner.GetComponent<BomberManPlayer>().OneBombDestory();
 
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
