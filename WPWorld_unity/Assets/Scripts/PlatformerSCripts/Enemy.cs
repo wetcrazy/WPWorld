@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour {
 	private Vector3 OrgPos;
 	private Vector3 OrgSize;
 	private ENEMYTYPES OrgType;
+    private RigidbodyConstraints OrgConstraints;
 
 	// Variables to grab
 	private Rigidbody RigidRef;
@@ -67,7 +68,9 @@ public class Enemy : MonoBehaviour {
 		RenderRef = GetComponent<Renderer>();
         ColliderRef = GetComponent<Collider>();
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-	}
+
+        OrgConstraints = RigidRef.constraints;
+    }
 
 	void Update() {
         MoveDir = Vector3.zero;
@@ -139,8 +142,15 @@ public class Enemy : MonoBehaviour {
                 TimeElapsed += Time.deltaTime;
             else
             {
-                RenderRef.enabled = false;
-                transform.localScale = OrgSize;
+                if(IsImmortal)
+                {
+                    CurrType = OrgType;
+                }
+                else
+                {
+                    RenderRef.enabled = false;
+                    transform.localScale = OrgSize;
+                }
             }
         }
 	}
@@ -188,6 +198,7 @@ public class Enemy : MonoBehaviour {
 
                 // Player Feedback, UI & Sound & Character Reaction
                 GameObject UIScore = Instantiate(ScoreUI, transform.position, transform.rotation, transform);
+                UIScore.GetComponent<TextMesh>().text = ScoreAmount.ToString();
                 if (DeathSFX != "")
                     SoundSystemRef.PlaySFX(DeathSFX);
                 CollidedRef.GetComponent<TPSLogic>().PushUp();
@@ -239,6 +250,7 @@ public class Enemy : MonoBehaviour {
 		transform.localPosition = OrgPos;
 		transform.localScale = OrgSize;
 		CurrType = OrgType;
+        RigidRef.constraints = OrgConstraints;
 
         TimeElapsed = 0;
 

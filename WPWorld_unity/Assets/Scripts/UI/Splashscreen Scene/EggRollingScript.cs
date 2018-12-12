@@ -19,7 +19,7 @@ public class EggRollingScript : MonoBehaviour
         newPos = RectTrans.anchoredPosition;
         newPos.x += 110.0f;
         speed = 50.0f;
-        zRot = new Vector3(0, 0, -180.0f);
+        zRot = new Vector3(0, 0, -160.0f);
 	}
 	
 	// Update is called once per frame
@@ -32,5 +32,7 @@ public class EggRollingScript : MonoBehaviour
         {
             RectTrans.Rotate(zRot * step * Time.deltaTime);
         }
+
+        Debug.Log(RectTrans.localRotation.z);
 	}
 }

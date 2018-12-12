@@ -126,16 +126,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrType: 0
-  WalkSpeed: 0.2
+  MovementSpeed: 0.2
+  PatrolPointA: {x: 0, y: 0, z: 0}
+  PatrolPointB: {x: 0, y: 0, z: 0}
   JumpSpeed: 1.5
-  PatrolPointA: {fileID: 0}
-  PatrolPointB: {fileID: 0}
-  PatrolToA: 0
-  TimeToDecay: 2
+  TimeToTransition: 1
   IsImmortal: 0
-  ScorePopup: {fileID: 1701056272419974, guid: 1b74302078d463a45afd120f9163d72b, type: 2}
-  Score: 200
-  DeathSound: EnemyDeath
+  ScoreAmount: 100
+  ScoreUI: {fileID: 1701056272419974, guid: 1b74302078d463a45afd120f9163d72b, type: 2}
+  DeathSFX: EnemyDeath
 --- !u!114 &114171954345069920
 MonoBehaviour:
   m_ObjectHideFlags: 1
