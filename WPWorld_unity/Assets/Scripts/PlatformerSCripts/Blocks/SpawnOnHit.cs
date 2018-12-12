@@ -2,114 +2,79 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum SPAWNTYPE
-{
-	COIN,
-	ITEM,
-	ENEMY
-}
-
 public class SpawnOnHit : MonoBehaviour {
 
-	[SerializeField]
-	private SPAWNTYPE CurrSpawn;
+    // Spawning Variables
+    public GameObject ObjectToSpawn;
 
-	private Material OrgMaterial;
+    // General Variables
+    public Material ChangedMaterial;
+    private Material OrgMaterial;
+    public int QuantityofSpawns;
+    private int OrgQuantity;
+    public string HitSFX;
+    public string EmptySFX;
 
-	[SerializeField]
-	private Material ChangedMaterial;
+    private Vector3 OrgPos;
 
-	[SerializeField]
-	private string CoinSFX;
-
-	[SerializeField]
-	private GameObject BounceCoin;
-
-	[SerializeField]
-	private string ItemEnemySFX;
-
-	[SerializeField]
-	private GameObject Item;
-
-	[SerializeField]
-	private GameObject Enemy;
-
-	[SerializeField]
-	private int AmountToSpawn = 1;
-
-	private Renderer RenderRef;
-	private SoundSystem SoundSystemRef;
-
-	// Reset Variables
-	private int OrgAmount;
+    // Variables to grab
+    private Rigidbody RigidRef;
+    private Renderer RenderRef;
+    private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start()
 	{
-		RenderRef = GetComponent<Renderer>();
-		SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+        OrgPos = transform.position;
 
-		OrgMaterial = RenderRef.material;
-		OrgAmount = AmountToSpawn;
+        RigidRef = GetComponent<Rigidbody>();
+        RenderRef = GetComponent<Renderer>();
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+
+        RigidRef.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-
+        if(transform.position.y < OrgPos.y)
+        {
+            RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+            transform.position = OrgPos;
+        }
 	}
 
-	private void OnCollisionStay(Collision collision)
-	{
-		GameObject CollidedObject = collision.gameObject;
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            if (!other.GetComponent<TPSLogic>().GetGrounded()
+                && other.GetComponent<Rigidbody>().velocity.y >= 0)
+            {
+                // Bounce Block
+                if (QuantityofSpawns <= 0)
+                {
+                    if (EmptySFX != "")
+                        SoundSystemRef.PlaySFX(EmptySFX);
+                    RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                    RigidRef.AddForce(transform.up, ForceMode.VelocityChange);
+                }
+                // Spawn Block
+                else
+                {
+                    if (HitSFX != "")
+                        SoundSystemRef.PlaySFX(HitSFX);
+                    QuantityofSpawns--;
+                    if (QuantityofSpawns <= 0)
+                        RenderRef.material = ChangedMaterial;
+                    Instantiate(ObjectToSpawn, transform.position, transform.rotation, GameObject.Find("Characters").transform);
+                }
+            }
+        }
+    }
 
-		if (CollidedObject.tag == "Player")
-		{
-			if (!CollidedObject.GetComponent<TPSLogic>().GetGrounded() // Grounded Check
-				&& CollidedObject.transform.localPosition.y + CollidedObject.transform.localScale.y * 0.5f <= transform.localPosition.y - transform.localScale.y * 0.5f // Check if the bottom of the gameobject is colliding with the top of the player
-				&& Mathf.Abs(CollidedObject.transform.localPosition.x - transform.localPosition.x) < transform.localScale.x * 0.4f // Check if the player is within a certain x range to trigger
-				&& Mathf.Abs(CollidedObject.transform.localPosition.z - transform.localPosition.z) < transform.localScale.z * 0.4f // Check if the player is within a certain z range to trigger
-				)
-			{
-				if (!RenderRef.material.name.Contains(ChangedMaterial.name))
-				{
-					AmountToSpawn--;
-					if (AmountToSpawn == 0)
-					{
-						RenderRef.material = ChangedMaterial;
-					}
-
-					GameObject ToSpawn;
-					if (CurrSpawn == SPAWNTYPE.COIN)
-					{
-						if (CoinSFX != "")
-							SoundSystemRef.PlaySFX(CoinSFX);
-						ToSpawn = Instantiate(BounceCoin, transform.position, Quaternion.identity);
-					}
-					else
-					{
-						if (ItemEnemySFX != "")
-							SoundSystemRef.PlaySFX(ItemEnemySFX);
-						if (CurrSpawn == SPAWNTYPE.ENEMY)
-							ToSpawn = Instantiate(Enemy, transform.position, transform.rotation);
-						else
-							ToSpawn = Instantiate(Item, transform.position, transform.rotation);
-					}
-
-					ToSpawn.transform.parent = GameObject.Find("Characters").transform;
-				}
-
-				Vector3 VelocityRef = CollidedObject.GetComponent<Rigidbody>().velocity;
-				if (VelocityRef.y > 0)
-					VelocityRef.y = -VelocityRef.y * 0.5f;
-				CollidedObject.GetComponent<Rigidbody>().velocity = VelocityRef;
-			}
-		}
-	}
-
-	public void Reset()
-	{
-		RenderRef.material = OrgMaterial;
-		AmountToSpawn = OrgAmount;
-	}
+    public void Reset()
+    {
+        
+    }
 }

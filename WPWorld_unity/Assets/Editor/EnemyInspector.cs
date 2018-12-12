@@ -41,13 +41,17 @@ public class EnemyInspector : Editor {
 
 		if (EnemyRef.CurrType != ENEMYTYPES.DEAD)
 		{
-			EnemyRef.IsImmortal = EditorGUILayout.Toggle("Is Immortal", EnemyRef.IsImmortal);
+            EnemyRef.TimeToTransition = EditorGUILayout.FloatField("Time To Transition", EnemyRef.TimeToTransition);
 
-			if (!EnemyRef.IsImmortal)
+            EnemyRef.IsImmortal = EditorGUILayout.Toggle("Is Immortal", EnemyRef.IsImmortal);
+
+            if (!EnemyRef.IsImmortal)
 			{
 				EnemyRef.ScoreAmount = EditorGUILayout.IntField("Score Amount", EnemyRef.ScoreAmount);
 				EnemyRef.ScoreUI = (GameObject)EditorGUILayout.ObjectField("Score UI", EnemyRef.ScoreUI, typeof(GameObject), true);
 			}
+
+            EnemyRef.DeathSFX = EditorGUILayout.TextField("Death SFX", EnemyRef.DeathSFX);
 		}
 
 		if(GUI.changed)
