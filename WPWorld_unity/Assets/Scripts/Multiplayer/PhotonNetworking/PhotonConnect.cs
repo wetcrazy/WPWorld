@@ -35,26 +35,14 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    private void Start()
-    {
-        //Set OfflineScreen to be in active first 
-        OfflineScreen.SetActive(false);
-
-        RoomScreen.SetActive(false);
-    }
-
-    private void Update()
-    {
-    }
-
     //Attempt to connect to photon servers
     public void ConnectToPhoton()
     {
         LoadingText.text = "Connecting to Photon servers...";
         //Debug.Log(LoadingText.text);
         PhotonNetwork.ConnectUsingSettings();
-        LoadingText.text = "Finding Best Region...";
-        PhotonNetwork.ConnectToBestCloudServer();
+        //LoadingText.text = "Finding Best Region...";
+        //PhotonNetwork.ConnectToBestCloudServer();
     }
     
     public void CreateGameRoom(string RoomID)
@@ -79,8 +67,6 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        LoadingText.text = "Connection to master servers established!";
-
         LoadingText.text = "Joining Lobby...";
 
         Debug.Log("Connected To Master");
@@ -89,7 +75,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnConnected()
     {
-        LoadingText.text = "Connection to servers established!";
+        LoadingText.text = "Connecting To Master Server...";
         Debug.Log("Connected");
     }
 
@@ -131,6 +117,12 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     {
         LoadingText.text = "";
         LobbyScreen.SetActive(true);
+
+        //Assign the nickname after successfully joining the lobby
+        if(PhotonNetwork.NickName == "" && PlayerPrefs.HasKey("PlayerUsername"))
+        {
+            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
+        }
 
         Debug.Log("Joined Lobby");
     }
