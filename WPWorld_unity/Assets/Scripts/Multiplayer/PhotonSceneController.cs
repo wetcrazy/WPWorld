@@ -18,6 +18,10 @@ public class PhotonSceneController : MonoBehaviour {
     GameObject InputFieldRoomID;
     [SerializeField]
     GameObject OfflineScreen;
+    [SerializeField]
+    GameObject LobbyScreen;
+    [SerializeField]
+    GameObject RoomScreen;
 
     //Script Object Variables
     [Header("Script Objects")]
@@ -43,6 +47,9 @@ public class PhotonSceneController : MonoBehaviour {
         }
         
         InputRoomIDPanel.SetActive(false);
+        OfflineScreen.SetActive(false);
+        LobbyScreen.SetActive(false);
+        RoomScreen.SetActive(false);
     }
 
     //Check if a username exists in PlayerPrefs
@@ -92,12 +99,6 @@ public class PhotonSceneController : MonoBehaviour {
 
         //Connect to Photon Servers
         photonConnect.ConnectToPhoton();
-
-        //If connection is successful, set the network name from the playerprefs
-        if (PhotonNetwork.IsConnectedAndReady)
-        {
-            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
-        }
     }
 
     public string RandomAlphanumericString(int length)
