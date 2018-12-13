@@ -29,13 +29,15 @@ public class DestroyOnHit : MonoBehaviour {
 	{
 		if (!RenderRef.isVisible)
 		{
-			GetComponent<Collider>().enabled = false;
+            if (GetComponent<Collider>().enabled)
+                GetComponent<Collider>().enabled = false;
 		}
 		else
 		{
-			GetComponent<Collider>().enabled = true;
+            if(!GetComponent<Collider>().enabled)
+			    GetComponent<Collider>().enabled = true;
 		}
-	}
+    }
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -67,12 +69,25 @@ public class DestroyOnHit : MonoBehaviour {
 					VelocityRef.y = -VelocityRef.y * 0.5f;
 				other.GetComponent<Rigidbody>().velocity = VelocityRef;
 
-				//if (hit.transform.name.Contains("Enemy"))
-				//{
-				//	hit.transform.GetComponent<Enemy>().AirborneDeath();
-				//	hit.transform.GetComponent<Rigidbody>().AddForce(0, 50 * transform.parent.parent.lossyScale.y, 0);
-				//}
-			}
+                // Check for Enemies above the block
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up + transform.right, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up - transform.right, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up + transform.forward, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up - transform.forward, out hit, transform.lossyScale.y)
+                    )
+                {
+                    if (hit.transform.GetComponent<Enemy>())
+                    {
+                        hit.transform.GetComponent<Enemy>().AirDeath();
+                    }
+                    else
+                    {
+                        Debug.Log("It can't detect what this is. " + hit.transform.name);
+                    }
+                }
+            }
 		}
 	}
 

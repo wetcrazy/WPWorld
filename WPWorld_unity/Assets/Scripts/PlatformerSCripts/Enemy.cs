@@ -46,6 +46,7 @@ public class Enemy : MonoBehaviour {
 
 	// Reset Variables
 	private Vector3 OrgPos;
+    private Vector3 OrgRotation;
 	private Vector3 OrgSize;
 	private ENEMYTYPES OrgType;
     private RigidbodyConstraints OrgConstraints;
@@ -61,6 +62,7 @@ public class Enemy : MonoBehaviour {
 		PatrolMarkerB = transform.localPosition + PatrolPointB;
 
 		OrgPos = transform.localPosition;
+        OrgRotation = transform.localEulerAngles;
 		OrgSize = transform.localScale;
 		OrgType = CurrType;
 
@@ -95,8 +97,6 @@ public class Enemy : MonoBehaviour {
             // Moving to Point A
 			if (PatrolFirstIteration)
 			{
-                Debug.Log("Moving To A");
-
                 if (Vector3.Distance(transform.localPosition, PatrolMarkerA) < transform.localScale.x * 0.5f)
                     PatrolFirstIteration = false;
                 else
@@ -105,8 +105,6 @@ public class Enemy : MonoBehaviour {
             // Moving to Point B
 			else
 			{
-                Debug.Log("Moving To B");
-
                 if (Vector3.Distance(transform.localPosition, PatrolMarkerB) < transform.localScale.x * 0.5f)
                     PatrolFirstIteration = true;
                 else
@@ -189,18 +187,11 @@ public class Enemy : MonoBehaviour {
                 && CollidedRef.transform.localPosition.y - CollidedRef.transform.localScale.y * 0.5f > transform.localPosition.y + transform.localScale.y * 0.5f
                 )
             {
-                ColliderRef.isTrigger = true;
-
                 if (isGrounded)
                     GroundDeath();
                 else
                     AirDeath();
 
-                // Player Feedback, UI & Sound & Character Reaction
-                GameObject UIScore = Instantiate(ScoreUI, transform.position, transform.rotation, transform);
-                UIScore.GetComponent<TextMesh>().text = ScoreAmount.ToString();
-                if (DeathSFX != "")
-                    SoundSystemRef.PlaySFX(DeathSFX);
                 CollidedRef.GetComponent<TPSLogic>().PushUp();
             }
             else
@@ -219,7 +210,7 @@ public class Enemy : MonoBehaviour {
         }
 	}
 
-    private void GroundDeath()
+    public void GroundDeath()
     {
         RigidRef.constraints = RigidbodyConstraints.FreezeAll;
         Vector3 VectorProperty = transform.localPosition;
@@ -231,16 +222,34 @@ public class Enemy : MonoBehaviour {
         transform.localScale = VectorProperty;
 
         CurrType = ENEMYTYPES.DEAD;
+        ColliderRef.isTrigger = true;
+
+        // Player Feedback, UI & Sound & Character Reaction
+        GameObject UIScore = Instantiate(ScoreUI, transform.position, transform.rotation, transform);
+        UIScore.GetComponent<TextMesh>().text = ScoreAmount.ToString();
+        if (DeathSFX != "")
+            SoundSystemRef.PlaySFX(DeathSFX);
     }
 
-    private void AirDeath()
+    public void AirDeath()
     {
         RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
 
         RigidRef.velocity = Vector3.zero;
-        RigidRef.AddForce(transform.up * JumpSpeed, ForceMode.VelocityChange);
+        RigidRef.AddForce(transform.up * JumpSpeed * 0.5f, ForceMode.VelocityChange);
+
+        Vector3 NewProperty = transform.localEulerAngles;
+        NewProperty.z += 180;
+        transform.localEulerAngles = NewProperty;
 
         CurrType = ENEMYTYPES.DEAD;
+        ColliderRef.isTrigger = true;
+
+        // Player Feedback, UI & Sound & Character Reaction
+        GameObject UIScore = Instantiate(ScoreUI, transform.position, transform.rotation, transform);
+        UIScore.GetComponent<TextMesh>().text = ScoreAmount.ToString();
+        if (DeathSFX != "")
+            SoundSystemRef.PlaySFX(DeathSFX);
     }
 
 	public void Reset()
@@ -248,6 +257,7 @@ public class Enemy : MonoBehaviour {
         MoveDir = Vector3.zero;
 
 		transform.localPosition = OrgPos;
+        transform.localEulerAngles = OrgRotation;
 		transform.localScale = OrgSize;
 		CurrType = OrgType;
         RigidRef.constraints = OrgConstraints;

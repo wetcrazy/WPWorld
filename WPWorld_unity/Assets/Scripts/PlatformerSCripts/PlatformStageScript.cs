@@ -11,12 +11,10 @@ public class PlatformStageScript : MonoBehaviour {
 
     private void Awake()
     {
-        transform.eulerAngles = Vector3.zero;
     }
 
     private void Start()
     {
-        transform.eulerAngles = Vector3.zero;
 
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
         if(BGM != "")
@@ -29,6 +27,5 @@ public class PlatformStageScript : MonoBehaviour {
         {
             SoundSystemRef.PlayBGM(BGM);
         }
-        transform.eulerAngles = Vector3.zero;
     }
 }
