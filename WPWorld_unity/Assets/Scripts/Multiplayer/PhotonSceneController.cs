@@ -13,12 +13,28 @@ public class PhotonSceneController : MonoBehaviour {
     [SerializeField]
     GameObject InputFieldUsername;
     [SerializeField]
+    GameObject InputRoomIDPanel;
+    [SerializeField]
+    GameObject InputFieldRoomID;
+    [SerializeField]
     GameObject OfflineScreen;
+    [SerializeField]
+    GameObject LobbyScreen;
+    [SerializeField]
+    GameObject RoomScreen;
 
     //Script Object Variables
     [Header("Script Objects")]
     [SerializeField]
     PhotonConnect photonConnect;
+    
+    private string RoomID;
+
+    public string GetRoomID
+    {
+        get { return RoomID; }
+    }
+
 
     // Use this for initialization
     void Start ()
@@ -29,6 +45,11 @@ public class PhotonSceneController : MonoBehaviour {
             //Try to connect to Photon servers
             TryGoOnline();
         }
+        
+        InputRoomIDPanel.SetActive(false);
+        OfflineScreen.SetActive(false);
+        LobbyScreen.SetActive(false);
+        RoomScreen.SetActive(false);
     }
 
     //Check if a username exists in PlayerPrefs
@@ -78,12 +99,6 @@ public class PhotonSceneController : MonoBehaviour {
 
         //Connect to Photon Servers
         photonConnect.ConnectToPhoton();
-
-        //If connection is successful, set the network name from the playerprefs
-        if (PhotonNetwork.IsConnectedAndReady)
-        {
-            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
-        }
     }
 
     public string RandomAlphanumericString(int length)
@@ -103,10 +118,24 @@ public class PhotonSceneController : MonoBehaviour {
 
     public void CreateGameRoom()
     {
-        string RoomID = RandomAlphanumericString(6);
+        RoomID = RandomAlphanumericString(6);
         photonConnect.CreateGameRoom(RoomID);
-        photonConnect.JoinGameRoom(RoomID);
-        
+    }
+
+    public void OpenJoinRoom()
+    {
+        InputFieldRoomID.SetActive(true);
+    }
+
+    public void ConfirmJoinRoom()
+    {
+        photonConnect.JoinGameRoom(InputFieldRoomID.GetComponent<InputField>().text);
+        InputRoomIDPanel.SetActive(false);
+    }
+
+    public void CancelJoinRoom()
+    {
+        InputRoomIDPanel.SetActive(false);
     }
 
     public void ClearUsernamePref()

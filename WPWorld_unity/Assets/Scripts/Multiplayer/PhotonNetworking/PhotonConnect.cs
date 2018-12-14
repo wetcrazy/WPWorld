@@ -15,10 +15,14 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     GameObject OfflineScreen;
     [SerializeField]
     GameObject RoomScreen;
+    [SerializeField]
+    GameObject LobbyScreen;
 
     [Header("Script Objects")]
     [SerializeField]
     PhotonRoomController RoomController;
+    [SerializeField]
+    PhotonSceneController SceneController;
 
     //Photon Variable Values
     [Header("Variables")]
@@ -31,28 +35,14 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    private void Start()
-    {
-        //Set OfflineScreen to be in active frist 
-        OfflineScreen.SetActive(false);
-
-        RoomScreen.SetActive(false);
-    }
-
-    private void Update()
-    {
-    }
-
     //Attempt to connect to photon servers
     public void ConnectToPhoton()
     {
         LoadingText.text = "Connecting to Photon servers...";
         //Debug.Log(LoadingText.text);
         PhotonNetwork.ConnectUsingSettings();
-        LoadingText.text = "Finding Best Region...";
-        PhotonNetwork.ConnectToBestCloudServer();
-        LoadingText.text = "Joining Lobby...";
-        PhotonNetwork.JoinLobby();
+        //LoadingText.text = "Finding Best Region...";
+        //PhotonNetwork.ConnectToBestCloudServer();
     }
     
     public void CreateGameRoom(string RoomID)
@@ -77,12 +67,16 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        LoadingText.text = "Connection to master servers established!";
+        LoadingText.text = "Joining Lobby...";
+
+        Debug.Log("Connected To Master");
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnConnected()
     {
-        LoadingText.text = "Connection to servers established!";
+        LoadingText.text = "Connecting To Master Server...";
+        Debug.Log("Connected");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -122,12 +116,27 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         LoadingText.text = "";
-        RoomController.InitRoom();
+        LobbyScreen.SetActive(true);
+
+        //Assign the nickname after successfully joining the lobby
+        if(PhotonNetwork.NickName == "" && PlayerPrefs.HasKey("PlayerUsername"))
+        {
+            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
+        }
+
+        Debug.Log("Joined Lobby");
     }
 
     public override void OnJoinedRoom()
     {
         RoomScreen.SetActive(true);
+        LobbyScreen.SetActive(false);
+        LoadingText.text = "";
+
+        RoomController.InitRoom();
+
+
+        Debug.Log("Joined Room");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -138,6 +147,41 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Failed to join random room!\nError Code:" + returnCode.ToString() + "\n" + message);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        //JoinGameRoom(SceneController.GetRoomID);
+
+        Debug.Log("Created Room");
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        RoomController.UpdatePlayerList();
+
+
+        Debug.Log("Someone joined");
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        RoomController.UpdatePlayerList();
+
+        Debug.Log("Someone left");
+    }
+
+    //public override void OnMasterClientSwitched(Player newMasterClient)
+    //{
+    //    RoomController.UpdatePlayerList();
+    //}
+
+    public override void OnLeftRoom()
+    {
+        RoomScreen.SetActive(false);
+        LobbyScreen.SetActive(true);
+
+        Debug.Log("Left Room");
     }
     #endregion
 }
