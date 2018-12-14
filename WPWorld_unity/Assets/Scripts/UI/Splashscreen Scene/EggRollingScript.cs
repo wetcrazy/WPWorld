@@ -32,7 +32,21 @@ public class EggRollingScript : MonoBehaviour
         {
             RectTrans.Rotate(zRot * step * Time.deltaTime);
         }
+        else
+        {
+            isDone = true;
+        }
 
-        Debug.Log(RectTrans.localRotation.z);
+        // Debug.Log(RectTrans.localRotation.z);
 	}
+
+    public bool GetisDone()
+    {
+        return isDone;
+    }
+
+    public void SendMessageManager()
+    {
+        var Manger = GameObject.FindGameObjectWithTag("SplashManager");
+    }
 }
