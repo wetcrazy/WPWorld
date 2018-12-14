@@ -9,12 +9,14 @@ public class DataStru : MonoBehaviour {
     Vector3 prevpos;
     Queue<GameObject> myQueue = new Queue<GameObject>();
     Queue<GameObject> tempqueue = new Queue<GameObject>();
+    public int lengthcount = 0;
 	// Use this for initialization
 	void Start () {
         myQueue.Enqueue(this.gameObject);
         myQueue.Enqueue(a);
         myQueue.Enqueue(b);
         prevpos = RoundoffFix(this.gameObject.transform.position);
+        lengthcount = this.gameObject.GetComponent<MyplayerScript>().appleCount;
     }
     // Update is called once per frame
     void Update ()
@@ -22,7 +24,13 @@ public class DataStru : MonoBehaviour {
         Vector3 distance = prevpos - this.gameObject.transform.position;
         if (distance.magnitude >= 1 )
         {
+           // Spawnobject(b);
             QUeueOrder();
+        }
+        if(this.gameObject.GetComponent<MyplayerScript>().appleCount > lengthcount )
+        {
+            Spawnobject(b);
+            lengthcount = this.gameObject.GetComponent<MyplayerScript>().appleCount;
         }
     }
     Vector3 RoundoffFix(Vector3 T)
@@ -35,7 +43,6 @@ public class DataStru : MonoBehaviour {
     }
     private void QUeueOrder()
     {
-        Debug.Log(myQueue.Count);
         while(myQueue.Count>0)
         {
             var V = myQueue.Dequeue();
@@ -47,8 +54,6 @@ public class DataStru : MonoBehaviour {
                 prevpos = temp;
             }
             tempqueue.Enqueue(V);
-
-
         }
         prevpos = RoundoffFix(this.gameObject.transform.position);
         while(tempqueue.Count>0)
@@ -56,5 +61,9 @@ public class DataStru : MonoBehaviour {
             var V = tempqueue.Dequeue();
             myQueue.Enqueue(V);
         }
+    }
+    void Spawnobject(GameObject V)
+    {
+        myQueue.Enqueue(GameObject.Instantiate(V, V.transform.position, V.transform.rotation, V.transform.parent));
     }
 }

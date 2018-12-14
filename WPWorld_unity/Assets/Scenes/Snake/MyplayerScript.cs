@@ -16,7 +16,7 @@ public class MyplayerScript : MonoBehaviour {
     bool Horizontal;
     float FixX;
     float FixZ;
-    int appleCount;
+    public int appleCount;
 
    
     void Start () {
