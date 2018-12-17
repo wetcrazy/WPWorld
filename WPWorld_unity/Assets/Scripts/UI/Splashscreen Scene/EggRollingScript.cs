@@ -19,20 +19,37 @@ public class EggRollingScript : MonoBehaviour
         newPos = RectTrans.anchoredPosition;
         newPos.x += 110.0f;
         speed = 50.0f;
-        zRot = new Vector3(0, 0, -160.0f);
+        zRot = new Vector3(0, 0, -170.0f);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         float step = speed * Time.deltaTime;
-        RectTrans.anchoredPosition = Vector2.MoveTowards(RectTrans.anchoredPosition, newPos, step);
-
+        RectTrans.anchoredPosition = Vector2.MoveTowards(RectTrans.anchoredPosition, newPos, step);        
         if (RectTrans.anchoredPosition != newPos)
         {
-            RectTrans.Rotate(zRot * step * Time.deltaTime);
+            RectTrans.Rotate(zRot * step * Time.deltaTime);              
         }
+        else
+        {
+            isDone = true;
+        }       
+        
+        if(isDone)
+        {
+            SendMessageManager();
+        }
+    }
 
-        Debug.Log(RectTrans.localRotation.z);
-	}
+    public bool GetisDone()
+    {
+        return isDone;
+    }
+
+    public void SendMessageManager()
+    {
+        var Manger = GameObject.FindGameObjectWithTag("SplashManager");
+        Manger.GetComponent<SplashScreenManager>().RevealButtons();
+    }
 }
