@@ -27,6 +27,12 @@ public class DestroyOnHit : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            if(!transform.GetChild(i).name.Contains(Debris.name))
+                transform.GetChild(i).GetComponent<Renderer>().enabled = RenderRef.isVisible;
+        }
+
 		if (!RenderRef.isVisible)
 		{
             if (GetComponent<Collider>().enabled)
