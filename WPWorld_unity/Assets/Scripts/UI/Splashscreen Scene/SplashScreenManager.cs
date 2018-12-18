@@ -14,24 +14,37 @@ public class SplashScreenManager : MonoBehaviour
     private void Start()
     {
         // Button
-        Color SPButtonColor = SinglePlayerButton.image.color;
-        Color MPButtonColor = MultiPlayerButton.image.color;
+        //Color SPButtonColor = SinglePlayerButton.image.color;
+        //Color MPButtonColor = MultiPlayerButton.image.color;
 
-        SPButtonColor.a = 0;
-        MPButtonColor.a = 0;
+        //SPButtonColor.a = 0;
+        //MPButtonColor.a = 0;
 
-        SinglePlayerButton.image.color = SPButtonColor;
-        MultiPlayerButton.image.color = MPButtonColor;
+        //SinglePlayerButton.image.color = SPButtonColor;
+        //MultiPlayerButton.image.color = MPButtonColor;
 
         // Text
-        Color SPButtonTextColor = SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color;
-        Color MPButtonTextColor = MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color;
+        //Color SPButtonTextColor = SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color;
+        //Color MPButtonTextColor = MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color;
 
-        SPButtonTextColor.a = 0;
-        MPButtonTextColor.a = 0;
+        //SPButtonTextColor.a = 0;
+        //MPButtonTextColor.a = 0;
 
-        SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color = SPButtonTextColor;
-        MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = MPButtonTextColor;
+        //SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color = SPButtonTextColor;
+        //MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = MPButtonTextColor;
+
+
+        Color newColor = Color.white;
+        newColor.a = 0;
+
+        SinglePlayerButton.image.color = newColor;
+        MultiPlayerButton.image.color = newColor;
+
+        newColor = Color.black;
+        newColor.a = 0;
+
+        SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color = newColor;
+        MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = newColor;
     }
 
     private void Update()
@@ -62,12 +75,12 @@ public class SplashScreenManager : MonoBehaviour
         MPButtonTextColor.a = Mathf.Lerp(MPButtonTextColor.a, 1, step);
 
         SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color = SPButtonTextColor;
-        MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = MPButtonTextColor;
+        MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = MPButtonTextColor;       
     }
 
     public void SinglePlayerButtonOnTouch()
     {
-       
+        SceneManager.LoadScene("ARPlayground");
     }
 
     public void MultiPlayerButtonOnTouch()
