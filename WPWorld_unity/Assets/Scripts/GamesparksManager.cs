@@ -7,6 +7,12 @@ public class GamesparksManager : MonoBehaviour {
 
     /// <summary>The GameSparks Manager singleton</summary>
     private static GamesparksManager instance = null;
+
+    public GamesparksManager GetInstance()
+    {
+        return instance;
+    }
+    
     void Awake()
     {
         if (instance == null) // check to see if the instance has a reference
@@ -39,18 +45,25 @@ public class GamesparksManager : MonoBehaviour {
         );
     }
 
-    public void AuthenticateDeviceAndPlayer()
+    public bool AuthenticateDeviceAndPlayer()
     {
+        bool isAuthenticated = false;
+
         new GameSparks.Api.Requests.DeviceAuthenticationRequest().SetDisplayName(PhotonNetwork.NickName).Send((response) => {
             if (!response.HasErrors)
             {
                 Debug.Log("Device Authenticated...");
+                isAuthenticated = true;
             }
             else
             {
                 Debug.Log("Error Authenticating Device...");
+                isAuthenticated = false;
+                
             }
         });
+
+        return isAuthenticated;
     }
 
     // Use this for initialization
