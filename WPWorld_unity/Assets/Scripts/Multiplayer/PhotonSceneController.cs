@@ -9,9 +9,11 @@ public class PhotonSceneController : MonoBehaviour {
     //Scene Objects & Variables (Gameobjects, Canvas,etc)
     [Header("Scene Objects")]
     [SerializeField]
-    GameObject InputPlayerNamePanel;
+    GameObject InputPlayerPanel;
     [SerializeField]
     GameObject InputFieldUsername;
+    [SerializeField]
+    GameObject InputFieldPassword;
     [SerializeField]
     GameObject InputRoomIDPanel;
     [SerializeField]
@@ -27,7 +29,9 @@ public class PhotonSceneController : MonoBehaviour {
     [Header("Script Objects")]
     [SerializeField]
     PhotonConnect photonConnect;
-    
+    [SerializeField]
+    GamesparksManager gamesparksManager;
+
     private string RoomID;
 
     public string GetRoomID
@@ -40,7 +44,7 @@ public class PhotonSceneController : MonoBehaviour {
     void Start ()
     {
         //Check if player already has a username
-        if (CheckForExistingUsername())
+        if (CheckForExistingPlayer())
         {
             //Try to connect to Photon servers
             TryGoOnline();
@@ -52,13 +56,13 @@ public class PhotonSceneController : MonoBehaviour {
         RoomScreen.SetActive(false);
     }
 
-    //Check if a username exists in PlayerPrefs
-    private bool CheckForExistingUsername()
+    //Check if a local player exists 
+    private bool CheckForExistingPlayer()
     {
-        if (PlayerPrefs.HasKey("PlayerUsername"))
+        if (PlayerPrefs.HasKey("PlayerUsername") && PlayerPrefs.HasKey("PlayerPassword") && gamesparksManager.GetInstance().AuthenticateDeviceAndPlayer())
         {
-            //If there's already a username, no need for username input
-            InputPlayerNamePanel.SetActive(false);
+            //If there's already a local player, no need to create again
+            InputPlayerPanel.SetActive(false);
             return true;
         }
         else
@@ -67,15 +71,19 @@ public class PhotonSceneController : MonoBehaviour {
         }
     }
 
-    //Player's confirmation after inputting a username
-    public void ConfirmUsername()
+    //Player's confirmation after inputting a username & password
+    public void ConfirmPlayer()
     {
         //Get the username input by player
-        InputField inputField = InputFieldUsername.GetComponent<InputField>();
-        string NewName = inputField.text;
-        
+        InputField inputFieldUsername = InputFieldUsername.GetComponent<InputField>();
+        string NewName = inputFieldUsername.text;
+
+        //Get the password input by player
+        InputField inputFieldPassword = InputFieldPassword.GetComponent<InputField>();
+        string NewPassword = inputFieldUsername.text;
+
         //If input field is empty
-        if (string.IsNullOrEmpty(NewName))
+        if (string.IsNullOrEmpty(NewName) || string.IsNullOrEmpty(NewPassword))
         {
             return;
         }
@@ -83,10 +91,13 @@ public class PhotonSceneController : MonoBehaviour {
         {
             //Set the input username into PlayerPrefs
             PlayerPrefs.SetString("PlayerUsername", NewName);
+
+            //Set the input password into PlayerPrefs
+            PlayerPrefs.SetString("PlayerPassword", NewPassword);
         }
 
         //Set the username input panel to inactive
-        InputPlayerNamePanel.SetActive(false);
+        InputPlayerPanel.SetActive(false);
         //Try to connect to photon servers
         TryGoOnline();
     }
@@ -96,6 +107,9 @@ public class PhotonSceneController : MonoBehaviour {
     {
         //Set OfflineScreen to be inactive frist 
         OfflineScreen.SetActive(false);
+
+        //Register with Gamesparks
+        gamesparksManager.GetInstance().RegisterPlayer();
 
         //Connect to Photon Servers
         photonConnect.ConnectToPhoton();
@@ -141,6 +155,7 @@ public class PhotonSceneController : MonoBehaviour {
     public void ClearUsernamePref()
     {
         PlayerPrefs.DeleteKey("PlayerUsername");
+        PlayerPrefs.DeleteKey("PlayerPassword");
         PhotonNetwork.NickName = "";
     }
 }
