@@ -7,6 +7,14 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
 
 
     public static GameObject LocalPlayerInstance;
+    private int Score = 0;
+
+    public int PlayerScore
+    {
+        get { return Score; }
+        set { Score = value; }
+    }
+
 
     private void Awake()
     {

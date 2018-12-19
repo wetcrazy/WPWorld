@@ -29,8 +29,6 @@ public class PhotonSceneController : MonoBehaviour {
     [Header("Script Objects")]
     [SerializeField]
     PhotonConnect photonConnect;
-    [SerializeField]
-    GamesparksManager gamesparksManager;
 
     private string RoomID;
 
@@ -59,7 +57,7 @@ public class PhotonSceneController : MonoBehaviour {
     //Check if a local player exists 
     private bool CheckForExistingPlayer()
     {
-        if (PlayerPrefs.HasKey("PlayerUsername") && PlayerPrefs.HasKey("PlayerPassword") && gamesparksManager.GetInstance().AuthenticateDeviceAndPlayer())
+        if (PlayerPrefs.HasKey("PlayerUsername") && PlayerPrefs.HasKey("PlayerPassword") && GamesparksManager.LocalGamesparkInstance.AuthenticateDeviceAndPlayer())
         {
             //If there's already a local player, no need to create again
             InputPlayerPanel.SetActive(false);
@@ -98,6 +96,10 @@ public class PhotonSceneController : MonoBehaviour {
 
         //Set the username input panel to inactive
         InputPlayerPanel.SetActive(false);
+        
+        //Register with Gamesparks
+        GamesparksManager.LocalGamesparkInstance.RegisterPlayer();
+
         //Try to connect to photon servers
         TryGoOnline();
     }
@@ -107,9 +109,6 @@ public class PhotonSceneController : MonoBehaviour {
     {
         //Set OfflineScreen to be inactive frist 
         OfflineScreen.SetActive(false);
-
-        //Register with Gamesparks
-        gamesparksManager.GetInstance().RegisterPlayer();
 
         //Connect to Photon Servers
         photonConnect.ConnectToPhoton();
