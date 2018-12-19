@@ -10,10 +10,12 @@ public class PhotonGameController : MonoBehaviour {
     [SerializeField]
     GameObject PlayerObjectPrefab;
     [SerializeField]
-    GameObject LeaderboardEntryUI;
-
-    [Header("Variables")]
+    GameObject LeaderboardUI;
     [SerializeField]
+    GameObject LeaderboardHeaderUI;
+    [SerializeField]
+    GameObject LeaderboardEntryUI;
+    
     float DistanceBetweenLeaderboardEntries;
 
     private void Awake()
@@ -29,6 +31,10 @@ public class PhotonGameController : MonoBehaviour {
            var thePlayer = PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
             thePlayer.transform.GetChild(0).GetComponent<TextMesh>().text = thePlayer.GetComponent<PlayerController>().photonView.Owner.NickName;
         }
+
+        DistanceBetweenLeaderboardEntries = Vector2.Distance(LeaderboardHeaderUI.transform.position, LeaderboardEntryUI.transform.position);
+
+        LeaderboardUI.SetActive(false);
     }
 	
     public void SubmitScore()
