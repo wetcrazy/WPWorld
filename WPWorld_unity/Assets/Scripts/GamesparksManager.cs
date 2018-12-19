@@ -6,18 +6,13 @@ using Photon.Pun;
 public class GamesparksManager : MonoBehaviour {
 
     /// <summary>The GameSparks Manager singleton</summary>
-    private static GamesparksManager instance = null;
+    public static GamesparksManager LocalGamesparkInstance = null;
 
-    public GamesparksManager GetInstance()
-    {
-        return instance;
-    }
-    
     void Awake()
     {
-        if (instance == null) // check to see if the instance has a reference
+        if (LocalGamesparkInstance == null) // check to see if the instance has a reference
         {
-            instance = this; // if not, give it a reference to this class...
+            LocalGamesparkInstance = this; // if not, give it a reference to this class...
             DontDestroyOnLoad(this.gameObject); // and make this object persistent as we load new scenes
         }
         else // if we already have a reference then remove the extra manager from the scene
@@ -65,14 +60,4 @@ public class GamesparksManager : MonoBehaviour {
 
         return isAuthenticated;
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
