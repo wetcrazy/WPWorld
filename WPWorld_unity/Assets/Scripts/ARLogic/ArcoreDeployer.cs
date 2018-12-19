@@ -110,7 +110,9 @@ public class ArcoreDeployer : MonoBehaviour
         ExitSelectionScreen_Stage();
         ExitGameMoveAnchor(true);
         ExitGameScreen();
-        ToSplashScreen();
+        ExitSplashScreen();
+        //ToSplashScreen();
+        ToSelectionScreen_Universe();
 
         //Initialise UI Gameobjects
         //Make the world selection button invisible
