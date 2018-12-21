@@ -13,27 +13,6 @@ public class SplashScreenManager : MonoBehaviour
 
     private void Start()
     {
-        // Button
-        //Color SPButtonColor = SinglePlayerButton.image.color;
-        //Color MPButtonColor = MultiPlayerButton.image.color;
-
-        //SPButtonColor.a = 0;
-        //MPButtonColor.a = 0;
-
-        //SinglePlayerButton.image.color = SPButtonColor;
-        //MultiPlayerButton.image.color = MPButtonColor;
-
-        // Text
-        //Color SPButtonTextColor = SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color;
-        //Color MPButtonTextColor = MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color;
-
-        //SPButtonTextColor.a = 0;
-        //MPButtonTextColor.a = 0;
-
-        //SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color = SPButtonTextColor;
-        //MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = MPButtonTextColor;
-
-
         Color newColor = Color.white;
         newColor.a = 0;
 
@@ -85,6 +64,6 @@ public class SplashScreenManager : MonoBehaviour
 
     public void MultiPlayerButtonOnTouch()
     {
-
+        SceneManager.LoadScene("PhotonTest");
     }
 }
