@@ -10,6 +10,7 @@ public class Dungeonsweeper2 : MonoBehaviour
         EMPTY,
         NUMBERED,
         BOMB,
+        QUESTION,
         TOTAL_BLOCKTYPE
     }
 
@@ -342,10 +343,10 @@ public class Dungeonsweeper2 : MonoBehaviour
         // If its not zero just return
         var _blockScript = _block.GetComponent<Blocks>();
         var _blockMat = _block.GetComponent<Renderer>().material;
-        _blockMat.mainTexture = List_NumberBlockMat[(int)_blockScript.m_BlockNumberType];
+        _blockMat.mainTexture = List_NumberBlockMat[(int)_blockScript.m_BlockNumberType];    
 
-        if (_blockScript.m_BlockNumberType != BlockNumberType.ZERO)
-        {
+        if (_blockScript.m_BlockNumberType != BlockNumberType.ZERO) // When its a number
+        {           
             return;
         }
 
@@ -388,7 +389,7 @@ public class Dungeonsweeper2 : MonoBehaviour
 
             var _hitScript = _hit.transform.gameObject.GetComponent<Blocks>();
 
-            if (_hitScript.m_BlockType == BlockType.NUMBERED)
+            if (_hitScript.m_BlockType == BlockType.NUMBERED || _hitScript.m_BlockType == BlockType.QUESTION)
             {
                 _hitScript.m_isTriggered = true;              
             }
@@ -414,7 +415,7 @@ public class Dungeonsweeper2 : MonoBehaviour
             {
                 var _RNG = Random.Range(1, (int)BlockType.TOTAL_BLOCKTYPE);
                 if ((BlockType)_RNG == BlockType.BOMB) // BOMB
-                {                  
+                {
                     if (currBomb > _anchorScript.m_numBomb) // Bomb Limiter
                     {
                         continue;
@@ -422,15 +423,23 @@ public class Dungeonsweeper2 : MonoBehaviour
 
                     var _crtlRNG = Random.Range(0, _anchorScript.m_BombSpawnRate); // Further rng it
                     if (_crtlRNG == _anchorScript.m_BombSpawnRate - 1)
-                    {                      
+                    {
                         _childScript.m_BlockType = (BlockType)_RNG; // Apply the bomb block                       
                     }
 
                 }
+                if ((BlockType)_RNG == BlockType.QUESTION)
+                {
+                    var _crtlRNG = Random.Range(0, 1.0f); // Further rng it
+                    if (_crtlRNG >= 0.75f)
+                    {
+                        _childScript.m_BlockType = (BlockType)_RNG; // apply texture
+                    }
+                }
                 else
                 {
                     _childScript.m_BlockType = (BlockType)_RNG; // Apply normal block
-                }                        
+                }
             }
              
         }
@@ -523,6 +532,7 @@ public class Dungeonsweeper2 : MonoBehaviour
         var _anchorScript = List_Anchors[_index].GetComponent<AnchorPoint>();       
         List_Anchors[_index].transform.localPosition = transform.localPosition;
     }
+
     // Updates and reverts back any anchor that has their grid cleared
     private void AnchorMovement()
     {

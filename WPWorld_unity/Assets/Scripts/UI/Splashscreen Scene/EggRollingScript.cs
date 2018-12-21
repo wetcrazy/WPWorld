@@ -6,30 +6,31 @@ using UnityEngine.UI;
 public class EggRollingScript : MonoBehaviour
 {
     private bool isDone;
-    private RectTransform RectTrans;
-    private Vector2 newPos;
+    private RectTransform rect;
     private float speed;
     private Vector3 zRot;
+
+    [SerializeField]
+    private GameObject Target;
 
 	// Use this for initialization
 	void Start ()
     {
         isDone = false;
-        RectTrans = this.gameObject.GetComponent<RectTransform>();
-        newPos = RectTrans.anchoredPosition;
-        newPos.x += 110.0f;
+        rect = this.gameObject.GetComponent<RectTransform>();   
         speed = 50.0f;
-        zRot = new Vector3(0, 0, -170.0f);
+        zRot = new Vector3(0, 0, -100.0f);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         float step = speed * Time.deltaTime;
-        RectTrans.anchoredPosition = Vector2.MoveTowards(RectTrans.anchoredPosition, newPos, step);        
-        if (RectTrans.anchoredPosition != newPos)
+        // rect.anchoredPosition = Vector2.MoveTowards(rect.anchoredPosition, newPos, step);        
+        rect.anchoredPosition = Vector2.MoveTowards(rect.anchoredPosition, Target.transform.localPosition, step);
+        if (rect.anchoredPosition != new Vector2(Target.transform.localPosition.x, Target.transform.localPosition.y))
         {
-            RectTrans.Rotate(zRot * step * Time.deltaTime);              
+            rect.Rotate(zRot * Time.deltaTime);              
         }
         else
         {
