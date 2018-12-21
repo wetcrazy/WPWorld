@@ -8,17 +8,19 @@ public class PlatformStageScript : MonoBehaviour {
     private string BGM;
 
     private SoundSystem SoundSystemRef;
-
-    private void Awake()
-    {
-    }
+	private PlayerMovement PlayerRef;
 
     private void Start()
     {
-
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+		PlayerRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         if(BGM != "")
             SoundSystemRef.PlayBGM(BGM);
+
+		if(transform.rotation.x <= 0)
+		{
+
+		}
     }
 
     private void Update()
