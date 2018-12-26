@@ -9,6 +9,11 @@ public class MovingMaterial : MonoBehaviour {
     [SerializeField]
     private float Y_Speed;
 
+    [SerializeField]
+    private float X_Random;
+    [SerializeField]
+    private float Y_Random;
+
     private Material MaterialRef;
 
 	// Use this for initialization

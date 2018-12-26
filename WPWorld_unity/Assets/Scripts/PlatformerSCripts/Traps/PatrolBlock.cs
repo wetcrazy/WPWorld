@@ -41,7 +41,7 @@ public class PatrolBlock : MonoBehaviour {
 
         if (TravelToSecond)
         {
-            if(Vector3.Distance(transform.localPosition, SecondPatrolPoint) > transform.lossyScale.magnitude)
+            if(Vector3.Distance(transform.localPosition, SecondPatrolPoint) > transform.lossyScale.magnitude * 0.5f)
             {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, SecondPatrolPoint, Time.deltaTime * MovementSpeed);
             }
@@ -52,7 +52,7 @@ public class PatrolBlock : MonoBehaviour {
         }
         else
         {
-            if (Vector3.Distance(transform.localPosition, FirstPatrolPoint) > transform.lossyScale.magnitude)
+            if (Vector3.Distance(transform.localPosition, FirstPatrolPoint) > transform.lossyScale.magnitude * 0.5f)
             {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, FirstPatrolPoint, Time.deltaTime * MovementSpeed);
             }
