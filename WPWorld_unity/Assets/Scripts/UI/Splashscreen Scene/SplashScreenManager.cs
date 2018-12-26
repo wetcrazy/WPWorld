@@ -24,11 +24,9 @@ public class SplashScreenManager : MonoBehaviour
 
         SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color = newColor;
         MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = newColor;
-    }
 
-    private void Update()
-    {
-
+        SinglePlayerButton.enabled = false;
+        MultiPlayerButton.enabled = false;
     }
 
     public void RevealButtons()
@@ -54,7 +52,10 @@ public class SplashScreenManager : MonoBehaviour
         MPButtonTextColor.a = Mathf.Lerp(MPButtonTextColor.a, 1, step);
 
         SinglePlayerButton.gameObject.GetComponentInChildren<Text>().color = SPButtonTextColor;
-        MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = MPButtonTextColor;       
+        MultiPlayerButton.gameObject.GetComponentInChildren<Text>().color = MPButtonTextColor;
+
+        SinglePlayerButton.enabled = true;
+        MultiPlayerButton.enabled = true;
     }
 
     public void SinglePlayerButtonOnTouch()
