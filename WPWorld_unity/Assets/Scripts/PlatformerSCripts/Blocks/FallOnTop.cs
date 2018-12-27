@@ -30,7 +30,7 @@ public class FallOnTop : MonoBehaviour {
 
 		RigidRef.constraints = RigidbodyConstraints.FreezeAll;
 		RigidRef.useGravity = true;
-		OrgPos = transform.position;
+		OrgPos = transform.localPosition;
 
 		SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 	}
@@ -48,7 +48,7 @@ public class FallOnTop : MonoBehaviour {
 			}
 			else
 			{
-				transform.position = OrgPos;
+				transform.localPosition = OrgPos;
 				RigidRef.constraints = RigidbodyConstraints.None;
 				ColliderRef.isTrigger = true;
 
@@ -96,6 +96,6 @@ public class FallOnTop : MonoBehaviour {
 		IsFalling = false;
 		TimeElapsed = 0;
 
-		transform.position = OrgPos;
+		transform.localPosition = OrgPos;
 	}
 }
