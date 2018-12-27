@@ -59,8 +59,6 @@ public class PhotonSceneController : MonoBehaviour {
         RoomScreen.SetActive(false);
     }
 
-    //GamesparksManager.LocalGamesparkInstance.GetComponent<GamesparksManager>().AuthenticatePlayer()
-
     //Check if a local player exists 
     private void CheckForExistingPlayer()
     {
