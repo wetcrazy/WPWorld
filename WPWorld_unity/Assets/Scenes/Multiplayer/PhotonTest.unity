@@ -738,6 +738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789a2c48d4e9c9844aa73565e50a0680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneController: {fileID: 986695794}
 --- !u!4 &376823926
 Transform:
   m_ObjectHideFlags: 0
@@ -2379,13 +2380,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bf885add0a84a4da1baef0b43864c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputPlayerNamePanel: {fileID: 1974327280}
+  InputPlayerPanel: {fileID: 1974327280}
   InputFieldUsername: {fileID: 2095832920}
+  InputFieldPassword: {fileID: 1361670963}
   InputRoomIDPanel: {fileID: 1120881672}
   InputFieldRoomID: {fileID: 1288361303}
   OfflineScreen: {fileID: 1721641416}
   LobbyScreen: {fileID: 150436164}
   RoomScreen: {fileID: 1206697324}
+  LoadingText: {fileID: 1048782450}
   photonConnect: {fileID: 2143610150}
 --- !u!1 &1048782448
 GameObject:
@@ -3164,7 +3167,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 986695794}
-        m_MethodName: ConfirmUsername
+        m_MethodName: ConfirmPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

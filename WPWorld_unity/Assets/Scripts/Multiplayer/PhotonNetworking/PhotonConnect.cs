@@ -39,10 +39,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public void ConnectToPhoton()
     {
         LoadingText.text = "Connecting to Photon servers...";
-        //Debug.Log(LoadingText.text);
         PhotonNetwork.ConnectUsingSettings();
-        //LoadingText.text = "Finding Best Region...";
-        //PhotonNetwork.ConnectToBestCloudServer();
     }
     
     public void CreateGameRoom(string RoomID)

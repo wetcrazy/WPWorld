@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+using GameSparks.Api;
+using GameSparks.Api.Messages;
+using GameSparks.Api.Requests;
+using GameSparks.Api.Responses;
+using GameSparks.Core;
+
 public class GamesparksManager : MonoBehaviour {
 
     /// <summary>The GameSparks Manager singleton</summary>
     public static GamesparksManager LocalGamesparkInstance = null;
 
+    [SerializeField]
+    PhotonSceneController SceneController;
+
     void Awake()
     {
+
         if (LocalGamesparkInstance == null) // check to see if the instance has a reference
         {
             LocalGamesparkInstance = this; // if not, give it a reference to this class...
@@ -23,7 +33,7 @@ public class GamesparksManager : MonoBehaviour {
 
     public void RegisterPlayer()
     {
-        new GameSparks.Api.Requests.RegistrationRequest()
+        new RegistrationRequest()
           .SetDisplayName(PhotonNetwork.NickName)
           .SetPassword(PlayerPrefs.GetString("PlayerPassword"))
           .SetUserName(PhotonNetwork.NickName)
@@ -38,26 +48,41 @@ public class GamesparksManager : MonoBehaviour {
               }
           }
         );
+
+        AuthenticatePlayer();
+        AuthenticateDeviceAndPlayer();
     }
 
-    public bool AuthenticateDeviceAndPlayer()
+    public void AuthenticatePlayer()
     {
-        bool isAuthenticated = false;
+        new AuthenticationRequest().SetUserName(PlayerPrefs.GetString("PlayerUsername"))
+            .SetPassword(PlayerPrefs.GetString("PlayerPassword"))
+            .Send((response) => {
+            if (!response.HasErrors)
+            {
+                Debug.Log("Player Authenticated...");
+                    SceneController.ReturnAuthentication(true);
+            }
+            else
+            {
+                Debug.Log("Error Authenticating Player...");
+                    SceneController.ReturnAuthentication(false);
+            }
+        });
+        
+    }
 
-        new GameSparks.Api.Requests.DeviceAuthenticationRequest().SetDisplayName(PhotonNetwork.NickName).Send((response) => {
+    public void AuthenticateDeviceAndPlayer()
+    {
+        new DeviceAuthenticationRequest().Send((response) => {
             if (!response.HasErrors)
             {
                 Debug.Log("Device Authenticated...");
-                isAuthenticated = true;
             }
             else
             {
                 Debug.Log("Error Authenticating Device...");
-                isAuthenticated = false;
-                
             }
         });
-
-        return isAuthenticated;
     }
 }
