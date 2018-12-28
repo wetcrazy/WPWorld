@@ -26,7 +26,7 @@ public class SpawnOnHit : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-        OrgPos = transform.position;
+        OrgPos = transform.localPosition;
 
         RigidRef = GetComponent<Rigidbody>();
         RenderRef = GetComponent<Renderer>();
@@ -45,7 +45,7 @@ public class SpawnOnHit : MonoBehaviour {
         if(transform.position.y < OrgPos.y)
         {
             RigidRef.constraints = RigidbodyConstraints.FreezeAll;
-            transform.position = OrgPos;
+            transform.localPosition = OrgPos;
             ColliderRef.isTrigger = false;
         }
 

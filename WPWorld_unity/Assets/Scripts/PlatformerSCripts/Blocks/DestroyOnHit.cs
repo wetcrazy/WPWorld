@@ -14,12 +14,14 @@ public class DestroyOnHit : MonoBehaviour {
 	private string DestroySFX;
 
 	private Renderer RenderRef;
+    private Collider ColliderRef;
 	private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start()
 	{
 		RenderRef = GetComponent<Renderer>();
+        ColliderRef = GetComponent<Collider>();
 
 		SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 	}
@@ -32,17 +34,6 @@ public class DestroyOnHit : MonoBehaviour {
             if(!transform.GetChild(i).name.Contains(Debris.name))
                 transform.GetChild(i).GetComponent<Renderer>().enabled = RenderRef.isVisible;
         }
-
-		if (!RenderRef.isVisible)
-		{
-            if (GetComponent<Collider>().enabled)
-                GetComponent<Collider>().enabled = false;
-		}
-		else
-		{
-            if(!GetComponent<Collider>().enabled)
-			    GetComponent<Collider>().enabled = true;
-		}
     }
 
 	private void OnTriggerEnter(Collider other)
@@ -57,6 +48,7 @@ public class DestroyOnHit : MonoBehaviour {
 				)
 			{
 				RenderRef.enabled = false;
+                ColliderRef.isTrigger = true;
 
 				if (DestroySFX != "")
 					SoundSystemRef.PlaySFX(DestroySFX);
@@ -88,10 +80,6 @@ public class DestroyOnHit : MonoBehaviour {
                     {
                         hit.transform.GetComponent<Enemy>().AirDeath();
                     }
-                    else
-                    {
-                        Debug.Log("It can't detect what this is. " + hit.transform.name);
-                    }
                 }
             }
 		}
@@ -100,5 +88,6 @@ public class DestroyOnHit : MonoBehaviour {
 	public void Reset()
 	{
 		RenderRef.enabled = true;
-	}
+        ColliderRef.isTrigger = false;
+    }
 }

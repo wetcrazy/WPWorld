@@ -11,12 +11,16 @@ public class CollectOnCollide : MonoBehaviour {
     [SerializeField]
     private int PointsToAdd;
 
+    public bool HasCollected;
+
     private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
 	void Start () {
         RenderRef = GetComponent<Renderer>();
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+
+        HasCollected = false;
     }
 	
 	// Update is called once per frame
@@ -34,6 +38,8 @@ public class CollectOnCollide : MonoBehaviour {
             {
                 RenderRef.enabled = false;
                 other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
+
+                HasCollected = true;
 
                 if (CollectSFX != "")
                     SoundSystemRef.PlaySFX(CollectSFX);

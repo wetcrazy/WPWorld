@@ -81,6 +81,15 @@ public class TPSLogic : MonoBehaviour
 
         Physics.gravity = new Vector3(0, -5f * transform.parent.parent.lossyScale.y, 0);
 
+        if(transform.parent.parent.eulerAngles.y == 90 || transform.parent.parent.eulerAngles.y == 270)
+        {
+            MovementRef.SetRestriction(MovementAvaliability.Z_ONLY);
+        }
+        else
+        {
+            MovementRef.SetRestriction(MovementAvaliability.X_ONLY);
+        }
+
         ListOfCoins.AddRange(FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[]);
         ListOfBricks.AddRange(FindObjectsOfType(typeof(DestroyOnHit)) as DestroyOnHit[]);
         ListOfTrolls.AddRange(FindObjectsOfType(typeof(ShowOnHit)) as ShowOnHit[]);
@@ -233,7 +242,10 @@ public class TPSLogic : MonoBehaviour
             DeathUI.ShowDisplay();
 
         foreach(CollectOnCollide CoinRef in ListOfCoins)
-            CoinRef.Reset();
+        {
+            if(!CoinRef.HasCollected)
+                CoinRef.Reset();
+        }
 
         foreach(DestroyOnHit BrickRef in ListOfBricks)
             BrickRef.Reset();
@@ -251,7 +263,10 @@ public class TPSLogic : MonoBehaviour
             FallBlock.Reset();
 
         foreach (MoveOnCollide MoveBlock in ListOfMoving)
-            MoveBlock.Reset();
+        {
+            if(!MoveBlock.CannotReset)
+                MoveBlock.Reset();
+        }
 
         foreach(Enemy ClonedEnemy in FindObjectsOfType(typeof(Enemy)) as Enemy[])
         {
@@ -260,9 +275,7 @@ public class TPSLogic : MonoBehaviour
         }
 
         foreach(GivePowerUpOnCollide PowerUpRef in FindObjectsOfType(typeof(GivePowerUpOnCollide)) as GivePowerUpOnCollide[])
-        {
             Destroy(PowerUpRef.gameObject);
-        }
 
         GetComponent<PlayerPowerUp>().Reset();
     }
