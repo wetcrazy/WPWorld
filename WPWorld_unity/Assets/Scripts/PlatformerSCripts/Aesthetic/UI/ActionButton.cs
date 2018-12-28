@@ -26,9 +26,5 @@ public class ActionButton : MonoBehaviour {
                 SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(SoundToPlay);
             PlayerObject.SendMessage("ShootFireball");
         }
-        else
-        {
-            Debug.Log("Either powerup doesn't exist or powerup doesn't equals to fireball");
-        }
     }
 }

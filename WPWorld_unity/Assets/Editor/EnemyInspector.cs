@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-
 [CustomEditor(typeof(Enemy))]
 public class EnemyInspector : Editor {
 
