@@ -15,6 +15,10 @@ public class PhotonGameController : MonoBehaviour {
     GameObject LeaderboardHeaderUI;
     [SerializeField]
     GameObject LeaderboardEntryUI;
+
+    [Header("Debug Stuff")]
+    [SerializeField]
+    Text PlayerPoints;
     
     float DistanceBetweenLeaderboardEntries;
 
@@ -52,8 +56,28 @@ public class PhotonGameController : MonoBehaviour {
         });
     }
 
+    public void EditScore(bool isAdd)
+    {
+        int Amount = 1000;
+
+        if(!isAdd)
+        {
+            Amount = -Amount;
+        }
+
+        PlayerController.LocalPlayerInstance.GetComponent<PlayerController>().PlayerScore += Amount;
+    }
+
     public void GetLeaderboard()
     {
+        if(LeaderboardUI.activeSelf)
+        {
+            LeaderboardUI.SetActive(false);
+            return;
+        }
+
+        LeaderboardUI.SetActive(true);
+
         new GameSparks.Api.Requests.LeaderboardDataRequest().SetLeaderboardShortCode("SUBMIT_SCORE").SetEntryCount(100).Send((response) => {
             if (!response.HasErrors)
             {
@@ -101,6 +125,6 @@ public class PhotonGameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+        PlayerPoints.text = PlayerController.LocalPlayerInstance.GetComponent<PlayerController>().PlayerScore.ToString();
+    }
 }

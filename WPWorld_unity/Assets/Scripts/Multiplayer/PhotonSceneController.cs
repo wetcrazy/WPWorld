@@ -24,6 +24,8 @@ public class PhotonSceneController : MonoBehaviour {
     GameObject LobbyScreen;
     [SerializeField]
     GameObject RoomScreen;
+    [SerializeField]
+    Text LoadingText;
 
     //Script Object Variables
     [Header("Script Objects")]
@@ -38,15 +40,18 @@ public class PhotonSceneController : MonoBehaviour {
     }
 
 
+    private void Update()
+    {
+        //Debug.Log(GameSparks.Core.GS.Authenticated);
+    }
+
     // Use this for initialization
     void Start ()
     {
-        //Check if player already has a username
-        if (CheckForExistingPlayer())
-        {
-            //Try to connect to Photon servers
-            TryGoOnline();
-        }
+        InputPlayerPanel.SetActive(false);
+        
+        //Check if player already exists
+        CheckForExistingPlayer();
         
         InputRoomIDPanel.SetActive(false);
         OfflineScreen.SetActive(false);
@@ -55,17 +60,33 @@ public class PhotonSceneController : MonoBehaviour {
     }
 
     //Check if a local player exists 
-    private bool CheckForExistingPlayer()
+    private void CheckForExistingPlayer()
     {
-        if (PlayerPrefs.HasKey("PlayerUsername") && PlayerPrefs.HasKey("PlayerPassword") && GamesparksManager.LocalGamesparkInstance.AuthenticateDeviceAndPlayer())
+        if (PlayerPrefs.HasKey("PlayerUsername") && PlayerPrefs.HasKey("PlayerPassword"))
         {
-            //If there's already a local player, no need to create again
-            InputPlayerPanel.SetActive(false);
-            return true;
+            GamesparksManager.LocalGamesparkInstance.GetComponent<GamesparksManager>().AuthenticatePlayer();
+            LoadingText.text = "Authenticating Player...";
         }
         else
         {
-            return false;
+            InputPlayerPanel.SetActive(true);
+        }
+
+    }
+
+    public void ReturnAuthentication(bool isAuthenticated)
+    {
+        if(isAuthenticated)
+        {
+            //If there's already a local player, no need to create again
+            InputPlayerPanel.SetActive(false);
+
+            TryGoOnline();
+        }
+        else
+        {
+            InputPlayerPanel.SetActive(true);
+            LoadingText.text = "";
         }
     }
 
@@ -89,6 +110,8 @@ public class PhotonSceneController : MonoBehaviour {
         {
             //Set the input username into PlayerPrefs
             PlayerPrefs.SetString("PlayerUsername", NewName);
+            //Set the username in Photon
+            PhotonNetwork.NickName = NewName;
 
             //Set the input password into PlayerPrefs
             PlayerPrefs.SetString("PlayerPassword", NewPassword);

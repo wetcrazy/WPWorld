@@ -11,7 +11,7 @@ public class ArcoreDeployer : MonoBehaviour
 {
     enum STATE_SCREEN
     {
-        SCREEN_SPLASH,
+        //SCREEN_SPLASH,
         SCREEN_SELECTION_UNIVERSE,
         SCREEN_SELECTION_PLANET,
         SCREEN_SELECTION_STAGE,
@@ -69,7 +69,7 @@ public class ArcoreDeployer : MonoBehaviour
     Text DebugText;
 
     //Arrays that store the individual objects in each screen
-    private GameObject[] SplashScreenObjects;
+    //private GameObject[] SplashScreenObjects;
     private GameObject[] SelectionScreen_PlanetsObjects;
     private GameObject[] SelectionScreen_StageObjects;
     private GameObject[] GameMoveAnchorObjects;
@@ -98,7 +98,7 @@ public class ArcoreDeployer : MonoBehaviour
     private void Start()
     {
         //Define the game object references
-        SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
+        //SplashScreenObjects = GameObject.FindGameObjectsWithTag("SplashScreen");
         SelectionScreen_PlanetsObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Planets");
         SelectionScreen_StageObjects = GameObject.FindGameObjectsWithTag("SelectionScreen_Stage");
         GameMoveAnchorObjects = GameObject.FindGameObjectsWithTag("GameMoveAnchorScreen");
@@ -110,7 +110,7 @@ public class ArcoreDeployer : MonoBehaviour
         ExitSelectionScreen_Stage();
         ExitGameMoveAnchor(true);
         ExitGameScreen();
-        ExitSplashScreen();
+        //ExitSplashScreen();
         //ToSplashScreen();
         ToSelectionScreen_Universe();
 
@@ -150,11 +150,11 @@ public class ArcoreDeployer : MonoBehaviour
         //Update the current screen
         switch (ScreenState)
         {
-            case STATE_SCREEN.SCREEN_SPLASH:
-                {
-                    SplashScreenUpdate();
-                    break;
-                }
+            //case STATE_SCREEN.SCREEN_SPLASH:
+            //    {
+            //        SplashScreenUpdate();
+            //        break;
+            //    }
             case STATE_SCREEN.SCREEN_SELECTION_UNIVERSE:
                 {
                     SelectionScreenUpdate_Universe();
@@ -181,39 +181,39 @@ public class ArcoreDeployer : MonoBehaviour
     }
 
     //-----SPLASH SCREEN FUNCTIONS-----//
-    private void ToSplashScreen()
-    {
-        //Change the screen state to the current one
-        ScreenState = STATE_SCREEN.SCREEN_SPLASH;
+    //private void ToSplashScreen()
+    //{
+    //    //Change the screen state to the current one
+    //    ScreenState = STATE_SCREEN.SCREEN_SPLASH;
 
-        //Set all splash screen objects to active
-        foreach (GameObject obj in SplashScreenObjects)
-        {
-            obj.SetActive(true);
-        }
-    }
+    //    //Set all splash screen objects to active
+    //    foreach (GameObject obj in SplashScreenObjects)
+    //    {
+    //        obj.SetActive(true);
+    //    }
+    //}
 
-    public void SplashScreenUpdate()
-    {
-        if (Input.touchCount > 0)
-        {
-            //Change to the universe screen
-            ExitSplashScreen();
-            ToSelectionScreen_Universe();
+    //public void SplashScreenUpdate()
+    //{
+    //    if (Input.touchCount > 0)
+    //    {
+    //        //Change to the universe screen
+    //        ExitSplashScreen();
+    //        ToSelectionScreen_Universe();
 
-            // Gets all Planes that are track and put it into the list
-            Session.GetTrackables(List_AllPlanes);
-        }
-    }
+    //        // Gets all Planes that are track and put it into the list
+    //        Session.GetTrackables(List_AllPlanes);
+    //    }
+    //}
 
-    public void ExitSplashScreen()
-    {
-        //Set all splash screen objects to inactive
-        foreach (GameObject obj in SplashScreenObjects)
-        {
-            obj.SetActive(false);
-        }
-    }
+    //public void ExitSplashScreen()
+    //{
+    //    //Set all splash screen objects to inactive
+    //    foreach (GameObject obj in SplashScreenObjects)
+    //    {
+    //        obj.SetActive(false);
+    //    }
+    //}
     //-----------------------------------------------------------------//
 
     //-----SELECTION SCREEN UNIVERSE FUNCTIONS-----//
