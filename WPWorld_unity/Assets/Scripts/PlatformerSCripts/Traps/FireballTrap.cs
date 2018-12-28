@@ -13,6 +13,7 @@ public class FireballTrap : MonoBehaviour {
 
     [SerializeField]
     private GameObject ParticleToDrop;
+    [SerializeField]
     private float TimeToSpawn;
     private float TimeElapsedObj;
 
@@ -30,25 +31,35 @@ public class FireballTrap : MonoBehaviour {
 	void Update () {
 		if(transform.localPosition.y <= OrgPos.y)
         {
-            RigidRef.constraints = RigidbodyConstraints.FreezePositionY;
+            RigidRef.constraints = RigidbodyConstraints.FreezeAll;
             transform.localPosition = OrgPos;
             TimeElapsed += Time.deltaTime;
 
             if(TimeElapsed >= TimeDelay)
             {
-                RigidRef.constraints = RigidbodyConstraints.None;
-                RigidRef.AddForce(transform.up * PushForce, ForceMode.VelocityChange);
+                RigidRef.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                RigidRef.AddForce(Vector3.up * PushForce, ForceMode.VelocityChange);
                 TimeElapsed = 0;
             }
         }
-
-        if(TimeElapsedObj >= TimeToSpawn)
-        {
-            TimeElapsedObj = 0;
-
-            Instantiate(ParticleToDrop, transform);
-        }
         else
+        {
+            if (TimeElapsedObj >= TimeToSpawn && RigidRef.velocity.y > 0 && ParticleToDrop != null)
+            {
+                TimeElapsedObj = 0;
+
+                Instantiate(ParticleToDrop,
+                    transform.position + new Vector3(Random.Range(-transform.localScale.x, transform.localScale.x) * 0.25f, 0, Random.Range(-transform.localScale.x, transform.localScale.x) * 0.25f),
+                    Quaternion.identity);
+            }
+        }
+
+        if (RigidRef.velocity.y < 0)
+            transform.eulerAngles = new Vector3(0, 0, -180) + transform.parent.parent.eulerAngles;
+        else
+            transform.eulerAngles = transform.parent.parent.eulerAngles;
+
+        if (ParticleToDrop != null)
         {
             TimeElapsedObj += Time.deltaTime;
         }
