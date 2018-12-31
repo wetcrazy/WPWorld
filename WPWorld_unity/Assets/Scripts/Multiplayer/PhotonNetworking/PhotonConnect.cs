@@ -79,6 +79,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         LoadingText.text = cause.ToString();
+        LobbyScreen.SetActive(false);
         OfflineScreen.SetActive(true);
 
         switch (cause)
