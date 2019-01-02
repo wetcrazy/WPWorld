@@ -33,7 +33,6 @@ public class PhotonGameController : MonoBehaviour {
         if(PlayerController.LocalPlayerInstance == null)
         {
            var thePlayer = PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
-            thePlayer.transform.GetChild(0).GetComponent<TextMesh>().text = thePlayer.GetComponent<PlayerController>().photonView.Owner.NickName;
         }
 
         DistanceBetweenLeaderboardEntries = Vector2.Distance(LeaderboardHeaderUI.transform.position, LeaderboardEntryUI.transform.position);

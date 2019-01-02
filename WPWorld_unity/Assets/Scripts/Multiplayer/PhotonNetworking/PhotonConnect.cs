@@ -29,7 +29,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players")]
     [SerializeField]
     byte MaximumPlayersInRoom = 2;
-
+   
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -113,7 +113,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        LoadingText.text = "";
+        LoadingText.text = PhotonNetwork.CloudRegion;
         LobbyScreen.SetActive(true);
 
         //Assign the nickname after successfully joining the lobby
