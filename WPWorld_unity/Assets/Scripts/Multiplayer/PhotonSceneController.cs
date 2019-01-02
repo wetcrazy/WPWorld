@@ -158,9 +158,9 @@ public class PhotonSceneController : MonoBehaviour {
         photonConnect.CreateGameRoom(RoomID);
     }
 
-    public void OpenJoinRoom()
+    public void OpenJoinRoom(bool active)
     {
-        InputFieldRoomID.SetActive(true);
+        InputRoomIDPanel.SetActive(active);
     }
 
     public void ConfirmJoinRoom()
