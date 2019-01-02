@@ -14,7 +14,7 @@ public class MoveOnCollide : MonoBehaviour {
 
     private Vector3 OrgPosition;
 
-    private bool IsMoving = false;
+    public bool IsMoving = false;
 
     public bool CannotReset;
 
@@ -35,8 +35,18 @@ public class MoveOnCollide : MonoBehaviour {
             else
 			{
 				this.transform.localPosition = MovePosition;
-				IsMoving = false;
 			}
+        }
+        else
+        {
+            if (Vector3.Distance(transform.localPosition, OrgPosition) > transform.localScale.magnitude * 0.01f)
+            {
+                this.transform.localPosition = Vector3.Lerp(transform.localPosition, OrgPosition, Time.deltaTime * MoveSpeed);
+            }
+            else
+            {
+                this.transform.localPosition = OrgPosition;
+            }
         }
 	}
 

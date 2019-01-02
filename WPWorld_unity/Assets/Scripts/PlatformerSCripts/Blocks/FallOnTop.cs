@@ -81,12 +81,20 @@ public class FallOnTop : MonoBehaviour {
 		{
 			if (hit.transform.tag == "Player")
 			{
-				IsFalling = true;
-				if (InteractedSFX != "")
-					SoundSystemRef.PlaySFX(InteractedSFX);
+                Fall();
 			}
 		}
 	}
+
+    public void Fall()
+    {
+        if (IsFalling || TimeElapsed >= TimeToFall)
+            return;
+
+        IsFalling = true;
+        if (InteractedSFX != "")
+            SoundSystemRef.PlaySFX(InteractedSFX);
+    }
 
 	public void Reset()
 	{

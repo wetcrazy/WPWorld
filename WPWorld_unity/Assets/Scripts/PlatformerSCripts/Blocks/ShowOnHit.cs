@@ -51,13 +51,18 @@ public class ShowOnHit : MonoBehaviour {
 					VelocityRef.y = -VelocityRef.y * 0.5f;
 				other.GetComponent<Rigidbody>().velocity = VelocityRef;
 
-				ColliderRef.size = new Vector3(1, 1, 1);
-				ColliderRef.center = Vector3.zero;
-
-				RenderRef.enabled = true;
+                Show();
 			}
 		}
 	}
+
+    public void Show()
+    {
+        ColliderRef.size = new Vector3(1, 1, 1);
+        ColliderRef.center = Vector3.zero;
+
+        RenderRef.enabled = true;
+    }
 
 	public void Reset()
 	{

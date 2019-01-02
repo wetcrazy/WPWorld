@@ -83,25 +83,30 @@ public class SpawnOnHit : MonoBehaviour {
                     }
                 }
 
-                // Bounce Block
-                if (QuantityofSpawns <= 0)
-                {
-                    if (EmptySFX != "")
-                        SoundSystemRef.PlaySFX(EmptySFX);
-                    RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                    RigidRef.AddForce(transform.up * 0.5f, ForceMode.VelocityChange);
-
-                    ColliderRef.isTrigger = true;
-                }
-                // Spawn Block
-                else
-                {
-                    if (HitSFX != "")
-                        SoundSystemRef.PlaySFX(HitSFX);
-                    QuantityofSpawns--;
-                    Instantiate(ObjectToSpawn, transform.position, transform.rotation, GameObject.Find("Characters").transform);
-                }
+                Spawn();
             }
+        }
+    }
+
+    public void Spawn()
+    {
+        // Bounce Block
+        if (QuantityofSpawns <= 0)
+        {
+            if (EmptySFX != "")
+                SoundSystemRef.PlaySFX(EmptySFX);
+            RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            RigidRef.AddForce(transform.up * 0.5f, ForceMode.VelocityChange);
+
+            ColliderRef.isTrigger = true;
+        }
+        // Spawn Block
+        else
+        {
+            if (HitSFX != "")
+                SoundSystemRef.PlaySFX(HitSFX);
+            QuantityofSpawns--;
+            Instantiate(ObjectToSpawn, transform.position, transform.rotation, GameObject.Find("Characters").transform);
         }
     }
 
