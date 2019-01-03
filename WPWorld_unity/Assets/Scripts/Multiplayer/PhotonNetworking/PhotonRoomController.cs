@@ -37,6 +37,7 @@ public class PhotonRoomController : MonoBehaviour
         }
         else
         {
+            HostControls.SetActive(true);
             PhotonNetwork.CurrentRoom.IsVisible = true;
         }
     }
@@ -121,6 +122,7 @@ public class PhotonRoomController : MonoBehaviour
             }
         }
 
+        RoomIDText.text = "Room ID: ";
         PhotonNetwork.LeaveRoom();
     }
 
@@ -133,7 +135,7 @@ public class PhotonRoomController : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("PhotonGameTest");
+            PhotonNetwork.LoadLevel("BomberMan");
         }
 
     }
