@@ -17,6 +17,7 @@ public class MoveOnCollide : MonoBehaviour {
     public bool IsMoving = false;
 
     public bool CannotReset;
+    public bool HasStoppedMoving = false;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,7 @@ public class MoveOnCollide : MonoBehaviour {
             else
 			{
 				this.transform.localPosition = MovePosition;
+                HasStoppedMoving = true;
 			}
         }
         else
@@ -53,7 +55,10 @@ public class MoveOnCollide : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
+        {
             IsMoving = true;
+            HasStoppedMoving = false;
+        }
     }
 
     public void Reset()

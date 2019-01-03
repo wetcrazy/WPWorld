@@ -66,6 +66,9 @@ public class ButtonScript : MonoBehaviour {
     {
         for(int i = 0;i < ObjectsToChange.Count; i++)
         {
+            if (ObjectsToChange[i] == null)
+                continue;
+
             if (ObjectsToChange[i].GetComponent<BounceOnHit>())
             {
                 ObjectsToChange[i].GetComponent<BounceOnHit>().Bounce();
@@ -99,6 +102,9 @@ public class ButtonScript : MonoBehaviour {
     {
         for (int i = 0; i < ObjectsToChange.Count; i++)
         {
+            if (ObjectsToChange[i] == null)
+                continue;
+
             if (ObjectsToChange[i].GetComponent<MoveOnCollide>())
             {
                 ObjectsToChange[i].GetComponent<MoveOnCollide>().IsMoving = false;

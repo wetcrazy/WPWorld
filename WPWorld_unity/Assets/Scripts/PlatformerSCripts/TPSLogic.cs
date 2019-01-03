@@ -264,8 +264,13 @@ public class TPSLogic : MonoBehaviour
 
         foreach (MoveOnCollide MoveBlock in ListOfMoving)
         {
-            if(!MoveBlock.CannotReset)
+            if (!MoveBlock.CannotReset)
                 MoveBlock.Reset();
+            else
+            {
+                if (!MoveBlock.HasStoppedMoving)
+                    MoveBlock.Reset();
+            }
         }
 
         foreach(Enemy ClonedEnemy in FindObjectsOfType(typeof(Enemy)) as Enemy[])
