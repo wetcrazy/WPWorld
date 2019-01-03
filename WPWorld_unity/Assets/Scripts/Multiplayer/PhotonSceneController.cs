@@ -39,12 +39,6 @@ public class PhotonSceneController : MonoBehaviour {
         get { return RoomID; }
     }
 
-
-    private void Update()
-    {
-        //Debug.Log(GameSparks.Core.GS.Authenticated);
-    }
-
     // Use this for initialization
     void Start ()
     {

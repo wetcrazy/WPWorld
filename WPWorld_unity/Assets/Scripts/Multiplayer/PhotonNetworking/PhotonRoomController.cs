@@ -12,18 +12,16 @@ public class PhotonRoomController : MonoBehaviour
     [SerializeField]
     Text RoomIDText;
     [SerializeField]
-    GameObject TransferHostButton;
-    [SerializeField]
     Text RoomVisibilityText;
     [SerializeField]
-    GameObject StartGameButton;
-    [SerializeField]
     GameObject PlayerListPanel;
+    [SerializeField]
+    GameObject HostControls;
 
     //List<Text> PlayerTextList = new List<Text>();
     Text[] PlayerTextList;
     private Dictionary<int, Player> players = new Dictionary<int, Player>();
-
+   
     public void InitRoom()
     {
         PlayerTextList = new Text[PlayerListPanel.transform.childCount];
@@ -33,19 +31,13 @@ public class PhotonRoomController : MonoBehaviour
         UpdatePlayerList();
 
         //Is not host of room
-        if (!PhotonNetwork.LocalPlayer.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            TransferHostButton.SetActive(false);
-            RoomVisibilityText.transform.parent.gameObject.SetActive(false);
-            StartGameButton.SetActive(false);
+            HostControls.SetActive(false);
         }
         else
         {
             PhotonNetwork.CurrentRoom.IsVisible = true;
-
-            TransferHostButton.SetActive(true);
-            RoomVisibilityText.transform.parent.gameObject.SetActive(true);
-            StartGameButton.SetActive(true);
         }
     }
 
@@ -85,13 +77,22 @@ public class PhotonRoomController : MonoBehaviour
 
     public void TransferHost()
     {
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; ++i)
+        if(PhotonNetwork.CurrentRoom.PlayerCount <= 1)
         {
-            var thePlayer = PhotonNetwork.CurrentRoom.Players[i];
+            return;
+        }
 
-            if (thePlayer != PhotonNetwork.LocalPlayer)
+        for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; ++i)
+        {
+            var thePlayer = PhotonNetwork.PlayerListOthers[i];
+
+            if (!thePlayer.IsInactive)
             {
                 PhotonNetwork.CurrentRoom.SetMasterClient(thePlayer);
+
+                HostControls.SetActive(false);
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("BecomeHost", thePlayer);
             }
         }
 
@@ -105,10 +106,18 @@ public class PhotonRoomController : MonoBehaviour
     }
 
     public void LeaveRoom()
-    //{
-    //    TransferHost();
-    //    Wait(2.0f);
     {
+        for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; ++i)
+        {
+            var thePlayer = PhotonNetwork.PlayerListOthers[i];
+
+            if (!thePlayer.IsInactive)
+            {
+                PhotonView photonView = PhotonView.Get(this);
+                photonView.RPC("BecomeHost", thePlayer);
+            }
+        }
+
         PhotonNetwork.LeaveRoom();
     }
 
@@ -124,5 +133,12 @@ public class PhotonRoomController : MonoBehaviour
             PhotonNetwork.LoadLevel("PhotonGameTest");
         }
 
+    }
+
+    //Remote Procedure Calls methods
+    [PunRPC]
+    private void BecomeHost()
+    {
+        HostControls.SetActive(true);
     }
 }

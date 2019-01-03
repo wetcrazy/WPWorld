@@ -4,8 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 
 public class PlayerController :  MonoBehaviourPun, IPunObservable{
-
-
+    
     public static GameObject LocalPlayerInstance;
     private int Score = 0;
 
@@ -14,7 +13,6 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
         get { return Score; }
         set { Score = value; }
     }
-
 
     private void Awake()
     {
@@ -26,12 +24,14 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
 
     // Use this for initialization
     void Start () {
-	}
+        LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = LocalPlayerInstance.GetComponent<PlayerController>().photonView.Owner.NickName;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         if (!photonView.IsMine && PhotonNetwork.IsConnected)
         {
+            photonView.gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = PhotonNetwork.PlayerListOthers[0].NickName;
             return;
         }
 
