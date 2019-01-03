@@ -30,9 +30,10 @@ public class PhotonGameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        
         if(PlayerController.LocalPlayerInstance == null)
         {
-           var thePlayer = PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(0f, 0f, 0f), Quaternion.identity, 0);
+           var thePlayer = PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
         }
 
         DistanceBetweenLeaderboardEntries = Vector2.Distance(LeaderboardHeaderUI.transform.position, LeaderboardEntryUI.transform.position);
