@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public enum MovementAvaliability // For use with scripted events like disabling 
     BOTH // BOTH ARE ALLOWED, DOESN"T RESTRICT PLAYER
 }
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviourPun, IPunObservable{
 
     [SerializeField]
     private float MovementSpeed;
@@ -28,6 +29,23 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
 
+    public static GameObject LocalPlayerInstance;
+    private int Score = 0;
+
+    public int PlayerScore
+    {
+        get { return Score; }
+        set { Score = value; }
+    }
+
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+    }
+
     // Use this for initialization
     void Start () {
 		RigidRef = GetComponent<Rigidbody>();
@@ -36,12 +54,28 @@ public class PlayerMovement : MonoBehaviour {
 
         JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         gameObject.transform.forward = Vector3.forward;
+
+        if(photonView.IsMine)
+        {
+            LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch(CurrAvaliability)
+        if (!photonView.IsMine && PhotonNetwork.IsConnected)
+        {
+            photonView.gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = PhotonNetwork.PlayerListOthers[0].NickName;
+            return;
+        }
+
+        if (photonView.IsMine)
+        {
+
+        }
+
+        switch (CurrAvaliability)
         {
             case (MovementAvaliability.NONE):
                 RigidRef.constraints = RigidbodyConstraints.None;
@@ -55,6 +89,19 @@ public class PlayerMovement : MonoBehaviour {
             case (MovementAvaliability.BOTH):
                 RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
                 break;
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //Send other players our data
+        if (stream.IsWriting)
+        {
+
+        }
+        else //Receive data from other players
+        {
+
         }
     }
 

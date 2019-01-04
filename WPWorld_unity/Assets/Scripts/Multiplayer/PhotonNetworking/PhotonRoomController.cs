@@ -37,6 +37,7 @@ public class PhotonRoomController : MonoBehaviour
         }
         else
         {
+            HostControls.SetActive(true);
             PhotonNetwork.CurrentRoom.IsVisible = true;
         }
     }
@@ -107,17 +108,21 @@ public class PhotonRoomController : MonoBehaviour
 
     public void LeaveRoom()
     {
-        for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; ++i)
+        if (PhotonNetwork.IsMasterClient)
         {
-            var thePlayer = PhotonNetwork.PlayerListOthers[i];
-
-            if (!thePlayer.IsInactive)
+            for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; ++i)
             {
-                PhotonView photonView = PhotonView.Get(this);
-                photonView.RPC("BecomeHost", thePlayer);
+                var thePlayer = PhotonNetwork.PlayerListOthers[i];
+
+                if (!thePlayer.IsInactive)
+                {
+                    PhotonView photonView = PhotonView.Get(this);
+                    photonView.RPC("BecomeHost", thePlayer);
+                }
             }
         }
 
+        RoomIDText.text = "Room ID: ";
         PhotonNetwork.LeaveRoom();
     }
 
@@ -130,7 +135,7 @@ public class PhotonRoomController : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("PhotonGameTest");
+            PhotonNetwork.LoadLevel("BomberMan");
         }
 
     }
