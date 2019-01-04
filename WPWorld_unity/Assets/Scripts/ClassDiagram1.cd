@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GamesparksManager">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GamesparksManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlinkingText">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAIAAAAAIAAAAg=</HashCode>
+      <FileName>Assets\Scripts\UI\BlinkingText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DPad">
+    <Position X="24.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwAAAAAAACAACAIABAAAAAAAAAAAAYQCAAEAgAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\DPad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Joystick">
+    <Position X="24.5" Y="4.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Joystick.JoystickDirection" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\UI\Joystick.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAIACAAAAAAAIAAAAEAAEAFAAAKAACgAAAAIEI=</HashCode>
+      <FileName>Assets\Scripts\UI\Joystick.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JumpButton">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAQAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\JumpButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OverlayCameraFind">
+    <Position X="19.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\OverlayCameraFind.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PauseManager">
+    <Position X="2" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFQABAAEACBAgAEAAAAAAAAIAAAEAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\PauseManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UniverseSelectionText">
+    <Position X="3.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIBAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\UI\RotateTextToCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SettingsManager">
+    <Position X="24.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABCAAAEAAAACAAAAAEAigEABCAAYAAAARIAA=</HashCode>
+      <FileName>Assets\Scripts\UI\SettingsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EggRollingScript">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAACAAAAEAAAAAICAAAAAAAQAABAAAAAAIAAA=</HashCode>
+      <FileName>Assets\Scripts\UI\Splashscreen Scene\EggRollingScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SplashScreenManager">
+    <Position X="12.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABCAAAAAAAAIAAAAAAAAAAAAAAgAAAAQACAA=</HashCode>
+      <FileName>Assets\Scripts\UI\Splashscreen Scene\SplashScreenManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChangeMaterial">
+    <Position X="8.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAACAAAAAAAAAAAAAIAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\ChangeMaterial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DestroyWhenCollide">
+    <Position X="14" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAQQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\DestroyWhenCollide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DumbAI">
+    <Position X="8.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgBAgACAiEAAAAAgoEAEAAAAIAAACAMAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\DumbAI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PushYouAway">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAIAAAAAAAAAAAAAAAAAAYAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\PushYouAway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PuzzleSceneManage">
+    <Position X="24.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAACAACAAAAAAIAAAAEAAgAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\PuzzleSceneManage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SendYouUp">
+    <Position X="29.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABCAAAAAAAAAAAAAAAAAAAQAJAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\SendYouUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShowWhenNear">
+    <Position X="15.75" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAIAAAAAJAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\ShowWhenNear.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Stage2Objective">
+    <Position X="28" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\Stage2Objective.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Teleporter">
+    <Position X="10.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAQAAAAAAAAAAAAFQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\Teleporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TrapCollider">
+    <Position X="26.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAACAAAAAAEBCAAAAAAAQCQQIYQEAAAAwAACA=</HashCode>
+      <FileName>Assets\Scripts\3DPuzzle\TrapCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArcoreDeployer">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ArcoreDeployer.STATE_SCREEN" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\ARLogic\ArcoreDeployer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ulwRNAkAiKQQBIwGBICAARERnGKTRQgLEXNaEARAhCA=</HashCode>
+      <FileName>Assets\Scripts\ARLogic\ArcoreDeployer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemovePlane">
+    <Position X="0.5" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ARLogic\RemovePlane.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AsteroidScript">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAICAAAAAAAAAAAAAAEAAAAAAAQAIAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AsteroidRun\AsteroidScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HealthPowerup">
+    <Position X="28" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\AsteroidRun\HealthPowerup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObstacleScript">
+    <Position X="12.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAICIAAIgAAEAAAA=</HashCode>
+      <FileName>Assets\Scripts\AsteroidRun\ObstacleScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerFinal">
+    <Position X="17.5" Y="8.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="PlayerFinal.DEBUFF_EFFECT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\AsteroidRun\PlayerFinal.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>xAQAAAAAgiAAAAAAAAAAQARCEAAACFAAQAIEAAABEAA=</HashCode>
+      <FileName>Assets\Scripts\AsteroidRun\PlayerFinal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneControlFinal">
+    <Position X="10.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CESAAAQAAiIEQAAAiACAAAESIAIAQCAQACgAQACAAxA=</HashCode>
+      <FileName>Assets\Scripts\AsteroidRun\SceneControlFinal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bomb">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAACEASAAAABAAAAAAQAAAAAIRIAAAAACEAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BomberMan\Bomb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BombermanInputs">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BomberMan\BombermanInputs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BombermanManager">
+    <Position X="15.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BomberMan\BombermanManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BomberManPlayer">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEQAAAAQACAAAABAAAQAABAABBAAQBACEACAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BomberMan\BomberManPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BombFire">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAA=</HashCode>
+      <FileName>Assets\Scripts\BomberMan\BombFire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GridMovementScript">
+    <Position X="7" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAgAFAyAAAAAFIAhAQCAABAAAAAAIAAABAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\BomberMan\GridMovementScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnchorPoint">
+    <Position X="2" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBgAAAEIAAAgAAAIAAAAAAABAEEAJhAcQAAAQAAEAEI=</HashCode>
+      <FileName>Assets\Scripts\DungeonSweeper\AnchorPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Blocks">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAIAAAAAAAAAAABAACABAAAAAAAAAAAAEAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\DungeonSweeper\Blocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DSPlatform">
+    <Position X="3.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAACAAAAAAAAAIAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\DungeonSweeper\DSPlatform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DSPlatformManager">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQQEAIgAAAAAAAAAAAAAoAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\DungeonSweeper\DSPlatformManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DSPlayer">
+    <Position X="14" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAABAgAAAAAAAAAABACECAAABAAYQAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\DungeonSweeper\DSPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dungeonsweeper2">
+    <Position X="26.25" Y="3.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Dungeonsweeper2.BlockType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\DungeonSweeper\Dungeonsweeper2.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Dungeonsweeper2.BlockNumberType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\DungeonSweeper\Dungeonsweeper2.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Dungeonsweeper2.LevelType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\DungeonSweeper\Dungeonsweeper2.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CEwYBACAwCAAAAlAQAgQAAQQAAIQAAAAEAAAAgAAIEQ=</HashCode>
+      <FileName>Assets\Scripts\DungeonSweeper\Dungeonsweeper2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GridBaseMovement">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAyAAAAIEABAEQAAABAQAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DungeonSweeper\GridBaseMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAgAAAAAQAAAAAAAIAAAAAAAAAAAAMA=</HashCode>
+      <FileName>Assets\Scripts\Multiplayer\NetworkObjects\PlayerController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PhotonConnect">
+    <Position X="22.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAGIBAEBACAAQQGAgAIAAAAAAAAIEEAAUAAAAQMA=</HashCode>
+      <FileName>Assets\Scripts\Multiplayer\PhotonNetworking\PhotonConnect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhotonGameController">
+    <Position X="7" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQgAAAIAiAAAAgEAAAAAAAIAAAAAAABAAAAAEAAAEg=</HashCode>
+      <FileName>Assets\Scripts\Multiplayer\PhotonNetworking\PhotonGameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhotonRoomController">
+    <Position X="19.25" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAEAAEAAAAAAAABEACAQAAQAIAAIIAEAAAAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Multiplayer\PhotonNetworking\PhotonRoomController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PhotonSceneController">
+    <Position X="29.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAAACADACoAKAEAAAAAAAMAACNAAQAAAAAAAAkQIIA=</HashCode>
+      <FileName>Assets\Scripts\Multiplayer\PhotonSceneController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BounceCoin">
+    <Position X="3.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAIKAAQAAAAAAAAAAAACAAAAAAAAAAAEIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\BounceCoin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollectOnCollide">
+    <Position X="26.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAQACAAhAAAACAAAABAAAAAAAAAQAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\CollectOnCollide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DestroyParticleSystem">
+    <Position X="19.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\DestroyParticleSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DropletEffect">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\DropletEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KillboxDestroy">
+    <Position X="3.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\KillboxDestroy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MovingMaterial">
+    <Position X="22.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAAAAAiAAAAAAAAAAAAAAADAAAgAAAAAgAAAAAQA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\MovingMaterial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParticleSpawnOnCollide">
+    <Position X="15.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwQAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\ParticleSpawnOnCollide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RespawnPoint">
+    <Position X="17.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQgAAAAACAAgBAACAAAABAAAAAACAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\RespawnPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RotateBasedOffRB">
+    <Position X="15.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\RotateBasedOffRB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundSystem">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAABAAAUAIABQQAAAEAAAABFAAAQAAEA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\SoundSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ActionButton">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAACAAgAAAAAAAAAAAAAAAAAACAAAAAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\UI\ActionButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HealthPopup">
+    <Position X="22.75" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQABAAAAKAAAAoABAAAAAAAACAECAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\UI\HealthPopup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndicatorScript">
+    <Position X="12.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAQCAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\UI\IndicatorScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScorePopup">
+    <Position X="19.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\UI\ScorePopup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIPopup">
+    <Position X="15.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAgAAAAAEAAAAAAAAAAIAAQAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\UI\UIPopup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinOnCollide">
+    <Position X="8.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAACAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Aesthetic\UI\WinOnCollide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BounceOnHit">
+    <Position X="3.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAAAAACAgwAAgAAAAAAAAAAAAAAAAQAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Blocks\BounceOnHit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DestroyOnHit">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACIAhAAgAAAAAAAAAAAAAAACQAAAAAMAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Blocks\DestroyOnHit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FallOnTop">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQQAKAAxAAgAAAAAAgAAAAgAAAAQAAAAAIBAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Blocks\FallOnTop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KillOnCollide">
+    <Position X="0.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Blocks\KillOnCollide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveOnCollide">
+    <Position X="8.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAACAABBAAAAAQAAAAAAQAAAEAQgAAAACAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Blocks\MoveOnCollide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShowOnHit">
+    <Position X="28" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAhAAgAAAAAAAABAAEAAAAQAACAAIAAQA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Blocks\ShowOnHit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpawnOnHit">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAASAA1oCgAAEAAAEAAAAAAAAAQAAgAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Blocks\SpawnOnHit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy">
+    <Position X="21" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAADABAqAAxACgAA4ACAAABBiDSAAIQAgAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fireball">
+    <Position X="26.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAIQAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Fireball.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ItemPowerUp">
+    <Position X="15.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABACAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\ItemPowerUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlatformStageScript">
+    <Position X="28" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAACAAgAAAAAAAAAAAAAAACAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\PlatformStageScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerMovement" BaseTypeListCollapsed="true">
+    <Position X="29.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CASAIABAAyAAgAgAAAACQAACBogkIAAAQAAEAAIAAMU=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\PlayerMovement.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PlayerPowerUp">
+    <Position X="28" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAKAABAAAEAEAiAAAAAAAABAIAAAEEAAAAQA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\PlayerPowerUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RotateOnCollided">
+    <Position X="28" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAABAAAAAAAAAAAAAAAAAAQAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\RotateOnCollided.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TPSLogic">
+    <Position X="14" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAQAAAQAAiTEhAAAABBAAAAECiAQAAQuwABAiAIEIAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\TPSLogic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ButtonScript">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAACAAAKAAEABAEQAAAAAABAAAIAAAQAAAAAAQBAQ=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Traps\ButtonScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireballTrap">
+    <Position X="2" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAAKAAQAAAAAAAAAAAAAAAAAAAQAAAAwIAAAg=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Traps\FireballTrap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GivePowerUpOnCollide">
+    <Position X="3.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAACAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Traps\GivePowerUpOnCollide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ItemBoxSpawn">
+    <Position X="19.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Traps\ItemBoxSpawn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LeverScript">
+    <Position X="21" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACAAACAAEABQAAAAAAAAAAAAAAABAAAAAAAQIAQ=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Traps\LeverScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PatrolBlock">
+    <Position X="17.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAQAAAAAAgAAIAMQQABACAABIA=</HashCode>
+      <FileName>Assets\Scripts\PlatformerSCripts\Traps\PatrolBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

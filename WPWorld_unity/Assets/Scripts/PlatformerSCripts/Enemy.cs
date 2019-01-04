@@ -143,6 +143,10 @@ public class Enemy : MonoBehaviour {
                 if(IsImmortal)
                 {
                     CurrType = OrgType;
+                    Vector3 NewPos = transform.localPosition;
+                    NewPos.y += transform.localScale.y * 0.5f;
+                    transform.localPosition = NewPos;
+                    transform.localScale = OrgSize;
                 }
                 else
                 {
