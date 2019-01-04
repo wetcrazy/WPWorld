@@ -55,7 +55,10 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable{
         JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
         gameObject.transform.forward = Vector3.forward;
 
-        LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = LocalPlayerInstance.GetComponent<PlayerController>().photonView.Owner.NickName;
+        if(photonView.IsMine)
+        {
+            LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+        }
     }
 
     // Update is called once per frame

@@ -125,6 +125,6 @@ public class PhotonGameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        PlayerPoints.text = PlayerController.LocalPlayerInstance.GetComponent<PlayerController>().PlayerScore.ToString();
+        //PlayerPoints.text = PlayerController.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore.ToString();
     }
 }
