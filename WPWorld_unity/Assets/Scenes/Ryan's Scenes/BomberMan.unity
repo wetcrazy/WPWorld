@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -364,22 +364,22 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2038485416}
     - target: {fileID: 114909913569798868, guid: caba322beb074f441aaa3a5ae5720c43,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2038485416}
     - target: {fileID: 114594877647190214, guid: caba322beb074f441aaa3a5ae5720c43,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2038485416}
     - target: {fileID: 114151901039400066, guid: caba322beb074f441aaa3a5ae5720c43,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2038485416}
     - target: {fileID: 114215607757775804, guid: caba322beb074f441aaa3a5ae5720c43,
         type: 2}
       propertyPath: viewIdField
@@ -483,6 +483,71 @@ Prefab:
       propertyPath: m_FontData.m_MinSize
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1429196008340378, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224518245430983510, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224253448775619242, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224691523476995266, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224060352782393776, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 224241020365522102, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 224251191398726802, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114605293442567112, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GetLeaderboard
+      objectReference: {fileID: 0}
+    - target: {fileID: 114909913569798868, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EditScore
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594877647190214, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EditScore
+      objectReference: {fileID: 0}
+    - target: {fileID: 114151901039400066, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SubmitScore
+      objectReference: {fileID: 0}
+    - target: {fileID: 224060352782393776, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -134
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &2038485416 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114294784194712006, guid: caba322beb074f441aaa3a5ae5720c43,
+    type: 2}
+  m_PrefabInternal: {fileID: 2038485415}
+  m_Script: {fileID: 11500000, guid: bbd79fb4b29368348ae4fe6c0a80864c, type: 3}

@@ -20,7 +20,6 @@ public class PhotonGameController : MonoBehaviour {
     [SerializeField]
     Text PlayerPoints;
     
-    float DistanceBetweenLeaderboardEntries;
 
     private void Awake()
     {
@@ -29,21 +28,17 @@ public class PhotonGameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-        
-        if(PlayerController.LocalPlayerInstance == null)
+        if(PlayerMovement.LocalPlayerInstance == null)
         {
            var thePlayer = PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
         }
-
-        DistanceBetweenLeaderboardEntries = Vector2.Distance(LeaderboardHeaderUI.transform.position, LeaderboardEntryUI.transform.position);
-
+        
         LeaderboardUI.SetActive(false);
     }
 	
     public void SubmitScore()
     {
-        new GameSparks.Api.Requests.LogEventRequest().SetEventKey("SUBMIT_SCORE").SetEventAttribute("SCORE", PlayerController.LocalPlayerInstance.GetComponent<PlayerController>().PlayerScore)
+        new GameSparks.Api.Requests.LogEventRequest().SetEventKey("SUBMIT_SCORE").SetEventAttribute("SCORE", PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore)
             .Send((response) => {
             if (!response.HasErrors)
             {
@@ -65,7 +60,8 @@ public class PhotonGameController : MonoBehaviour {
             Amount = -Amount;
         }
 
-        PlayerController.LocalPlayerInstance.GetComponent<PlayerController>().PlayerScore += Amount;
+        PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore += Amount;
+        PlayerPoints.text = PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore.ToString();
     }
 
     public void GetLeaderboard()
@@ -77,8 +73,12 @@ public class PhotonGameController : MonoBehaviour {
         }
 
         LeaderboardUI.SetActive(true);
-
-        new GameSparks.Api.Requests.LeaderboardDataRequest().SetLeaderboardShortCode("SUBMIT_SCORE").SetEntryCount(100).Send((response) => {
+        
+        new GameSparks.Api.Requests.LeaderboardDataRequest()
+            //.SetLeaderboardShortCode("SUBMIT_SCORE")
+            .SetEntryCount(10)
+            .SetLeaderboardShortCode("LEADERBOARD")
+            .Send((response) => {
             if (!response.HasErrors)
             {
                 Debug.Log("Found Leaderboard Data...");
@@ -101,7 +101,7 @@ public class PhotonGameController : MonoBehaviour {
 
     public void CreateLeaderboardEntryUI(int Rank, string PlayerName, string Score)
     {
-        GameObject NewLeaderboardEntry = Instantiate(LeaderboardEntryUI, LeaderboardEntryUI.transform.parent);
+        GameObject NewLeaderboardEntry = Instantiate(LeaderboardEntryUI, LeaderboardHeaderUI.transform);
 
         NewLeaderboardEntry.transform.GetChild(0).GetComponent<Text>().text = Rank.ToString();
         NewLeaderboardEntry.transform.GetChild(1).GetComponent<Text>().text = PlayerName;
@@ -110,10 +110,10 @@ public class PhotonGameController : MonoBehaviour {
         //Adjust the entry position based on rank number
         if (Rank > 1)
         {
-            Vector3 EntryPos = NewLeaderboardEntry.transform.position;
-            EntryPos.y -= (Rank - 1) * DistanceBetweenLeaderboardEntries;
+            Vector3 EntryPos = NewLeaderboardEntry.transform.localPosition;
+            EntryPos.y *= Rank;
 
-            NewLeaderboardEntry.transform.position = EntryPos;
+            NewLeaderboardEntry.transform.localPosition = EntryPos;
         }
     }
     
