@@ -250,6 +250,7 @@ public class ARMultiplayerController : MonoBehaviour
     private void SpawnLevel(Touch _touch)
     {
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
+        Destroy(LevelObject);
     }
 
     // oooooooooooooooooooooooooooooooooooooooo
