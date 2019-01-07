@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UniverseSelectionText : MonoBehaviour {
+public class RotateTextToCamera : MonoBehaviour {
     GameObject CameraObject;
 
     private void Awake()

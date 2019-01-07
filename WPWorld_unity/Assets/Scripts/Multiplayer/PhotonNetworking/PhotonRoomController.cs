@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PhotonRoomController : MonoBehaviour
 {
-
     [Header("Scene Objects")]
     [SerializeField]
     Text RoomIDText;
@@ -124,11 +123,6 @@ public class PhotonRoomController : MonoBehaviour
 
         RoomIDText.text = "Room ID: ";
         PhotonNetwork.LeaveRoom();
-    }
-
-    IEnumerator Wait(float seconds)
-    {
-        yield return new WaitForSecondsRealtime(2.0f);
     }
 
     public void StartNetworkGame()

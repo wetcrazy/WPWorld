@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 4273454294829124}
   - component: {fileID: 23795633204866308}
   - component: {fileID: 102119480891575532}
-  - component: {fileID: 114251947875720496}
+  - component: {fileID: 114772094560053986}
   m_Layer: 0
   m_Name: AsteroidWorld Text
   m_TagString: Untagged
@@ -276,7 +276,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1586531558205422}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 355.27145, y: 283.05243, z: -72.77476}
+  m_LocalPosition: {x: 288.85498, y: 19.8818, z: -72.77476}
   m_LocalScale: {x: 1.3062433, y: 1.3062437, z: 1.3062437}
   m_Children:
   - {fileID: 4482259439911612}
@@ -1044,17 +1044,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4385084570b94d4faa4eae7b4bae080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114251947875720496
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1329561540522002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4385084570b94d4faa4eae7b4bae080, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114466810916562166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1072,6 +1061,17 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1265587790617262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4385084570b94d4faa4eae7b4bae080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114772094560053986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329561540522002}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4385084570b94d4faa4eae7b4bae080, type: 3}
