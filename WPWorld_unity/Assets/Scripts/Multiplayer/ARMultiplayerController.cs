@@ -192,13 +192,17 @@ public class ARMultiplayerController : MonoBehaviour
         //    return;
         //}
 
+        DebugText.text = "ToGameScreen Ran 01";
         Reset_Anchor();
 
+        DebugText.text = "ToGameScreen Ran 02";
         ScreenState = STATE_SCREEN.SCREEN_GAME;
-
+        DebugText.text = "ToGameScreen Ran 03";
         //Spawn the level
         SpawnLevel(Input.GetTouch(0));
+        DebugText.text = "ToGameScreen Ran 04";
         AnchorRef.SetActive(false);
+        DebugText.text = "ToGameScreen Ran 05";
 
         //Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
     }
