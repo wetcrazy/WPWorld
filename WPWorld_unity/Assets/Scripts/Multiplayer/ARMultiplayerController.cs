@@ -76,6 +76,15 @@ public class ARMultiplayerController : MonoBehaviour
                 break;
         }
 
+        if(_GroundObject == null)
+        {
+            DebugText.text += "\nGround is null";
+        }
+        else
+        {
+            DebugText.text += "\nGround is not null";
+        }
+
     }
     
     //-----GAME MOVE ANCHOR FUNCTIONS-----//
