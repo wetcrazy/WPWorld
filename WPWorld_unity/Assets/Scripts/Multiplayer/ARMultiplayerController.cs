@@ -66,15 +66,16 @@ public class ARMultiplayerController : MonoBehaviour
         {
             case STATE_SCREEN.SCREEN_GAME_MOVEANCHOR:
                 GameMoveAnchorUpdate();
+                DebugText.text = "Anchor = " + AnchorRef.transform.position.ToString();
                 break;
             case STATE_SCREEN.SCREEN_GAME:
                 GameScreenUpdate();
+                DebugText.text = "Ground = " + _GroundObject.transform.position.ToString();
                 break;
             default:
                 break;
         }
 
-        DebugText.text = AnchorRef.transform.position.ToString();
     }
     
     //-----GAME MOVE ANCHOR FUNCTIONS-----//
