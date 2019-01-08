@@ -36,8 +36,8 @@ public class ARMultiplayerController : MonoBehaviour
     GameObject AnchorRef;
 
     [Header("Game Screen Objects")]
-   // [SerializeField]
-    public GameObject LevelObject;
+    [SerializeField]
+    GameObject LevelObject;
     
     SoundSystem soundSystem = null;
 
@@ -54,14 +54,9 @@ public class ARMultiplayerController : MonoBehaviour
     {
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-
-        if (LevelObject == null)
-        {
-            DebugText.text = "Level Obj null";
-        }
-
+        
         //Initialise Screens
-        ExitGameScreen();
+        //ExitGameScreen();
         ToGameMoveAnchor();
     }
 
