@@ -78,11 +78,11 @@ public class ARMultiplayerController : MonoBehaviour
 
         if(_GroundObject == null)
         {
-            DebugText.text += "\nGround is null";
+            DebugText.text += "Ground is null";
         }
         else
         {
-            DebugText.text += "\nGround is not null";
+            DebugText.text += "Ground is not null";
         }
 
     }
