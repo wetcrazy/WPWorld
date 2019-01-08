@@ -162,7 +162,6 @@ public class ARMultiplayerController : MonoBehaviour
 
         //Set all game move anchor screen objects to inactive
         MoveAnchorControlsUI.SetActive(false);
-        AnchorRef.SetActive(false);
     }
     //-----------------------------------------------------------------//
 
@@ -175,12 +174,13 @@ public class ARMultiplayerController : MonoBehaviour
             return;
         }
 
-        //Reset_Anchor();
+        Reset_Anchor();
 
         ScreenState = STATE_SCREEN.SCREEN_GAME;
 
         //Spawn the level
         SpawnLevel(Input.GetTouch(0));
+        AnchorRef.SetActive(false);
 
         Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
     }
