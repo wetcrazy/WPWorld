@@ -56,7 +56,6 @@ public class ARMultiplayerController : MonoBehaviour
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
         
         //Initialise Screens
-        //ExitGameScreen();
         ToGameMoveAnchor();
     }
 
@@ -108,10 +107,10 @@ public class ARMultiplayerController : MonoBehaviour
             Spawner(Input.GetTouch(0), AnchorRef);
             _GroundObject.GetComponent<MeshRenderer>().enabled = true;
         }
-
-        if (_GroundObject != null)
+        else if (_GroundObject != null)
         {
             AnchorRef.transform.position = _GroundObject.transform.position;
+            AnchorRef.transform.rotation = _GroundObject.transform.rotation;
             UpdateOffSet();
         }
 
@@ -189,7 +188,7 @@ public class ARMultiplayerController : MonoBehaviour
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
 
-        //Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
+        Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
     }
 
     private void GameScreenUpdate()
@@ -256,10 +255,7 @@ public class ARMultiplayerController : MonoBehaviour
 
     private void SpawnLevel(Touch _touch)
     {
-        
-
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
-       
     }
 
     // oooooooooooooooooooooooooooooooooooooooo
