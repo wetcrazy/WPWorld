@@ -65,13 +65,17 @@ public class ARMultiplayerController : MonoBehaviour
         switch (ScreenState)
         {
             case STATE_SCREEN.SCREEN_GAME_MOVEANCHOR:
-                GameMoveAnchorUpdate();
-                DebugText.text = "Anchor = " + AnchorRef.transform.position.ToString();
-                break;
+                {
+                    GameMoveAnchorUpdate();
+                    DebugText.text = "Anchor = " + AnchorRef.transform.position.ToString();
+                    break;
+                }
             case STATE_SCREEN.SCREEN_GAME:
-                GameScreenUpdate();
-                DebugText.text = "Ground = " + _GroundObject.transform.position.ToString();
-                break;
+                {
+                    GameScreenUpdate();
+                    DebugText.text = "Ground = " + _GroundObject.transform.position.ToString();
+                    break;
+                }
             default:
                 break;
         }
@@ -184,10 +188,10 @@ public class ARMultiplayerController : MonoBehaviour
     public void ToGameScreen()
     {
         //Don't go to game screen if ground object is null
-        if (_GroundObject == null)
-        {
-            return;
-        }
+        //if (_GroundObject == null)
+        //{
+        //    return;
+        //}
 
         Reset_Anchor();
 
