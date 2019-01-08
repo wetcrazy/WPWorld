@@ -271,10 +271,22 @@ public class ARMultiplayerController : MonoBehaviour
 
     private void SpawnLevel(Touch _touch)
     {
-        _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
-        _GroundObject.SetActive(true);
+        if (LevelObject != null)
+        {
+            DebugText.text = "Level Obj OK";
+        }
 
-        _GroundObject.GetComponent<MeshRenderer>().enabled = true;
+        DebugText.text += "AnchorRef Pos = " + AnchorRef.transform.position.ToString();
+        DebugText.text += "AnchorRef Rot = " + AnchorRef.transform.rotation.ToString();
+
+        if (_anchor != null)
+        {
+            DebugText.text += "_anchor Parent OK";
+        }
+        
+
+        _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
+       
     }
 
     // oooooooooooooooooooooooooooooooooooooooo
