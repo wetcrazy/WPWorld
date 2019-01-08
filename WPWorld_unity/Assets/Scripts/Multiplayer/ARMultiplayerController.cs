@@ -68,7 +68,7 @@ public class ARMultiplayerController : MonoBehaviour
                 {
                     GameMoveAnchorUpdate();
                     DebugText.text = "Anchor = " + AnchorRef.transform.position.ToString();
-
+                    DebugText.text += "State = MoveAnchor";
                     
                     break;
                 }
@@ -76,6 +76,7 @@ public class ARMultiplayerController : MonoBehaviour
                 {
                     GameScreenUpdate();
                     DebugText.text = "Ground = " + _GroundObject.transform.position.ToString();
+                    DebugText.text += "State = Game";
                     break;
                 }
             default:
