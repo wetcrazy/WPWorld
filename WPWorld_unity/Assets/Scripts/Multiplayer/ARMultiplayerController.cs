@@ -24,6 +24,8 @@ public class ARMultiplayerController : MonoBehaviour
     Camera MainCamera;
     [SerializeField]
     GameObject PlayerObjectPrefab;
+    [SerializeField]
+    Text DebugText;
 
     [Header("Move Anchor Screen Objects")]
     [SerializeField]
@@ -71,6 +73,8 @@ public class ARMultiplayerController : MonoBehaviour
             default:
                 break;
         }
+
+        DebugText.text = AnchorRef.transform.position.ToString();
     }
     
     //-----GAME MOVE ANCHOR FUNCTIONS-----//
@@ -251,6 +255,9 @@ public class ARMultiplayerController : MonoBehaviour
     private void SpawnLevel(Touch _touch)
     {
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
+        _GroundObject.SetActive(true);
+
+        _GroundObject.GetComponent<MeshRenderer>().enabled = true;
     }
 
     // oooooooooooooooooooooooooooooooooooooooo
