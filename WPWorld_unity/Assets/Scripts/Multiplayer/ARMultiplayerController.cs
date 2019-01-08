@@ -68,6 +68,8 @@ public class ARMultiplayerController : MonoBehaviour
                 {
                     GameMoveAnchorUpdate();
                     DebugText.text = "Anchor = " + AnchorRef.transform.position.ToString();
+
+                    
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
@@ -80,13 +82,9 @@ public class ARMultiplayerController : MonoBehaviour
                 break;
         }
 
-        if(_GroundObject == null)
+        if (_GroundObject != null)
         {
-            DebugText.text += "Ground is null";
-        }
-        else
-        {
-            DebugText.text += "Ground is not null";
+            DebugText.text += "Ground = " + _GroundObject.transform.position.ToString();
         }
 
     }
@@ -201,7 +199,7 @@ public class ARMultiplayerController : MonoBehaviour
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
 
-        Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
+        //Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
     }
 
     private void GameScreenUpdate()
