@@ -36,8 +36,8 @@ public class ARMultiplayerController : MonoBehaviour
     GameObject AnchorRef;
 
     [Header("Game Screen Objects")]
-    [SerializeField]
-    GameObject LevelObject;
+   // [SerializeField]
+    public GameObject LevelObject;
     
     SoundSystem soundSystem = null;
 
@@ -55,6 +55,11 @@ public class ARMultiplayerController : MonoBehaviour
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
+        if (LevelObject == null)
+        {
+            DebugText.text = "Level Obj null";
+        }
+
         //Initialise Screens
         ExitGameScreen();
         ToGameMoveAnchor();
@@ -67,25 +72,16 @@ public class ARMultiplayerController : MonoBehaviour
             case STATE_SCREEN.SCREEN_GAME_MOVEANCHOR:
                 {
                     GameMoveAnchorUpdate();
-                    DebugText.text = "Anchor = " + AnchorRef.transform.position.ToString();
-                    DebugText.text += "State = MoveAnchor";
                     
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
                 {
                     GameScreenUpdate();
-                    DebugText.text = "Ground = " + _GroundObject.transform.position.ToString();
-                    DebugText.text += "State = Game";
                     break;
                 }
             default:
                 break;
-        }
-
-        if (_GroundObject != null)
-        {
-            DebugText.text += "Ground = " + _GroundObject.transform.position.ToString();
         }
 
     }
@@ -191,18 +187,12 @@ public class ARMultiplayerController : MonoBehaviour
         //{
         //    return;
         //}
-
-        DebugText.text = "ToGameScreen Ran 01";
+        
         Reset_Anchor();
-
-        DebugText.text = "ToGameScreen Ran 02";
         ScreenState = STATE_SCREEN.SCREEN_GAME;
-        DebugText.text = "ToGameScreen Ran 03";
         //Spawn the level
         SpawnLevel(Input.GetTouch(0));
-        DebugText.text = "ToGameScreen Ran 04";
         AnchorRef.SetActive(false);
-        DebugText.text = "ToGameScreen Ran 05";
 
         //Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
     }
@@ -271,18 +261,6 @@ public class ARMultiplayerController : MonoBehaviour
 
     private void SpawnLevel(Touch _touch)
     {
-        if (LevelObject != null)
-        {
-            DebugText.text = "Level Obj OK";
-        }
-
-        DebugText.text += "AnchorRef Pos = " + AnchorRef.transform.position.ToString();
-        DebugText.text += "AnchorRef Rot = " + AnchorRef.transform.rotation.ToString();
-
-        if (_anchor != null)
-        {
-            DebugText.text += "_anchor Parent OK";
-        }
         
 
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
