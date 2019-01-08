@@ -51,7 +51,7 @@ public class ARMultiplayerController : MonoBehaviour
     private void Start()
     {
         //Define the game object references       
-        soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
+        //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
         //Initialise Screens
         ExitGameScreen();
