@@ -100,7 +100,8 @@ public class ARMultiplayerController : MonoBehaviour
             Spawner(Input.GetTouch(0), AnchorRef);
             _GroundObject.GetComponent<MeshRenderer>().enabled = true;
         }
-        else if (_GroundObject != null)
+
+        if (_GroundObject != null)
         {
             AnchorRef.transform.position = _GroundObject.transform.position;
             UpdateOffSet();
