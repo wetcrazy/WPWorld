@@ -175,7 +175,7 @@ public class ARMultiplayerController : MonoBehaviour
             return;
         }
 
-        Reset_Anchor();
+        //Reset_Anchor();
 
         ScreenState = STATE_SCREEN.SCREEN_GAME;
 
