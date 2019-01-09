@@ -8,11 +8,10 @@ public class Bomb : MonoBehaviour
     public GameObject BlockPrefab;
   
     public GameObject Manager; // Need for power up block spawner
-
-    [SerializeField]
+    
     private int firePower;
-    [SerializeField]
     private GameObject Owner;
+    private Photon.Realtime.Player OwnerPUN;
     private float currTimer;
     private float MAX_TIMER = 3.0f;
     private Collider col;
@@ -125,5 +124,20 @@ public class Bomb : MonoBehaviour
     public void SetBombOwner(GameObject _newOwner)
     {
         Owner = _newOwner;
+    }
+
+    public void SetBombOwnerPUN(Photon.Realtime.Player _newOwnerPUN)
+    {
+        OwnerPUN = _newOwnerPUN;
+    }
+
+    public GameObject GetOwner()
+    {
+        return Owner;
+    }
+
+    public Photon.Realtime.Player GetOwnerPUN()
+    {
+        return OwnerPUN;
     }
 }

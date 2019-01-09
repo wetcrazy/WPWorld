@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class BomberManPlayer : MonoBehaviour
+public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallback
 {
     public GameObject Bombprefab;
 
@@ -17,6 +20,23 @@ public class BomberManPlayer : MonoBehaviour
 
     private bool isLose;
 
+    public static GameObject LocalPlayerInstance;
+    private int Score = 0;
+
+    public int PlayerScore
+    {
+        get { return Score; }
+        set { Score = value; }
+    }
+
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+    }
+
     private void Start()
     {
         isDead = false;
@@ -27,11 +47,25 @@ public class BomberManPlayer : MonoBehaviour
         MAX_TIMER = 3.0f;
         MAX_NUMBOMB = 1;
         currNUMBomb = 0;
+
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+        }
+        else
+        {
+            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+        }
     }
 
     private void Update()
     {
-        if(isDead)
+        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+
+        if (isDead)
         {
             if(currTimer > MAX_TIMER)
             {
@@ -52,16 +86,54 @@ public class BomberManPlayer : MonoBehaviour
         }
     }
 
-    public void SpawnBomb()
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if(isLose && currNUMBomb < MAX_NUMBOMB)
+        //Send other players our data
+        if (stream.IsWriting)
         {
-            currNUMBomb += 1;
+
+        }
+        else //Receive data from other players
+        {
+
+        }
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
+        {
+            case EventCodes.EVENT_CODES.EVENT_DROP_BOMB:
+                {
+                    GameObject theBomb = (GameObject)photonEvent.CustomData;
+                    SpawnBomb(theBomb, theBomb.GetComponent<Bomb>());
+                    break;
+                }
+
+            default:
+                break;
+        }
+    }
+
+    public void onBombButtonDown()
+    {
+        if (isLose && currNUMBomb < MAX_NUMBOMB)
+        {
             var newBomb = Bombprefab;
             newBomb.GetComponent<Bomb>().SetBombPower(firePower);
-            newBomb.GetComponent<Bomb>().SetBombOwner(this.transform.gameObject);
-            Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
-        }   
+            newBomb.GetComponent<Bomb>().SetBombOwner(gameObject);
+            newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.LocalPlayer);
+
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            SendOptions sendOptions = new SendOptions { Reliability = true };
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_DROP_BOMB, newBomb, raiseEventOptions, sendOptions);
+        }
+    }
+
+    public void SpawnBomb(GameObject BombData, Bomb BombDataScript)
+    {
+        currNUMBomb++;
+        Instantiate(BombData, BombDataScript.GetOwner().transform.position, Quaternion.identity, BombDataScript.GetOwner().transform.parent);   
     }
 
     public void Respawn()

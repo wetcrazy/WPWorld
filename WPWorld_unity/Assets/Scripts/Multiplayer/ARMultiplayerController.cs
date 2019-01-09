@@ -188,7 +188,7 @@ public class ARMultiplayerController : MonoBehaviour
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
 
-        Photon.Pun.PhotonNetwork.Instantiate(this.PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
+        Photon.Pun.PhotonNetwork.Instantiate(PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
     }
 
     private void GameScreenUpdate()

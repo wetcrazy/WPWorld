@@ -1,16 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public static class EventCodes {
 
-public class EventCodes : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public enum EVENT_CODES
+    {
+        EVENT_DROP_BOMB = 0,
+    }
 }

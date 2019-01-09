@@ -38,7 +38,7 @@ public class PhotonGameController : MonoBehaviour {
 	
     public void SubmitScore()
     {
-        new GameSparks.Api.Requests.LogEventRequest().SetEventKey("SUBMIT_SCORE").SetEventAttribute("SCORE", PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore)
+        new GameSparks.Api.Requests.LogEventRequest().SetEventKey("SUBMIT_SCORE").SetEventAttribute("SCORE", BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore)
             .Send((response) => {
             if (!response.HasErrors)
             {
@@ -60,8 +60,8 @@ public class PhotonGameController : MonoBehaviour {
             Amount = -Amount;
         }
 
-        PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore += Amount;
-        PlayerPoints.text = PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore.ToString();
+        BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore += Amount;
+        PlayerPoints.text = BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore.ToString();
     }
 
     public void GetLeaderboard()
