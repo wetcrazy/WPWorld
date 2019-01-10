@@ -13,4 +13,9 @@ public class BombermanManager : MonoBehaviour
     {
         _selectedOBJ.GetComponent<BomberManPlayer>().OneBombDestory();
     }
+
+    public void PlaceBomb()
+    {
+        BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
+    }
 }

@@ -86,6 +86,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallbac
         }
     }
 
+    private void SpawnBomb(GameObject BombData, Bomb BombDataScript)
+    {
+        currNUMBomb++;
+        Instantiate(BombData, BombDataScript.GetOwner().transform.position, Quaternion.identity, BombDataScript.GetOwner().transform.parent);
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //Send other players our data
@@ -128,12 +134,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallbac
             SendOptions sendOptions = new SendOptions { Reliability = true };
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_DROP_BOMB, newBomb, raiseEventOptions, sendOptions);
         }
-    }
-
-    public void SpawnBomb(GameObject BombData, Bomb BombDataScript)
-    {
-        currNUMBomb++;
-        Instantiate(BombData, BombDataScript.GetOwner().transform.position, Quaternion.identity, BombDataScript.GetOwner().transform.parent);   
     }
 
     public void Respawn()
