@@ -1934,7 +1934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1445339673066688
 GameObject:
   m_ObjectHideFlags: 1
@@ -3433,7 +3433,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4585820564902428}
-  - component: {fileID: 114522121645655008}
+  - component: {fileID: 114607591506630390}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: BombermanManager
@@ -6737,7 +6737,7 @@ Transform:
   m_GameObject: {fileID: 1239250979841282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4206169707797020}
   - {fileID: 224565780084700740}
@@ -19925,8 +19925,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114522121645655008}
-        m_MethodName: OnBombButtonDown
+      - m_Target: {fileID: 114263014802556860, guid: 4bb8b0be4f6ecee4dbdee68d79369921,
+          type: 2}
+        m_MethodName: onBombButtonDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19977,7 +19978,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114294784194712006}
         m_MethodName: SubmitScore
         m_Mode: 1
         m_Arguments:
@@ -20011,10 +20012,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 90
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 9
+    m_MinSize: 8
     m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -20022,7 +20023,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Minus
 --- !u!114 &114173854648294234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20217,10 +20218,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 90
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 9
+    m_MinSize: 7
     m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -20228,7 +20229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Ldr Bord
 --- !u!114 &114392481279405136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20349,17 +20350,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114522121645655008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1809068911124588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c031feefd47de55478757bfcbd478fde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114594877647190214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20399,7 +20389,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114294784194712006}
         m_MethodName: EditScore
         m_Mode: 6
         m_Arguments:
@@ -20499,7 +20489,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114294784194712006}
         m_MethodName: GetLeaderboard
         m_Mode: 1
         m_Arguments:
@@ -20512,6 +20502,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114607591506630390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809068911124588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2baf0fcc00d5970429f7e5ee5423aa0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114664476355781904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20593,18 +20594,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 90
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 100
+    m_MinSize: 0
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Add
 --- !u!114 &114768854233521054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20774,7 +20775,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114294784194712006}
         m_MethodName: EditScore
         m_Mode: 6
         m_Arguments:
@@ -20849,10 +20850,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 90
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 9
+    m_MinSize: 8
     m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -20860,7 +20861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Submit
 --- !u!222 &222026284251745690
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -21001,11 +21002,11 @@ RectTransform:
   m_Children:
   - {fileID: 224109973751657454}
   m_Father: {fileID: 224565780084700740}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 2.4770002, y: 3.2890003, z: -37.475002}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -200, y: -200}
+  m_AnchoredPosition: {x: -200, y: -134}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224109973751657454
@@ -21092,7 +21093,7 @@ RectTransform:
   m_Children:
   - {fileID: 224985290694506072}
   m_Father: {fileID: 224565780084700740}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -21111,7 +21112,7 @@ RectTransform:
   m_Children:
   - {fileID: 224180897442627336}
   m_Father: {fileID: 224565780084700740}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -21131,7 +21132,7 @@ RectTransform:
   - {fileID: 224310870604345600}
   - {fileID: 224812988657144366}
   m_Father: {fileID: 224565780084700740}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21205,12 +21206,12 @@ RectTransform:
   m_Children:
   - {fileID: 224624853477228254}
   - {fileID: 224772232364943330}
-  - {fileID: 224253448775619242}
   - {fileID: 224691523476995266}
   - {fileID: 224241020365522102}
-  - {fileID: 224518245430983510}
-  - {fileID: 224060352782393776}
   - {fileID: 224251191398726802}
+  - {fileID: 224518245430983510}
+  - {fileID: 224253448775619242}
+  - {fileID: 224060352782393776}
   m_Father: {fileID: 4680652993723218}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21268,7 +21269,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224565780084700740}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -21309,7 +21310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 430, y: 300}
+  m_AnchoredPosition: {x: 420, y: 300}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224812988657144366
