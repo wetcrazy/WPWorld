@@ -10,6 +10,7 @@ public class HealthPopup : MonoBehaviour
     private Color ColorRef;
 
     private GameObject PlayerRef;
+    [SerializeField]
     private MovementAvaliability OrgAvaliability;
 
     //Debug Serialize
@@ -159,7 +160,8 @@ public class HealthPopup : MonoBehaviour
     {
         if (ColorRef.a != 0)
             return;
-        OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
+        if(PlayerRef.GetComponent<PlayerMovement>().GetRestriction() != MovementAvaliability.NONE)
+            OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
         PlayerRef.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
         PlayerRef.GetComponent<TPSLogic>().AbleToJumpPub = false;
         Showing = true;
