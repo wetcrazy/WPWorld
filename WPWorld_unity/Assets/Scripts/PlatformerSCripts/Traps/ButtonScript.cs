@@ -2,69 +2,99 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BUTTONTYPE
+{
+    ONETIME, // Activated once, cannot be turned off
+    TOGGLE, // Can be turned on or off
+    TIMER // Turned on by stepping on it, will turn off by itself soon.
+}
+
 public class ButtonScript : MonoBehaviour {
 
-    [SerializeField]
-    private bool HasInteracted;
-    private bool HasDoneAction = false;
+    public BUTTONTYPE CurrType;
 
-    [SerializeField]
-    private float ButtonTimeDelay;
+    // General Variables
+    private bool HasInteracted;
+    private bool HasStarted = true;
+
+    private float OrgScale;
+    private Vector3 AlteringScale;
+
+    // One Time Variables
+
+    // Toggle Variables
+
+    // Timer Variables
+    public float TimeToReset;
     private float TimeElapsed;
 
-    // Animation Variables
-    private Vector3 OrgSize;
-    private Vector3 CurrScale;
-    private Vector3 ToScale;
-    [SerializeField]
-    private float ButtonSpeed;
+    public string ButtonSFX;
 
-    [SerializeField]
-    private float TimeToComplete;
-
-    [SerializeField]
-    private List<GameObject> ObjectsToChange = new List<GameObject>();
+    public List<GameObject> ObjectsToChange = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
-        OrgSize = transform.GetChild(0).localScale;
-
-        CurrScale = OrgSize;
-        ToScale = OrgSize;
+        OrgScale = transform.GetChild(0).localScale.y;
+        AlteringScale = transform.GetChild(0).localScale;   
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (HasInteracted)
+        transform.GetChild(0).transform.localScale = AlteringScale;
+
+        if(HasInteracted)
         {
-            if (!HasDoneAction)
+            switch (CurrType)
             {
-                Action();
+                case (BUTTONTYPE.ONETIME):
+                    Action();
+                    HasInteracted = false;
+                    break;
+                case (BUTTONTYPE.TOGGLE):
+                    if(HasStarted)
+                    {
+                        Action();
+                        HasStarted = false;
+                        HasInteracted = false;
+                    }
+                    else
+                    {
+                        Revert();
+                        HasStarted = true;
+                        HasInteracted = false;
+                    }
 
-                CurrScale.y = 0.5f;
-            }
-            else
-            {
-                if (TimeElapsed >= ButtonTimeDelay)
-                    Revert();
-                else
-                    TimeElapsed += Time.deltaTime;
-
-                ToScale.y = OrgSize.y;
+                    HasInteracted = false;
+                    break;
+                case (BUTTONTYPE.TIMER):
+                    if(HasStarted)
+                    {
+                        Action();
+                        HasStarted = false;
+                    }
+                    else
+                    {
+                        if(TimeToReset <= TimeElapsed)
+                        {
+                            Revert();
+                            HasStarted = true;
+                            HasInteracted = false;
+                            TimeElapsed = 0;
+                        }
+                        else
+                        {
+                            TimeElapsed += Time.deltaTime;
+                            AlteringScale.y = Mathf.Lerp(AlteringScale.y, OrgScale, Time.deltaTime);
+                        }
+                    }
+                    break;
             }
         }
-
-        if(Vector3.Distance(CurrScale, ToScale) > transform.localScale.x * 0.1f)
-        {
-            CurrScale = Vector3.Lerp(CurrScale, ToScale, Time.deltaTime * ButtonSpeed);
-            TimeToComplete += Time.deltaTime;
-        }
-        transform.GetChild(0).localScale = CurrScale;
     }
 
     private void Action()
     {
-        for(int i = 0;i < ObjectsToChange.Count; i++)
+        for (int i = 0; i < ObjectsToChange.Count; i++)
         {
             if (ObjectsToChange[i] == null)
                 continue;
@@ -95,7 +125,7 @@ public class ButtonScript : MonoBehaviour {
             }
         }
 
-        HasDoneAction = true;
+        AlteringScale.y = 0.7f;
     }
 
     private void Revert()
@@ -116,14 +146,14 @@ public class ButtonScript : MonoBehaviour {
             }
         }
 
-        TimeElapsed = 0;
-        HasInteracted = false;
-        HasDoneAction = false;
+        AlteringScale.y = OrgScale;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!HasDoneAction)
+        if(other.tag == "Player")
+        {
             HasInteracted = true;
+        }
     }
 }

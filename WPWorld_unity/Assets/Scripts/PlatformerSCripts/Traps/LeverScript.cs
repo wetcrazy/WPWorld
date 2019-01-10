@@ -14,6 +14,10 @@ public class LeverScript : MonoBehaviour {
     private Vector3 MoveToRotation;
     public float LeverSpeed;
 
+    // Sound Variables
+    [SerializeField]
+    private string LeverSFX;
+
     public List<GameObject> ObjectsToChange = new List<GameObject>();
 
 	// Use this for initialization
