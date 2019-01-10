@@ -28,10 +28,6 @@ public class PhotonGameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        //if(PlayerMovement.LocalPlayerInstance == null)
-        //{
-        //   var thePlayer = 
-        //}
         
         LeaderboardUI.SetActive(false);
     }

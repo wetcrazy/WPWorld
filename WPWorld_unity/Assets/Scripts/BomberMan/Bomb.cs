@@ -7,8 +7,7 @@ public class Bomb : MonoBehaviour
     public GameObject BombFirePrefab;
     public GameObject BlockPrefab;
   
-    public GameObject Manager; // Need for power up block spawner
-    
+    // Bomb Properties
     private int firePower;
     private GameObject Owner;
     private Photon.Realtime.Player OwnerPUN;
@@ -17,8 +16,7 @@ public class Bomb : MonoBehaviour
     private Collider col;
 
     private void Start()
-    {
-        Manager = GameObject.FindGameObjectWithTag("BombermanManager");
+    {    
         col = this.transform.GetComponent<Collider>();
         col.isTrigger = true;
         currTimer = 0.0f;
@@ -38,7 +36,7 @@ public class Bomb : MonoBehaviour
 
     public void BlowUp()
     {
-        Owner.GetComponent<BomberManPlayer>().OneBombDestory();
+       // Owner.GetComponent<BomberManPlayer>().OneBombDestory();
 
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
@@ -103,9 +101,11 @@ public class Bomb : MonoBehaviour
                 Instantiate(newBomb, this.transform.position + -Vector3.forward * (BlockPrefab.transform.localScale.x * i), Quaternion.identity, this.transform.parent);
             }
         }
+
         Destroy(this.gameObject);
     }
 
+    // Setters
     public void SetBombPower(int _newPower)
     {
         firePower = _newPower;
@@ -114,11 +114,6 @@ public class Bomb : MonoBehaviour
     public void SetBombTimer(int _newTime)
     {
         MAX_TIMER = _newTime;
-    }
-
-    private void OnTriggerExit()
-    {
-        col.isTrigger = false;
     }
 
     public void SetBombOwner(GameObject _newOwner)
@@ -131,6 +126,7 @@ public class Bomb : MonoBehaviour
         OwnerPUN = _newOwnerPUN;
     }
 
+    // Getters
     public GameObject GetOwner()
     {
         return Owner;
@@ -140,4 +136,13 @@ public class Bomb : MonoBehaviour
     {
         return OwnerPUN;
     }
+
+    // Collision
+    // Turn off trigger collision when the player is out of the trigger box
+    private void OnTriggerExit()
+    {
+        col.isTrigger = false;
+    }
+
+   
 }

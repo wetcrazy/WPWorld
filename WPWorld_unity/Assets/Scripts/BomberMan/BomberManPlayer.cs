@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 using ExitGames.Client.Photon;
 
-public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallback
+public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 {
-    public GameObject Bombprefab;
-
+    // Player Properties
     private int firePower;
     private int Lives;
     private bool isDead;
     private int MAX_NUMBOMB;
-    [SerializeField]
     private int currNUMBomb;
+
+    // For Respawning Cool Down
     private float currTimer;
     private float MAX_TIMER;
 
@@ -22,7 +23,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallbac
 
     public static GameObject LocalPlayerInstance;
     private int Score = 0;
-
+    
     public int PlayerScore
     {
         get { return Score; }
@@ -51,11 +52,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallbac
         if (photonView.IsMine)
         {
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+            LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
         }
         else
         {
             gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-        }
+        }            
     }
 
     private void Update()
@@ -65,6 +67,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallbac
             return;
         }
 
+        // Death Respawn
         if (isDead)
         {
             if(currTimer > MAX_TIMER)
@@ -85,12 +88,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallbac
             }
         }
     }
-
-    private void SpawnBomb(GameObject BombData, Bomb BombDataScript)
-    {
-        currNUMBomb++;
-        Instantiate(BombData, BombDataScript.GetOwner().transform.position, Quaternion.identity, BombDataScript.GetOwner().transform.parent);
-    }
+ 
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -105,42 +103,29 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable, IOnEventCallbac
         }
     }
 
-    public void OnEvent(EventData photonEvent)
-    {
-        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
-        {
-            case EventCodes.EVENT_CODES.EVENT_DROP_BOMB:
-                {
-                    GameObject theBomb = (GameObject)photonEvent.CustomData;
-                    SpawnBomb(theBomb, theBomb.GetComponent<Bomb>());
-                    break;
-                }
-
-            default:
-                break;
-        }
-    }
-
+    // Bomb Button
     public void onBombButtonDown()
     {
-        if (isLose && currNUMBomb < MAX_NUMBOMB)
-        {
-            var newBomb = Bombprefab;
-            newBomb.GetComponent<Bomb>().SetBombPower(firePower);
-            newBomb.GetComponent<Bomb>().SetBombOwner(gameObject);
-            newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.LocalPlayer);
+        object[] content = new object[] {new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
+            firePower,
+            PhotonNetwork.LocalPlayer.ActorNumber
+        };
+        
+        byte evCode = 0;
 
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-            SendOptions sendOptions = new SendOptions { Reliability = true };
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_DROP_BOMB, newBomb, raiseEventOptions, sendOptions);
-        }
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+        
+        SendOptions sendOptions = new SendOptions { Reliability = true };
+        PhotonNetwork.RaiseEvent(evCode, content, raiseEventOptions, sendOptions);
     }
 
+    // Respawn the player
     public void Respawn()
     {
         this.transform.GetComponent<GridMovementScript>().Respawn();
     }
 
+    // Setter
     public void SetisDead(bool _boolvalue)
     {
         isDead = _boolvalue;
