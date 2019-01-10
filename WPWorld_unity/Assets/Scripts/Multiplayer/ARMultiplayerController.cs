@@ -42,7 +42,7 @@ public class ARMultiplayerController : MonoBehaviour
     SoundSystem soundSystem = null;
 
     //Reference to the clone of GameObjPrefab
-    GameObject _GroundObject = null;
+    public static GameObject _GroundObject = null;
     Anchor _anchor;
 
     bool isSpawned = false;
@@ -188,7 +188,7 @@ public class ARMultiplayerController : MonoBehaviour
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
 
-        Photon.Pun.PhotonNetwork.Instantiate(PlayerObjectPrefab.name, new Vector3(Random.Range(1, 5), 5, Random.Range(1, 5)), Quaternion.identity, 0);
+        Photon.Pun.PhotonNetwork.Instantiate(PlayerObjectPrefab.name, new Vector3(0, 3, 0), Quaternion.identity, 0);
     }
 
     private void GameScreenUpdate()
@@ -256,6 +256,7 @@ public class ARMultiplayerController : MonoBehaviour
     private void SpawnLevel(Touch _touch)
     {
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
+        _GroundObject.tag = LevelObject.tag;
     }
 
     // oooooooooooooooooooooooooooooooooooooooo
