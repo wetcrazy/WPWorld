@@ -66,9 +66,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
                     Vector3 BombPos = (Vector3)data[0];
                     int firepower = (int)data[1];
-                    int OwnerActorID = (int)data[2];
 
-                    SpawnBomb(BombPos, firepower, OwnerActorID);
+                    SpawnBomb(BombPos, firepower, photonEvent.Sender);
                     break;
                 }
             case EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH:
