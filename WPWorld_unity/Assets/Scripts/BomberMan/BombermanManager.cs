@@ -9,10 +9,10 @@ using UnityEngine.UI;
 
 public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 {
-
     [SerializeField]
     GameObject BombPrefab;
-
+    
+    public static int PointsForKilling = 100;
    
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
@@ -30,6 +30,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     }
 
 
+    // Event Functions
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
         GameObject newBomb = Instantiate(BombPrefab, BombPos, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
@@ -44,6 +45,22 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
+    public void PlayerDeath(int OwnerActorID)
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        // Who Die
+        foreach (GameObject player in players)
+        {
+            if(player.GetPhotonView().OwnerActorNr == OwnerActorID)
+            {
+                player.GetComponent<BomberManPlayer>().SetisDead(true);
+                break;  
+            }
+        }
+    }
+
+    // EVENTS
     public void OnEvent(EventData photonEvent)
     {
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
@@ -57,7 +74,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
                     SpawnBomb(BombPos, firepower, photonEvent.Sender);
                     break;
-                }     
+                }
+            case EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH: // Some one dies and need some love and appreciate 
+                {
+                    PlayerDeath(photonEvent.Sender);
+
+                    break;  
+                }
             default:
                 break;
         }

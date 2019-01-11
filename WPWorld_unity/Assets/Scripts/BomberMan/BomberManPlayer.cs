@@ -23,7 +23,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     public static GameObject LocalPlayerInstance;
     private int Score = 0;
-    
+
     public int PlayerScore
     {
         get { return Score; }
@@ -57,7 +57,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         else
         {
             gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-        }            
+        }
     }
 
     private void Update()
@@ -70,10 +70,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         // Death Respawn
         if (isDead)
         {
-            if(currTimer > MAX_TIMER)
+            if (currTimer > MAX_TIMER)
             {
                 currTimer = 0.0f;
-                if(Lives <= 0)
+                if (Lives <= 0)
                 {
                     isLose = true;
                 }
@@ -88,7 +88,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             }
         }
     }
- 
+
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -109,9 +109,9 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         object[] content = new object[] {new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
             firePower
         };
-        
+
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-        
+
         SendOptions sendOptions = new SendOptions { Reliability = true };
         PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_DROP_BOMB, content, raiseEventOptions, sendOptions);
     }
@@ -132,4 +132,36 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     {
         currNUMBomb -= 1;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "BombFire")
+        {
+            if (!isDead)
+            {
+                LocalPlayerDeathEvent(other.gameObject.transform.parent.GetComponent<Bomb>().GetOwnerPUN());
+            }
+        }
+    }
+
+    private void LocalPlayerDeathEvent(Player Bomb_Owner)
+    {
+        // Set local player death
+        isDead = true;
+
+        // Ask for mourning session
+        RaiseEventOptions REO = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        SendOptions SO = new SendOptions { Reliability = true };
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH, null, REO, SO);
+
+        // Adding Score
+        photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
+    }
+
+    [PunRPC]
+    private void PlayerAddPoints(int PointsToAdd)
+    {
+        PlayerScore += PointsToAdd;
+    }
+
 }
