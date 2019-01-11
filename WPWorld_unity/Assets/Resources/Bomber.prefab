@@ -166,7 +166,7 @@ Transform:
   m_GameObject: {fileID: 1030502945735488}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_Children:
   - {fileID: 4521616401081900}
   - {fileID: 4584406687839278}
@@ -483,8 +483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ddec7ed7b82da47832066fba5fba31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bombprefab: {fileID: 1065647677103512, guid: a912996b78bf03043902ffd0eb08bb43, type: 2}
-  currNUMBomb: 0
 --- !u!114 &114327245309723994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -496,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4edf00c3dd58666448d6e11e3f20e49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 3
+  MovementSpeed: 2
   MovementDir: {x: 0, y: 0, z: 0}
   MovementMultiplier: 0
   CurrAvaliability: 3
@@ -518,7 +516,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 114099591260915894}
-  - {fileID: 114327245309723994}
+  - {fileID: 114263014802556860}
   viewIdField: 0
   InstantiationId: 2
   isRuntimeInstantiated: 0

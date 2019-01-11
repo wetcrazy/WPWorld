@@ -16,13 +16,40 @@ public class PhotonRoomController : MonoBehaviour
     GameObject PlayerListPanel;
     [SerializeField]
     GameObject HostControls;
+    [SerializeField]
+    Image CurrentGameModeImage;
+
+    [Header("GameMode Sprites")]
+    [SerializeField]
+    Sprite SnakeSprite;
+    [SerializeField]
+    Sprite TronSprite;
+    [SerializeField]
+    Sprite PlatformerSprite;
+    [SerializeField]
+    Sprite BombermanSprite;
 
     //List<Text> PlayerTextList = new List<Text>();
     Text[] PlayerTextList;
     private Dictionary<int, Player> players = new Dictionary<int, Player>();
-   
+    PhotonView photonView;
+
+    public enum GAMEMODE
+    {
+        GAMEMODE_SNAKE,
+        GAMEMODE_TRON,
+        GAMEMODE_PLATFORMER,
+        GAMEMODE_BOMBERMAN,
+
+        GAMEMODE_TOTAL
+    }
+
+    public static GAMEMODE CurrentGamemode = 0;
+
     public void InitRoom()
     {
+        photonView = PhotonView.Get(this);
+
         PlayerTextList = new Text[PlayerListPanel.transform.childCount];
         PlayerTextList = PlayerListPanel.GetComponentsInChildren<Text>();
 
@@ -38,6 +65,8 @@ public class PhotonRoomController : MonoBehaviour
         {
             HostControls.SetActive(true);
             PhotonNetwork.CurrentRoom.IsVisible = true;
+
+            UpdateCurrentGameMode(CurrentGamemode);
         }
     }
 
@@ -109,14 +138,12 @@ public class PhotonRoomController : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            for (int i = 0; i < PhotonNetwork.PlayerListOthers.Length; ++i)
+            foreach (Player player in PhotonNetwork.PlayerListOthers)
             {
-                var thePlayer = PhotonNetwork.PlayerListOthers[i];
-
-                if (!thePlayer.IsInactive)
+                if (!player.IsInactive)
                 {
-                    PhotonView photonView = PhotonView.Get(this);
-                    photonView.RPC("BecomeHost", thePlayer);
+                    photonView.RPC("BecomeHost", player);
+                    break;
                 }
             }
         }
@@ -129,9 +156,42 @@ public class PhotonRoomController : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("BomberMan");
+            switch (CurrentGamemode)
+            {
+                case GAMEMODE.GAMEMODE_SNAKE:
+                    break;
+                case GAMEMODE.GAMEMODE_TRON:
+                    break;
+                case GAMEMODE.GAMEMODE_PLATFORMER:
+                    break;
+                case GAMEMODE.GAMEMODE_BOMBERMAN:
+                    PhotonNetwork.LoadLevel("BomberMan");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void NextGamemode(int LeftRightValue)
+    {
+        CurrentGamemode += LeftRightValue;
+
+        if(CurrentGamemode < 0)
+        {
+            CurrentGamemode = GAMEMODE.GAMEMODE_TOTAL - 1;
+        }
+        else if (CurrentGamemode >= GAMEMODE.GAMEMODE_TOTAL)
+        {
+            CurrentGamemode = 0;
         }
 
+        foreach (Player player in PhotonNetwork.PlayerListOthers)
+        {
+            photonView.RPC("UpdateCurrentGameMode", player, CurrentGamemode);
+        }
+        
+        UpdateCurrentGameMode(CurrentGamemode);
     }
 
     //Remote Procedure Calls methods
@@ -139,5 +199,27 @@ public class PhotonRoomController : MonoBehaviour
     private void BecomeHost()
     {
         HostControls.SetActive(true);
+    }
+    
+    [PunRPC]
+    private void UpdateCurrentGameMode(GAMEMODE CurrentGamemode)
+    {
+        switch (CurrentGamemode)
+        {
+            case GAMEMODE.GAMEMODE_SNAKE:
+                CurrentGameModeImage.sprite = SnakeSprite;
+                break;
+            case GAMEMODE.GAMEMODE_TRON:
+                CurrentGameModeImage.sprite = TronSprite;
+                break;
+            case GAMEMODE.GAMEMODE_PLATFORMER:
+                CurrentGameModeImage.sprite = PlatformerSprite;
+                break;
+            case GAMEMODE.GAMEMODE_BOMBERMAN:
+                CurrentGameModeImage.sprite = BombermanSprite;
+                break;
+            default:
+                break;
+        }
     }
 }
