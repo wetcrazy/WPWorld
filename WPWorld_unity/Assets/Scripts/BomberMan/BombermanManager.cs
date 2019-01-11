@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 {
-
     [SerializeField]
     GameObject BombPrefab;
 
@@ -30,6 +29,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     }
 
 
+    // Event Functions
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
         GameObject newBomb = Instantiate(BombPrefab, BombPos, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
@@ -44,6 +44,18 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
+    public void PlayerDeath(int OwnerActorID,BomberManPlayer EnemyBombScript)
+    {
+        foreach (Player player in PhotonNetwork.PlayerListOthers)
+        {
+            if (player.ActorNumber == OwnerActorID)
+            {
+                
+            }
+        }
+    }
+
+    // EVENTS
     public void OnEvent(EventData photonEvent)
     {
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
@@ -58,7 +70,16 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
                     SpawnBomb(BombPos, firepower, OwnerActorID);
                     break;
-                }     
+                }
+            case EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+
+                    int OwnerActorID = (int)data[0];
+                    BomberManPlayer EnemyBombScript = (BomberManPlayer)data[1];
+
+                    break;  
+                }
             default:
                 break;
         }

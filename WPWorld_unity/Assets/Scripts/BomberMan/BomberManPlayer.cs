@@ -106,7 +106,9 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     // Bomb Button
     public void onBombButtonDown()
     {
-        object[] content = new object[] {new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
+        object[] content = new object[] 
+        {
+            new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
             firePower,
             PhotonNetwork.LocalPlayer.ActorNumber
         };
@@ -132,5 +134,32 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     public void OneBombDestory()
     {
         currNUMBomb -= 1;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "BombFire")
+        {
+            if(!isDead)
+            {
+                LocalPlayerDeathEvent(other.gameObject.GetComponent<BomberManPlayer>());
+            }
+        }
+    }
+
+    private void LocalPlayerDeathEvent(BomberManPlayer Bomb_Owner)
+    {
+        isDead = true;
+        object[] content = new object[]
+        {
+            PhotonNetwork.LocalPlayer.ActorNumber, // Person that died
+            Bomb_Owner // The bomb he died to  
+        };
+
+        RaiseEventOptions REO = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+
+        SendOptions SO = new SendOptions { Reliability = true };
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH, content, REO, SO);
+
     }
 }
