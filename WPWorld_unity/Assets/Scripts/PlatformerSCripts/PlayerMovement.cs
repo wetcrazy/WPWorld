@@ -28,7 +28,8 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
 
-
+    [SerializeField]
+    private GameObject MoveToPoint;
     
 
     // Use this for initialization
@@ -49,7 +50,7 @@ public class PlayerMovement : MonoBehaviour {
         switch (CurrAvaliability)
         {
             case (MovementAvaliability.NONE):
-                RigidRef.constraints = RigidbodyConstraints.None;
+                RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
                 break;
             case (MovementAvaliability.X_ONLY):
                 RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
@@ -61,6 +62,8 @@ public class PlayerMovement : MonoBehaviour {
                 RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
                 break;
         }
+
+        MovementDir = (MoveToPoint.transform.position - transform.position).normalized;
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
