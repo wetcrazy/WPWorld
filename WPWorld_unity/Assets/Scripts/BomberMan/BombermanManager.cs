@@ -11,7 +11,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 {
     [SerializeField]
     GameObject BombPrefab;
-
+    
+    public static int PointsForKilling = 100;
    
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
@@ -44,13 +45,17 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
-    public void PlayerDeath(int OwnerActorID,BomberManPlayer EnemyBombScript)
+    public void PlayerDeath(int OwnerActorID)
     {
-        foreach (Player player in PhotonNetwork.PlayerListOthers)
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        // Who Die
+        foreach (GameObject player in players)
         {
-            if (player.ActorNumber == OwnerActorID)
+            if(player.GetPhotonView().OwnerActorNr == OwnerActorID)
             {
-                
+                player.GetComponent<BomberManPlayer>().SetisDead(true);
+                break;  
             }
         }
     }
@@ -70,12 +75,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                     SpawnBomb(BombPos, firepower, photonEvent.Sender);
                     break;
                 }
-            case EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH:
+            case EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH: // Some one dies and need some love and appreciate 
                 {
-                    object[] data = (object[])photonEvent.CustomData;
-
-                    int OwnerActorID = (int)data[0];
-                    BomberManPlayer EnemyBombScript = (BomberManPlayer)data[1];
+                    PlayerDeath(photonEvent.Sender);
 
                     break;  
                 }
