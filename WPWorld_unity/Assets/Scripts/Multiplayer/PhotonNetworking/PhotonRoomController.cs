@@ -60,12 +60,13 @@ public class PhotonRoomController : MonoBehaviour
         if (!PhotonNetwork.IsMasterClient)
         {
             HostControls.SetActive(false);
-            UpdateCurrentGameMode(CurrentGamemode);
         }
         else
         {
             HostControls.SetActive(true);
             PhotonNetwork.CurrentRoom.IsVisible = true;
+
+            UpdateCurrentGameMode(CurrentGamemode);
         }
     }
 
