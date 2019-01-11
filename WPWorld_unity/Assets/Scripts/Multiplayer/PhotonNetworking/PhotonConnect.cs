@@ -165,7 +165,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomController.UpdatePlayerList();
-        photonView.RPC("UpdateCurrentGameMode", newPlayer, PhotonRoomController.CurrentGamemode);
+        RoomController.GetComponent<PhotonView>().RPC("UpdateCurrentGameMode", newPlayer, PhotonRoomController.CurrentGamemode);
 
         Debug.Log("Someone joined");
     }

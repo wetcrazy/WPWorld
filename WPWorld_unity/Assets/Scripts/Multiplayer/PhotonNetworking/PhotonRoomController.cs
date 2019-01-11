@@ -155,12 +155,24 @@ public class PhotonRoomController : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("BomberMan");
+            switch (CurrentGamemode)
+            {
+                case GAMEMODE.GAMEMODE_SNAKE:
+                    break;
+                case GAMEMODE.GAMEMODE_TRON:
+                    break;
+                case GAMEMODE.GAMEMODE_PLATFORMER:
+                    break;
+                case GAMEMODE.GAMEMODE_BOMBERMAN:
+                    PhotonNetwork.LoadLevel("BomberMan");
+                    break;
+                default:
+                    break;
+            }
         }
-
     }
 
-    public void NextGamemode(short LeftRightValue)
+    public void NextGamemode(int LeftRightValue)
     {
         CurrentGamemode += LeftRightValue;
 
