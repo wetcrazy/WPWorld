@@ -107,8 +107,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     public void onBombButtonDown()
     {
         object[] content = new object[] {new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
-            firePower,
-            PhotonNetwork.LocalPlayer.ActorNumber
+            firePower
         };
         
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well

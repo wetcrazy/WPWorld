@@ -159,14 +159,15 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         RoomController.UpdatePlayerList();
 
 
-        Debug.Log("Someone joined");
+        Debug.Log("Someone left");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomController.UpdatePlayerList();
+        photonView.RPC("UpdateCurrentGameMode", newPlayer, PhotonRoomController.CurrentGamemode);
 
-        Debug.Log("Someone left");
+        Debug.Log("Someone joined");
     }
 
     //public override void OnMasterClientSwitched(Player newMasterClient)
