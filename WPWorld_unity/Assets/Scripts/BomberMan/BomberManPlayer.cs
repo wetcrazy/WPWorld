@@ -111,12 +111,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             PhotonNetwork.LocalPlayer.ActorNumber
         };
         
-        byte evCode = 0;
-
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
         
         SendOptions sendOptions = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent(evCode, content, raiseEventOptions, sendOptions);
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_DROP_BOMB, content, raiseEventOptions, sendOptions);
     }
 
     // Respawn the player

@@ -46,9 +46,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
-        switch (photonEvent.Code)
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
         {
-            case 0: // Bomb
+            case EventCodes.EVENT_CODES.EVENT_DROP_BOMB: // Bomb
                 {
                     object[] data = (object[])photonEvent.CustomData;
 
