@@ -5,15 +5,29 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-using UnityEngine.UI;
-
 public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 {
+    // For bomb Spawning
     [SerializeField]
     GameObject BombPrefab;
+
+    // For Bomb UI
+    public GameObject AnchorUIObj;
+
+    public GameObject SpawnBombButton;
     
+    // For Highscore
     public static int PointsForKilling = 100;
-   
+
+
+    // UPDATE
+    private void Update()
+    {
+        EnableBombUi();
+    }
+
+
+
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
         _selectedOBJ.GetComponent<BomberManPlayer>().SetisDead(_boolValue);
@@ -27,6 +41,18 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public void LocalPlayerCall_SpawnBomb()
     {
         BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
+    }
+
+    public void EnableBombUi()
+    {
+        if(AnchorUIObj.activeSelf)
+        {
+            SpawnBombButton.SetActive(false);
+        }
+        else
+        {
+            SpawnBombButton.SetActive(true);
+        }
     }
 
 

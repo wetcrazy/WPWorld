@@ -165,7 +165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &331829314
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 1300, y: 600}
+  m_SizeDelta: {x: 1300, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &357215550
 MonoBehaviour:
@@ -277,7 +277,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: c222cd02c447941edb09ecb6433229ce, type: 3}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -346,7 +346,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1772147192650458, guid: c10877f7cd5764de18d46d7b777d1faa, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 20155940112608238, guid: c10877f7cd5764de18d46d7b777d1faa,
         type: 2}
@@ -429,7 +429,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -382, y: 835}
+  m_AnchoredPosition: {x: 300, y: 300}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496651100
@@ -991,7 +991,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &652682534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,7 +1580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &802994111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1700,7 +1700,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 300, y: -250}
+  m_AnchoredPosition: {x: -50, y: -374}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &852370777
@@ -1843,7 +1843,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1300, y: 600}
+  m_SizeDelta: {x: 1300, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &862284598
 MonoBehaviour:
@@ -2126,6 +2126,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008135378063926, guid: 023a142ef7026b34b964eabab214a913, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 023a142ef7026b34b964eabab214a913, type: 2}
@@ -2445,7 +2449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1390266470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2512,58 +2516,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1409647755
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 114251812416267976, guid: caba322beb074f441aaa3a5ae5720c43,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2050179748}
-    - target: {fileID: 114826121459061988, guid: caba322beb074f441aaa3a5ae5720c43,
-        type: 2}
-      propertyPath: viewIdField
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1624262458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2699,7 +2651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1792011265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2925,7 +2877,7 @@ GameObject:
   - component: {fileID: 2050179747}
   - component: {fileID: 2050179748}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: BombermanGameManager
   m_TagString: BombermanManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2958,6 +2910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BombPrefab: {fileID: 1065647677103512, guid: a912996b78bf03043902ffd0eb08bb43, type: 2}
+  AnchorUIObj: {fileID: 147103732}
+  SpawnBombButton: {fileID: 496651098}
 --- !u!1 &2091635203
 GameObject:
   m_ObjectHideFlags: 0
