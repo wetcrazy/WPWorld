@@ -494,10 +494,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4edf00c3dd58666448d6e11e3f20e49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 3
+  MovementSpeed: 0.2
   MovementDir: {x: 0, y: 0, z: 0}
   MovementMultiplier: 0
   CurrAvaliability: 3
+  MoveToPoint: {fileID: 0}
 --- !u!114 &114332786401930472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -516,7 +517,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 114099591260915894}
-  - {fileID: 114327245309723994}
+  - {fileID: 114263014802556860}
   viewIdField: 0
   InstantiationId: 2
   isRuntimeInstantiated: 0
