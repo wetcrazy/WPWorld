@@ -5,6 +5,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
+using UnityEngine.UI;
+
 public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 {
     // For bomb Spawning
@@ -19,6 +21,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // For Highscore
     public static int PointsForKilling = 100;
 
+    // For Debugging
+    public Text Debug01;
+    public Text Debug02;
 
     // UPDATE
     private void Update()
@@ -40,7 +45,18 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     public void LocalPlayerCall_SpawnBomb()
     {
-        BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
+        Debug02.text = "Pressing";
+
+        if(PhotonNetwork.IsConnected)
+        {
+            BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().onBombButtonDown();
+        }
+       
+        Debug02.text = "Press Already";
     }
 
     public void EnableBombUi()
@@ -57,20 +73,45 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
 
     // Event Functions
+
+    // Spawn Bomb
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
+        Debug01.text = "I Was here 01";
         GameObject newBomb = Instantiate(BombPrefab, BombPos, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
 
+        Debug01.text = "I Was here 02";
         foreach (Player player in PhotonNetwork.PlayerListOthers)
         {
             if(player.ActorNumber == OwnerActorID)
             {
+                Debug01.text = "I Was here 03";
                 newBomb.GetComponent<Bomb>().SetBombOwnerPUN(player);
+                break;
             }
         }
+
+        Debug01.text = "I Was here 04";
     }
 
+    public void SpawnBomb(Vector3 BombPos, int firepower, GameObject player)
+    {
+        Debug01.text = "I Was here 01";
+        GameObject newBomb = Instantiate(BombPrefab, BombPos, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+        newBomb.GetComponent<Bomb>().SetBombPower(firepower);
+
+        Debug01.text = "I Was here 02";
+
+
+        newBomb.GetComponent<Bomb>().SetBombOwner(player);
+
+
+        Debug01.text = "I Was here 03";
+
+    }
+
+    // Player death
     public void PlayerDeath(int OwnerActorID)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
