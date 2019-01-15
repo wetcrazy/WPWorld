@@ -123,6 +123,7 @@ public class ARMultiplayerController : MonoBehaviour
         //}
     }
 
+    //Movement functions for the anchor
     public void MoveAnchorForward()
     {
         _GroundObject.transform.position += MainCameraRef.transform.forward * Time.deltaTime;
@@ -258,11 +259,6 @@ public class ARMultiplayerController : MonoBehaviour
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
         _GroundObject.tag = LevelObject.tag;
     }
-
-    // oooooooooooooooooooooooooooooooooooooooo
-    //            <Public Stuff> 
-    // oooooooooooooooooooooooooooooooooooooooo
-    
     
     // Shifts the object back if there is an offset
     private void UpdateOffSet()

@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TPSLogic : MonoBehaviour
+public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
 {
-
     [SerializeField]
     private float JumpForce;
     [SerializeField]
@@ -72,6 +74,18 @@ public class TPSLogic : MonoBehaviour
     private List<FallOnTop> ListOfFalling = new List<FallOnTop>();
     private List<MoveOnCollide> ListOfMoving = new List<MoveOnCollide>();
 
+    //The local player instance
+    public static GameObject LocalPlayerInstance;
+
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+            LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -97,11 +111,27 @@ public class TPSLogic : MonoBehaviour
         ListOfEnemies.AddRange(FindObjectsOfType(typeof(Enemy)) as Enemy[]);
         ListOfFalling.AddRange(FindObjectsOfType(typeof(FallOnTop)) as FallOnTop[]);
         ListOfMoving.AddRange(FindObjectsOfType(typeof(MoveOnCollide)) as MoveOnCollide[]);
+
+        //Setting the username text that is above the player objects
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+        }
+        else
+        {
+            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Don't update if the player obj doesn't belong to you or is disconnected
+        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+
         RaycastHit hit;
 
         if (IsGrounded)
@@ -303,5 +333,55 @@ public class TPSLogic : MonoBehaviour
     public void SetJumpForce(float n_JumpForce)
     {
         JumpForce = n_JumpForce;
+    }
+
+
+    /// <summary>
+    /// The network stream where data can be constantly be sent & received
+    /// </summary>
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+    }
+
+    //Receiving events sent by other players
+    public void OnEvent(EventData photonEvent)
+    {
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
+        {
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BOUNCE:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BREAK:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_FALL:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_SPAWNER:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_HIDDEN:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_GROUND:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_COIN_PICKUP:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_BUTTON_TRIGGERED:
+                break;
+            case EventCodes.EVENT_CODES.PLATOFRM_EVENT_LEVER_TRIGGERED:
+                break;
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_CHECKPOINT_TRIGGERED:
+                break;
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the player object is belongs to the client
+    /// </summary>
+    public bool isMine()
+    {
+        return photonView.IsMine;
     }
 }

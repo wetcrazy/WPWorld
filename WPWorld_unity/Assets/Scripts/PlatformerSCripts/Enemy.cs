@@ -147,6 +147,7 @@ public class Enemy : MonoBehaviour {
                     NewPos.y += transform.localScale.y * 0.5f;
                     transform.localPosition = NewPos;
                     transform.localScale = OrgSize;
+                    RigidRef.constraints = OrgConstraints;
                 }
                 else
                 {
