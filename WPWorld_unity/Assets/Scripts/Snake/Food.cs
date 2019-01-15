@@ -10,7 +10,11 @@ public class Food : MonoBehaviour
         {
             if(this.gameObject.tag == "Speedy")
             {
-                other.gameObject.GetComponent<Head>().Setspeed(1);
+                other.gameObject.GetComponent<Head>().Setspeed(0.035f);
+            }
+            else if (this.gameObject.tag == "Food")
+            {
+                other.gameObject.GetComponent<Head>().AddAppleAte();
             }
             Destroy(this.gameObject);
             
