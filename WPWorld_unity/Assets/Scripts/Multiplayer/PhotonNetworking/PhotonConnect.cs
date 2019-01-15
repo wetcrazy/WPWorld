@@ -44,19 +44,16 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     
     public void CreateGameRoom(string RoomID)
     {
-        Debug.Log("Creating Room...");
         PhotonNetwork.CreateRoom(RoomID, new RoomOptions { MaxPlayers = MaximumPlayersInRoom });
     }
 
     public void JoinGameRoom(string RoomID)
     {
-        Debug.Log("Joining Room...");
         PhotonNetwork.JoinRoom(RoomID);
     }
 
     public void JoinRandomGameRoom()
     {
-        Debug.Log("Joining Random Room...");
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -65,15 +62,13 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         LoadingText.text = "Joining Lobby...";
-
-        Debug.Log("Connected To Master");
+        
         PhotonNetwork.JoinLobby();
     }
 
     public override void OnConnected()
     {
         LoadingText.text = "Connecting To Master Server...";
-        Debug.Log("Connected");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -121,8 +116,6 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerUsername");
         }
-
-        Debug.Log("Joined Lobby");
     }
 
     public override void OnJoinedRoom()
@@ -132,42 +125,27 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         LoadingText.text = "";
 
         RoomController.InitRoom();
-
-
-        Debug.Log("Joined Room");
     }
 
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        Debug.Log("Failed to join room!\nError Code:" + returnCode.ToString() + "\n" + message);
-    }
+    //public override void OnJoinRoomFailed(short returnCode, string message)
+    //{
+    //    Debug.Log("Failed to join room!\nError Code:" + returnCode.ToString() + "\n" + message);
+    //}
 
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        Debug.Log("Failed to join random room!\nError Code:" + returnCode.ToString() + "\n" + message);
-    }
-
-    public override void OnCreatedRoom()
-    {
-        //JoinGameRoom(SceneController.GetRoomID);
-
-        Debug.Log("Created Room");
-    }
+    //public override void OnJoinRandomFailed(short returnCode, string message)
+    //{
+    //    Debug.Log("Failed to join random room!\nError Code:" + returnCode.ToString() + "\n" + message);
+    //}
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         RoomController.UpdatePlayerList();
-
-
-        Debug.Log("Someone left");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomController.UpdatePlayerList();
         RoomController.GetComponent<PhotonView>().RPC("UpdateCurrentGameMode", newPlayer, PhotonRoomController.CurrentGamemode);
-
-        Debug.Log("Someone joined");
     }
 
     //public override void OnMasterClientSwitched(Player newMasterClient)
@@ -179,8 +157,6 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     {
         RoomScreen.SetActive(false);
         LobbyScreen.SetActive(true);
-
-        Debug.Log("Left Room");
     }
     #endregion
 }

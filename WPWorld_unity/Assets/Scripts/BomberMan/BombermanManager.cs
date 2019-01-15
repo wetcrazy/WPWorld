@@ -132,7 +132,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
         {
-            case EventCodes.EVENT_CODES.EVENT_DROP_BOMB: // Bomb
+            case EventCodes.EVENT_CODES.BOMBER_EVENT_DROP_BOMB: // Bomb
                 {
                     object[] data = (object[])photonEvent.CustomData;
 
@@ -142,7 +142,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                     SpawnBomb(BombPos, firepower, photonEvent.Sender);
                     break;
                 }
-            case EventCodes.EVENT_CODES.EVENT_PLAYER_DEATH: // Some one dies and need some love and appreciate 
+            case EventCodes.EVENT_CODES.BOMBER_EVENT_PLAYER_DEATH: // Some one dies and need some love and appreciate 
                 {
                     PlayerDeath(photonEvent.Sender);
 
