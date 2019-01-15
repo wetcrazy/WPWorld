@@ -35,6 +35,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
+            LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
         }
     }
 
@@ -49,10 +50,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         MAX_NUMBOMB = 1;
         currNUMBomb = 0;
 
+        //Setting the username text that is above the player objects
         if (photonView.IsMine)
         {
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-            LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
         }
         else
         {

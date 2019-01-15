@@ -36,11 +36,21 @@ public class BounceOnHit : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-        if(other.tag == "Player")
+        if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             if (!other.GetComponent<TPSLogic>().GetGrounded()
             && other.GetComponent<Rigidbody>().velocity.y >= 0)
             {
+                //Send event to all players that this block has bounced
+                object[] content = new object[]
+                    {
+                        //Add id
+                    };
+
+                ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+                Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BOUNCE, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
+                //Perform the event locally
                 Bounce();
             }
         }

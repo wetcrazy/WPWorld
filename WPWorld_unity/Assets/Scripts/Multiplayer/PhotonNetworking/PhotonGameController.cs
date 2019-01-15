@@ -34,7 +34,26 @@ public class PhotonGameController : MonoBehaviour {
 	
     public void SubmitScore()
     {
-        new GameSparks.Api.Requests.LogEventRequest().SetEventKey("SUBMIT_SCORE").SetEventAttribute("SCORE", BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore)
+        int ScoreToSubmit = 0;
+
+        switch (SceneManagerHelper.ActiveSceneName)
+        {
+            case "BomberMan":
+                {
+                    ScoreToSubmit = BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore;
+                    break;
+                }
+            case "Platformer":
+                {
+                    ScoreToSubmit = TPSLogic.LocalPlayerInstance.GetComponent<TPSLogic>().CurrPointsPub;
+                    break;
+                }
+
+            default:
+                break;
+        }
+
+        new GameSparks.Api.Requests.LogEventRequest().SetEventKey("SUBMIT_SCORE").SetEventAttribute("SCORE", ScoreToSubmit)
             .Send((response) => {
             if (!response.HasErrors)
             {
@@ -71,7 +90,6 @@ public class PhotonGameController : MonoBehaviour {
         LeaderboardUI.SetActive(true);
         
         new GameSparks.Api.Requests.LeaderboardDataRequest()
-            //.SetLeaderboardShortCode("SUBMIT_SCORE")
             .SetEntryCount(10)
             .SetLeaderboardShortCode("LEADERBOARD")
             .Send((response) => {
@@ -117,10 +135,5 @@ public class PhotonGameController : MonoBehaviour {
     void HighScoreMessageHandler(GameSparks.Api.Messages.NewHighScoreMessage _message)
     {
         Debug.Log("NEW HIGH SCORE \n " + _message.LeaderboardName);
-    }
-
-    // Update is called once per frame
-    void Update () {
-        //PlayerPoints.text = PlayerController.LocalPlayerInstance.GetComponent<PlayerMovement>().PlayerScore.ToString();
     }
 }
