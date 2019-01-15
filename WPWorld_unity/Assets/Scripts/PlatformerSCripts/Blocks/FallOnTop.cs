@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FallOnTop : MonoBehaviour {
+
+    public int ID;
+
 	private Rigidbody RigidRef;
 	private Renderer RenderRef;
 	private Collider ColliderRef;

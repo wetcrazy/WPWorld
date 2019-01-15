@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShowOnHit : MonoBehaviour {
 
+    public int ID;
+
 	private BoxCollider ColliderRef;
 	private Renderer RenderRef;
 

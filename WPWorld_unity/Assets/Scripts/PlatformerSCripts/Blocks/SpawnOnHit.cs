@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpawnOnHit : MonoBehaviour {
 
+    public int ID;
+
     // Spawning Variables
     public GameObject ObjectToSpawn;
 

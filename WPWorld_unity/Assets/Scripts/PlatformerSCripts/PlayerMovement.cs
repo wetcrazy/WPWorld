@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour {
                 break;
         }
 
-        MovementDir = (MoveToPoint.transform.position - transform.position).normalized;
+        //MovementDir = (MoveToPoint.transform.position - transform.position).normalized;
     }
 
     public void GetDPadInput(Vector3 MoveDirection)

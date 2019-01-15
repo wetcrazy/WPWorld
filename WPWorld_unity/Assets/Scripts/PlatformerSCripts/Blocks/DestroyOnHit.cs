@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DestroyOnHit : MonoBehaviour {
 
+    public int ID;
+
 	[SerializeField]
 	private int AmountOfDebris;
 
