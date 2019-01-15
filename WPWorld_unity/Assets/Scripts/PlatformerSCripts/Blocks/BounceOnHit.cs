@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BounceOnHit : MonoBehaviour {
 
-	[SerializeField]
+    public int ID;
+
+    [SerializeField]
 	private string BounceSFX;
 
     private Vector3 OrgPos;
@@ -44,7 +46,7 @@ public class BounceOnHit : MonoBehaviour {
                 //Send event to all players that this block has bounced
                 object[] content = new object[]
                     {
-                        //Add id
+                        ID
                     };
 
                 ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
