@@ -3,9 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Head : MonoBehaviour
 {
-  
+    bool isInput = false;
+    bool checkbuttons = false;
+    public Text ScoreDisplay;
+    public Text LifeDisplay;
+    public Text WLconditionDisplay;
+
+    bool win = false;
+    int I_score = 0;
+    int Lives = 5;
+
+    public Button UP;
+    public Button DOWN;
+    public Button LEFT;
+    public Button RIGHT;
+ 
     public enum STATE_FACING
     {
         STATE_FORWARD,
@@ -24,8 +39,7 @@ public class Head : MonoBehaviour
 
     private Vector3 mainDirection = new Vector3();
     private STATE_FACING facingState;
-
-    //private int gridsize = 1;
+    
     Vector3 prev = new Vector3();
     bool once = false;
     float normalspeed;
@@ -38,16 +52,58 @@ public class Head : MonoBehaviour
         //this.gameObject.transform.Translate(  temp -this.gameObject.transform.position);
         // prev = this.gameObject.transform.position;
         normalspeed = 0.01f;
+        //button
+        UP.onClick.AddListener(Inputup);
+        DOWN.onClick.AddListener(Inputdown);
+        LEFT.onClick.AddListener(Inputleft);
+        RIGHT.onClick.AddListener(Inputright);
+        UP.onClick.AddListener(delegate { TaskWithParameters("Up"); });
+        DOWN.onClick.AddListener(delegate { TaskWithParameters("Down"); });
+        LEFT.onClick.AddListener(delegate { TaskWithParameters("Left"); });
+        RIGHT.onClick.AddListener(delegate { TaskWithParameters("Right"); });
+        isInput = false;
+        ScoreDisplay.text = "";
+        LifeDisplay.text = "";
+        WLconditionDisplay.text = "";
+        win = false;
+
     }
     public void Setspeed(float speed)
     {
         m_Speed = speed;
     }
+
+    void TaskOnClick()
+    {
+        //Output this to console when Button1 or Button3 is clicked
+        Debug.Log("You have clicked the button!");
+    }
+
+    void TaskWithParameters(string message)
+    {
+        //Output this to console when the Button2 is clicked
+        Debug.Log(message);
+    }
+
+    void ButtonClicked(int buttonNo)
+    {
+        //Output this to console when the Button3 is clicked
+        Debug.Log("Button clicked = " + buttonNo);
+    }
+
     private void Update()
     {
-        
-        //var headspeed = m_Speed * 0.6f;
-        //bool turning = false;
+        ScoreDisplay.text = " Score : " + I_score;
+        LifeDisplay.text = " Lives : " + Lives;
+        if(I_score>5)
+        {
+            WLconditionDisplay.text = " WINNER ";
+        }
+        else if(Lives<1)
+        {
+            WLconditionDisplay.text = "GAMEOVER";
+        }
+      
         if(m_Speed!= normalspeed)
         {
             timer -= Time.deltaTime;
@@ -60,30 +116,12 @@ public class Head : MonoBehaviour
         // Player movement
         PlayerControl();
 
-        //if(Children.Count > 2)
-        //{
-        //    if (Children[0].GetComponent<Body>().turningPos.Count == 0)
-        //    {
-        //        turning = false;
-        //    }
-        //    else if (Children[0].GetComponent<Body>().turningPos.Count > 3)
-        //    {
-        //        turning = true;
-        //    }
-        //}
-        // Player Movement
-        //if(turning)
-        //{
-        //    this.gameObject.transform.position += this.gameObject.transform.forward * headspeed * Time.deltaTime;
-        //}
-        //else
-        //{
+       
         if(once)
         {
             this.gameObject.transform.position += this.gameObject.transform.forward * m_Speed ;
         }
-
-        //}     
+        
       
 
         // Children Movement
@@ -124,6 +162,52 @@ public class Head : MonoBehaviour
                 }     
             }
         }
+
+
+        
+    }
+ 
+    public void Inputup()
+    {
+        // float check = Vector3.Distance(prev, this.gameObject.transform.position);
+
+        if (facingState != STATE_FACING.STATE_BACKWARD && facingState != STATE_FACING.STATE_FORWARD)
+        {
+            gameObject.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
+            facingState = STATE_FACING.STATE_FORWARD;
+            once = true;
+            isInput = true;
+        }
+    }
+    public void Inputdown()
+    {
+        if (facingState != STATE_FACING.STATE_FORWARD && facingState != STATE_FACING.STATE_BACKWARD)
+        {
+            gameObject.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
+            facingState = STATE_FACING.STATE_BACKWARD;
+            once = true;
+            isInput = true;
+        }
+    }
+    public void Inputleft()
+    {
+        if (facingState != STATE_FACING.STATE_RIGHT && facingState != STATE_FACING.STATE_LEFT)
+        {
+            gameObject.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
+            facingState = STATE_FACING.STATE_LEFT;
+            once = true;
+            isInput = true;
+        }
+    }
+    public void Inputright()
+    {
+        if (facingState != STATE_FACING.STATE_LEFT && facingState != STATE_FACING.STATE_LEFT)
+        {
+            gameObject.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
+            facingState = STATE_FACING.STATE_RIGHT;
+            once = true;
+            isInput = true;
+        }
     }
 
     // Inputs
@@ -131,14 +215,15 @@ public class Head : MonoBehaviour
     {
        
         float check = Vector3.Distance(prev, this.gameObject.transform.position);
-       
-            bool isInput = false;
+
+         
+        // bool isInput = false;
         //if (check >= 1f || !once)
         //{
         //    Vector3 temp = SetVectortoint(this.gameObject.transform.position);
         //    this.gameObject.transform.Translate(temp - this.gameObject.transform.position);
         //    prev = this.gameObject.transform.position;
-            if (Input.GetKey(KeyCode.UpArrow) && facingState != STATE_FACING.STATE_BACKWARD && facingState != STATE_FACING.STATE_FORWARD)
+        if (Input.GetKey(KeyCode.UpArrow) && facingState != STATE_FACING.STATE_BACKWARD && facingState != STATE_FACING.STATE_FORWARD)
             {
                 gameObject.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
                 facingState = STATE_FACING.STATE_FORWARD;
@@ -179,7 +264,7 @@ public class Head : MonoBehaviour
                     childScript.turningDirection.Enqueue(GetComponent<Head>().facingState);
                     childScript.turningPos.Enqueue(gameObject.transform.position);
                 }
-
+                isInput = false;
             }
 
        // }
@@ -229,11 +314,11 @@ public class Head : MonoBehaviour
         Vector3 temp = new Vector3(Vx,Vy,Vz);
         return temp;
     }
+    //score goes up
+    public void AddAppleAte()
+    {
+        I_score++;
+    }
     
-    //Vector3 Snaptoposition(Vector3 V)
-    //{
-    //    Vector3 blob = SetVectortoint(V);
-    //    V.Set(blob.x, blob.y, blob.z);
-    //    return V;
-    //}
+    
 }

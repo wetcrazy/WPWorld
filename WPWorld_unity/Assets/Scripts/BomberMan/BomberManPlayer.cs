@@ -106,14 +106,24 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     // Bomb Button
     public void onBombButtonDown()
     {
-        object[] content = new object[] {new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
-            firePower
-        };
+        if (!PhotonNetwork.IsConnected)
+        {
+            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnBomb(this.transform.position, firePower, this.gameObject);         
+        }
+        else
+        {
+            object[] content = new object[]
+            {
+                new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
+                firePower
+            };
 
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
 
-        SendOptions sendOptions = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_DROP_BOMB, content, raiseEventOptions, sendOptions);
+            SendOptions sendOptions = new SendOptions { Reliability = true };
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.EVENT_DROP_BOMB, content, raiseEventOptions, sendOptions);
+        }
+      
     }
 
     // Respawn the player
