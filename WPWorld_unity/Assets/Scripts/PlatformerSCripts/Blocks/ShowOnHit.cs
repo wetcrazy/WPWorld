@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShowOnHit : MonoBehaviour {
 
+    public int ID;
+
 	private BoxCollider ColliderRef;
 	private Renderer RenderRef;
 
@@ -39,11 +41,21 @@ public class ShowOnHit : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Player")
+		if (other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
 		{
 			if (other.GetComponent<Rigidbody>().velocity.y > 0)
 			{
-				if (ShowSFX != "")
+                //Send event to all players that this block has been destroyed
+                object[] content = new object[]
+                    {
+                        ID
+                    };
+
+                ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+                Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_HIDDEN, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
+                //Perform the event locally
+                if (ShowSFX != "")
 					SoundSystemRef.PlaySFX(ShowSFX);
 
 				Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
