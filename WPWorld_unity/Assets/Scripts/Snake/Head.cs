@@ -12,7 +12,7 @@ public class Head : MonoBehaviour
     public Text LifeDisplay;
     public Text WLconditionDisplay;
 
-    bool win = false;
+    bool hitself = false;
     int I_score = 0;
     int Lives = 5;
 
@@ -44,6 +44,7 @@ public class Head : MonoBehaviour
     bool once = false;
     float normalspeed;
     float timer = 5;
+    bool hit = false;
     private void Start()
     {
         facingState = STATE_FACING.STATE_EMPTY;
@@ -65,8 +66,8 @@ public class Head : MonoBehaviour
         ScoreDisplay.text = "";
         LifeDisplay.text = "";
         WLconditionDisplay.text = "";
-        win = false;
-
+        hitself = false;
+        hit = false;
     }
     public void Setspeed(float speed)
     {
@@ -93,8 +94,11 @@ public class Head : MonoBehaviour
 
     private void Update()
     {
+        hit = this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided;
+
         ScoreDisplay.text = " Score : " + I_score;
         LifeDisplay.text = " Lives : " + Lives;
+        
         if(I_score>5)
         {
             WLconditionDisplay.text = " WINNER ";
@@ -114,57 +118,59 @@ public class Head : MonoBehaviour
             m_Speed = normalspeed;
         }
         // Player movement
-        PlayerControl();
-
-       
-        if(once)
+        if (!hit)
         {
-            this.gameObject.transform.position += this.gameObject.transform.forward * m_Speed ;
-        }
-        
-      
+            PlayerControl();
 
-        // Children Movement
-        foreach (GameObject child in Children)
-        {
-            var childScript = child.GetComponent<Body>();
 
-            if (childScript.turningPos.Count == 0)
+            if (once)
             {
-                child.gameObject.transform.position += child.gameObject.transform.forward * m_Speed ;             
+                this.gameObject.transform.position += this.gameObject.transform.forward * m_Speed;
             }
-            else
-            {                            
-                child.gameObject.transform.position = Vector3.MoveTowards(child.gameObject.transform.position, childScript.turningPos.Peek(), m_Speed);
-                           
-                if (childScript.turningPos.Peek() == child.transform.position)
+
+
+
+            // Children Movement
+            foreach (GameObject child in Children)
+            {
+                var childScript = child.GetComponent<Body>();
+
+                if (childScript.turningPos.Count == 0)
                 {
-                    childScript.turningPos.Dequeue();
+                    child.gameObject.transform.position += child.gameObject.transform.forward * m_Speed;
+                }
+                else
+                {
+                    child.gameObject.transform.position = Vector3.MoveTowards(child.gameObject.transform.position, childScript.turningPos.Peek(), m_Speed);
 
-                    if (childScript.turningDirection.Peek() == STATE_FACING.STATE_FORWARD)
+                    if (childScript.turningPos.Peek() == child.transform.position)
                     {
-                        child.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
-                    }
-                    else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_BACKWARD)
-                    {
-                        child.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
-                    }
-                    else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_RIGHT)
-                    {
-                        child.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
-                    }
-                    else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_LEFT)
-                    {
-                        child.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
-                    }
+                        childScript.turningPos.Dequeue();
 
-                    childScript.turningDirection.Dequeue();
-                }     
+                        if (childScript.turningDirection.Peek() == STATE_FACING.STATE_FORWARD)
+                        {
+                            child.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
+                        }
+                        else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_BACKWARD)
+                        {
+                            child.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
+                        }
+                        else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_RIGHT)
+                        {
+                            child.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
+                        }
+                        else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_LEFT)
+                        {
+                            child.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
+                        }
+
+                        childScript.turningDirection.Dequeue();
+                    }
+                }
             }
         }
-
-
-        
+       // var kidsbod = this.gameObject.GetComponentsInChildren<Rigidbody>();
+       // if(kidsbod.)
     }
  
     public void Inputup()
@@ -303,6 +309,7 @@ public class Head : MonoBehaviour
         {
             AddBody();
         }
+       
     } 
 
     //returns a vector3 with int values
@@ -319,6 +326,5 @@ public class Head : MonoBehaviour
     {
         I_score++;
     }
-    
-    
+  
 }
