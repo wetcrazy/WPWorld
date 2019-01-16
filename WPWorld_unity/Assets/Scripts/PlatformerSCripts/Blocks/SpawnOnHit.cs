@@ -70,7 +70,7 @@ public class SpawnOnHit : MonoBehaviour {
             if (!other.GetComponent<TPSLogic>().GetGrounded()
                 && other.GetComponent<Rigidbody>().velocity.y >= 0)
             {
-                //Send event to all players that this block has been destroyed
+                //Send event to all players that this block has spawned something
                 object[] content = new object[]
                     {
                         ID

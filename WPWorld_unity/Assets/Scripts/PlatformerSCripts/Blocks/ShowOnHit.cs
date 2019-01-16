@@ -45,7 +45,7 @@ public class ShowOnHit : MonoBehaviour {
 		{
 			if (other.GetComponent<Rigidbody>().velocity.y > 0)
 			{
-                //Send event to all players that this block has been destroyed
+                //Send event to all players that this block has been unhidden
                 object[] content = new object[]
                     {
                         ID
