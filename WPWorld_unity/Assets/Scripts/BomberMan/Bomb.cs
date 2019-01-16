@@ -35,14 +35,75 @@ public class Bomb : MonoBehaviour
     }
 
     public void BlowUp()
-    {
-        // Owner.GetComponent<BomberManPlayer>().OneBombDestory();
-
+    {       
         float scalableSize = BlockPrefab.transform.localScale.x * this.transform.parent.transform.localScale.x;
+        Quaternion Roatation = ARMultiplayerController._GroundObject.GetComponentInChildren<Transform>().rotation;
 
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
-    
+
+        //// + X
+        //RaycastHit hit;
+        //for (int i = 1; i <= firePower; i++)
+        //{
+        //    if (Physics.Raycast(this.transform.position, Vector3.right, out hit, scalableSize * i))
+        //    {
+        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+        //        {
+        //            Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //    }
+        //}
+        //// - X
+        //for (int i = 1; i <= firePower; i++)
+        //{
+        //    if (Physics.Raycast(this.transform.position, -Vector3.right, out hit, scalableSize * i))
+        //    {
+        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+        //        {
+        //            Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //    }
+        //}
+        //// + Z
+        //for (int i = 1; i <= firePower; i++)
+        //{
+        //    if (Physics.Raycast(this.transform.position, Vector3.forward, out hit, scalableSize * i))
+        //    {
+        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+        //        {
+        //            Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //    }
+        //}
+        //// - Z
+        //for (int i = 1; i <= firePower; i++)
+        //{
+        //    if (Physics.Raycast(this.transform.position, -Vector3.forward, out hit, scalableSize * i))
+        //    {
+        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
+        //        {
+        //            Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+        //    }
+        //}
+
         // + X
         RaycastHit hit;
         for (int i = 1; i <= firePower; i++)
@@ -51,12 +112,12 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
             }
         }
         // - X
@@ -66,12 +127,12 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
             }
         }
         // + Z
@@ -81,12 +142,12 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
             }
         }
         // - Z
@@ -96,15 +157,16 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
             }
         }
 
+        ReduceBombCount();
         Destroy(this.gameObject);
     }
 
@@ -142,10 +204,35 @@ public class Bomb : MonoBehaviour
 
     // Collision
     // Turn off trigger collision when the player is out of the trigger box
-    private void OnTriggerExit()
+    private void OnTriggerExit(Collider other)
     {
         col.isTrigger = false;
     }
 
-   
+    // Reduce Bomb Count
+    private void ReduceBombCount()
+    {
+        if (Photon.Pun.PhotonNetwork.IsConnected)
+        {
+            if (OwnerPUN.ActorNumber == Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
+            }
+        }
+        else
+        {
+            Owner.GetComponent<BomberManPlayer>().OnBombDestoryed();
+        }
+
+        //if(OwnerPUN == null)
+        //{
+        //    GameObject.FindGameObjectWithTag("Debug").GetComponent<UnityEngine.UI.Text>().text = "I am null";
+        //}
+
+        //if (OwnerPUN.ActorNumber == Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber)
+        //{
+        //    GameObject.FindGameObjectWithTag("Debug").GetComponent<UnityEngine.UI.Text>().text = "I Came here 2 inside";
+        //    BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
+        //}
+    }
 }

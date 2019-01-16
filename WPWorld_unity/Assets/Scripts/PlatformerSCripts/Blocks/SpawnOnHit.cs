@@ -65,11 +65,20 @@ public class SpawnOnHit : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             if (!other.GetComponent<TPSLogic>().GetGrounded()
                 && other.GetComponent<Rigidbody>().velocity.y >= 0)
             {
+                //Send event to all players that this block has spawned something
+                object[] content = new object[]
+                    {
+                        ID
+                    };
+
+                ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+                Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_SPAWNER, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                 // Check for Enemies above the block
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
@@ -81,6 +90,13 @@ public class SpawnOnHit : MonoBehaviour {
                 {
                     if (hit.transform.name.Contains("Enemy"))
                     {
+                        object[] content02 = new object[]
+                                  {
+                                      //Add id
+                                  };
+
+                        Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                         hit.transform.GetComponent<Enemy>().AirDeath();
                     }
                 }

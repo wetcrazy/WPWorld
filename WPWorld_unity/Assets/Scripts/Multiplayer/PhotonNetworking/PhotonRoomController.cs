@@ -46,6 +46,9 @@ public class PhotonRoomController : MonoBehaviour
 
     public static GAMEMODE CurrentGamemode = 0;
 
+    /// <summary>
+    /// Initialise the game room
+    /// </summary>
     public void InitRoom()
     {
         photonView = PhotonView.Get(this);
@@ -56,17 +59,17 @@ public class PhotonRoomController : MonoBehaviour
         RoomIDText.text += PhotonNetwork.CurrentRoom.Name;
         UpdatePlayerList();
 
-        //Is not host of room
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            HostControls.SetActive(false);
-        }
-        else
+        //If you are host of room
+        if (PhotonNetwork.IsMasterClient)
         {
             HostControls.SetActive(true);
             PhotonNetwork.CurrentRoom.IsVisible = true;
 
             UpdateCurrentGameMode(CurrentGamemode);
+        }
+        else
+        {
+            HostControls.SetActive(false);
         }
     }
 
@@ -163,6 +166,7 @@ public class PhotonRoomController : MonoBehaviour
                 case GAMEMODE.GAMEMODE_TRON:
                     break;
                 case GAMEMODE.GAMEMODE_PLATFORMER:
+                    PhotonNetwork.LoadLevel("Platformer");
                     break;
                 case GAMEMODE.GAMEMODE_BOMBERMAN:
                     PhotonNetwork.LoadLevel("BomberMan");
