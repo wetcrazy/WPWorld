@@ -36,15 +36,22 @@ public class CollectOnCollide : MonoBehaviour {
         {
             if(RenderRef.isVisible)
             {
-                RenderRef.enabled = false;
+                Collect();
+
+                // Add points to the player who collects the coin
                 other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
-
-                HasCollected = true;
-
-                if (CollectSFX != "")
-                    SoundSystemRef.PlaySFX(CollectSFX);
             }
         }
+    }
+
+    public void Collect()
+    {
+        RenderRef.enabled = false;
+
+        HasCollected = true;
+
+        if (CollectSFX != "")
+            SoundSystemRef.PlaySFX(CollectSFX);
     }
 
     public void Reset()

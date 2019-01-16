@@ -282,6 +282,7 @@ public class TPSLogic : MonoBehaviour
         foreach(GivePowerUpOnCollide PowerUpRef in FindObjectsOfType(typeof(GivePowerUpOnCollide)) as GivePowerUpOnCollide[])
             Destroy(PowerUpRef.gameObject);
 
+        // IMPORTANT TO RESET
         GetComponent<PlayerPowerUp>().Reset();
     }
 

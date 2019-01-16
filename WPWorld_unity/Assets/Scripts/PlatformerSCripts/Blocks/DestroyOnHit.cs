@@ -49,43 +49,49 @@ public class DestroyOnHit : MonoBehaviour {
 				&& other.GetComponent<Rigidbody>().velocity.y >= 0
 				)
 			{
-				RenderRef.enabled = false;
-                ColliderRef.isTrigger = true;
+                Destroy();
 
-				if (DestroySFX != "")
-					SoundSystemRef.PlaySFX(DestroySFX);
-
-				for (int i = 0; i < AmountOfDebris; i++)
-				{
-					GameObject n_Debris = Instantiate(Debris, this.transform);
-					Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
-					RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
-						Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
-						Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
-				}
-
-				Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
-				if (VelocityRef.y > 0)
-					VelocityRef.y = -VelocityRef.y * 0.5f;
-				other.GetComponent<Rigidbody>().velocity = VelocityRef;
-
-                // Check for Enemies above the block
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
-                    || Physics.Raycast(transform.position, transform.up + transform.right, out hit, transform.lossyScale.y)
-                    || Physics.Raycast(transform.position, transform.up - transform.right, out hit, transform.lossyScale.y)
-                    || Physics.Raycast(transform.position, transform.up + transform.forward, out hit, transform.lossyScale.y)
-                    || Physics.Raycast(transform.position, transform.up - transform.forward, out hit, transform.lossyScale.y)
-                    )
-                {
-                    if (hit.transform.GetComponent<Enemy>())
-                    {
-                        hit.transform.GetComponent<Enemy>().AirDeath();
-                    }
-                }
+                // Player Feedback, Can be removed for the sake of multiplayer
+                Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
+                if (VelocityRef.y > 0)
+                    VelocityRef.y = -VelocityRef.y * 0.5f;
+                other.GetComponent<Rigidbody>().velocity = VelocityRef;
             }
 		}
 	}
+
+    public void Destroy()
+    {
+        RenderRef.enabled = false;
+        ColliderRef.isTrigger = true;
+
+        if (DestroySFX != "")
+            SoundSystemRef.PlaySFX(DestroySFX);
+
+        for (int i = 0; i < AmountOfDebris; i++)
+        {
+            GameObject n_Debris = Instantiate(Debris, this.transform);
+            Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
+            RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
+                Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
+                Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
+        }
+
+        // Check for Enemies above the block
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
+            || Physics.Raycast(transform.position, transform.up + transform.right, out hit, transform.lossyScale.y)
+            || Physics.Raycast(transform.position, transform.up - transform.right, out hit, transform.lossyScale.y)
+            || Physics.Raycast(transform.position, transform.up + transform.forward, out hit, transform.lossyScale.y)
+            || Physics.Raycast(transform.position, transform.up - transform.forward, out hit, transform.lossyScale.y)
+            )
+        {
+            if (hit.transform.GetComponent<Enemy>())
+            {
+                hit.transform.GetComponent<Enemy>().AirDeath();
+            }
+        }
+    }
 
 	public void Reset()
 	{
