@@ -38,22 +38,6 @@ public class DestroyOnHit : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-	private void OnTriggerEnter(Collider other)
-	{
-		if (!RenderRef.isVisible)
-			return;
-
-		if(other.tag == "Player")
-		{
-			if(!other.GetComponent<TPSLogic>().GetGrounded()
-				&& other.GetComponent<Rigidbody>().velocity.y >= 0
-				)
-			{
-                Destroy();
-
-                // Player Feedback, Can be removed for the sake of multiplayer
-=======
     private void OnTriggerEnter(Collider other)
     {
         if (!RenderRef.isVisible)
@@ -75,29 +59,8 @@ public class DestroyOnHit : MonoBehaviour
                 Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BREAK, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
 
                 //Perform the event locally
-                RenderRef.enabled = false;
-                ColliderRef.isTrigger = true;
+                Destroy();
 
-                if (DestroySFX != "")
-                    SoundSystemRef.PlaySFX(DestroySFX);
-
-                for (int i = 0; i < AmountOfDebris; i++)
-                {
-                    GameObject n_Debris = Instantiate(Debris, this.transform);
-                    Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
-                    RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
-                        Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
-                        Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
-                }
-
->>>>>>> 04c6e22f2665a966faf7d3e8b6894cfc344e485d
-                Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
-                if (VelocityRef.y > 0)
-                    VelocityRef.y = -VelocityRef.y * 0.5f;
-                other.GetComponent<Rigidbody>().velocity = VelocityRef;
-<<<<<<< HEAD
-=======
-                
                 // Check for Enemies above the block
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
@@ -119,12 +82,10 @@ public class DestroyOnHit : MonoBehaviour
                         hit.transform.GetComponent<Enemy>().AirDeath();
                     }
                 }
->>>>>>> 04c6e22f2665a966faf7d3e8b6894cfc344e485d
             }
         }
     }
 
-<<<<<<< HEAD
     public void Destroy()
     {
         RenderRef.enabled = false;
@@ -141,31 +102,11 @@ public class DestroyOnHit : MonoBehaviour
                 Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
                 Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
         }
-
-        // Check for Enemies above the block
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up + transform.right, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up - transform.right, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up + transform.forward, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up - transform.forward, out hit, transform.lossyScale.y)
-            )
-        {
-            if (hit.transform.GetComponent<Enemy>())
-            {
-                hit.transform.GetComponent<Enemy>().AirDeath();
-            }
-        }
     }
 
 	public void Reset()
 	{
-		RenderRef.enabled = true;
-=======
-    public void Reset()
-    {
         RenderRef.enabled = true;
->>>>>>> 04c6e22f2665a966faf7d3e8b6894cfc344e485d
         ColliderRef.isTrigger = false;
     }
 }
