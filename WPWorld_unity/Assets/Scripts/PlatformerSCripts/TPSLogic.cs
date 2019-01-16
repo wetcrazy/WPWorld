@@ -314,6 +314,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         foreach(GivePowerUpOnCollide PowerUpRef in FindObjectsOfType(typeof(GivePowerUpOnCollide)) as GivePowerUpOnCollide[])
             Destroy(PowerUpRef.gameObject);
 
+        // IMPORTANT TO RESET
         GetComponent<PlayerPowerUp>().Reset();
     }
 

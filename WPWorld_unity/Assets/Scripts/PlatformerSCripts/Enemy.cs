@@ -16,6 +16,8 @@ public enum ENEMYTYPES
 
 public class Enemy : MonoBehaviour {
 
+    public int ID;
+
 	public ENEMYTYPES CurrType;
 
 	// Walk Variables

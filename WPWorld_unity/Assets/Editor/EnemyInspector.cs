@@ -14,6 +14,10 @@ public class EnemyInspector : Editor {
 		// IDEAS, SET DIRTY & APPLY MODIFIED PROPERTIES?
 		var EnemyRef = target as Enemy;
 
+        EnemyRef.ID = EditorGUILayout.IntField("ID", EnemyRef.ID);
+
+        EditorGUILayout.Space();
+
 		EnemyRef.CurrType = (ENEMYTYPES)EditorGUILayout.EnumPopup("Enemy Type", EnemyRef.CurrType);
 
 		if (EnemyRef.CurrType != ENEMYTYPES.DEAD)
