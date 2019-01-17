@@ -35,8 +35,14 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         set { Score = value; }
     }
 
-    // Invurnable Frame
+    // Invurnable Frame (Shouldn't be in reset function)
     private const float MAX_invurnTime = 3.0f;
+    private float curr_invurnTime = 0.0f;
+    private bool isDmgtaken = false;
+    private bool isBlinking = false;
+
+    // Heart Container
+    private GameObject HeartContainer;
 
     private void Awake()
     {
@@ -91,6 +97,14 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
                 currTimer += 1.0f * Time.deltaTime;
             }
         }
+
+        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "I am here";
+            
+        // Invurnable Frame
+        if (isDmgtaken)
+        {
+            InvurnablePlayer();
+        }
     }
 
 
@@ -135,7 +149,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
         currNUMBomb += 1;
     }
-
     // Respawn the player
     public void Respawn()
     {
@@ -154,6 +167,38 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
         Respawn();
     }
+    // Player blinking
+    public void InvurnablePlayer()
+    {
+        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+        if (curr_invurnTime > MAX_invurnTime)
+        {
+            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
+            isDmgtaken = false;
+            curr_invurnTime = 0.0f;
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn";
+            curr_invurnTime += 1.0f * Time.deltaTime;
+        }
+
+        var Render = this.gameObject.GetComponent<Renderer>();
+
+        if (isBlinking)
+        {
+            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Non Blinking";
+            this.transform.localScale.Set(0.08f, 0.08f, 0.08f);
+            isBlinking = false;
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Blinking";
+            this.transform.localScale.Set(0, 0, 0);
+            isBlinking = true;
+        }
+        
+    }
 
     // Collision
     private void OnTriggerEnter(Collider other)
@@ -161,7 +206,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         // Fire
         if (other.gameObject.tag == "BombFire")
         {
-            currLives -= 1;
+            if (!isDmgtaken)
+            {
+                GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Dmg Taken";
+                // currLives -= 1;
+                isDmgtaken = true;
+            }
         }
     }
 
