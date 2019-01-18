@@ -40,6 +40,8 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private float curr_invurnTime = 0.0f;
     private bool isDmgtaken = false;
     private bool isBlinking = false;
+    private const float MAX_blinkTime = 10.0f;
+    private float curr_blinkTime = 0.0f;
 
     // Heart Container
     private GameObject HeartContainer;
@@ -72,10 +74,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
-        {
-            return;
-        }
+        //if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        //{
+        //    return;
+        //}
 
         // Death Respawn
         if (isDead)
@@ -98,13 +100,17 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             }
         }
 
-        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "I am here";
+       
             
         // Invurnable Frame
         if (isDmgtaken)
-        {
+        {        
             InvurnablePlayer();
         }
+
+        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
+
+
     }
 
 
@@ -169,35 +175,53 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     }
     // Player blinking
     public void InvurnablePlayer()
-    {
-        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+    {     
         if (curr_invurnTime > MAX_invurnTime)
-        {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
+        {          
             isDmgtaken = false;
+            isBlinking = false;
             curr_invurnTime = 0.0f;
+            return;
         }
         else
-        {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn";
+        {         
             curr_invurnTime += 1.0f * Time.deltaTime;
+            //isBlinking = true;
         }
 
-        var Render = this.gameObject.GetComponent<Renderer>();
+        // var Render = this.gameObject.GetComponent<Renderer>();
+
+        //if (isBlinking)
+        //{
+        //    if(curr_blinkTime > MAX_blinkTime)
+        //    {
+        //        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+        //        this.transform.localScale.Set(0, 0, 0);              
+        //        curr_blinkTime = 0.0f;
+        //    }
+        //    else
+        //    {
+        //        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
+        //        this.transform.localScale.Set(100, 100, 100);              
+        //        curr_blinkTime += 1f * Time.deltaTime;
+        //    }          
+        //} 
+
+     
 
         if (isBlinking)
         {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Non Blinking";
-            this.transform.localScale.Set(0.08f, 0.08f, 0.08f);
-            isBlinking = false;
+            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+            this.transform.localScale = new Vector3(0, 0, 0);
+            // isBlinking = false;  
         }
         else
         {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Blinking";
-            this.transform.localScale.Set(0, 0, 0);
+            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
+            this.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
             isBlinking = true;
         }
-        
+
     }
 
     // Collision
@@ -208,7 +232,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             if (!isDmgtaken)
             {
-                GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Dmg Taken";
+                // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Dmg Taken";
                 // currLives -= 1;
                 isDmgtaken = true;
             }
