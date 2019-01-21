@@ -36,12 +36,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     }
 
     // Invurnable Frame (Shouldn't be in reset function)
-    private const float MAX_invurnTime = 3.0f;
+    private const float MAX_invurnTime = 2.0f;
     private float curr_invurnTime = 0.0f;
     private bool isDmgtaken = false;
     private bool isBlinking = false;
-    private const float MAX_blinkTime = 10.0f;
-    private float curr_blinkTime = 0.0f;
 
     // Heart Container
     private GameObject HeartContainer;
@@ -178,15 +176,14 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     {     
         if (curr_invurnTime > MAX_invurnTime)
         {          
-            isDmgtaken = false;
-            isBlinking = false;
+            isDmgtaken = false;        
             curr_invurnTime = 0.0f;
+            this.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
             return;
         }
         else
         {         
-            curr_invurnTime += 1.0f * Time.deltaTime;
-            //isBlinking = true;
+            curr_invurnTime += 1.0f * Time.deltaTime;          
         }
 
         // var Render = this.gameObject.GetComponent<Renderer>();
@@ -213,7 +210,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
             this.transform.localScale = new Vector3(0, 0, 0);
-            // isBlinking = false;  
+            isBlinking = false;  
         }
         else
         {
