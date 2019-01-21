@@ -40,6 +40,7 @@ public class ARMultiplayerController : MonoBehaviour
     GameObject LevelObject;
     
     SoundSystem soundSystem = null;
+    private GameObject[] SpawnPoints;
 
     //Reference to the clone of GameObjPrefab
     public static GameObject _GroundObject = null;
@@ -54,7 +55,12 @@ public class ARMultiplayerController : MonoBehaviour
     {
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-        
+        if (Photon.Pun.PhotonNetwork.IsMasterClient)
+        {
+            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+        }
+
+
         //Initialise Screens
         ToGameMoveAnchor();
     }

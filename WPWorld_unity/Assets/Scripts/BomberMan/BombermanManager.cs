@@ -34,8 +34,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         EnableBombUi();
     }
 
-
-
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
         _selectedOBJ.GetComponent<BomberManPlayer>().SetisDead(_boolValue);
