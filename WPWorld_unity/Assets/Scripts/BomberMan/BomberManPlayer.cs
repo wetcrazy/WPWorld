@@ -16,6 +16,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private int MAX_NUMBOMB;
     private int currNUMBomb;
     private Vector3 respawnPt;
+    private Vector3 OrignScale;
 
     // For Respawning Cool Down
     private float currTimer;
@@ -36,7 +37,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     }
 
     // Invurnable Frame (Shouldn't be in reset function)
-    private const float MAX_invurnTime = 3.0f;
+    private const float MAX_invurnTime = 2.0f;
     private float curr_invurnTime = 0.0f;
     private bool isDmgtaken = false;
     private bool isBlinking = false;
@@ -58,7 +59,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private void Start()
     {
         Reset();
-
+        OrignScale = this.transform.localScale;
         //Setting the username text that is above the player objects
         if (photonView.IsMine)
         {
@@ -72,10 +73,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
-        {
-            return;
-        }
+        //if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        //{
+        //    return;
+        //}
 
         // Death Respawn
         if (isDead)
@@ -97,14 +98,14 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
                 currTimer += 1.0f * Time.deltaTime;
             }
         }
-
-        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "I am here";
-            
+           
         // Invurnable Frame
         if (isDmgtaken)
-        {
+        {        
             InvurnablePlayer();
         }
+
+        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
     }
 
 
@@ -169,35 +170,32 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     }
     // Player blinking
     public void InvurnablePlayer()
-    {
-        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+    {     
         if (curr_invurnTime > MAX_invurnTime)
-        {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
-            isDmgtaken = false;
+        {          
+            isDmgtaken = false;        
             curr_invurnTime = 0.0f;
+            this.transform.localScale = OrignScale;
+            return;
         }
         else
-        {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn";
-            curr_invurnTime += 1.0f * Time.deltaTime;
+        {         
+            curr_invurnTime += 1.0f * Time.deltaTime;          
         }
-
-        var Render = this.gameObject.GetComponent<Renderer>();
 
         if (isBlinking)
         {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Non Blinking";
-            this.transform.localScale.Set(0.08f, 0.08f, 0.08f);
-            isBlinking = false;
+            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+            this.transform.localScale = new Vector3(0, 0, 0);
+            isBlinking = false;  
         }
         else
         {
-            GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Blinking";
-            this.transform.localScale.Set(0, 0, 0);
+            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
+            this.transform.localScale = OrignScale;
             isBlinking = true;
         }
-        
+
     }
 
     // Collision
@@ -208,7 +206,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             if (!isDmgtaken)
             {
-                GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Dmg Taken";
+                // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Dmg Taken";
                 // currLives -= 1;
                 isDmgtaken = true;
             }

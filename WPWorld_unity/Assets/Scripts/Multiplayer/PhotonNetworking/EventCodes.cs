@@ -5,6 +5,7 @@
         //Bomberman Events
         BOMBER_EVENT_DROP_BOMB = 0,
         BOMBER_EVENT_PLAYER_DEATH,
+        BOMBER_EVENT_SPAWN_POWERUP,
 
         //Platformer Events
         PLATFORM_EVENT_BLOCK_BOUNCE,
