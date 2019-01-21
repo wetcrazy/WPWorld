@@ -3345,9 +3345,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4608430102878362}
   - component: {fileID: 65613283798838358}
+  - component: {fileID: 114584919758205118}
   m_Layer: 0
   m_Name: Brick_Block (1)
-  m_TagString: Untagged
+  m_TagString: BombermanBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3915,9 +3916,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4544128158046294}
   - component: {fileID: 65132484249181892}
+  - component: {fileID: 114980495240322958}
   m_Layer: 0
   m_Name: Brick_Block
-  m_TagString: Untagged
+  m_TagString: BombermanBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5858,9 +5860,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4937882863335120}
   - component: {fileID: 65487034458535280}
+  - component: {fileID: 114976749482697852}
   m_Layer: 0
   m_Name: Brick_Block (2)
-  m_TagString: Untagged
+  m_TagString: BombermanBreakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48858,6 +48861,17 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Name
+--- !u!114 &114584919758205118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1319109908861778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a490a33e5c2f3147a3b3fc51fc01859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114643577048011620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -49105,6 +49119,28 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114976749482697852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1557257797072826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a490a33e5c2f3147a3b3fc51fc01859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114980495240322958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1359743449973200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a490a33e5c2f3147a3b3fc51fc01859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222079569379663964
 CanvasRenderer:
   m_ObjectHideFlags: 1

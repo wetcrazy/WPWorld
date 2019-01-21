@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bomb : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class Bomb : MonoBehaviour
         
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
-
+       
         // + X
         RaycastHit hit;
         for (int i = 1; i <= firePower; i++)
@@ -50,6 +51,10 @@ public class Bomb : MonoBehaviour
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
                     Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                }
+                else if(hit.transform.gameObject.tag == "BombermanBreakable")
+                {              
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
                 }
             }
             else
@@ -66,6 +71,10 @@ public class Bomb : MonoBehaviour
                 {
                     Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
+                else if (hit.transform.gameObject.tag == "BombermanBreakable")
+                {
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                }
             }
             else
             {
@@ -81,6 +90,10 @@ public class Bomb : MonoBehaviour
                 {
                     Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
+                else if (hit.transform.gameObject.tag == "BombermanBreakable")
+                {
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                }
             }
             else
             {
@@ -95,6 +108,10 @@ public class Bomb : MonoBehaviour
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
                     Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                }
+                else if (hit.transform.gameObject.tag == "BombermanBreakable")
+                {
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
                 }
             }
             else
