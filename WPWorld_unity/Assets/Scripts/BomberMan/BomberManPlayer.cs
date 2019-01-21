@@ -18,6 +18,9 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private Vector3 respawnPt;
     private Vector3 OrignScale;
 
+    private GameObject[] SpawnPoints;
+    Vector3 SpawnPoint;
+
     // For Respawning Cool Down
     private float currTimer;
     private const float MAX_TIMER = 3.0f;
@@ -45,6 +48,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     // Heart Container
     private GameObject HeartContainer;
 
+
     private void Awake()
     {
         respawnPt = this.transform.position;
@@ -60,10 +64,22 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     {
         Reset();
         OrignScale = this.transform.localScale;
-        //Setting the username text that is above the player objects
+
         if (photonView.IsMine)
         {
+            //Setting the username text that is above the player objects
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+
+            //Set the spawning position for the players
+            if (PhotonNetwork.IsMasterClient)
+            {
+                SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+                
+                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                {
+                    photonView.RPC("SetPosition", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.position);
+                }
+            }
         }
         else
         {
@@ -234,13 +250,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
     }
 
-    // Highscore
-    [PunRPC]
-    private void PlayerAddPoints(int PointsToAdd)
-    {
-        PlayerScore += PointsToAdd;
-    }
-
     // Setter
     public void SetisDead(bool _boolvalue)
     {
@@ -250,5 +259,18 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     public void OnBombDestoryed()
     {
         currNUMBomb -= 1;
+    }
+
+    // Highscore
+    [PunRPC]
+    private void PlayerAddPoints(int PointsToAdd)
+    {
+        PlayerScore += PointsToAdd;
+    }
+
+    [PunRPC]
+    void SetPosition(Vector3 NewPos)
+    {
+        gameObject.transform.position = NewPos;
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GoogleARCore;
+using Photon.Pun;
+using Photon.Realtime;
 
 /// <summary>
 /// Controls the ARCORE
@@ -40,7 +42,6 @@ public class ARMultiplayerController : MonoBehaviour
     GameObject LevelObject;
     
     SoundSystem soundSystem = null;
-    private GameObject[] SpawnPoints;
 
     //Reference to the clone of GameObjPrefab
     public static GameObject _GroundObject = null;
@@ -55,12 +56,7 @@ public class ARMultiplayerController : MonoBehaviour
     {
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-        if (Photon.Pun.PhotonNetwork.IsMasterClient)
-        {
-            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-        }
-
-
+       
         //Initialise Screens
         ToGameMoveAnchor();
     }
@@ -188,14 +184,14 @@ public class ARMultiplayerController : MonoBehaviour
         //{
         //    return;
         //}
-        
+
         Reset_Anchor();
         ScreenState = STATE_SCREEN.SCREEN_GAME;
         //Spawn the level
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
 
-        Photon.Pun.PhotonNetwork.Instantiate(PlayerObjectPrefab.name, new Vector3(0, 3, 0), Quaternion.identity, 0);
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
     }
 
     private void GameScreenUpdate()

@@ -2,8 +2,11 @@
 
     public enum EVENT_CODES
     {
+        //General Events
+        EVENT_PLAYER_SPAWN = 0,
+
         //Bomberman Events
-        BOMBER_EVENT_DROP_BOMB = 0,
+        BOMBER_EVENT_DROP_BOMB,
         BOMBER_EVENT_PLAYER_DEATH,
         BOMBER_EVENT_SPAWN_POWERUP,
 
