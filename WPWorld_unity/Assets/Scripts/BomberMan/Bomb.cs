@@ -37,72 +37,9 @@ public class Bomb : MonoBehaviour
     public void BlowUp()
     {       
         float scalableSize = BlockPrefab.transform.localScale.x * this.transform.parent.transform.localScale.x;
-        Quaternion Roatation = ARMultiplayerController._GroundObject.GetComponentInChildren<Transform>().rotation;
-
+        
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
-
-        //// + X
-        //RaycastHit hit;
-        //for (int i = 1; i <= firePower; i++)
-        //{
-        //    if (Physics.Raycast(this.transform.position, Vector3.right, out hit, scalableSize * i))
-        //    {
-        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
-        //        {
-        //            Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //    }
-        //}
-        //// - X
-        //for (int i = 1; i <= firePower; i++)
-        //{
-        //    if (Physics.Raycast(this.transform.position, -Vector3.right, out hit, scalableSize * i))
-        //    {
-        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
-        //        {
-        //            Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //    }
-        //}
-        //// + Z
-        //for (int i = 1; i <= firePower; i++)
-        //{
-        //    if (Physics.Raycast(this.transform.position, Vector3.forward, out hit, scalableSize * i))
-        //    {
-        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
-        //        {
-        //            Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //    }
-        //}
-        //// - Z
-        //for (int i = 1; i <= firePower; i++)
-        //{
-        //    if (Physics.Raycast(this.transform.position, -Vector3.forward, out hit, scalableSize * i))
-        //    {
-        //        if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
-        //        {
-        //            Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
-        //    }
-        //}
 
         // + X
         RaycastHit hit;
@@ -112,12 +49,12 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
             }
         }
         // - X
@@ -127,12 +64,12 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Roatation, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
             }
         }
         // + Z
@@ -142,12 +79,12 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
             }
         }
         // - Z
@@ -157,12 +94,12 @@ public class Bomb : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
-                    Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
+                    Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
             }
             else
             {
-                Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Roatation, this.transform.parent);
+                Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
             }
         }
 

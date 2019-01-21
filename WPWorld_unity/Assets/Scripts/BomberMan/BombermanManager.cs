@@ -26,7 +26,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     [Header("Debugging Text")]
     // For Debugging
     public Text Debug01;
-    public Text Debug02;
+    public Text Debug02; 
 
     // UPDATE
     private void Update()
@@ -34,17 +34,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         EnableBombUi();
     }
 
-
-
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
         _selectedOBJ.GetComponent<BomberManPlayer>().SetisDead(_boolValue);
     }
 
     public void LocalPlayerCall_SpawnBomb()
-    {
-        Debug02.text = "Pressing";
-
+    {  
         if(PhotonNetwork.IsConnected)
         {
             BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
@@ -53,8 +49,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().onBombButtonDown();
         }
-       
-        Debug02.text = "Press Already";
     }
 
     // Bomb UI
@@ -92,7 +86,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     // Spawn Bomb (Singleplayer)
     public void SpawnBomb(Vector3 BombPos, int firepower, GameObject player)
-    {    
+    {
         GameObject newBomb = Instantiate(BombPrefab, BombPos, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwner(player);

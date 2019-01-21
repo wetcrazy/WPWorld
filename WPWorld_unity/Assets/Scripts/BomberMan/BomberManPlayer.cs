@@ -16,6 +16,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private int MAX_NUMBOMB;
     private int currNUMBomb;
     private Vector3 respawnPt;
+    private Vector3 OrignScale;
 
     // For Respawning Cool Down
     private float currTimer;
@@ -58,7 +59,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private void Start()
     {
         Reset();
-
+        OrignScale = this.transform.localScale;
         //Setting the username text that is above the player objects
         if (photonView.IsMine)
         {
@@ -97,9 +98,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
                 currTimer += 1.0f * Time.deltaTime;
             }
         }
-
-       
-            
+           
         // Invurnable Frame
         if (isDmgtaken)
         {        
@@ -107,8 +106,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         }
 
         GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
-
-
     }
 
 
@@ -178,33 +175,13 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {          
             isDmgtaken = false;        
             curr_invurnTime = 0.0f;
-            this.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
+            this.transform.localScale = OrignScale;
             return;
         }
         else
         {         
             curr_invurnTime += 1.0f * Time.deltaTime;          
         }
-
-        // var Render = this.gameObject.GetComponent<Renderer>();
-
-        //if (isBlinking)
-        //{
-        //    if(curr_blinkTime > MAX_blinkTime)
-        //    {
-        //        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
-        //        this.transform.localScale.Set(0, 0, 0);              
-        //        curr_blinkTime = 0.0f;
-        //    }
-        //    else
-        //    {
-        //        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
-        //        this.transform.localScale.Set(100, 100, 100);              
-        //        curr_blinkTime += 1f * Time.deltaTime;
-        //    }          
-        //} 
-
-     
 
         if (isBlinking)
         {
@@ -215,7 +192,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         else
         {
             // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
-            this.transform.localScale = new Vector3(0.08f, 0.08f, 0.08f);
+            this.transform.localScale = OrignScale;
             isBlinking = true;
         }
 
