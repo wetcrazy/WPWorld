@@ -188,7 +188,7 @@ public class Enemy : MonoBehaviour {
 
 		GameObject CollidedRef = collision.gameObject;
 
-		if (CollidedRef.tag == "Player")
+		if (CollidedRef.tag == "Player" && CollidedRef.GetComponent<TPSLogic>().isMine())
 		{
             if(!CollidedRef.GetComponent<TPSLogic>().GetGrounded()
                 && CollidedRef.transform.localPosition.y - CollidedRef.transform.localScale.y * 0.5f > transform.localPosition.y + transform.localScale.y * 0.5f
@@ -228,6 +228,7 @@ public class Enemy : MonoBehaviour {
 		}
         else
         {
+            // Change direction when hitting a block
             if (CurrType.ToString().Contains("WALK")
                 && transform.localPosition.y + transform.localScale.y * 0.5f >= CollidedRef.transform.position.y
                 && transform.localPosition.y - transform.localScale.y * 0.5f <= CollidedRef.transform.position.y)
