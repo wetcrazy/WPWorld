@@ -18,8 +18,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private Vector3 respawnPt;
     private Vector3 OrignScale;
 
-    private GameObject[] SpawnPoints;
-    Vector3 SpawnPoint;
 
     // For Respawning Cool Down
     private float currTimer;
@@ -69,17 +67,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             //Setting the username text that is above the player objects
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-
-            //Set the spawning position for the players
-            if (PhotonNetwork.IsMasterClient)
-            {
-                SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-                
-                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
-                {
-                    photonView.RPC("SetPosition", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.position);
-                }
-            }
         }
         else
         {
@@ -266,11 +253,5 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private void PlayerAddPoints(int PointsToAdd)
     {
         PlayerScore += PointsToAdd;
-    }
-
-    [PunRPC]
-    void SetPosition(Vector3 NewPos)
-    {
-        gameObject.transform.position = NewPos;
     }
 }

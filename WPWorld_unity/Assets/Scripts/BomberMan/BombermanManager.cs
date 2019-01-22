@@ -81,15 +81,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
-
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            if(player.ActorNumber == OwnerActorID)
-            {
-                newBomb.GetComponent<Bomb>().SetBombOwnerPUN(player);
-                break;
-            }
-        }    
+        newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
     }
 
     // Spawn Bomb (Singleplayer)
