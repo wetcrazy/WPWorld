@@ -66,7 +66,7 @@ public class ARMultiplayerController : MonoBehaviour
         ToGameMoveAnchor();
 
         //Get spawning positions of level
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnected)
         {
             SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
         }

@@ -108,7 +108,9 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             InvurnablePlayer();
         }
 
-        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
+        //GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
+
+        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.position.x.ToString() + ", " + this.transform.position.y.ToString() + ", " + this.transform.position.z.ToString();
     }
 
 

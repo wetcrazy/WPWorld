@@ -40,6 +40,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         EnableBombUi();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
+
+        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
+        {
+            Debug02.text = "I EXIST";
+        }
     }
 
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
