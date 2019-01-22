@@ -8157,6 +8157,8 @@ GameObject:
   - component: {fileID: 65088464951936906}
   - component: {fileID: 54726047025614114}
   - component: {fileID: 114616104759670062}
+  - component: {fileID: 114383657137197238}
+  - component: {fileID: 114713478277503424}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -11403,7 +11405,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1466951459312880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 122.20677, y: 205.29865, z: -314.55356}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224203202338553876}
@@ -39216,7 +39218,6 @@ MonoBehaviour:
   DeathSFX: Giggs
   CurrPoints: 0
   DeathCounter: -9
-  IsLocalPlayer: 0
 --- !u!114 &114060600956798622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40481,6 +40482,27 @@ MonoBehaviour:
   ID: 1
   TimeToFall: 1
   InteractedSFX: FallingBlock
+--- !u!114 &114383657137197238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920809897135658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114713478277503424}
+  viewIdField: 0
+  InstantiationId: 1
+  isRuntimeInstantiated: 0
 --- !u!114 &114387993213571108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -41601,6 +41623,20 @@ MonoBehaviour:
   IsMoving: 0
   SmoothMovement: 0
   CannotReset: 1
+--- !u!114 &114713478277503424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920809897135658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
 --- !u!114 &114726553418547982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -42683,8 +42719,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 5.000001, y: 0.0000011920934, z: 5.000008}
+    m_Center: {x: 0.00048828125, y: 0, z: 0}
+    m_Extent: {x: 4.9999237, y: 0.00000005960829, z: 5.000306}
   m_DirtyAABB: 0
 --- !u!137 &137299338489902370
 SkinnedMeshRenderer:
@@ -42730,8 +42766,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 4.9999995, y: 0.0000011920934, z: 4.9999957}
+    m_Center: {x: 0.00048828125, y: 0, z: 0}
+    m_Extent: {x: 4.9999237, y: 0.00000005960828, z: 5.0003057}
   m_DirtyAABB: 0
 --- !u!137 &137955978329182378
 SkinnedMeshRenderer:
@@ -42777,8 +42813,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: -5.684342e-14, z: 0}
-    m_Extent: {x: 5.000001, y: 0.0000011920935, z: 5.0000014}
+    m_Center: {x: 0.00048828125, y: 0, z: 0}
+    m_Extent: {x: 4.9999237, y: 0.00000005960828, z: 5.0003057}
   m_DirtyAABB: 0
 --- !u!183 &183000711220447110
 Cloth:
