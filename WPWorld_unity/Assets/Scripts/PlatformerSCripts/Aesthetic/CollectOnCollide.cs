@@ -35,14 +35,14 @@ public class CollectOnCollide : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             if(RenderRef.isVisible)
             {
                 Collect();
 
                 // Add points to the player who collects the coin
-                other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
+                    other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
             }
         }
     }

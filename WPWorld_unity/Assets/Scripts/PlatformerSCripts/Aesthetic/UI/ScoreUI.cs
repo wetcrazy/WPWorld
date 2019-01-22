@@ -17,7 +17,7 @@ public class ScoreUI : MonoBehaviour {
         PlayerInstances = GameObject.FindGameObjectsWithTag("Player");
         for(int i = 0; i < PlayerInstances.Length; i++)
         {
-            if (!PlayerInstances[i].GetComponent<TPSLogic>().IsLocalPlayer)
+            if (!PlayerInstances[i].GetComponent<TPSLogic>().isMine())
                 continue;
             PlayerRef = PlayerInstances[i].GetComponent<TPSLogic>();
         }
