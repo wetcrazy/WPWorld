@@ -54,7 +54,6 @@ public class ARMultiplayerController : MonoBehaviour
     List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     
     private GameObject[] SpawnPoints;
-    Vector3 SpawnPoint;
     PhotonView photonView;
 
     private void Start()
