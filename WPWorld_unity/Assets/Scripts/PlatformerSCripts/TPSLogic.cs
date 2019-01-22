@@ -374,7 +374,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     {
                         if (block.ID == BlockID)
                         {
-                            //block;
+                            block.Destroy();
                             break;
                         }
                     }
