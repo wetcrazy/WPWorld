@@ -283,6 +283,7 @@ public class ARMultiplayerController : MonoBehaviour
         }
         else
         {
+            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
             PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
         }
 
