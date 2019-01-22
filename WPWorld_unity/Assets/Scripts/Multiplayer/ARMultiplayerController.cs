@@ -64,12 +64,6 @@ public class ARMultiplayerController : MonoBehaviour
 
         //Initialise Screens
         ToGameMoveAnchor();
-
-        //Get spawning positions of level
-        if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnected)
-        {
-            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-        }
     }
 
     private void Update()
@@ -203,22 +197,7 @@ public class ARMultiplayerController : MonoBehaviour
         AnchorRef.SetActive(false);
 
 
-        if (PhotonNetwork.IsConnected)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                RequestSpawnPoint(PhotonNetwork.IsMasterClient);
-            }
-            else
-            {
-                //Request the host for a spawn point and then instantiate the player
-                photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
-            }
-        }
-        else
-        {
-            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
-        }
+        
     }
 
     private void GameScreenUpdate()
@@ -287,6 +266,28 @@ public class ARMultiplayerController : MonoBehaviour
     {
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
         _GroundObject.tag = LevelObject.tag;
+        
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                //Get spawning positions of level
+                SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+                RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+            }
+            else
+            {
+                //Request the host for a spawn point and then instantiate the player
+                photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+            }
+        }
+        else
+        {
+            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
+        }
+
+       
     }
     
     // Shifts the object back if there is an offset
@@ -330,7 +331,6 @@ public class ARMultiplayerController : MonoBehaviour
             //When found an available sawn point
             if (isMasterClient)
             {
-                //If host, just instantiate the player obj
                 PhotonNetwork.Instantiate(PlayerObjectPrefab.name, spawnpoint.transform.position, Quaternion.identity, 0);
             }
             else

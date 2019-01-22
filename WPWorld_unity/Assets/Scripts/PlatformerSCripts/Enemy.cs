@@ -194,10 +194,30 @@ public class Enemy : MonoBehaviour {
                 && CollidedRef.transform.localPosition.y - CollidedRef.transform.localScale.y * 0.5f > transform.localPosition.y + transform.localScale.y * 0.5f
                 )
             {
+                ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+
                 if (isGrounded)
+                {
+                    object[] content02 = new object[]
+                               {
+                                   ID
+                               };
+
+                    Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_GROUND, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                     GroundDeath();
+                }
                 else
+                {
+                    object[] content02 = new object[]
+                               {
+                                   ID
+                               };
+
+                    Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                     AirDeath();
+                }
 
                 CollidedRef.GetComponent<TPSLogic>().PushUp();
             }

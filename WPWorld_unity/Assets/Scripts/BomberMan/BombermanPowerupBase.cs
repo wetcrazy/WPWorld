@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BombermanPowerupBase : MonoBehaviour
 {
-    private bool isCollected;
+    public bool isCollected { get; set; }
+    [HideInInspector]
+    public GameObject _player = null;
   
     // Constructor
     public BombermanPowerupBase()
@@ -38,6 +40,7 @@ public class BombermanPowerupBase : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
+            _player = other.gameObject;
             isCollected = true;
         }
     }
