@@ -202,15 +202,23 @@ public class ARMultiplayerController : MonoBehaviour
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
 
-        if(PhotonNetwork.IsMasterClient)
+
+        if (PhotonNetwork.IsConnected)
         {
-            RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+            }
+            else
+            {
+                //Request the host for a spawn point and then instantiate the player
+                photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+            }
         }
         else
         {
-            //Request the host for a spawn point and then instantiate the player
-            photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
-        }        
+            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
+        }
     }
 
     private void GameScreenUpdate()
