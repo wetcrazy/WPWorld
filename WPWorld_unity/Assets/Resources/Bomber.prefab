@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4455753509270180}
   - component: {fileID: 54409289943161322}
   - component: {fileID: 135026204472636764}
-  - component: {fileID: 114251717193396610}
   - component: {fileID: 114263014802556860}
   - component: {fileID: 114327245309723994}
   - component: {fileID: 114332786401930472}
@@ -44,7 +43,7 @@ GameObject:
   - component: {fileID: 114281783279227050}
   m_Layer: 0
   m_Name: Heart Container
-  m_TagString: Untagged
+  m_TagString: Heart Container
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,8 +180,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1030502945735488}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -32.23, y: 0, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 4521616401081900}
   - {fileID: 4584406687839278}
@@ -485,23 +484,6 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &114251717193396610
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030502945735488}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3389d52423e2583479b1dece2ee5a0fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Blockprefab: {fileID: 1920404016355918, guid: 3894e81030de6b04db99042b4f3555a5,
-    type: 2}
-  lookDir: {x: 0, y: 0, z: 0}
-  movementSpeed: 1
-  movementMultiplier: 0
-  movetime: 1
 --- !u!114 &114263014802556860
 MonoBehaviour:
   m_ObjectHideFlags: 1

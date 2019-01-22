@@ -16,6 +16,8 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private int MAX_NUMBOMB;
     private int currNUMBomb;
     private Vector3 respawnPt;
+    private Vector3 OrignScale;
+
 
     // For Respawning Cool Down
     private float currTimer;
@@ -35,8 +37,15 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         set { Score = value; }
     }
 
-    // Invurnable Frame
-    private const float MAX_invurnTime = 3.0f;
+    // Invurnable Frame (Shouldn't be in reset function)
+    private const float MAX_invurnTime = 2.0f;
+    private float curr_invurnTime = 0.0f;
+    private bool isDmgtaken = false;
+    private bool isBlinking = false;
+
+    // Heart Container
+    private GameObject HeartContainer;
+
 
     private void Awake()
     {
@@ -52,10 +61,11 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private void Start()
     {
         Reset();
+        OrignScale = this.transform.localScale;
 
-        //Setting the username text that is above the player objects
         if (photonView.IsMine)
         {
+            //Setting the username text that is above the player objects
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
         }
         else
@@ -66,10 +76,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
-        {
-            return;
-        }
+        //if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        //{
+        //    return;
+        //}
 
         // Death Respawn
         if (isDead)
@@ -91,6 +101,16 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
                 currTimer += 1.0f * Time.deltaTime;
             }
         }
+           
+        // Invurnable Frame
+        if (isDmgtaken)
+        {        
+            InvurnablePlayer();
+        }
+
+        //GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
+
+        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.position.x.ToString() + ", " + this.transform.position.y.ToString() + ", " + this.transform.position.z.ToString();
     }
 
 
@@ -135,7 +155,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
         currNUMBomb += 1;
     }
-
     // Respawn the player
     public void Respawn()
     {
@@ -154,6 +173,35 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
         Respawn();
     }
+    // Player blinking
+    public void InvurnablePlayer()
+    {     
+        if (curr_invurnTime > MAX_invurnTime)
+        {          
+            isDmgtaken = false;        
+            curr_invurnTime = 0.0f;
+            this.transform.localScale = OrignScale;
+            return;
+        }
+        else
+        {         
+            curr_invurnTime += 1.0f * Time.deltaTime;          
+        }
+
+        if (isBlinking)
+        {
+            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+            this.transform.localScale = new Vector3(0, 0, 0);
+            isBlinking = false;  
+        }
+        else
+        {
+            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
+            this.transform.localScale = OrignScale;
+            isBlinking = true;
+        }
+
+    }
 
     // Collision
     private void OnTriggerEnter(Collider other)
@@ -161,7 +209,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         // Fire
         if (other.gameObject.tag == "BombFire")
         {
-            currLives -= 1;
+            if (!isDmgtaken)
+            {
+                // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Dmg Taken";
+                // currLives -= 1;
+                isDmgtaken = true;
+            }
         }
     }
 
@@ -186,13 +239,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
     }
 
-    // Highscore
-    [PunRPC]
-    private void PlayerAddPoints(int PointsToAdd)
-    {
-        PlayerScore += PointsToAdd;
-    }
-
     // Setter
     public void SetisDead(bool _boolvalue)
     {
@@ -202,5 +248,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     public void OnBombDestoryed()
     {
         currNUMBomb -= 1;
+    }
+
+    // Highscore
+    [PunRPC]
+    private void PlayerAddPoints(int PointsToAdd)
+    {
+        PlayerScore += PointsToAdd;
     }
 }
