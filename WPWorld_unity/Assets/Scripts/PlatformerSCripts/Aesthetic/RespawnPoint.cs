@@ -57,7 +57,7 @@ public class RespawnPoint : MonoBehaviour {
     {
         if (Interacted)
             return;
-        if(other.tag == "Player")
+        if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             Interacted = true;
             other.GetComponent<PlayerMovement>().SetRespawn(this.transform.position);

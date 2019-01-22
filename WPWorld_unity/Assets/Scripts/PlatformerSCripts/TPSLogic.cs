@@ -76,12 +76,8 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     //The local player instance
     public static GameObject LocalPlayerInstance;
 
-    // Checks if this player is the local player so that UI doesn't need to include photon
-    public bool IsLocalPlayer;
-
     private void Awake()
     {
-        IsLocalPlayer = photonView.IsMine;
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
@@ -426,9 +422,35 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     break;
                 }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int EnemyID = (int)data[0];
+
+                    foreach (var enemy in ListOfEnemies)
+                    {
+                        if (enemy.ID == EnemyID)
+                        {
+                            enemy.AirDeath();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_GROUND:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int EnemyID = (int)data[0];
+
+                    foreach (var enemy in ListOfEnemies)
+                    {
+                        if (enemy.ID == EnemyID)
+                        {
+                            enemy.GroundDeath();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_COIN_PICKUP:
                 break;
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:

@@ -188,16 +188,36 @@ public class Enemy : MonoBehaviour {
 
 		GameObject CollidedRef = collision.gameObject;
 
-		if (CollidedRef.tag == "Player")
+		if (CollidedRef.tag == "Player" && CollidedRef.GetComponent<TPSLogic>().isMine())
 		{
             if(!CollidedRef.GetComponent<TPSLogic>().GetGrounded()
                 && CollidedRef.transform.localPosition.y - CollidedRef.transform.localScale.y * 0.5f > transform.localPosition.y + transform.localScale.y * 0.5f
                 )
             {
+                ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+
                 if (isGrounded)
+                {
+                    object[] content02 = new object[]
+                               {
+                                   ID
+                               };
+
+                    Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_GROUND, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                     GroundDeath();
+                }
                 else
+                {
+                    object[] content02 = new object[]
+                               {
+                                   ID
+                               };
+
+                    Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                     AirDeath();
+                }
 
                 CollidedRef.GetComponent<TPSLogic>().PushUp();
             }
@@ -208,6 +228,7 @@ public class Enemy : MonoBehaviour {
 		}
         else
         {
+            // Change direction when hitting a block
             if (CurrType.ToString().Contains("WALK")
                 && transform.localPosition.y + transform.localScale.y * 0.5f >= CollidedRef.transform.position.y
                 && transform.localPosition.y - transform.localScale.y * 0.5f <= CollidedRef.transform.position.y)

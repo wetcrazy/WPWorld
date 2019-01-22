@@ -77,14 +77,16 @@ public class DestroyOnHit : MonoBehaviour
                 {
                     if (hit.transform.GetComponent<Enemy>())
                     {
+                        Enemy enemyScript = hit.transform.GetComponent<Enemy>();
+
                         object[] content02 = new object[]
                                {
-                                   //Add id
+                                   enemyScript.ID
                                };
 
                         Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
 
-                        hit.transform.GetComponent<Enemy>().AirDeath();
+                        enemyScript.AirDeath();
                     }
                 }
             }
