@@ -54,27 +54,36 @@ public class BounceOnHit : MonoBehaviour {
 
                 //Perform the event locally
                 Bounce();
+
+                // Check for Enemies above the block
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up + transform.right, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up - transform.right, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up + transform.forward, out hit, transform.lossyScale.y)
+                    || Physics.Raycast(transform.position, transform.up - transform.forward, out hit, transform.lossyScale.y)
+                    )
+                {
+                    if (hit.transform.name.Contains("Enemy"))
+                    {
+                        Enemy enemyScript = hit.transform.GetComponent<Enemy>();
+
+                        object[] content02 = new object[]
+                               {
+                                   enemyScript.ID
+                               };
+                        
+                        Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+                        
+                        enemyScript.AirDeath();
+                    }
+                }
             }
         }
 	}
 
     public void Bounce()
     {
-        // Check for Enemies above the block
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up + transform.right, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up - transform.right, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up + transform.forward, out hit, transform.lossyScale.y)
-            || Physics.Raycast(transform.position, transform.up - transform.forward, out hit, transform.lossyScale.y)
-            )
-        {
-            if (hit.transform.name.Contains("Enemy"))
-            {
-                hit.transform.GetComponent<Enemy>().AirDeath();
-            }
-        }
-
         if (BounceSFX != "")
             SoundSystemRef.PlaySFX(BounceSFX);
         RigidRef.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;

@@ -426,9 +426,35 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     break;
                 }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int EnemyID = (int)data[0];
+
+                    foreach (var enemy in ListOfEnemies)
+                    {
+                        if (enemy.ID == EnemyID)
+                        {
+                            enemy.AirDeath();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_GROUND:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int EnemyID = (int)data[0];
+
+                    foreach (var enemy in ListOfEnemies)
+                    {
+                        if (enemy.ID == EnemyID)
+                        {
+                            enemy.GroundDeath();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_COIN_PICKUP:
                 break;
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:
