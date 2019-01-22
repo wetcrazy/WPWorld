@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIPopup : MonoBehaviour {
 
+    [Header("Sound Settings")]
     [SerializeField]
     private string EnterSFX;
 

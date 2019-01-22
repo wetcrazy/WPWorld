@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class MoveOnCollide : MonoBehaviour {
 
+    [Header("Vector3 represents the relative difference.")]
+    [Header("Movement Settings")]
+    // Movement Variables
     [SerializeField]
     private Vector3 MoveAmount;
     [SerializeField]
     private float MoveSpeed;
-
-    [SerializeField]
     private Vector3 MovePosition;
-
     private Vector3 OrgPosition;
-
     public bool IsMoving = false;
 
-    public bool CannotReset;
-    public bool HasStoppedMoving = false;
+    [SerializeField]
+    private bool SmoothMovement;
 
-	// Use this for initialization
-	void Start () {
+    [Space]
+    [Header("Reset Settings")]
+    public bool CannotReset;
+
+    // Use this for initialization
+    void Start () {
         OrgPosition = transform.localPosition;
         MovePosition = transform.localPosition + MoveAmount;
 	}
@@ -31,19 +34,24 @@ public class MoveOnCollide : MonoBehaviour {
         {
             if(Vector3.Distance(transform.localPosition, MovePosition) > transform.localScale.magnitude * 0.01f)
 			{
-				this.transform.localPosition = Vector3.Lerp(transform.localPosition, MovePosition, Time.deltaTime * MoveSpeed);
+                if (SmoothMovement)
+                    this.transform.localPosition = Vector3.Lerp(transform.localPosition, MovePosition, Time.deltaTime * MoveSpeed);
+                else
+                    this.transform.localPosition = Vector3.MoveTowards(transform.localPosition, MovePosition, Time.deltaTime * MoveSpeed);
 			}
             else
 			{
 				this.transform.localPosition = MovePosition;
-                HasStoppedMoving = true;
 			}
         }
         else
         {
             if (Vector3.Distance(transform.localPosition, OrgPosition) > transform.localScale.magnitude * 0.01f)
             {
-                this.transform.localPosition = Vector3.Lerp(transform.localPosition, OrgPosition, Time.deltaTime * MoveSpeed);
+                if (SmoothMovement)
+                    this.transform.localPosition = Vector3.Lerp(transform.localPosition, OrgPosition, Time.deltaTime * MoveSpeed);
+                else
+                    this.transform.localPosition = Vector3.MoveTowards(transform.localPosition, OrgPosition, Time.deltaTime * MoveSpeed);
             }
             else
             {
@@ -57,7 +65,6 @@ public class MoveOnCollide : MonoBehaviour {
         if(other.tag == "Player")
         {
             IsMoving = true;
-            HasStoppedMoving = false;
         }
     }
 

@@ -7,21 +7,22 @@ public class PatrolBlock : MonoBehaviour {
     [SerializeField]
     private float MovementSpeed;
 
+    [Header("Vector3 represents the relative difference.")]
+    [Header("Position Settings")]
+    // Main Patrol Variables
     [SerializeField]
     private Vector3 FirstPoint;
-    [SerializeField]
     private Vector3 FirstPatrolPoint;
-
     [SerializeField]
     private Vector3 SecondPoint;
-    [SerializeField]
     private Vector3 SecondPatrolPoint;
-
     private bool TravelToSecond = true;
 
+    [Space]
+    [Header("Colliding Settings")]
+    // Collide to start variables
     [SerializeField]
     private bool CollideToStart;
-
     private bool HasCollided;
 
     private Transform OrgParent;

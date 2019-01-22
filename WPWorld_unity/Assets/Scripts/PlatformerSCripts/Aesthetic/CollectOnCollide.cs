@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CollectOnCollide : MonoBehaviour {
 
-    private Renderer RenderRef;
+    // Score Variables
+    [Header("Score Settings")]
+    [SerializeField]
+    private int PointsToAdd;
+    public bool HasCollected;
+
+    [Space]
+    [Header("Sound Settings")]
     [SerializeField]
     private string CollectSFX;
 
-    [SerializeField]
-    private int PointsToAdd;
-
-    public bool HasCollected;
-
+    private Renderer RenderRef;
     private SoundSystem SoundSystemRef;
 
 	// Use this for initialization

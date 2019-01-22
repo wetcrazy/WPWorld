@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class DestroyOnHit : MonoBehaviour
 {
+    [Header("ID Settings")]
     public int ID;
 
+    [Space]
+    [Header("Debris Settings")]
     [SerializeField]
     private int AmountOfDebris;
 
     [SerializeField]
     private GameObject Debris;
 
+    [Space]
+    [Header("Sound Settings")]
     [SerializeField]
     private string DestroySFX;
 

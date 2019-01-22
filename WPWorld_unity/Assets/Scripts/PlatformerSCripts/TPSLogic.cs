@@ -30,8 +30,6 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     [SerializeField]
     private string DeathSFX;
 
-    private int PrevPoints;
-
     [SerializeField]
     private int CurrPoints = 0;
     public int CurrPointsPub
@@ -78,8 +76,12 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     //The local player instance
     public static GameObject LocalPlayerInstance;
 
+    // Checks if this player is the local player so that UI doesn't need to include photon
+    public bool IsLocalPlayer;
+
     private void Awake()
     {
+        IsLocalPlayer = photonView.IsMine;
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
@@ -299,10 +301,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
             if (!MoveBlock.CannotReset)
                 MoveBlock.Reset();
             else
-            {
-                if (!MoveBlock.HasStoppedMoving)
-                    MoveBlock.Reset();
-            }
+                MoveBlock.Reset();
         }
 
         foreach(Enemy ClonedEnemy in FindObjectsOfType(typeof(Enemy)) as Enemy[])

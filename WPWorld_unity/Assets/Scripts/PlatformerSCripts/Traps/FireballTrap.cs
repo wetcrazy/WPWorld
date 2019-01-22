@@ -64,12 +64,4 @@ public class FireballTrap : MonoBehaviour {
             TimeElapsedObj += Time.deltaTime;
         }
 	}
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.name.Contains("Water"))
-        {
-            Debug.Log("Entered Water, Input Particle Here");
-        }
-    }
 }

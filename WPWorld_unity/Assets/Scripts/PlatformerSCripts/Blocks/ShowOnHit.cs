@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShowOnHit : MonoBehaviour {
 
+    [Header("ID Settings")]
     public int ID;
 
 	private BoxCollider ColliderRef;
@@ -12,7 +13,9 @@ public class ShowOnHit : MonoBehaviour {
 	private Vector3 OrgCenter;
 	private Vector3 OrgSize;
 
-	[SerializeField]
+    [Space]
+    [Header("Sound Settings")]
+    [SerializeField]
 	private string ShowSFX;
 
 	private SoundSystem SoundSystemRef;
