@@ -37,11 +37,13 @@ public class ARMultiplayerController : MonoBehaviour
     GameObject MainCameraRef;
     [SerializeField]
     GameObject AnchorRef;
+    [SerializeField]
+    GameObject SpawnPlayersButton;
 
     [Header("Game Screen Objects")]
     [SerializeField]
     GameObject LevelObject;
-    
+
     SoundSystem soundSystem = null;
 
     //Reference to the clone of GameObjPrefab
@@ -52,7 +54,7 @@ public class ARMultiplayerController : MonoBehaviour
     public bool isWon;
     Vector3 FirstTouchWorldPoint = new Vector3();
     List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
-    
+
     private GameObject[] SpawnPoints;
     PhotonView photonView;
 
@@ -61,7 +63,8 @@ public class ARMultiplayerController : MonoBehaviour
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
         photonView = PhotonView.Get(this);
-
+        
+        SpawnPlayersButton.SetActive(false);
         //Initialise Screens
         ToGameMoveAnchor();
     }
@@ -73,7 +76,7 @@ public class ARMultiplayerController : MonoBehaviour
             case STATE_SCREEN.SCREEN_GAME_MOVEANCHOR:
                 {
                     GameMoveAnchorUpdate();
-                    
+
                     break;
                 }
             case STATE_SCREEN.SCREEN_GAME:
@@ -106,7 +109,7 @@ public class ARMultiplayerController : MonoBehaviour
         MainCameraRef.transform.position = MainCamera.transform.position;
         //Set the forward to always be in the direction of camera but never allow the y axis to change to ensure the game anchor object to only move on the xz plane
         MainCameraRef.transform.forward = new Vector3(MainCamera.transform.forward.x, MainCamera.transform.position.y, MainCamera.transform.forward.z);
-        
+
         //If move anchor has not been spawned yet
         if (!isSpawned && Input.touchCount > 0)
         {
@@ -118,7 +121,7 @@ public class ARMultiplayerController : MonoBehaviour
         {
             AnchorRef.transform.position = _GroundObject.transform.position;
             AnchorRef.transform.rotation = _GroundObject.transform.rotation;
-            UpdateOffSet();
+            //UpdateOffSet();
         }
 
         //foreach (DetectedPlane thePlane in List_AllPlanes)
@@ -195,14 +198,11 @@ public class ARMultiplayerController : MonoBehaviour
         //Spawn the level
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
-
-
-        
     }
 
     private void GameScreenUpdate()
     {
-        UpdateOffSet();
+        //UpdateOffSet();
     }
 
     public void ExitGameScreen()
@@ -266,22 +266,30 @@ public class ARMultiplayerController : MonoBehaviour
     {
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
         _GroundObject.tag = LevelObject.tag;
-        
+
         if (PhotonNetwork.IsConnected)
         {
             if (PhotonNetwork.IsMasterClient)
             {
                 //Get spawning positions of level
                 SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-                RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+
+                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                {
+                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.localPosition);
+                }
+                //RequestSpawnPoint(PhotonNetwork.IsMasterClient);
             }
             else
             {
                 //Request the host for a spawn point and then instantiate the player
-                photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+                //photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+                photonView.RPC("AddNumberOfPlayerReady", PhotonNetwork.MasterClient);
             }
 
-            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+            //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+
+
         }
         else
         {
@@ -289,7 +297,7 @@ public class ARMultiplayerController : MonoBehaviour
             PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
         }
     }
-    
+
     // Shifts the object back if there is an offset
     private void UpdateOffSet()
     {
@@ -330,7 +338,7 @@ public class ARMultiplayerController : MonoBehaviour
             {
                 continue;
             }
-            
+
             //When found an available sawn point
             if (isMasterClient)
             {
@@ -342,10 +350,36 @@ public class ARMultiplayerController : MonoBehaviour
                 //Send the spawnpoint pos to the player that requested it
                 photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.CurrentRoom.GetPlayer(ActorID), spawnpoint.transform.localPosition);
             }
-            
+
             //Disable the spawnpoint after being used
             spawnpoint.SetActive(false);
             break;
         }
+    }
+
+    int NumOfPlayersReady = 0;
+    bool EveryoneReady = false;
+
+    [PunRPC]
+    void AddNumberOfPlayerReady()
+    {
+        ++NumOfPlayersReady;
+
+        if(NumOfPlayersReady == PhotonNetwork.PlayerList.Length)
+        {
+            EveryoneReady = true;
+            SpawnPlayersButton.SetActive(true);
+        }
+    }
+
+    [PunRPC]
+    public void SpawnPlayer()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("SpawnPlayer", RpcTarget.Others);
+        }
+
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
     }
 }

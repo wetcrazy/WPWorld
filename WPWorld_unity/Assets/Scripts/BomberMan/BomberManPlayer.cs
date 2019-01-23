@@ -68,7 +68,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             //Setting the username text that is above the player objects
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-            PlayerObjects = GameObject.FindGameObjectsWithTag("Player");
+            //PlayerObjects = GameObject.FindGameObjectsWithTag("Player");
         }
         else
         {
