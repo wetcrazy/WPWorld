@@ -20,8 +20,6 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private Vector3 MovementDir = Vector3.zero;
-
-    [SerializeField] 
     private float MovementMultiplier;
 
     [SerializeField]
@@ -275,6 +273,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Respawn()
     {
-        this.transform.position = RespawnPoint;
+        this.transform.localPosition = RespawnPoint;
     }
 }
