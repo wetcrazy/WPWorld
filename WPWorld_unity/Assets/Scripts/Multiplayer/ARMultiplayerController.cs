@@ -280,14 +280,14 @@ public class ARMultiplayerController : MonoBehaviour
                 //Request the host for a spawn point and then instantiate the player
                 photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
             }
+
+            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
         }
         else
         {
             SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
             PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
         }
-
-        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
     }
     
     // Shifts the object back if there is an offset
