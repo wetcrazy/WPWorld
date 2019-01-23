@@ -9,44 +9,51 @@ using UnityEngine.UI;
 
 public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 {
+    [Header("Bomb Prefab")]
     // For bomb Spawning
     [SerializeField]
     GameObject BombPrefab;
 
+    [Header("PowerUp Prefab")]
+    // Power Ups
+    public List<GameObject> List_PowerUpBlocks;
+
+    [Header("Bomberman UI")]
     // For Bomb UI
     public GameObject AnchorUIObj;
-
     public GameObject SpawnBombButton;
-    
+
+    [Header("HighScore")]
     // For Highscore
     public static int PointsForKilling = 100;
 
+    [Header("Debugging Text")]
     // For Debugging
     public Text Debug01;
     public Text Debug02;
+
+
+    private Quaternion NewRotation;
 
     // UPDATE
     private void Update()
     {
         EnableBombUi();
+        NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
+
+        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
+        {
+            Debug02.text = "I EXIST";
+        }
     }
-
-
 
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
         _selectedOBJ.GetComponent<BomberManPlayer>().SetisDead(_boolValue);
     }
 
-    public void DestoryMyBombCount(GameObject _selectedOBJ)
-    {
-        _selectedOBJ.GetComponent<BomberManPlayer>().OneBombDestory();
-    }
-
     public void LocalPlayerCall_SpawnBomb()
-    {
-        Debug02.text = "Pressing";
-
+    {  
         if(PhotonNetwork.IsConnected)
         {
             BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
@@ -55,63 +62,50 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().onBombButtonDown();
         }
-       
-        Debug02.text = "Press Already";
     }
 
+    // Bomb UI
     public void EnableBombUi()
     {
         if(AnchorUIObj.activeSelf)
         {
-            SpawnBombButton.SetActive(false);
+            SpawnBombButton.SetActive(false);         
         }
         else
         {
-            SpawnBombButton.SetActive(true);
+            SpawnBombButton.SetActive(true);        
         }
     }
 
+    // =============
+    //    EVENTS
+    // =============
 
-    // Event Functions
-
-    // Spawn Bomb
+    // Spawn Bomb (Multiplayer)
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
-        Debug01.text = "I Was here 01";
-        GameObject newBomb = Instantiate(BombPrefab, BombPos, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+        GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
-
-        Debug01.text = "I Was here 02";
-        foreach (Player player in PhotonNetwork.PlayerListOthers)
-        {
-            if(player.ActorNumber == OwnerActorID)
-            {
-                Debug01.text = "I Was here 03";
-                newBomb.GetComponent<Bomb>().SetBombOwnerPUN(player);
-                break;
-            }
-        }
-
-        Debug01.text = "I Was here 04";
+        newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
     }
 
+    // Spawn Bomb (Singleplayer)
     public void SpawnBomb(Vector3 BombPos, int firepower, GameObject player)
     {
-        Debug01.text = "I Was here 01";
-        GameObject newBomb = Instantiate(BombPrefab, BombPos, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+        GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
-
-        Debug01.text = "I Was here 02";
-
-
         newBomb.GetComponent<Bomb>().SetBombOwner(player);
-
-
-        Debug01.text = "I Was here 03";
-
     }
 
-    // Player death
+    // Spawn Power Up 
+    public void SpawnPowerUp(Vector3 PowerPos, int randNum)
+    {
+        Debug01.text = "Spawning Power";
+        var newPower = Instantiate(List_PowerUpBlocks[randNum], PowerPos, NewRotation, ARMultiplayerController._GroundObject.transform);
+        Debug01.text = "Spawned Power";
+    }
+
+    // Player death (Multiplayer)
     public void PlayerDeath(int OwnerActorID)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -127,7 +121,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
-    // EVENTS
+    // ==============
+    //  EVENT TRIGGER
+    // ==============
+
     public void OnEvent(EventData photonEvent)
     {
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
@@ -147,6 +144,17 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                     PlayerDeath(photonEvent.Sender);
 
                     break;  
+                }
+            case EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_POWERUP: // PowerUp
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+
+                    var SpawnPos = (Vector3)data[0];
+                    var RandNum = (int)data[1];
+
+                    SpawnPowerUp(SpawnPos, RandNum);
+
+                    break;
                 }
             default:
                 break;

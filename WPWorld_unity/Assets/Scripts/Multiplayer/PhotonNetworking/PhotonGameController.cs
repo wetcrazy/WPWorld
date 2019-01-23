@@ -35,17 +35,20 @@ public class PhotonGameController : MonoBehaviour {
     public void SubmitScore()
     {
         int ScoreToSubmit = 0;
+        string EventShortCode = "";
 
         switch (SceneManagerHelper.ActiveSceneName)
         {
             case "BomberMan":
                 {
                     ScoreToSubmit = BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore;
+                    EventShortCode = "SUBMIT_SCORE_BOMBERMAN";
                     break;
                 }
             case "Platformer":
                 {
                     ScoreToSubmit = TPSLogic.LocalPlayerInstance.GetComponent<TPSLogic>().CurrPointsPub;
+                    EventShortCode = "SUBMIT_SCORE_PLATFORMER";
                     break;
                 }
 
@@ -53,7 +56,7 @@ public class PhotonGameController : MonoBehaviour {
                 break;
         }
 
-        new GameSparks.Api.Requests.LogEventRequest().SetEventKey("SUBMIT_SCORE").SetEventAttribute("SCORE", ScoreToSubmit)
+        new GameSparks.Api.Requests.LogEventRequest().SetEventKey(EventShortCode).SetEventAttribute("SCORE", ScoreToSubmit)
             .Send((response) => {
             if (!response.HasErrors)
             {
@@ -88,10 +91,27 @@ public class PhotonGameController : MonoBehaviour {
         }
 
         LeaderboardUI.SetActive(true);
-        
+
+        string LeaderboardShortCode = "";
+        switch (SceneManagerHelper.ActiveSceneName)
+        {
+            case "BomberMan":
+                {
+                    LeaderboardShortCode = "LEADERBOARD_BOMBERMAN";
+                    break;
+                }
+            case "Platformer":
+                {
+                    LeaderboardShortCode = "LEADERBOARD_PLATFORMER";
+                    break;
+                }
+            default:
+                break;
+        }
+
         new GameSparks.Api.Requests.LeaderboardDataRequest()
             .SetEntryCount(10)
-            .SetLeaderboardShortCode("LEADERBOARD")
+            .SetLeaderboardShortCode(LeaderboardShortCode)
             .Send((response) => {
             if (!response.HasErrors)
             {

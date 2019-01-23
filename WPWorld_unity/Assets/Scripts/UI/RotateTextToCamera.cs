@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateTextToCamera : MonoBehaviour {
     GameObject CameraObject;
 
-    private void Awake()
+    private void Start()
     {
         CameraObject = GameObject.FindGameObjectWithTag("MainCamera");
     }

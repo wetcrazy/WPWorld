@@ -30,8 +30,6 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     [SerializeField]
     private string DeathSFX;
 
-    private int PrevPoints;
-
     [SerializeField]
     private int CurrPoints = 0;
     public int CurrPointsPub
@@ -67,12 +65,13 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private SoundSystem SoundSystemRef;
 
     private List<CollectOnCollide> ListOfCoins = new List<CollectOnCollide>();
-    private List<DestroyOnHit> ListOfBricks = new List<DestroyOnHit>();
-    private List<ShowOnHit> ListOfTrolls = new List<ShowOnHit>();
-    private List<SpawnOnHit> ListOfSpawns = new List<SpawnOnHit>();
+    private List<DestroyOnHit> ListOfBreakables = new List<DestroyOnHit>();
+    private List<ShowOnHit> ListOfHidden = new List<ShowOnHit>();
+    private List<SpawnOnHit> ListOfSpawners = new List<SpawnOnHit>();
     private List<Enemy> ListOfEnemies = new List<Enemy>();
     private List<FallOnTop> ListOfFalling = new List<FallOnTop>();
     private List<MoveOnCollide> ListOfMoving = new List<MoveOnCollide>();
+    private List<BounceOnHit> ListOfBouncingBlocks = new List<BounceOnHit>();
 
     //The local player instance
     public static GameObject LocalPlayerInstance;
@@ -105,12 +104,13 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         }
 
         ListOfCoins.AddRange(FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[]);
-        ListOfBricks.AddRange(FindObjectsOfType(typeof(DestroyOnHit)) as DestroyOnHit[]);
-        ListOfTrolls.AddRange(FindObjectsOfType(typeof(ShowOnHit)) as ShowOnHit[]);
-        ListOfSpawns.AddRange(FindObjectsOfType(typeof(SpawnOnHit)) as SpawnOnHit[]);
+        ListOfBreakables.AddRange(FindObjectsOfType(typeof(DestroyOnHit)) as DestroyOnHit[]);
+        ListOfHidden.AddRange(FindObjectsOfType(typeof(ShowOnHit)) as ShowOnHit[]);
+        ListOfSpawners.AddRange(FindObjectsOfType(typeof(SpawnOnHit)) as SpawnOnHit[]);
         ListOfEnemies.AddRange(FindObjectsOfType(typeof(Enemy)) as Enemy[]);
         ListOfFalling.AddRange(FindObjectsOfType(typeof(FallOnTop)) as FallOnTop[]);
         ListOfMoving.AddRange(FindObjectsOfType(typeof(MoveOnCollide)) as MoveOnCollide[]);
+        ListOfBouncingBlocks.AddRange(FindObjectsOfType(typeof(BounceOnHit)) as BounceOnHit[]);
 
         //Setting the username text that is above the player objects
         if (photonView.IsMine)
@@ -277,13 +277,13 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 CoinRef.Reset();
         }
 
-        foreach(DestroyOnHit BrickRef in ListOfBricks)
+        foreach(DestroyOnHit BrickRef in ListOfBreakables)
             BrickRef.Reset();
 
-        foreach(ShowOnHit TrollRef in ListOfTrolls)
+        foreach(ShowOnHit TrollRef in ListOfHidden)
             TrollRef.Reset();
 
-        foreach (SpawnOnHit SpawnRef in ListOfSpawns)
+        foreach (SpawnOnHit SpawnRef in ListOfSpawners)
             SpawnRef.Reset();
 
         foreach (Enemy EnemyRef in ListOfEnemies)
@@ -297,10 +297,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
             if (!MoveBlock.CannotReset)
                 MoveBlock.Reset();
             else
-            {
-                if (!MoveBlock.HasStoppedMoving)
-                    MoveBlock.Reset();
-            }
+                MoveBlock.Reset();
         }
 
         foreach(Enemy ClonedEnemy in FindObjectsOfType(typeof(Enemy)) as Enemy[])
@@ -312,6 +309,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         foreach(GivePowerUpOnCollide PowerUpRef in FindObjectsOfType(typeof(GivePowerUpOnCollide)) as GivePowerUpOnCollide[])
             Destroy(PowerUpRef.gameObject);
 
+        // IMPORTANT TO RESET
         GetComponent<PlayerPowerUp>().Reset();
     }
 
@@ -349,19 +347,110 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
         {
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BOUNCE:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int BlockID = (int)data[0];
+
+                    foreach (var block in ListOfBouncingBlocks)
+                    {
+                        if (block.ID == BlockID)
+                        {
+                            block.Bounce();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BREAK:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int BlockID = (int)data[0];
+
+                    foreach (var block in ListOfBreakables)
+                    {
+                        if (block.ID == BlockID)
+                        {
+                            block.Destroy();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_FALL:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int BlockID = (int)data[0];
+
+                    foreach (var block in ListOfFalling)
+                    {
+                        if(block.ID == BlockID)
+                        {
+                            block.Fall();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_SPAWNER:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int BlockID = (int)data[0];
+
+                    foreach (var block in ListOfSpawners)
+                    {
+                        if (block.ID == BlockID)
+                        {
+                            block.Spawn();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_HIDDEN:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int BlockID = (int)data[0];
+
+                    foreach (var block in ListOfHidden)
+                    {
+                        if (block.ID == BlockID)
+                        {
+                            block.Show();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int EnemyID = (int)data[0];
+
+                    foreach (var enemy in ListOfEnemies)
+                    {
+                        if (enemy.ID == EnemyID)
+                        {
+                            enemy.AirDeath();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_GROUND:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int EnemyID = (int)data[0];
+
+                    foreach (var enemy in ListOfEnemies)
+                    {
+                        if (enemy.ID == EnemyID)
+                        {
+                            enemy.GroundDeath();
+                            break;
+                        }
+                    }
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_COIN_PICKUP:
                 break;
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:
@@ -375,6 +464,17 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
             default:
                 break;
         }
+    }
+
+    //Adds this script as one of the callback targets
+    public void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    public void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
 
     /// <summary>

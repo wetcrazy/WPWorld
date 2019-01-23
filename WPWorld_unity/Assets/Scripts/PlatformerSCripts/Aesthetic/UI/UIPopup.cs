@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIPopup : MonoBehaviour {
 
+    [Header("Sound Settings")]
     [SerializeField]
     private string EnterSFX;
 
@@ -27,7 +28,7 @@ public class UIPopup : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             transform.GetChild(0).gameObject.SetActive(true);
             if (EnterSFX != "")
@@ -37,7 +38,7 @@ public class UIPopup : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }

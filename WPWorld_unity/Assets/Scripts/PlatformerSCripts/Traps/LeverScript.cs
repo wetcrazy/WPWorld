@@ -4,26 +4,40 @@ using UnityEngine;
 
 public class LeverScript : MonoBehaviour {
 
+    [Header("ID Settings")]
+    public int ID;
+
     // Shared Variables
+    [Header("Main Settings")]
     [SerializeField]
     private bool HasInteracted;
     private bool HasDoneAction = false;
 
+    [Space]
     // Animation Variables
+    [Header("Animation Settings")]
     private Vector3 LeverRotation;
     private Vector3 MoveToRotation;
-    public float LeverSpeed;
+    [SerializeField]
+    private float LeverSpeed;
 
+    [Space]
     // Sound Variables
+    [Header("Sound Settings")]
     [SerializeField]
     private string LeverSFX;
+    private SoundSystem SoundSystemRef;
 
+    // All game objects to trigger
+    [Header("Objects to Trigger")]
     public List<GameObject> ObjectsToChange = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
         LeverRotation = new Vector3(-55, 0, 0);
         MoveToRotation = new Vector3(-55, 0, 0);
+
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
     }
 	
 	// Update is called once per frame
@@ -38,6 +52,9 @@ public class LeverScript : MonoBehaviour {
             {
                 Revert();
             }
+
+            if (LeverSFX != "")
+                SoundSystemRef.PlaySFX(LeverSFX);
         }
 
         if(Vector3.Distance(LeverRotation, MoveToRotation) > transform.localScale.x)

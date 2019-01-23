@@ -84,6 +84,15 @@ public class FallOnTop : MonoBehaviour {
 		{
 			if (hit.transform.tag == "Player")
 			{
+                //Send event to all players that this block has fallen
+                object[] content = new object[]
+                    {
+                        ID
+                    };
+
+                ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+                Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_FALL, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                 Fall();
 			}
 		}

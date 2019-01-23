@@ -11,31 +11,35 @@ public enum BUTTONTYPE
 
 public class ButtonScript : MonoBehaviour {
 
+    public int ID;
+
     public BUTTONTYPE CurrType;
 
     // General Variables
     private bool HasInteracted;
     private bool HasStarted = true;
 
+    // Animation Variables
     private float OrgScale;
     private Vector3 AlteringScale;
-
-    // One Time Variables
-
-    // Toggle Variables
+    public float ButtonSpeed;
 
     // Timer Variables
     public float TimeToReset;
     private float TimeElapsed;
 
+    // Sound Variables
     public string ButtonSFX;
+    private SoundSystem SoundSystemRef;
 
     public List<GameObject> ObjectsToChange = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
         OrgScale = transform.GetChild(0).localScale.y;
-        AlteringScale = transform.GetChild(0).localScale;   
+        AlteringScale = transform.GetChild(0).localScale;
+
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 	}
 	
 	// Update is called once per frame
@@ -47,7 +51,15 @@ public class ButtonScript : MonoBehaviour {
             switch (CurrType)
             {
                 case (BUTTONTYPE.ONETIME):
-                    Action();
+                    if(HasStarted)
+                    {
+                        Action();
+                        AlteringScale.y = 0.5f;
+                        if (ButtonSFX != "")
+                            SoundSystemRef.PlaySFX(ButtonSFX);
+                        HasStarted = false;
+                    }
+
                     HasInteracted = false;
                     break;
                 case (BUTTONTYPE.TOGGLE):
@@ -56,13 +68,18 @@ public class ButtonScript : MonoBehaviour {
                         Action();
                         HasStarted = false;
                         HasInteracted = false;
+                        AlteringScale.y = 0.5f;
                     }
                     else
                     {
                         Revert();
                         HasStarted = true;
                         HasInteracted = false;
+                        AlteringScale.y = 0.5f;
                     }
+
+                    if (ButtonSFX != "")
+                        SoundSystemRef.PlaySFX(ButtonSFX);
 
                     HasInteracted = false;
                     break;
@@ -71,6 +88,11 @@ public class ButtonScript : MonoBehaviour {
                     {
                         Action();
                         HasStarted = false;
+
+                        AlteringScale.y = 0.5f;
+
+                        if (ButtonSFX != "")
+                            SoundSystemRef.PlaySFX(ButtonSFX);
                     }
                     else
                     {
@@ -82,12 +104,21 @@ public class ButtonScript : MonoBehaviour {
                             TimeElapsed = 0;
                         }
                         else
-                        {
                             TimeElapsed += Time.deltaTime;
-                            AlteringScale.y = Mathf.Lerp(AlteringScale.y, OrgScale, Time.deltaTime);
-                        }
                     }
                     break;
+            }
+        }
+
+        if(CurrType != BUTTONTYPE.ONETIME)
+        {
+            if (Mathf.Abs(AlteringScale.y - OrgScale) < OrgScale * 0.01f)
+            {
+                AlteringScale.y = OrgScale;
+            }
+            else
+            {
+                AlteringScale.y = Mathf.MoveTowards(AlteringScale.y, OrgScale, Time.deltaTime * ButtonSpeed);
             }
         }
     }
@@ -124,8 +155,6 @@ public class ButtonScript : MonoBehaviour {
                 ObjectsToChange[i].GetComponent<SpawnOnHit>().Spawn();
             }
         }
-
-        AlteringScale.y = 0.7f;
     }
 
     private void Revert()
@@ -145,8 +174,6 @@ public class ButtonScript : MonoBehaviour {
                 ObjectsToChange[i].GetComponent<ShowOnHit>().Reset();
             }
         }
-
-        AlteringScale.y = OrgScale;
     }
 
     private void OnTriggerEnter(Collider other)

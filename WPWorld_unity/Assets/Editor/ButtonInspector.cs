@@ -12,13 +12,26 @@ public class ButtonInspector : Editor
 
         var ButtonRef = target as ButtonScript;
 
+        EditorGUILayout.LabelField("ID Settings", EditorStyles.boldLabel);
+        ButtonRef.ID = EditorGUILayout.IntField("ID", ButtonRef.ID);
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Button Settings", EditorStyles.boldLabel);
         ButtonRef.CurrType = (BUTTONTYPE)EditorGUILayout.EnumPopup("Button Type", ButtonRef.CurrType);
 
-        if(ButtonRef.CurrType == BUTTONTYPE.TIMER)
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Animation Settings", EditorStyles.boldLabel);
+        ButtonRef.ButtonSpeed = EditorGUILayout.FloatField("Button Speed", ButtonRef.ButtonSpeed);
+
+        if (ButtonRef.CurrType == BUTTONTYPE.TIMER)
         {
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Timer Settings", EditorStyles.boldLabel);
             ButtonRef.TimeToReset = EditorGUILayout.FloatField("Time To Reset", ButtonRef.TimeToReset);
         }
 
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Sound Settings", EditorStyles.boldLabel);
         ButtonRef.ButtonSFX = EditorGUILayout.TextField("Button SFX", ButtonRef.ButtonSFX);
 
         SerializedProperty tps = serializedObject.FindProperty("ObjectsToChange");

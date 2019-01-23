@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bomb : MonoBehaviour
 {
@@ -35,14 +36,12 @@ public class Bomb : MonoBehaviour
     }
 
     public void BlowUp()
-    {
-        // Owner.GetComponent<BomberManPlayer>().OneBombDestory();
-
+    {       
         float scalableSize = BlockPrefab.transform.localScale.x * this.transform.parent.transform.localScale.x;
-
+        
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
-    
+       
         // + X
         RaycastHit hit;
         for (int i = 1; i <= firePower; i++)
@@ -52,6 +51,10 @@ public class Bomb : MonoBehaviour
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
                     Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                }
+                else if(hit.transform.gameObject.tag == "BombermanBreakable")
+                {              
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
                 }
             }
             else
@@ -68,6 +71,10 @@ public class Bomb : MonoBehaviour
                 {
                     Instantiate(newBomb, this.transform.position + -Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
+                else if (hit.transform.gameObject.tag == "BombermanBreakable")
+                {
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                }
             }
             else
             {
@@ -82,6 +89,10 @@ public class Bomb : MonoBehaviour
                 if (hit.transform.gameObject.tag == "BombFire" || hit.transform.gameObject.tag == "Player")
                 {
                     Instantiate(newBomb, this.transform.position + Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
+                }
+                else if (hit.transform.gameObject.tag == "BombermanBreakable")
+                {
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
                 }
             }
             else
@@ -98,6 +109,10 @@ public class Bomb : MonoBehaviour
                 {
                     Instantiate(newBomb, this.transform.position + -Vector3.forward * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
+                else if (hit.transform.gameObject.tag == "BombermanBreakable")
+                {
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                }
             }
             else
             {
@@ -105,6 +120,7 @@ public class Bomb : MonoBehaviour
             }
         }
 
+        ReduceBombCount();
         Destroy(this.gameObject);
     }
 
@@ -142,10 +158,35 @@ public class Bomb : MonoBehaviour
 
     // Collision
     // Turn off trigger collision when the player is out of the trigger box
-    private void OnTriggerExit()
+    private void OnTriggerExit(Collider other)
     {
         col.isTrigger = false;
     }
 
-   
+    // Reduce Bomb Count
+    private void ReduceBombCount()
+    {
+        if (Photon.Pun.PhotonNetwork.IsConnected)
+        {
+            if (OwnerPUN.ActorNumber == Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
+            }
+        }
+        else
+        {
+            Owner.GetComponent<BomberManPlayer>().OnBombDestoryed();
+        }
+
+        //if(OwnerPUN == null)
+        //{
+        //    GameObject.FindGameObjectWithTag("Debug").GetComponent<UnityEngine.UI.Text>().text = "I am null";
+        //}
+
+        //if (OwnerPUN.ActorNumber == Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber)
+        //{
+        //    GameObject.FindGameObjectWithTag("Debug").GetComponent<UnityEngine.UI.Text>().text = "I Came here 2 inside";
+        //    BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
+        //}
+    }
 }

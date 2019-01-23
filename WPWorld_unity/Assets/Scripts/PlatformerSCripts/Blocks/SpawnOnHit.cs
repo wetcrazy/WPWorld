@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class SpawnOnHit : MonoBehaviour {
 
+    [Header("ID Settings")]
     public int ID;
 
+    [Space]
+    [Header("Spawn Settings")]
     // Spawning Variables
     public GameObject ObjectToSpawn;
 
     // General Variables
     public Material ChangedMaterial;
     private Material OrgMaterial;
-    public int QuantityofSpawns;
+    public int NumberOfSpawns;
     private int OrgQuantity;
+
+    [Space]
+    [Header("Sound Settings")]
+    // Sound Variables
     public string HitSFX;
     public string EmptySFX;
 
@@ -35,7 +42,7 @@ public class SpawnOnHit : MonoBehaviour {
         ColliderRef = GetComponent<Collider>();
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
-        OrgQuantity = QuantityofSpawns;
+        OrgQuantity = NumberOfSpawns;
         OrgMaterial = RenderRef.material;
 
         RigidRef.constraints = RigidbodyConstraints.FreezeAll;
@@ -51,7 +58,7 @@ public class SpawnOnHit : MonoBehaviour {
             ColliderRef.isTrigger = false;
         }
 
-        if (QuantityofSpawns <= 0)
+        if (NumberOfSpawns <= 0)
         {
             if (!RenderRef.material.name.Contains(ChangedMaterial.name))
                 RenderRef.material = ChangedMaterial;
@@ -70,7 +77,7 @@ public class SpawnOnHit : MonoBehaviour {
             if (!other.GetComponent<TPSLogic>().GetGrounded()
                 && other.GetComponent<Rigidbody>().velocity.y >= 0)
             {
-                //Send event to all players that this block has been destroyed
+                //Send event to all players that this block has spawned something
                 object[] content = new object[]
                     {
                         ID
@@ -90,14 +97,16 @@ public class SpawnOnHit : MonoBehaviour {
                 {
                     if (hit.transform.name.Contains("Enemy"))
                     {
+                        Enemy enemyScript = hit.transform.GetComponent<Enemy>();
+
                         object[] content02 = new object[]
                                   {
-                                      //Add id
+                                      enemyScript.ID
                                   };
 
                         Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
 
-                        hit.transform.GetComponent<Enemy>().AirDeath();
+                        enemyScript.AirDeath();
                     }
                 }
 
@@ -109,7 +118,7 @@ public class SpawnOnHit : MonoBehaviour {
     public void Spawn()
     {
         // Bounce Block
-        if (QuantityofSpawns <= 0)
+        if (NumberOfSpawns <= 0)
         {
             if (EmptySFX != "")
                 SoundSystemRef.PlaySFX(EmptySFX);
@@ -123,13 +132,13 @@ public class SpawnOnHit : MonoBehaviour {
         {
             if (HitSFX != "")
                 SoundSystemRef.PlaySFX(HitSFX);
-            QuantityofSpawns--;
+            NumberOfSpawns--;
             Instantiate(ObjectToSpawn, transform.position, transform.rotation, GameObject.Find("Characters").transform);
         }
     }
 
     public void Reset()
     {
-        QuantityofSpawns = OrgQuantity;
+        NumberOfSpawns = OrgQuantity;
     }
 }

@@ -15,7 +15,9 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     private float MovementSpeed;
     
-    Joystick JoysticControls;
+    // UN-NEEDED FOR NOW
+    // Joystick JoysticControls;
+
     [SerializeField]
     private Vector3 MovementDir = Vector3.zero;
 
@@ -38,7 +40,8 @@ public class PlayerMovement : MonoBehaviour {
 
         RespawnPoint = transform.position;
 
-        JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+        // JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+
         gameObject.transform.forward = Vector3.forward;
 
         

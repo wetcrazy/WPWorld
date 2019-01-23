@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GoogleARCore;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 /// <summary>
 /// Controls the ARCORE
@@ -50,11 +53,15 @@ public class ARMultiplayerController : MonoBehaviour
     Vector3 FirstTouchWorldPoint = new Vector3();
     List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
     
+    private GameObject[] SpawnPoints;
+    PhotonView photonView;
+
     private void Start()
     {
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-        
+        photonView = PhotonView.Get(this);
+
         //Initialise Screens
         ToGameMoveAnchor();
     }
@@ -79,7 +86,7 @@ public class ARMultiplayerController : MonoBehaviour
         }
 
     }
-    
+
     //-----GAME MOVE ANCHOR FUNCTIONS-----//
     public void ToGameMoveAnchor()
     {
@@ -182,14 +189,15 @@ public class ARMultiplayerController : MonoBehaviour
         //{
         //    return;
         //}
-        
+
         Reset_Anchor();
         ScreenState = STATE_SCREEN.SCREEN_GAME;
         //Spawn the level
         SpawnLevel(Input.GetTouch(0));
         AnchorRef.SetActive(false);
 
-        Photon.Pun.PhotonNetwork.Instantiate(PlayerObjectPrefab.name, new Vector3(0, 3, 0), Quaternion.identity, 0);
+
+        
     }
 
     private void GameScreenUpdate()
@@ -258,6 +266,28 @@ public class ARMultiplayerController : MonoBehaviour
     {
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
         _GroundObject.tag = LevelObject.tag;
+        
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                //Get spawning positions of level
+                SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+                RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+            }
+            else
+            {
+                //Request the host for a spawn point and then instantiate the player
+                photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+            }
+        }
+        else
+        {
+            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
+        }
+
+       
     }
     
     // Shifts the object back if there is an offset
@@ -278,5 +308,40 @@ public class ARMultiplayerController : MonoBehaviour
     public void PlayDPadSound()
     {
         soundSystem.PlaySFX("DPadClickSound");
+    }
+    
+    [PunRPC]
+    void ReceiveSpawnPoint(Vector3 SpawnPos)
+    {
+        //After receiving the spawnpoint pos from host, instantiate the player
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPos, Quaternion.identity, 0);
+    }
+
+    [PunRPC]
+    void RequestSpawnPoint(bool isMasterClient = false, int ActorID = 0)
+    {
+        //Look for an available spawn point
+        foreach (GameObject spawnpoint in SpawnPoints)
+        {
+            if (!spawnpoint.activeSelf)
+            {
+                continue;
+            }
+            
+            //When found an available sawn point
+            if (isMasterClient)
+            {
+                PhotonNetwork.Instantiate(PlayerObjectPrefab.name, spawnpoint.transform.position, Quaternion.identity, 0);
+            }
+            else
+            {
+                //Send the spawnpoint pos to the player that requested it
+                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.CurrentRoom.GetPlayer(ActorID), spawnpoint.transform.position);
+            }
+            
+            //Disable the spawnpoint after being used
+            spawnpoint.SetActive(false);
+            break;
+        }
     }
 }

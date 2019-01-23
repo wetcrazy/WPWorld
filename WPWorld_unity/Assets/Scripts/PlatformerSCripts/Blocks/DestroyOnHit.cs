@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class DestroyOnHit : MonoBehaviour
 {
+    [Header("ID Settings")]
     public int ID;
 
+    [Space]
+    [Header("Debris Settings")]
     [SerializeField]
     private int AmountOfDebris;
 
     [SerializeField]
     private GameObject Debris;
 
+    [Space]
+    [Header("Sound Settings")]
     [SerializeField]
     private string DestroySFX;
 
@@ -59,26 +64,8 @@ public class DestroyOnHit : MonoBehaviour
                 Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BREAK, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
 
                 //Perform the event locally
-                RenderRef.enabled = false;
-                ColliderRef.isTrigger = true;
+                Destroy();
 
-                if (DestroySFX != "")
-                    SoundSystemRef.PlaySFX(DestroySFX);
-
-                for (int i = 0; i < AmountOfDebris; i++)
-                {
-                    GameObject n_Debris = Instantiate(Debris, this.transform);
-                    Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
-                    RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
-                        Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
-                        Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
-                }
-
-                Vector3 VelocityRef = other.GetComponent<Rigidbody>().velocity;
-                if (VelocityRef.y > 0)
-                    VelocityRef.y = -VelocityRef.y * 0.5f;
-                other.GetComponent<Rigidbody>().velocity = VelocityRef;
-                
                 // Check for Enemies above the block
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.up, out hit, transform.lossyScale.y)
@@ -90,22 +77,42 @@ public class DestroyOnHit : MonoBehaviour
                 {
                     if (hit.transform.GetComponent<Enemy>())
                     {
+                        Enemy enemyScript = hit.transform.GetComponent<Enemy>();
+
                         object[] content02 = new object[]
                                {
-                                   //Add id
+                                   enemyScript.ID
                                };
 
                         Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR, content02, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
 
-                        hit.transform.GetComponent<Enemy>().AirDeath();
+                        enemyScript.AirDeath();
                     }
                 }
             }
         }
     }
 
-    public void Reset()
+    public void Destroy()
     {
+        RenderRef.enabled = false;
+        ColliderRef.isTrigger = true;
+
+        if (DestroySFX != "")
+            SoundSystemRef.PlaySFX(DestroySFX);
+
+        for (int i = 0; i < AmountOfDebris; i++)
+        {
+            GameObject n_Debris = Instantiate(Debris, this.transform);
+            Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
+            RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
+                Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
+                Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
+        }
+    }
+
+	public void Reset()
+	{
         RenderRef.enabled = true;
         ColliderRef.isTrigger = false;
     }

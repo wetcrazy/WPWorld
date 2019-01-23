@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CollectOnCollide : MonoBehaviour {
 
-    private Renderer RenderRef;
+    // Score Variables
+    [Header("Score Settings")]
+    [SerializeField]
+    private int PointsToAdd;
+    public bool HasCollected;
+
+    [Space]
+    [Header("Sound Settings")]
     [SerializeField]
     private string CollectSFX;
 
-    [SerializeField]
-    private int PointsToAdd;
-
-    public bool HasCollected;
-
+    private Renderer RenderRef;
     private SoundSystem SoundSystemRef;
 
 	// Use this for initialization
@@ -32,19 +35,26 @@ public class CollectOnCollide : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             if(RenderRef.isVisible)
             {
-                RenderRef.enabled = false;
-                other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
+                Collect();
 
-                HasCollected = true;
-
-                if (CollectSFX != "")
-                    SoundSystemRef.PlaySFX(CollectSFX);
+                // Add points to the player who collects the coin
+                    other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
             }
         }
+    }
+
+    public void Collect()
+    {
+        RenderRef.enabled = false;
+
+        HasCollected = true;
+
+        if (CollectSFX != "")
+            SoundSystemRef.PlaySFX(CollectSFX);
     }
 
     public void Reset()

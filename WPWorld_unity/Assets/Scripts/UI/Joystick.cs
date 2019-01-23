@@ -208,10 +208,15 @@ public class Joystick : MonoBehaviour
             NewJoystickPos = JoystickBackgroundPosition + (Quaternion.AngleAxis(-DragAngle, Vector3.forward) * Up);
         }
 
-        if (joystickDirection == JoystickDirection.DIR_FORWARD || joystickDirection == JoystickDirection.DIR_BACK)
-            NewJoystickPos.x = JoystickBackgroundPosition.x;
-        else
-            NewJoystickPos.y = JoystickBackgroundPosition.y;
+
+        // -------------------------------------------------------- \\
+        // Remove Comments to snap joystick back to four directions \\
+        // -------------------------------------------------------- \\
+
+        //if (joystickDirection == JoystickDirection.DIR_FORWARD || joystickDirection == JoystickDirection.DIR_BACK)
+        //    NewJoystickPos.x = JoystickBackgroundPosition.x;
+        //else
+        //    NewJoystickPos.y = JoystickBackgroundPosition.y;
 
         JoystickBall.transform.position = NewJoystickPos;
 
