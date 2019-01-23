@@ -77,7 +77,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        if (!photonView.IsMine)
         {
             return;
         }
