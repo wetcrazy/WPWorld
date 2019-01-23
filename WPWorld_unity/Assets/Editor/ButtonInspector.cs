@@ -19,9 +19,12 @@ public class ButtonInspector : Editor
         EditorGUILayout.LabelField("Button Settings", EditorStyles.boldLabel);
         ButtonRef.CurrType = (BUTTONTYPE)EditorGUILayout.EnumPopup("Button Type", ButtonRef.CurrType);
 
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Animation Settings", EditorStyles.boldLabel);
-        ButtonRef.ButtonSpeed = EditorGUILayout.FloatField("Button Speed", ButtonRef.ButtonSpeed);
+        if(ButtonRef.CurrType == BUTTONTYPE.TOGGLE || ButtonRef.CurrType == BUTTONTYPE.TIMER)
+        {
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Animation Settings", EditorStyles.boldLabel);
+            ButtonRef.ButtonSpeed = EditorGUILayout.FloatField("Button Speed", ButtonRef.ButtonSpeed);
+        }
 
         if (ButtonRef.CurrType == BUTTONTYPE.TIMER)
         {
@@ -34,6 +37,8 @@ public class ButtonInspector : Editor
         EditorGUILayout.LabelField("Sound Settings", EditorStyles.boldLabel);
         ButtonRef.ButtonSFX = EditorGUILayout.TextField("Button SFX", ButtonRef.ButtonSFX);
 
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Object Settings", EditorStyles.boldLabel);
         SerializedProperty tps = serializedObject.FindProperty("ObjectsToChange");
         EditorGUI.BeginChangeCheck();
         EditorGUILayout.PropertyField(tps, true);
