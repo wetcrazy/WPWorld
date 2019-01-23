@@ -55,6 +55,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             LocalPlayerInstance = gameObject;
             LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
+            LocalPlayerInstance.transform.localPosition = ARMultiplayerController.SpawnPoint;
         }
     }
 
@@ -76,10 +77,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        //if (!photonView.IsMine || !PhotonNetwork.IsConnected)
-        //{
-        //    return;
-        //}
+        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        {
+            return;
+        }
 
         // Death Respawn
         if (isDead)

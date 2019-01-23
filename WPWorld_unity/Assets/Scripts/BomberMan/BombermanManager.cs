@@ -41,10 +41,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         EnableBombUi();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
 
-        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
-        {
-            Debug02.text = "I EXIST";
-        }
+        Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
+
+        //if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
+        //{
+        //    Debug02.text = "I EXIST";
+        //}
     }
 
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
@@ -100,9 +102,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Spawn Power Up 
     public void SpawnPowerUp(Vector3 PowerPos, int randNum)
     {
-        Debug01.text = "Spawning Power";
+        //Debug01.text = "Spawning Power";
         var newPower = Instantiate(List_PowerUpBlocks[randNum], PowerPos, NewRotation, ARMultiplayerController._GroundObject.transform);
-        Debug01.text = "Spawned Power";
+        //Debug01.text = "Spawned Power";
     }
 
     // Player death (Multiplayer)
