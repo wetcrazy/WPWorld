@@ -121,18 +121,15 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         //Send other players our data
         if (stream.IsWriting)
         {
-            object[] content = new object[] { transform.position, PhotonNetwork.LocalPlayer.ActorNumber };
-            stream.SendNext(content);
+            stream.SendNext(transform.localPosition);
         }
         else //Receive data from other players
         {
-            object[] data = (object[])stream.ReceiveNext();
-
             foreach (GameObject player in PlayerObjects)
             {
-                if(player.GetPhotonView().OwnerActorNr == (int)data[1])
+                if(player.GetPhotonView().OwnerActorNr == info.Sender.ActorNumber)
                 {
-                    player.transform.position = (Vector3)data[0];
+                    player.transform.localPosition = (Vector3)stream.ReceiveNext();
                 }
             }
         }
