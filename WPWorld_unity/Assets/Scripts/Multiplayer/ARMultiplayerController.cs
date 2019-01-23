@@ -287,7 +287,7 @@ public class ARMultiplayerController : MonoBehaviour
             PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoints[0].transform.position, Quaternion.identity, 0);
         }
 
-       
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
     }
     
     // Shifts the object back if there is an offset
