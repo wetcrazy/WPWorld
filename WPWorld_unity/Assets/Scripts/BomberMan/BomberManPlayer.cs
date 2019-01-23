@@ -55,6 +55,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             LocalPlayerInstance = gameObject;
             LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
+            LocalPlayerInstance.transform.localPosition = ARMultiplayerController.SpawnPoint;
         }
     }
 

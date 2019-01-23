@@ -309,12 +309,15 @@ public class ARMultiplayerController : MonoBehaviour
     {
         soundSystem.PlaySFX("DPadClickSound");
     }
-    
+
+    public static Vector3 SpawnPoint;
+
     [PunRPC]
     void ReceiveSpawnPoint(Vector3 SpawnPos)
     {
         //After receiving the spawnpoint pos from host, instantiate the player
-        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPos, Quaternion.identity, 0);
+        //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPos, Quaternion.identity, 0);
+        SpawnPoint = SpawnPos;
     }
 
     [PunRPC]
@@ -331,12 +334,13 @@ public class ARMultiplayerController : MonoBehaviour
             //When found an available sawn point
             if (isMasterClient)
             {
-                PhotonNetwork.Instantiate(PlayerObjectPrefab.name, spawnpoint.transform.position, Quaternion.identity, 0);
+                //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, spawnpoint.transform.position, Quaternion.identity, 0);
+                ReceiveSpawnPoint(spawnpoint.transform.localPosition);
             }
             else
             {
                 //Send the spawnpoint pos to the player that requested it
-                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.CurrentRoom.GetPlayer(ActorID), spawnpoint.transform.position);
+                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.CurrentRoom.GetPlayer(ActorID), spawnpoint.transform.localPosition);
             }
             
             //Disable the spawnpoint after being used
