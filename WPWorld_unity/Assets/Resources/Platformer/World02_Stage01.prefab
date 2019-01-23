@@ -45888,7 +45888,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e403d8c695a104dac1aeb83e2c65e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: $Platformer4
+  BGM: Platformer4
+  MinimumDistance: 2
+  MaximumDistance: 3.5
 --- !u!114 &114663433608215094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47090,10 +47092,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 0
-  CurrType: 2
+  CurrType: 0
   ButtonSpeed: 0
   TimeToReset: 0
-  ButtonSFX: 
+  ButtonSFX: Button
   ObjectsToChange:
   - {fileID: 1787168943742466}
   - {fileID: 0}
