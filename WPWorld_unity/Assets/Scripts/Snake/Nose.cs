@@ -10,9 +10,13 @@ public class Nose : MonoBehaviour {
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Block"))
+        if (other.CompareTag("Block"))
         {
             Debug.Log("okay");
+            deathcollided = true;
+        }
+        else if(other.name == "Body(Clone)")
+        {
             deathcollided = true;
         }
     }
