@@ -45,7 +45,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     // Heart Container
     private GameObject HeartContainer;
-
+    GameObject[] PlayerObjects;
 
     private void Awake()
     {
@@ -68,6 +68,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             //Setting the username text that is above the player objects
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+            PlayerObjects = GameObject.FindGameObjectsWithTag("Player");
         }
         else
         {
@@ -77,7 +78,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        if (!photonView.IsMine)
         {
             return;
         }
@@ -120,11 +121,17 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         //Send other players our data
         if (stream.IsWriting)
         {
-
+            stream.SendNext(transform.localPosition);
         }
         else //Receive data from other players
         {
-
+            foreach (GameObject player in PlayerObjects)
+            {
+                if(player.GetPhotonView().OwnerActorNr == info.Sender.ActorNumber)
+                {
+                    player.transform.localPosition = (Vector3)stream.ReceiveNext();
+                }
+            }
         }
     }
 

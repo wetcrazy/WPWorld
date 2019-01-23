@@ -128,7 +128,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     void Update()
     {
         //Don't update if the player obj doesn't belong to you or is disconnected
-        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        if (!photonView.IsMine)
         {
             return;
         }
