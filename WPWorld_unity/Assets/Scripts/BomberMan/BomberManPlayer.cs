@@ -245,10 +245,22 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         isDead = _boolvalue;
     }
 
+    public void AddBombPower()
+    {
+        firePower += 1;
+    }
+
+    public void AddNumBomb()
+    {
+        MAX_NUMBOMB += 1;
+    }
+
     public void OnBombDestoryed()
     {
         currNUMBomb -= 1;
     }
+
+   
 
     // Highscore
     [PunRPC]

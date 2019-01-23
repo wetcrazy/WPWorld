@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class BombermanPowerupBase : MonoBehaviour
 {
+    // GameObject PlayerTarget == Collector
+    // Bool isCollected == Powerup is been collected by player
+   
     public bool isCollected { get; set; }
     [HideInInspector]
-    public GameObject _player = null;
-  
+    public GameObject PlayerTarget = null; 
+
     // Constructor
     public BombermanPowerupBase()
     {
@@ -19,6 +22,8 @@ public class BombermanPowerupBase : MonoBehaviour
         // Power up collected destory it
         if(isCollected)
         {
+            Effect();    
+
             Destroy(this.gameObject);
         }
     }
@@ -40,7 +45,7 @@ public class BombermanPowerupBase : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            _player = other.gameObject;
+            PlayerTarget = other.gameObject;
             isCollected = true;
         }
     }
