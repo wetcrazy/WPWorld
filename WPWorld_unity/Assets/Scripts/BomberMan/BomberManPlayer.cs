@@ -76,10 +76,10 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     private void Update()
     {
-        //if (!photonView.IsMine || !PhotonNetwork.IsConnected)
-        //{
-        //    return;
-        //}
+        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        {
+            return;
+        }
 
         // Death Respawn
         if (isDead)
