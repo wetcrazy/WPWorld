@@ -68,7 +68,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {
             //Setting the username text that is above the player objects
             LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-            PlayerObjects = GameObject.FindGameObjectsWithTag("Player");
+            //PlayerObjects = GameObject.FindGameObjectsWithTag("Player");
         }
         else
         {
@@ -119,20 +119,20 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //Send other players our data
-        if (stream.IsWriting)
-        {
-            stream.SendNext(transform.localPosition);
-        }
-        else //Receive data from other players
-        {
-            foreach (GameObject player in PlayerObjects)
-            {
-                if(player.GetPhotonView().OwnerActorNr == info.Sender.ActorNumber)
-                {
-                    player.transform.localPosition = (Vector3)stream.ReceiveNext();
-                }
-            }
-        }
+        //if (stream.IsWriting)
+        //{
+        //    stream.SendNext(transform.localPosition);
+        //}
+        //else //Receive data from other players
+        //{
+        //    foreach (GameObject player in PlayerObjects)
+        //    {
+        //        if(player.GetPhotonView().OwnerActorNr == info.Sender.ActorNumber)
+        //        {
+        //            player.transform.localPosition = (Vector3)stream.ReceiveNext();
+        //        }
+        //    }
+        //}
     }
 
     // Bomb Button
