@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class ScoreUI : MonoBehaviour {
 
+    [SerializeField]
+    private float ActualScore;
+    private float ScoreToShow;
+
     // Variables to grab
     private Text TextRef;
     private TPSLogic PlayerRef;
@@ -25,7 +29,8 @@ public class ScoreUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(PlayerRef != null)
-            TextRef.text = " : " + PlayerRef.CurrPointsPub.ToString();
+        TextRef.text = " : " + ScoreToShow.ToString("F0");
+
+        ScoreToShow = Mathf.Lerp(ScoreToShow, ActualScore, Time.deltaTime);
     }
 }

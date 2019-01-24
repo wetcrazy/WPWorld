@@ -13,22 +13,35 @@ public class CoinFeedbackUI : MonoBehaviour {
     [Header("Speed Settings")]
     [SerializeField]
     private float MovementSpeed;
+    [SerializeField]
+    private float ScalingSpeed;
+
+    private RectTransform RectTransformRef;
 
 	// Use this for initialization
 	void Start () {
-		
+        RectTransformRef = GetComponent<RectTransform>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        foreach(GameObject n_Coin in Coins)
+        if(Vector3.Distance(transform.localScale, new Vector3(1,1,1)) < 0.1f)
         {
-            n_Coin.transform.localPosition = Vector3.Lerp(Vector3.zero, transform.localPosition, MovementSpeed * Time.deltaTime);
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(1, 1, 1), ScalingSpeed * Time.deltaTime);
+        }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            Pulse();
         }
 	}
 
-    public void CreateCoin(Vector3 n_Pos)
+    public void Pulse()
     {
-        Coins.Add(Instantiate(CoinPrefab, n_Pos, Quaternion.identity, transform));
+        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 }

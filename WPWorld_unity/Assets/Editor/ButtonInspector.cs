@@ -19,7 +19,7 @@ public class ButtonInspector : Editor
         EditorGUILayout.LabelField("Button Settings", EditorStyles.boldLabel);
         ButtonRef.CurrType = (BUTTONTYPE)EditorGUILayout.EnumPopup("Button Type", ButtonRef.CurrType);
 
-        if(ButtonRef.CurrType == BUTTONTYPE.TOGGLE || ButtonRef.CurrType == BUTTONTYPE.TIMER)
+        if(ButtonRef.CurrType != BUTTONTYPE.ONETIME)
         {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Animation Settings", EditorStyles.boldLabel);

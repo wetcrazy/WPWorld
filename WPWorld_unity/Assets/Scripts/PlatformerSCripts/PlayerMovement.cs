@@ -27,10 +27,7 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 RespawnPoint;
     private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
-
-    [SerializeField]
-    private GameObject MoveToPoint;
-    
+  
 
     // Use this for initialization
     void Start () {
@@ -63,8 +60,6 @@ public class PlayerMovement : MonoBehaviour {
                 RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
                 break;
         }
-
-        //MovementDir = (MoveToPoint.transform.position - transform.position).normalized;
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
@@ -227,7 +222,6 @@ public class PlayerMovement : MonoBehaviour {
     {
         if(other.tag == "Killbox")
         {
-            Debug.Log("Reset!");
             Respawn();
         }
     }
