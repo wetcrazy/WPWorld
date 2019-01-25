@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour
 {
-
     [SerializeField]
     Button JoystickBall;
     [SerializeField]
