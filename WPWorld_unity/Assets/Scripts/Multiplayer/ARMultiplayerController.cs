@@ -29,6 +29,8 @@ public class ARMultiplayerController : MonoBehaviour
     GameObject PlayerObjectPrefab;
     [SerializeField]
     Text DebugText;
+    [SerializeField]
+    Text DebugText2;
 
     [Header("Move Anchor Screen Objects")]
     [SerializeField]
@@ -62,11 +64,34 @@ public class ARMultiplayerController : MonoBehaviour
     {
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-        photonView = PhotonView.Get(this);
-        
-        SpawnPlayersButton.SetActive(false);
-        //Initialise Screens
-        ToGameMoveAnchor();
+        //photonView = PhotonView.Get(this);
+
+        //SpawnPlayersButton.SetActive(false);
+        ////Initialise Screens
+        //ToGameMoveAnchor();
+
+        //
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            //Get spawning positions of level
+            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+            {
+                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.position);
+            }
+            //RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+            AddNumberOfPlayerReady();
+        }
+        else
+        {
+
+            //Request the host for a spawn point and then instantiate the player
+            //photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+            SpawnPlayersButton.SetActive(false);
+            photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
+        }
     }
 
     private void Update()
@@ -288,7 +313,7 @@ public class ARMultiplayerController : MonoBehaviour
                 photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
             }
 
-            //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+            // PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
 
 
         }
@@ -322,7 +347,11 @@ public class ARMultiplayerController : MonoBehaviour
     // Spawn Player button (for host)
     public void SpawnPlayerHost()
     {
+        DebugText2.text = "Host Spawning";
+        
+
         photonView.RPC("SpawnPlayer", RpcTarget.All);
+
         SpawnPlayersButton.SetActive(false);
     }
 
@@ -382,7 +411,8 @@ public class ARMultiplayerController : MonoBehaviour
 
     [PunRPC]
     void SpawnPlayer()
-    {     
-        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, new Vector3(0, 2, 0), Quaternion.identity, 0);
+    {
+        DebugText.text = "Spawned";
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoint, Quaternion.identity, 0);
     }
 }
