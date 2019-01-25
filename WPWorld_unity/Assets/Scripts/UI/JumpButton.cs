@@ -10,7 +10,7 @@ public class JumpButton : MonoBehaviour {
 	void Start () {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
 
-        if(PlayerObject.GetComponent<TPSLogic>())
+        if(PlayerObject.GetComponent<TPSLogic>() != null)
         {
             GameObject[] PlayersToGet = GameObject.FindGameObjectsWithTag("Player");
 

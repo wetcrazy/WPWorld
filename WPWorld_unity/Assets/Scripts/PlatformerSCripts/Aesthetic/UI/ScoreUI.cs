@@ -29,6 +29,8 @@ public class ScoreUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        ActualScore = PlayerRef.CurrPointsPub;
+
         TextRef.text = " : " + ScoreToShow.ToString("F0");
 
         ScoreToShow = Mathf.Lerp(ScoreToShow, ActualScore, Time.deltaTime);
