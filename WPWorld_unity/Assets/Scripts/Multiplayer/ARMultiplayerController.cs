@@ -121,7 +121,7 @@ public class ARMultiplayerController : MonoBehaviour
         {
             AnchorRef.transform.position = _GroundObject.transform.position;
             AnchorRef.transform.rotation = _GroundObject.transform.rotation;
-            //UpdateOffSet();
+            UpdateOffSet();
         }
 
         //foreach (DetectedPlane thePlane in List_AllPlanes)
@@ -202,7 +202,7 @@ public class ARMultiplayerController : MonoBehaviour
 
     private void GameScreenUpdate()
     {
-        //UpdateOffSet();
+        UpdateOffSet();
     }
 
     public void ExitGameScreen()
@@ -279,12 +279,13 @@ public class ARMultiplayerController : MonoBehaviour
                     photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.localPosition);
                 }
                 //RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+                AddNumberOfPlayerReady();
             }
             else
             {
                 //Request the host for a spawn point and then instantiate the player
                 //photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
-                photonView.RPC("AddNumberOfPlayerReady", PhotonNetwork.MasterClient);
+                photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
             }
 
             //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
@@ -316,6 +317,13 @@ public class ARMultiplayerController : MonoBehaviour
     public void PlayDPadSound()
     {
         soundSystem.PlaySFX("DPadClickSound");
+    }
+
+    // Spawn Player button (for host)
+    public void SpawnPlayerHost()
+    {
+        photonView.RPC("SpawnPlayer", RpcTarget.All);
+        SpawnPlayersButton.SetActive(false);
     }
 
     public static Vector3 SpawnPoint;
@@ -373,13 +381,8 @@ public class ARMultiplayerController : MonoBehaviour
     }
 
     [PunRPC]
-    public void SpawnPlayer()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("SpawnPlayer", RpcTarget.Others);
-        }
-
-        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+    void SpawnPlayer()
+    {     
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, new Vector3(0, 2, 0), Quaternion.identity, 0);
     }
 }
