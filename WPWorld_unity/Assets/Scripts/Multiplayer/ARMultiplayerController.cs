@@ -347,9 +347,6 @@ public class ARMultiplayerController : MonoBehaviour
     // Spawn Player button (for host)
     public void SpawnPlayerHost()
     {
-        DebugText2.text = "Host Spawning";
-        
-
         photonView.RPC("SpawnPlayer", RpcTarget.All);
 
         SpawnPlayersButton.SetActive(false);
@@ -412,7 +409,19 @@ public class ARMultiplayerController : MonoBehaviour
     [PunRPC]
     void SpawnPlayer()
     {
-        DebugText.text = "Spawned";
         PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoint, Quaternion.identity, 0);
+        
+        // Check if the player's parent are really the level and not something else
+        foreach(GameObject n_Player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (n_Player.GetComponent<TPSLogic>().isMine())
+            {
+                DebugText.text = "Master Parent = " + n_Player.transform.parent.name;
+            }
+            else
+            {
+                DebugText2.text = "Client Parent = " + n_Player.transform.parent.name;
+            }
+        }
     }
 }
