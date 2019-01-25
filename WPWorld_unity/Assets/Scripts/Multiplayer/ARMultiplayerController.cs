@@ -64,11 +64,11 @@ public class ARMultiplayerController : MonoBehaviour
     {
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
-        //photonView = PhotonView.Get(this);
+        photonView = PhotonView.Get(this);
 
-        //SpawnPlayersButton.SetActive(false);
+        SpawnPlayersButton.SetActive(false);
         ////Initialise Screens
-        //ToGameMoveAnchor();
+        ToGameMoveAnchor();
 
         //
 
@@ -149,13 +149,13 @@ public class ARMultiplayerController : MonoBehaviour
             UpdateOffSet();
         }
 
-        //foreach (DetectedPlane thePlane in List_AllPlanes)
-        //{
-        //    if (thePlane.TrackingState == TrackingState.Stopped)
-        //    {
-        //        break;
-        //    }
-        //}
+        foreach (DetectedPlane thePlane in List_AllPlanes)
+        {
+            if (thePlane.TrackingState == TrackingState.Stopped)
+            {
+                break;
+            }
+        }
     }
 
     //Movement functions for the anchor
@@ -313,7 +313,7 @@ public class ARMultiplayerController : MonoBehaviour
                 photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
             }
 
-            // PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
 
 
         }
