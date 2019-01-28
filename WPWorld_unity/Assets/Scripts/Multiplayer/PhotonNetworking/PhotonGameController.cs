@@ -8,8 +8,6 @@ public class PhotonGameController : MonoBehaviour {
 
     [Header("Scene Objects")]
     [SerializeField]
-    GameObject PlayerObjectPrefab;
-    [SerializeField]
     GameObject LeaderboardUI;
     [SerializeField]
     GameObject LeaderboardHeaderUI;
