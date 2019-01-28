@@ -35,7 +35,7 @@ public class Bomb : MonoBehaviour
         }
     }
 
-    public void BlowUp()
+    public virtual void BlowUp()
     {       
         float scalableSize = BlockPrefab.transform.localScale.x * this.transform.parent.transform.localScale.x;
         

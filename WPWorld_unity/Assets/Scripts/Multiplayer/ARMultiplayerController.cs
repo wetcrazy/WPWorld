@@ -50,7 +50,7 @@ public class ARMultiplayerController : MonoBehaviour
 
     //Reference to the clone of GameObjPrefab
     public static GameObject _GroundObject = null;
-    Anchor _anchor;
+    public static Anchor _anchor;
 
     bool isSpawned = false;
     public bool isWon;
@@ -72,26 +72,26 @@ public class ARMultiplayerController : MonoBehaviour
 
         //
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            //Get spawning positions of level
-            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    //Get spawning positions of level
+        //    SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 
-            for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
-            {
-                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.position);
-            }
-            //RequestSpawnPoint(PhotonNetwork.IsMasterClient);
-            AddNumberOfPlayerReady();
-        }
-        else
-        {
+        //    for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+        //    {
+        //        photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.localPosition);
+        //    }
+        //    //RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+        //    AddNumberOfPlayerReady();
+        //}
+        //else
+        //{
 
-            //Request the host for a spawn point and then instantiate the player
-            //photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
-            SpawnPlayersButton.SetActive(false);
-            photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
-        }
+        //    //Request the host for a spawn point and then instantiate the player
+        //    //photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+        //    SpawnPlayersButton.SetActive(false);
+        //    photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
+        //}
     }
 
     private void Update()
@@ -299,22 +299,19 @@ public class ARMultiplayerController : MonoBehaviour
                 //Get spawning positions of level
                 SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 
+                //Send each player a spawnpoint
                 for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
                 {
-                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.localPosition);
+                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.position);
                 }
-                //RequestSpawnPoint(PhotonNetwork.IsMasterClient);
+                
                 AddNumberOfPlayerReady();
             }
             else
             {
-                //Request the host for a spawn point and then instantiate the player
-                //photonView.RPC("RequestSpawnPoint", PhotonNetwork.MasterClient, false, PhotonNetwork.LocalPlayer.ActorNumber);
+                //Tell the host that you have spawned the level
                 photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
             }
-
-            PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
-
 
         }
         else
@@ -357,42 +354,40 @@ public class ARMultiplayerController : MonoBehaviour
     [PunRPC]
     void ReceiveSpawnPoint(Vector3 SpawnPos)
     {
-        //After receiving the spawnpoint pos from host, instantiate the player
-        //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPos, Quaternion.identity, 0);
+        //Receive spawn point from host
         SpawnPoint = SpawnPos;
     }
 
-    [PunRPC]
-    void RequestSpawnPoint(bool isMasterClient = false, int ActorID = 0)
-    {
-        //Look for an available spawn point
-        foreach (GameObject spawnpoint in SpawnPoints)
-        {
-            if (!spawnpoint.activeSelf)
-            {
-                continue;
-            }
+    //[PunRPC]
+    //void RequestSpawnPoint(bool isMasterClient = false, int ActorID = 0)
+    //{
+    //    //Look for an available spawn point
+    //    foreach (GameObject spawnpoint in SpawnPoints)
+    //    {
+    //        if (!spawnpoint.activeSelf)
+    //        {
+    //            continue;
+    //        }
 
-            //When found an available sawn point
-            if (isMasterClient)
-            {
-                //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, spawnpoint.transform.position, Quaternion.identity, 0);
-                ReceiveSpawnPoint(spawnpoint.transform.localPosition);
-            }
-            else
-            {
-                //Send the spawnpoint pos to the player that requested it
-                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.CurrentRoom.GetPlayer(ActorID), spawnpoint.transform.localPosition);
-            }
+    //        //When found an available sawn point
+    //        if (isMasterClient)
+    //        {
+    //            //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, spawnpoint.transform.position, Quaternion.identity, 0);
+    //            ReceiveSpawnPoint(spawnpoint.transform.localPosition);
+    //        }
+    //        else
+    //        {
+    //            //Send the spawnpoint pos to the player that requested it
+    //            photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.CurrentRoom.GetPlayer(ActorID), spawnpoint.transform.localPosition);
+    //        }
 
-            //Disable the spawnpoint after being used
-            spawnpoint.SetActive(false);
-            break;
-        }
-    }
+    //        //Disable the spawnpoint after being used
+    //        spawnpoint.SetActive(false);
+    //        break;
+    //    }
+    //}
 
     int NumOfPlayersReady = 0;
-    bool EveryoneReady = false;
 
     [PunRPC]
     void AddNumberOfPlayerReady()
@@ -401,7 +396,6 @@ public class ARMultiplayerController : MonoBehaviour
 
         if(NumOfPlayersReady == PhotonNetwork.PlayerList.Length)
         {
-            EveryoneReady = true;
             SpawnPlayersButton.SetActive(true);
         }
     }
@@ -409,7 +403,7 @@ public class ARMultiplayerController : MonoBehaviour
     [PunRPC]
     void SpawnPlayer()
     {
-        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoint, Quaternion.identity, 0);
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
         
         // Check if the player's parent are really the level and not something else
         foreach(GameObject n_Player in GameObject.FindGameObjectsWithTag("Player"))
