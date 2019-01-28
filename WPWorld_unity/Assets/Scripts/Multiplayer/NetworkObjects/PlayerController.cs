@@ -19,7 +19,7 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            gameObject.transform.parent = GameObject.FindGameObjectWithTag("GameLevel").transform;
+            gameObject.transform.parent = ARMultiplayerController._GroundObject.transform;
         }
     }
 
