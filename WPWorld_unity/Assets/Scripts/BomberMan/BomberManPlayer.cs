@@ -45,20 +45,13 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     // Heart Container
     private GameObject HeartContainer;
-    GameObject[] PlayerObjects;
-
-    Text MyPlayerPos;
-    Text SPawnPos;
-    Text OtherPlayerPos;
 
     private void Awake()
     {
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            gameObject.transform.parent = GameObject.FindGameObjectWithTag("GameLevel").transform;            //gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
             
-
             respawnPt = this.transform.position;
         }
     }
@@ -67,25 +60,15 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     {
         Reset();
         OrignScale = this.transform.localScale;
-        MyPlayerPos = GameObject.FindGameObjectsWithTag("Debug")[0].GetComponent<Text>();
-        SPawnPos = GameObject.FindGameObjectsWithTag("Debug")[1].GetComponent<Text>();
-        OtherPlayerPos = GameObject.FindGameObjectsWithTag("Debug")[2].GetComponent<Text>();
+       
         this.gameObject.GetComponent<Rigidbody>().velocity.Set(0, 0, 0);
+
+        //Setting the username text that is above the player objects
+        gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
 
         if (photonView.IsMine)
         {
-            //Setting the username text that is above the player objects
-            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = PhotonNetwork.NickName;
-
-            
             gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
-
-            SPawnPos.text += "My Spawn - " + ARMultiplayerController.SpawnPoint.ToString();
-
-        }
-        else
-        {
-            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
         }
     }
 
@@ -93,13 +76,8 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
         {
-            OtherPlayerPos.text = "\nOther Global Player - " + gameObject.transform.position.ToString();
-            OtherPlayerPos.text += "\nOther Local Player - " + gameObject.transform.localPosition.ToString();
             return;
         }
-
-        MyPlayerPos.text = "\nMy Global Player - " + gameObject.transform.position.ToString();
-        MyPlayerPos.text += "\nMy Local Player - " + gameObject.transform.localPosition.ToString();
 
         // Death Respawn
         if (isDead)
@@ -127,10 +105,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {        
             InvurnablePlayer();
         }
-
-        //GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
-
-        //DebugText.text = gameObject.transform.position.ToString();
 
     }
 
