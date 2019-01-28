@@ -404,7 +404,7 @@ public class ARMultiplayerController : MonoBehaviour
     [PunRPC]
     void SpawnPlayer()
     {
-        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPoint, Quaternion.identity, 0);
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
         
         // Check if the player's parent are really the level and not something else
         foreach(GameObject n_Player in GameObject.FindGameObjectsWithTag("Player"))
