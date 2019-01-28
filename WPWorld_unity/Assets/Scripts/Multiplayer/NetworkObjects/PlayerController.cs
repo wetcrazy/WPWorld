@@ -19,7 +19,7 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            gameObject.transform.parent = ARMultiplayerController._GroundObject.transform;
+            gameObject.transform.parent = ARMultiplayerController._anchor.transform;
         }
     }
 
@@ -27,7 +27,11 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
     void Start () {
         gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
 
-        gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
+        if (photonView.IsMine)
+        {
+            gameObject.transform.localPosition = (ARMultiplayerController.SpawnPoint - ARMultiplayerController._anchor.transform.position);
+            photonView.RPC("CorrectPosition", RpcTarget.Others, gameObject.transform.localPosition, photonView.OwnerActorNr);
+        }
     }
 	
 	// Update is called once per frame
@@ -45,6 +49,25 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
         else //Receive data from other players
         {
 
+        }
+    }
+
+    [PunRPC]
+    void CorrectPosition(Vector3 CorrectPos, int ActorID)
+    {
+        if(photonView.OwnerActorNr == ActorID)
+        {
+            return;
+        }
+
+        var PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject playerGO in PlayerGoList)
+        {
+            if(playerGO.GetPhotonView().OwnerActorNr == ActorID)
+            {
+                playerGO.transform.localPosition = CorrectPos;
+            }
         }
     }
 }

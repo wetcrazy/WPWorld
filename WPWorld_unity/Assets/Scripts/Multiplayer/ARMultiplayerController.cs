@@ -50,7 +50,7 @@ public class ARMultiplayerController : MonoBehaviour
 
     //Reference to the clone of GameObjPrefab
     public static GameObject _GroundObject = null;
-    Anchor _anchor;
+    public static Anchor _anchor;
 
     bool isSpawned = false;
     public bool isWon;
@@ -302,7 +302,7 @@ public class ARMultiplayerController : MonoBehaviour
                 //Send each player a spawnpoint
                 for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
                 {
-                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.localPosition);
+                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.position);
                 }
                 
                 AddNumberOfPlayerReady();
@@ -356,7 +356,6 @@ public class ARMultiplayerController : MonoBehaviour
     {
         //Receive spawn point from host
         SpawnPoint = SpawnPos;
-        
     }
 
     //[PunRPC]
