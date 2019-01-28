@@ -63,6 +63,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private Rigidbody RigidRef;
     private PlayerMovement MovementRef;
     private SoundSystem SoundSystemRef;
+    public LeverScript LeverRef;
 
     private List<CollectOnCollide> ListOfCoins = new List<CollectOnCollide>();
     private List<DestroyOnHit> ListOfBreakables = new List<DestroyOnHit>();
@@ -238,6 +239,16 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             Death();
         }
+
+        if(other.name.Contains("Lever"))
+        {
+            LeverRef = other.GetComponent<LeverScript>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        LeverRef = null;
     }
 
     private void OnCollisionEnter(Collision collision)
