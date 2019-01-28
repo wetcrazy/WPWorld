@@ -153,8 +153,15 @@ public class Enemy : MonoBehaviour {
                 }
                 else
                 {
-                    RenderRef.enabled = false;
-                    transform.localScale = OrgSize;
+                    if(transform.name.Contains("Clone"))
+                    {
+                        Destroy(this.gameObject);
+                    }
+                    else
+                    {
+                        RenderRef.enabled = false;
+                        transform.localScale = OrgSize;
+                    }
                 }
             }
         }
@@ -176,8 +183,15 @@ public class Enemy : MonoBehaviour {
 
 		if (other.tag == "Killbox")
 		{
-			RenderRef.enabled = false;
-			RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+            if (transform.name.Contains("Clone"))
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                RenderRef.enabled = false;
+                RigidRef.constraints = RigidbodyConstraints.FreezeAll;
+            }
 		}
 	}
 

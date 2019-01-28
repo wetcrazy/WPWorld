@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour {
 
+    [Header("Movement Settings")]
+    [SerializeField]
+    private float ForwardForce;
+    [SerializeField]
+    private float UpwardForce;
+
+    [Header("Collision Settings")]
+    [SerializeField]
+    private GameObject ExplosionFX;
+    [SerializeField]
+    private string ExplosionSFX;
+
+    private SoundSystem SoundSystemRef;
     private Rigidbody RigidRef;
 
 	// Use this for initialization
 	void Start () {
         RigidRef = GetComponent<Rigidbody>();
+        SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
-        RigidRef.AddForce(transform.forward * 10);
+        RigidRef.AddForce(transform.forward * ForwardForce);
     }
 	
 	// Update is called once per frame
@@ -28,38 +42,36 @@ public class Fireball : MonoBehaviour {
     {
         GameObject CollisionRef = collision.gameObject;
 
-        if(CollisionRef.tag == "Player" || CollisionRef.name.Contains("Enemy"))
+        if(CollisionRef.tag == "Player"
+            || CollisionRef.name.Contains("Enemy")
+            || CollisionRef.GetComponent<Fireball>() != null)
         {
             Destroy(this.gameObject);
             if (CollisionRef.tag == "Player")
                 CollisionRef.GetComponent<TPSLogic>().Death();
-            else
+            if (CollisionRef.name.Contains("Enemy"))
+                CollisionRef.GetComponent<Enemy>().AirDeath();
+            if (CollisionRef.GetComponent<Fireball>() != null)
             {
-                //CollisionRef.GetComponent<Enemy>().AirborneDeath();
+                if(ExplosionFX != null)
+                    Instantiate(ExplosionFX, (transform.position + CollisionRef.transform.position) / 2, Quaternion.identity);
+                if (ExplosionSFX != "")
+                    SoundSystemRef.PlaySFX(ExplosionSFX);
             }
         }
         else
         {
             RigidRef.velocity = Vector3.zero;
-            if(Mathf.Abs(transform.position.y - CollisionRef.transform.position.y) < CollisionRef.transform.localScale.y / 2.5f)
+
+            if(CollisionRef.transform.position.y + CollisionRef.transform.lossyScale.y * 0.5f < transform.position.y)
             {
-                Debug.Log(CollisionRef.name + " LR, " + Mathf.Abs(transform.position.y - CollisionRef.transform.position.y) + " - " + CollisionRef.transform.localScale.y / 2.5f);
-                transform.forward = -transform.forward;
+                RigidRef.AddForce(transform.forward * ForwardForce);
+                RigidRef.AddForce(transform.up * UpwardForce);
             }
             else
             {
-                Debug.Log(CollisionRef.name + " UD, " + Mathf.Abs(transform.position.y - CollisionRef.transform.position.y) + " - " + CollisionRef.transform.localScale.y / 2.5f);
-                
-                if(transform.position.y > CollisionRef.transform.position.y) // Down
-                {
-                    RigidRef.AddForce(transform.up * 20);
-                }
-                else // Up
-                {
-                    RigidRef.AddForce(-transform.up * 20);
-                }
+                transform.forward = -transform.forward;
             }
-            RigidRef.AddForce(transform.forward * 20);
         }
     }
 }

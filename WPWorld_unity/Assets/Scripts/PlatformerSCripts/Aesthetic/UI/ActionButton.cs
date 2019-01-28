@@ -20,11 +20,18 @@ public class ActionButton : MonoBehaviour {
 
     public void onActionButtonDown()
     {
-        if (PlayerObject.GetComponent<PlayerPowerUp>() && PlayerObject.GetComponent<PlayerPowerUp>().GetPowerUp() == POWERUPS.FIREBALL)
+        if(PlayerObject.GetComponent<TPSLogic>().LeverRef != null)
         {
-            if(SoundToPlay != "")
-                SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(SoundToPlay);
-            PlayerObject.SendMessage("ShootFireball");
+            PlayerObject.GetComponent<TPSLogic>().LeverRef.Activate();
+        }
+        else
+        {
+            if (PlayerObject.GetComponent<PlayerPowerUp>() && PlayerObject.GetComponent<PlayerPowerUp>().GetPowerUp() == POWERUPS.FIREBALL)
+            {
+                if (SoundToPlay != "")
+                    SoundSystemRef.GetComponent<SoundSystem>().PlaySFX(SoundToPlay);
+                PlayerObject.SendMessage("ShootFireball");
+            }
         }
     }
 }

@@ -6,61 +6,61 @@ public enum POWERUPS
 {
     NONE,
     SUPERSPEED,
-    FIREBALL,
     SUPERJUMP,
+    FIREBALL,
     INVISIBILITY,
     INSTANTDEATH,
 }
 
 public class PlayerPowerUp : MonoBehaviour {
 
+    [Header("Debug Settings")]
     [SerializeField]
     private POWERUPS CurrPowerUp;
 
-    private POWERUPS PrevPowerUp;
-
+    [Header("Super Jump Settings")]
     [SerializeField]
     private float SuperMovementSpeed;
     private float OrgMovementSpeed;
 
+    [Header("Super Jump Settings")]
     [SerializeField]
     private float SuperJumpForce;
     private float OrgJumpForce;
 
-    [SerializeField]
-    private float FireballDelay;
-
+    [Header("Fireball Settings")]
     [SerializeField]
     private GameObject FireBallPrefab;
-
+    [SerializeField]
+    private float FireballDelay;
+    [SerializeField]
     private float TimeElapsed;
 
 	// Use this for initialization
 	void Start () {
-        PrevPowerUp = CurrPowerUp;
-
         OrgMovementSpeed = GetComponent<PlayerMovement>().GetMovementSpeed();
         OrgJumpForce = GetComponent<TPSLogic>().GetJumpForce();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(CurrPowerUp != PrevPowerUp)
+        switch(CurrPowerUp)
         {
-            switch(CurrPowerUp)
-            {
-                case (POWERUPS.SUPERSPEED):
-                    GetComponent<PlayerMovement>().SetMovementSpeed(SuperMovementSpeed);
-                    break;
-                case (POWERUPS.SUPERJUMP):
-                    GetComponent<TPSLogic>().SetJumpForce(SuperJumpForce);
-                    break;
-                case (POWERUPS.INSTANTDEATH):
-                    GetComponent<TPSLogic>().Death();
-                    break;
-            }
+            case (POWERUPS.SUPERSPEED):
+                break;
+            case (POWERUPS.SUPERJUMP):
+                break;
+            case (POWERUPS.FIREBALL):
+                if (TimeElapsed > 0)
+                    TimeElapsed -= Time.deltaTime;
+                else
+                    TimeElapsed = 0;
+                break;
+            case (POWERUPS.INVISIBILITY):
+                break;
+            case (POWERUPS.INSTANTDEATH):
+                break;
         }
-        PrevPowerUp = CurrPowerUp;
     }
 
     public void SetPowerUp(POWERUPS n_PowerUp)
@@ -102,7 +102,7 @@ public class PlayerPowerUp : MonoBehaviour {
 
             GameObject n_Fireball = Instantiate(FireBallPrefab, SpawnPosition, transform.rotation);
 
-            TimeElapsed += FireballDelay;
+            TimeElapsed = FireballDelay;
         }
     }
 

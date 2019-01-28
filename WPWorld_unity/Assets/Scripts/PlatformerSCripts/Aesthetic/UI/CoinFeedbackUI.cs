@@ -3,24 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinFeedbackUI : MonoBehaviour {
-    
-    [Header("Prefab Settings")]
-    [SerializeField]
-    private GameObject CoinPrefab;
-    private List<GameObject> Coins = new List<GameObject>();
 
-    [Space]
-    [Header("Speed Settings")]
-    [SerializeField]
-    private float MovementSpeed;
     [SerializeField]
     private float ScalingSpeed;
 
-    private RectTransform RectTransformRef;
+    [SerializeField]
+    private Vector3 PulseSize;
 
 	// Use this for initialization
 	void Start () {
-        RectTransformRef = GetComponent<RectTransform>();
+
 	}
 	
 	// Update is called once per frame
@@ -42,6 +34,6 @@ public class CoinFeedbackUI : MonoBehaviour {
 
     public void Pulse()
     {
-        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        transform.localScale = PulseSize;
     }
 }
