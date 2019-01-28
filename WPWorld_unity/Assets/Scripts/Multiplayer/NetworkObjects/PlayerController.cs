@@ -19,26 +19,20 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
+            gameObject.transform.parent = GameObject.FindGameObjectWithTag("GameLevel").transform;
         }
     }
 
     // Use this for initialization
     void Start () {
-        LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = LocalPlayerInstance.GetComponent<PlayerController>().photonView.Owner.NickName;
+        gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+
+        gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!photonView.IsMine && PhotonNetwork.IsConnected)
-        {
-            photonView.gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = PhotonNetwork.PlayerListOthers[0].NickName;
-            return;
-        }
-
-        if(photonView.IsMine)
-        {
-
-        }
+        
 	}
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

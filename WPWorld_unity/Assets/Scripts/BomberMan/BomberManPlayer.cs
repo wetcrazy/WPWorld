@@ -56,8 +56,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
-            gameObject.transform.parent = ARMultiplayerController._GroundObject.transform;
-            //gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
+            gameObject.transform.parent = GameObject.FindGameObjectWithTag("GameLevel").transform;            //gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
             
 
             respawnPt = this.transform.position;
@@ -79,8 +78,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = PhotonNetwork.NickName;
 
             
-            //gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
-            //PlayerObjects = GameObject.FindGameObjectsWithTag("Player");
+            gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
 
             SPawnPos.text += "My Spawn - " + ARMultiplayerController.SpawnPoint.ToString();
 
