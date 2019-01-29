@@ -10,7 +10,7 @@ using ExitGames.Client.Photon;
 /// <summary>
 /// Controls the ARCORE
 /// </summary>
-public class ARMultiplayerController : MonoBehaviour
+public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 {
     enum STATE_SCREEN
     {
@@ -51,6 +51,9 @@ public class ARMultiplayerController : MonoBehaviour
     //Reference to the clone of GameObjPrefab
     public static GameObject _GroundObject = null;
     public static Vector3 SpawnPoint;
+
+    GameObject[] LevelSpawnPoints;
+    Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
     Anchor _anchor;
 
     bool isSpawned = false;
@@ -269,12 +272,17 @@ public class ARMultiplayerController : MonoBehaviour
         _GroundObject = Instantiate(LevelObject, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
         _GroundObject.tag = LevelObject.tag;
 
-        SpawnPoint = GameObject.Find("Respawn").transform.localPosition;
+        LevelSpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 
         if (PhotonNetwork.IsConnected)
         {
             if (PhotonNetwork.IsMasterClient)
             {
+                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                {
+                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
+                }
+
                 AddNumberOfPlayerReady();
             }
             else
@@ -317,6 +325,18 @@ public class ARMultiplayerController : MonoBehaviour
         SpawnPlayersButton.SetActive(false);
     }
 
+    [PunRPC]
+    void ReceiveSpawnPoint(string SpawnPosName)
+    {
+        foreach (GameObject spawnpoint in LevelSpawnPoints)
+        {
+            if (spawnpoint.name == SpawnPosName)
+            {
+                SpawnPoint = spawnpoint.transform.localPosition;
+                break;
+            }
+        }
+    }
 
     [PunRPC]
     void AddNumberOfPlayerReady()
@@ -332,6 +352,48 @@ public class ARMultiplayerController : MonoBehaviour
     [PunRPC]
     void SpawnPlayer()
     {
-        Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity, _GroundObject.transform);
+        //Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity, _GroundObject.transform);
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+    }
+
+    public void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    public void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
+        {
+            case EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE:
+                {
+                    Vector3 PlayerLocalPos = (Vector3)photonEvent.CustomData;
+
+                    if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
+                    {
+                        GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+
+                        foreach (GameObject player in PlayerGoList)
+                        {
+                            if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
+                            {
+                                PlayerGoDict.Add(photonEvent.Sender, player);
+                                break;
+                            }
+                        }
+                    }
+
+                    PlayerGoDict[photonEvent.Sender].transform.localPosition = PlayerLocalPos;
+
+                    break;
+                }
+            default:
+                break;
+        }
     }
 }

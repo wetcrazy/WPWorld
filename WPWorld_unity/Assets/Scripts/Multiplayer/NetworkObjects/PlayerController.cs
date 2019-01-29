@@ -27,7 +27,7 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
             LocalPlayerInstance = gameObject;
         }
 
-        gameObject.transform.SetParent(GameObject.FindGameObjectWithTag("GameLevel").transform, true);
+        gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
     }
 
     // Use this for initialization
