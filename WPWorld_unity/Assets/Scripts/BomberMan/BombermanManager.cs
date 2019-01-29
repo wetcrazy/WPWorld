@@ -23,6 +23,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public GameObject AnchorUIObj;
     public GameObject SpawnBombButton;
 
+    [Header("Breakables")]
+    // For breakable spawning
+    //public List<GameObject> List_BreakablesBlocks;
+
     [Header("HighScore")]
     // For Highscore
     public static int PointsForKilling = 100;

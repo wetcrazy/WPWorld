@@ -18,7 +18,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private Vector3 respawnPt;
     private Vector3 OrignScale;
 
-
     // For Respawning Cool Down
     private float currTimer;
     private const float MAX_TIMER = 3.0f;
