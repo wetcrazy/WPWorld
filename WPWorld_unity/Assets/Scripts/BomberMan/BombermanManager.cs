@@ -62,7 +62,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {  
         if(PhotonNetwork.IsConnected)
         {
-            BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
+            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
         }
         else
         {

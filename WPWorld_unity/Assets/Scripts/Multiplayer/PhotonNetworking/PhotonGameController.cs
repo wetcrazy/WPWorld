@@ -39,7 +39,7 @@ public class PhotonGameController : MonoBehaviour {
         {
             case "BomberMan":
                 {
-                    ScoreToSubmit = BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore;
+                    ScoreToSubmit = PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore;
                     EventShortCode = "SUBMIT_SCORE_BOMBERMAN";
                     break;
                 }
@@ -76,8 +76,8 @@ public class PhotonGameController : MonoBehaviour {
             Amount = -Amount;
         }
 
-        BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore += Amount;
-        PlayerPoints.text = BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore.ToString();
+        PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore += Amount;
+        PlayerPoints.text = PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore.ToString();
     }
 
     public void GetLeaderboard()
