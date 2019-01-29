@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 114263014802556860}
   - component: {fileID: 114327245309723994}
   - component: {fileID: 114332786401930472}
-  - component: {fileID: 114099591260915894}
   m_Layer: 0
   m_Name: Bomber
   m_TagString: Player
@@ -181,7 +180,7 @@ Transform:
   m_GameObject: {fileID: 1030502945735488}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
   m_Children:
   - {fileID: 4521616401081900}
   - {fileID: 4584406687839278}
@@ -447,7 +446,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!102 &102757309250911632
 TextMesh:
@@ -470,20 +469,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &114099591260915894
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030502945735488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!114 &114263014802556860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -519,9 +504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 0.2
   MovementDir: {x: 0, y: 0, z: 0}
-  MovementMultiplier: 0
   CurrAvaliability: 3
-  MoveToPoint: {fileID: 0}
 --- !u!114 &114332786401930472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -536,10 +519,9 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114099591260915894}
   - {fileID: 114263014802556860}
   viewIdField: 0
   InstantiationId: 1

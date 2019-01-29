@@ -60,7 +60,7 @@ public class RespawnPoint : MonoBehaviour {
         if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             Interacted = true;
-            other.GetComponent<PlayerMovement>().SetRespawn(this.transform.position);
+            other.GetComponent<PlayerMovement>().SetRespawn(this.transform.localPosition);
 
             if (RespawnSFX != "")
                 SoundSystemRef.PlaySFX(RespawnSFX);

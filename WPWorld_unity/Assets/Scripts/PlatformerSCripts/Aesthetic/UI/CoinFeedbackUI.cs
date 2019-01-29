@@ -3,32 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinFeedbackUI : MonoBehaviour {
-    
-    [Header("Prefab Settings")]
-    [SerializeField]
-    private GameObject CoinPrefab;
-    private List<GameObject> Coins = new List<GameObject>();
 
-    [Space]
-    [Header("Speed Settings")]
     [SerializeField]
-    private float MovementSpeed;
+    private float ScalingSpeed;
+
+    [SerializeField]
+    private Vector3 PulseSize;
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        foreach(GameObject n_Coin in Coins)
+        if(Vector3.Distance(transform.localScale, new Vector3(1,1,1)) < 0.1f)
         {
-            n_Coin.transform.localPosition = Vector3.Lerp(Vector3.zero, transform.localPosition, MovementSpeed * Time.deltaTime);
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = Vector3.MoveTowards(transform.localScale, new Vector3(1, 1, 1), ScalingSpeed * Time.deltaTime);
+        }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            Pulse();
         }
 	}
 
-    public void CreateCoin(Vector3 n_Pos)
+    public void Pulse()
     {
-        Coins.Add(Instantiate(CoinPrefab, n_Pos, Quaternion.identity, transform));
+        transform.localScale = PulseSize;
     }
 }

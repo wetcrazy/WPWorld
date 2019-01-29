@@ -35,7 +35,7 @@ public class Bomb : MonoBehaviour
         }
     }
 
-    public void BlowUp()
+    public virtual void BlowUp()
     {       
         float scalableSize = BlockPrefab.transform.localScale.x * this.transform.parent.transform.localScale.x;
         
@@ -170,7 +170,7 @@ public class Bomb : MonoBehaviour
         {
             if (OwnerPUN.ActorNumber == Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
+                PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
             }
         }
         else

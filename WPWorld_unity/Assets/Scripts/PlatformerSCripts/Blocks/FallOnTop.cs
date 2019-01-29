@@ -4,28 +4,26 @@ using UnityEngine;
 
 public class FallOnTop : MonoBehaviour {
 
+    [Header("ID Settings")]
     public int ID;
-
-	private Rigidbody RigidRef;
-	private Renderer RenderRef;
-	private Collider ColliderRef;
 
 	private Vector3 OrgPos;
 
 	[SerializeField]
 	private float TimeToFall;
-
 	private float TimeElapsed;
+    private bool IsFalling = false; 
 
-	[SerializeField]
+    [SerializeField]
 	private string InteractedSFX;
 
-	private SoundSystem SoundSystemRef;
+    private Rigidbody RigidRef;
+    private Renderer RenderRef;
+    private Collider ColliderRef;
+    private SoundSystem SoundSystemRef;
 
-	private bool IsFalling = false;
-
-	// Use this for initialization
-	void Start()
+    // Use this for initialization
+    void Start()
 	{
 		RigidRef = GetComponent<Rigidbody>();
 		RenderRef = GetComponent<Renderer>();

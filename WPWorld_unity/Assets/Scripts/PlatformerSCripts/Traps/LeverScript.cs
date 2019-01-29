@@ -127,4 +127,9 @@ public class LeverScript : MonoBehaviour {
 
         MoveToRotation = new Vector3(-55, 0, 0);
     }
+
+    public void Activate()
+    {
+        HasInteracted = !HasInteracted;
+    }
 }

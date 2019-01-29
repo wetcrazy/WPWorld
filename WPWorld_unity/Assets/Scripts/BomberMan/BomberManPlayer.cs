@@ -6,7 +6,7 @@ using Photon.Realtime;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
 
-public class BomberManPlayer : MonoBehaviourPun, IPunObservable
+public class BomberManPlayer : MonoBehaviourPun
 {
     // Player Properties
     private int firePower;
@@ -18,16 +18,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private Vector3 respawnPt;
     private Vector3 OrignScale;
 
-
     // For Respawning Cool Down
     private float currTimer;
     private const float MAX_TIMER = 3.0f;
 
     // Lose Condition
     private bool isLose;
-
-    // Player Local Instance
-    public static GameObject LocalPlayerInstance;
 
     // Highscore
     private int Score = 0;
@@ -45,16 +41,13 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     // Heart Container
     private GameObject HeartContainer;
-
+    SendOptions sendOptions = new SendOptions { Reliability = true };
 
     private void Awake()
     {
-        respawnPt = this.transform.position;
-
-        if (photonView.IsMine)
+        if(photonView.IsMine)
         {
-            LocalPlayerInstance = gameObject;
-            LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
+            respawnPt = this.transform.position;
         }
     }
 
@@ -62,24 +55,16 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     {
         Reset();
         OrignScale = this.transform.localScale;
-
-        if (photonView.IsMine)
-        {
-            //Setting the username text that is above the player objects
-            LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-        }
-        else
-        {
-            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-        }
+       
+        //this.gameObject.GetComponent<Rigidbody>().velocity.Set(0, 0, 0);
     }
 
     private void Update()
     {
-        //if (!photonView.IsMine || !PhotonNetwork.IsConnected)
-        //{
-        //    return;
-        //}
+        if (!photonView.IsMine)
+        {
+            return;
+        }
 
         // Death Respawn
         if (isDead)
@@ -108,23 +93,26 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             InvurnablePlayer();
         }
 
-        //GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
-
-        GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.position.x.ToString() + ", " + this.transform.position.y.ToString() + ", " + this.transform.position.z.ToString();
     }
-
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        //Send other players our data
-        if (stream.IsWriting)
-        {
-
-        }
-        else //Receive data from other players
-        {
-
-        }
+        ////Send other players our data
+        //if (stream.IsWriting)
+        //{
+        //    stream.SendNext(transform.localPosition);
+        //}
+        //else //Receive data from other players
+        //{
+        //    foreach (GameObject player in PlayerObjects)
+        //    {
+        //        if (player.GetPhotonView().OwnerActorNr == info.Sender.ActorNumber)
+        //        {
+        //            player.transform.localPosition = (Vector3)stream.ReceiveNext();
+        //            break;
+        //        }
+        //    }
+        //}
     }
 
     // Bomb Button
@@ -148,8 +136,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-
-            SendOptions sendOptions = new SendOptions { Reliability = true };
+            
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_DROP_BOMB, content, raiseEventOptions, sendOptions);
         }
 
@@ -216,6 +203,18 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
                 isDmgtaken = true;
             }
         }
+        if(other.gameObject.tag == "Player")
+        {
+            this.gameObject.GetComponent<Collider>().enabled = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            this.gameObject.GetComponent<Collider>().enabled = true;
+        }
     }
 
     // Death Event
@@ -232,8 +231,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
         // Ask for mourning session
         RaiseEventOptions REO = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        SendOptions SO = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_PLAYER_DEATH, null, REO, SO);
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_PLAYER_DEATH, null, REO, sendOptions);
 
         // Adding Score
         photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);

@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +13,7 @@ public enum MovementAvaliability // For use with scripted events like disabling 
     BOTH // BOTH ARE ALLOWED, DOESN"T RESTRICT PLAYER
 }
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
     [SerializeField]
     private float MovementSpeed;
@@ -20,8 +23,6 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     private Vector3 MovementDir = Vector3.zero;
-
-    [SerializeField] 
     private float MovementMultiplier;
 
     [SerializeField]
@@ -30,26 +31,56 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
 
-    [SerializeField]
-    private GameObject MoveToPoint;
+    SendOptions sendOptions = new SendOptions { Reliability = true };
     
+    // Player Local Instance
+    public static GameObject LocalPlayerInstance;
+
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+
+        gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
+    }
 
     // Use this for initialization
     void Start () {
-		RigidRef = GetComponent<Rigidbody>();
 
-        RespawnPoint = transform.position;
+        //Setting the username text that is above the player objects
+        gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
 
-        // JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+        if (!photonView.IsMine)
+        {
+            return;
+        }
 
-        gameObject.transform.forward = Vector3.forward;
-
+        //Init the player pos to spawnpoint pos
+        gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
+        //Init the player rot
+        gameObject.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
         
+        //Get the rigidbody component
+        RigidRef = GetComponent<Rigidbody>();
+
+        //Init the respawn point
+        RespawnPoint = transform.position;
+        
+        //Init your player transform on other clients
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         switch (CurrAvaliability)
         {
             case (MovementAvaliability.NONE):
@@ -66,7 +97,11 @@ public class PlayerMovement : MonoBehaviour {
                 break;
         }
 
-        //MovementDir = (MoveToPoint.transform.position - transform.position).normalized;
+        //Update position on other client
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+
+        //Update your rotation on other clients
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
@@ -221,6 +256,11 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if(!photonView.IsMine)
+        {
+            return;
+        }
+
         // Actually moves the player according to the Movement Direction, Movement speed is attached here to prevent multiple movement speed from being multiplied in Update
         RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * MovementMultiplier * Time.fixedDeltaTime);
     }
@@ -229,7 +269,6 @@ public class PlayerMovement : MonoBehaviour {
     {
         if(other.tag == "Killbox")
         {
-            Debug.Log("Reset!");
             Respawn();
         }
     }
@@ -275,6 +314,11 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Respawn()
     {
-        this.transform.position = RespawnPoint;
+        this.transform.localPosition = RespawnPoint;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
     }
 }

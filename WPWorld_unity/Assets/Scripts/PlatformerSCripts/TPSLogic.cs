@@ -63,6 +63,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private Rigidbody RigidRef;
     private PlayerMovement MovementRef;
     private SoundSystem SoundSystemRef;
+    public LeverScript LeverRef;
 
     private List<CollectOnCollide> ListOfCoins = new List<CollectOnCollide>();
     private List<DestroyOnHit> ListOfBreakables = new List<DestroyOnHit>();
@@ -82,6 +83,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             LocalPlayerInstance = gameObject;
             LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
+            LocalPlayerInstance.transform.localPosition = ARMultiplayerController.SpawnPoint;
         }
     }
 
@@ -127,7 +129,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     void Update()
     {
         //Don't update if the player obj doesn't belong to you or is disconnected
-        if (!photonView.IsMine || !PhotonNetwork.IsConnected)
+        if (!photonView.IsMine)
         {
             return;
         }
@@ -237,6 +239,16 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             Death();
         }
+
+        if(other.name.Contains("Lever"))
+        {
+            LeverRef = other.GetComponent<LeverScript>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        LeverRef = null;
     }
 
     private void OnCollisionEnter(Collision collision)

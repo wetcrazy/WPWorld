@@ -23,6 +23,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public GameObject AnchorUIObj;
     public GameObject SpawnBombButton;
 
+    [Header("Breakables")]
+    // For breakable spawning
+    //public List<GameObject> List_BreakablesBlocks;
+
     [Header("HighScore")]
     // For Highscore
     public static int PointsForKilling = 100;
@@ -39,12 +43,14 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     private void Update()
     {
         EnableBombUi();
-        NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
+        // NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
+        NewRotation = Quaternion.identity;
+        Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
 
-        if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
-        {
-            Debug02.text = "I EXIST";
-        }
+        //if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
+        //{
+        //    Debug02.text = "I EXIST";
+        //}
     }
 
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
@@ -56,7 +62,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {  
         if(PhotonNetwork.IsConnected)
         {
-            BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
+            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
         }
         else
         {
@@ -85,6 +91,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
         GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
+        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
     }
@@ -93,6 +100,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public void SpawnBomb(Vector3 BombPos, int firepower, GameObject player)
     {
         GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
+        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwner(player);
     }
@@ -100,9 +108,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Spawn Power Up 
     public void SpawnPowerUp(Vector3 PowerPos, int randNum)
     {
-        Debug01.text = "Spawning Power";
+        //Debug01.text = "Spawning Power";
         var newPower = Instantiate(List_PowerUpBlocks[randNum], PowerPos, NewRotation, ARMultiplayerController._GroundObject.transform);
-        Debug01.text = "Spawned Power";
+        //Debug01.text = "Spawned Power";
     }
 
     // Player death (Multiplayer)
