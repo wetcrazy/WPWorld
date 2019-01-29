@@ -37,12 +37,12 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
     public static GameObject LocalPlayerInstance;
 
     private void Awake()
-    {
+    {      
         if (photonView.IsMine)
         {
             LocalPlayerInstance = gameObject;
         }
-
+        
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
     }
 
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
     // Update is called once per frame
     void Update()
-    {
+    {       
         if (!photonView.IsMine)
         {
             return;

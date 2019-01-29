@@ -131,7 +131,7 @@ public class BomberManPlayer : MonoBehaviourPun
         {
             object[] content = new object[]
             {
-                new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
+                transform.localPosition,
                 firePower
             };
 
