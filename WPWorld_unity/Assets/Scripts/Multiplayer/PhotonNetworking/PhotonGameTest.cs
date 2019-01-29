@@ -13,11 +13,17 @@ public class PhotonGameTest : MonoBehaviour//, IOnEventCallback
     [SerializeField]
     GameObject LevelObj;
 
+    public static GameObject _GroundObject;
     PhotonView photonView;
     public static Vector3 SpawnPoint;
     GameObject[] LevelSpawnPoints;
 
     Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
+
+    private void Awake()
+    {
+        _GroundObject = LevelObj;
+    }
 
     // Use this for initialization
     void Start () {
@@ -33,7 +39,6 @@ public class PhotonGameTest : MonoBehaviour//, IOnEventCallback
                 photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
             }
         }
-       
     }
 
     [PunRPC]
@@ -56,44 +61,50 @@ public class PhotonGameTest : MonoBehaviour//, IOnEventCallback
 		
 	}
 
-    //public void OnEnable()
-    //{
-    //    PhotonNetwork.AddCallbackTarget(this);
-    //}
+    public void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
 
-    //public void OnDisable()
-    //{
-    //    PhotonNetwork.RemoveCallbackTarget(this);
-    //}
+    public void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
 
-    //public void OnEvent(EventData photonEvent)
-    //{
-    //    switch ((EventCodes.EVENT_CODES)photonEvent.Code)
-    //    {
-    //        case EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE:
-    //            {
-    //                Vector3 PlayerLocalPos = (Vector3)photonEvent.CustomData;
+    public void OnEvent(EventData photonEvent)
+    {
+        if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
+        {
+            GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
 
-    //                if(!PlayerGoDict.ContainsKey(photonEvent.Sender))
-    //                {
-    //                    GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in PlayerGoList)
+            {
+                if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
+                {
+                    PlayerGoDict.Add(photonEvent.Sender, player);
+                    break;
+                }
+            }
+        }
 
-    //                    foreach (GameObject player in PlayerGoList)
-    //                    {
-    //                        if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
-    //                        {
-    //                            PlayerGoDict.Add(photonEvent.Sender, player);
-    //                            break;
-    //                        }
-    //                    }
-    //                }
-                    
-    //                PlayerGoDict[photonEvent.Sender].transform.localPosition = PlayerLocalPos;
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
+        {
+            case EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE:
+                {
+                    Vector3 PlayerLocalPos = (Vector3)photonEvent.CustomData;
+                    PlayerGoDict[photonEvent.Sender].transform.localPosition = PlayerLocalPos;
 
-    //                break;
-    //            }
-    //        default:
-    //            break;
-    //    }
-    //}
+                    break;
+                }
+            case EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE:
+                {
+                    Quaternion PlayerLocalRot = (Quaternion)photonEvent.CustomData;
+                    PlayerGoDict[photonEvent.Sender].transform.localRotation = PlayerLocalRot;
+
+                    break;
+                }
+            default:
+                break;
+        }
+    }
 }

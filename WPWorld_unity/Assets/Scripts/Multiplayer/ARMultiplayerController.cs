@@ -368,27 +368,33 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
+        if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
+        {
+            GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (GameObject player in PlayerGoList)
+            {
+                if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
+                {
+                    PlayerGoDict.Add(photonEvent.Sender, player);
+                    break;
+                }
+            }
+        }
+
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
         {
             case EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE:
                 {
                     Vector3 PlayerLocalPos = (Vector3)photonEvent.CustomData;
-
-                    if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
-                    {
-                        GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
-
-                        foreach (GameObject player in PlayerGoList)
-                        {
-                            if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
-                            {
-                                PlayerGoDict.Add(photonEvent.Sender, player);
-                                break;
-                            }
-                        }
-                    }
-
                     PlayerGoDict[photonEvent.Sender].transform.localPosition = PlayerLocalPos;
+
+                    break;
+                }
+            case EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE:
+                {
+                    Quaternion PlayerLocalRot = (Quaternion)photonEvent.CustomData;
+                    PlayerGoDict[photonEvent.Sender].transform.localRotation = PlayerLocalRot;
 
                     break;
                 }

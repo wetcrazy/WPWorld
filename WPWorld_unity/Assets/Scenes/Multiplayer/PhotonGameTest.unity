@@ -1194,7 +1194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &526556184
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1252,7 +1252,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 526556183}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 173.3, z: 0}
+  m_LocalPosition: {x: 0, y: 161, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1360,7 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa6ad622de35fa4b899df1d1e3a39b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerObjectPrefab: {fileID: 1703271515105264, guid: 07880d5605b240448b5c2c5ed0ff5e49,
+  PlayerObjectPrefab: {fileID: 1030502945735488, guid: 4bb8b0be4f6ecee4dbdee68d79369921,
     type: 2}
   LevelObj: {fileID: 0}
 --- !u!4 &561965456
@@ -2375,7 +2375,7 @@ Prefab:
         type: 2}
       propertyPath: PlayerObjectPrefab
       value: 
-      objectReference: {fileID: 1703271515105264, guid: 07880d5605b240448b5c2c5ed0ff5e49,
+      objectReference: {fileID: 1030502945735488, guid: 4bb8b0be4f6ecee4dbdee68d79369921,
         type: 2}
     - target: {fileID: 1935292660200488, guid: 18fccc16d0ffd19468d1291b0fe11394, type: 2}
       propertyPath: m_IsActive

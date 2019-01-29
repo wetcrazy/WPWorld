@@ -4,6 +4,7 @@
     {
         //General Events
         PLAYER_POSITION_UPDATE = 0,
+        PLAYER_ROTATION_UPDATE,
 
         //Bomberman Events
         BOMBER_EVENT_DROP_BOMB,

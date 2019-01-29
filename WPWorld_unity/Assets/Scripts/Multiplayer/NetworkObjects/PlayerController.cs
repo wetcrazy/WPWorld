@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
-using ExitGames.Client.Photon;
 
 public class PlayerController :  MonoBehaviourPun, IPunObservable{
     
     public static GameObject LocalPlayerInstance;
     private int Score = 0;
     
-    SendOptions sendOptions = new SendOptions { Reliability = true };
-
     float Sendtimer = 0.5f;
     bool hasSent = false;
     public int PlayerScore
@@ -36,7 +32,7 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
 
         if (photonView.IsMine)
         {
-            gameObject.transform.localPosition = PhotonGameTest.SpawnPoint;
+            gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
         }
     }
 
@@ -47,7 +43,7 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
             return;
         }
 
-        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+        
     }
 
     //private void LateUpdate()

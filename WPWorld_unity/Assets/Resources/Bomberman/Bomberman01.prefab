@@ -12542,7 +12542,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1409425284108272}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.399933, y: 1.000061, z: 4.500122}
+  m_LocalPosition: {x: 5.399933, y: 1.5, z: 4.500122}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -13751,7 +13751,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1145104688697914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.099945, y: 1.000061, z: -6.6000366}
+  m_LocalPosition: {x: -5.099945, y: 1.5, z: -6.6000366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -17729,7 +17729,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1999230361798296}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.320038, y: 1.000061, z: 5.369873}
+  m_LocalPosition: {x: -6.320038, y: 1.5, z: 5.369873}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -18345,7 +18345,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1352932302586140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.3999634, y: 1.000061, z: -7.799988}
+  m_LocalPosition: {x: 3.3999634, y: 1.5, z: -7.799988}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -48854,8 +48854,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd79fb4b29368348ae4fe6c0a80864c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerObjectPrefab: {fileID: 1030502945735488, guid: 4bb8b0be4f6ecee4dbdee68d79369921,
-    type: 2}
   LeaderboardUI: {fileID: 1175969044015844}
   LeaderboardHeaderUI: {fileID: 1928369208960612}
   LeaderboardEntryUI: {fileID: 1207617090840098, guid: 6479d4cc42da66a41a83aac9fb9a2d20,
@@ -49036,7 +49034,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 3
+  InstantiationId: 4
   isRuntimeInstantiated: 0
 --- !u!114 &114862304941909042
 MonoBehaviour:

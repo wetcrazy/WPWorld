@@ -37,7 +37,6 @@ public class Joystick : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PlayerObject = GameObject.FindGameObjectWithTag("Player");
         Up = new Vector3(0, JoystickBallDragLengthLimit, 0);
         Right = new Vector3(JoystickBallDragLengthLimit, 0, 0);
     }
@@ -48,6 +47,12 @@ public class Joystick : MonoBehaviour
         if (!isDraggingJoystick)
         {
             return;
+        }
+
+        //Check if player obj exist or not
+        if(PlayerObject == null)
+        {
+            PlayerObject = PlayerMovement.LocalPlayerInstance;
         }
 
         Vector3 JoystickBackgroundPosition = JoystickBackground.transform.position;

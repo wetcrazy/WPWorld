@@ -170,7 +170,7 @@ public class Bomb : MonoBehaviour
         {
             if (OwnerPUN.ActorNumber == Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
+                PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().OnBombDestoryed();
             }
         }
         else
