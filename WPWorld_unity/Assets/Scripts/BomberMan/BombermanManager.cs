@@ -107,17 +107,23 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
+<<<<<<< HEAD
         newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
         newBomb.transform.Translate(BombPos, Space.Self);
         newBomb.transform.localPosition = Vector3.zero;
         newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
         newBomb.transform.localPosition = BombPos;
+=======
+>>>>>>> 195823578de3979ee40558b74ab6e18a62fe26ae
         //Set the rotation & position of the new bomb
         newBomb.transform.localPosition = Vector3.zero;
         newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
         newBomb.transform.localPosition = BombPos;
        
+<<<<<<< HEAD
 
+=======
+>>>>>>> 195823578de3979ee40558b74ab6e18a62fe26ae
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
 
