@@ -47,6 +47,7 @@ public class Head : MonoBehaviour
     private STATE_FACING facingState;
     Vector3 prev = new Vector3();
     bool once = false;
+    float starting_speed = 0.01f;
     float normalspeed;
     float timer = 5;
     bool hit = false;
