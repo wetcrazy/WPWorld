@@ -174,7 +174,7 @@ Prefab:
     - target: {fileID: 114031503034195486, guid: 875984784667c6b4da29577883468c33,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114775902963661478, guid: 875984784667c6b4da29577883468c33,
         type: 2}
@@ -319,7 +319,7 @@ Prefab:
     - target: {fileID: 114031503034195486, guid: 875984784667c6b4da29577883468c33,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: PlayButtonSound
+      value: ExitGameMoveAnchor
       objectReference: {fileID: 0}
     - target: {fileID: 114031503034195486, guid: 875984784667c6b4da29577883468c33,
         type: 2}
@@ -344,7 +344,7 @@ Prefab:
     - target: {fileID: 114031503034195486, guid: 875984784667c6b4da29577883468c33,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114031503034195486, guid: 875984784667c6b4da29577883468c33,
         type: 2}
@@ -390,6 +390,25 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ExitGameScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 114031503034195486, guid: 875984784667c6b4da29577883468c33,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1792011265}
+    - target: {fileID: 114679089500719730, guid: 875984784667c6b4da29577883468c33,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2050179748}
+    - target: {fileID: 114679089500719730, guid: 875984784667c6b4da29577883468c33,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LocalPlayerCall_SpawnBomb
+      objectReference: {fileID: 0}
+    - target: {fileID: 1860956607256872, guid: 875984784667c6b4da29577883468c33, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114775902963661478, guid: 875984784667c6b4da29577883468c33, type: 2}
@@ -503,6 +522,11 @@ Prefab:
       propertyPath: DebugText2
       value: 
       objectReference: {fileID: 589112281}
+    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
+        type: 2}
+      propertyPath: SinglePlayer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18fccc16d0ffd19468d1291b0fe11394, type: 2}
   m_IsPrefabParent: 0
@@ -747,6 +771,57 @@ GameObject:
   m_PrefabParentObject: {fileID: 1488143516586044, guid: 875984784667c6b4da29577883468c33,
     type: 2}
   m_PrefabInternal: {fileID: 324430875}
+--- !u!1001 &930237705
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114826121459061988, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388666504172252, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+  m_IsPrefabParent: 0
 --- !u!114 &1134054865 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114732931005483440, guid: 875984784667c6b4da29577883468c33,
@@ -1098,5 +1173,9 @@ MonoBehaviour:
   - {fileID: 1388609146568386, guid: 403bb20414695b64995ff517df61c3ca, type: 2}
   AnchorUIObj: {fileID: 1740283870}
   SpawnBombButton: {fileID: 890945508}
+  List_BreakablesBlocks:
+  - {fileID: 1131678054451154, guid: 990d593bd497c9347b4818226f050a96, type: 2}
+  - {fileID: 1131678054451154, guid: 31a02335c3f101b4cbe836cccc230ef0, type: 2}
+  List_PlayerPlaySpace: []
   Debug01: {fileID: 1134054865}
   Debug02: {fileID: 589112281}

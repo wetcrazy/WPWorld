@@ -123,15 +123,15 @@ public class BomberManPlayer : MonoBehaviourPun
             return;
         }
 
-        if (!PhotonNetwork.IsConnected)
+        if (ARMultiplayerController.isSinglePlayer)
         {
-            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnBomb(this.transform.position, firePower, this.gameObject);         
+            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnBomb(this.transform.localPosition, firePower, this.gameObject);         
         }
         else
         {
             object[] content = new object[]
             {
-                new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
+                transform.localPosition,
                 firePower
             };
 
