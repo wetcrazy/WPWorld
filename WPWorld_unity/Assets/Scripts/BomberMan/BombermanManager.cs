@@ -27,6 +27,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
 
+    [Header("PlayerPlaySpace")]
+    // For player play space
+    public List<GameObject> List_PlayerPlaySpace;
+
     [Header("HighScore")]
     // For Highscore
     public static int PointsForKilling = 100;
@@ -48,11 +52,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         // Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
     }
 
+    // When player Dies
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
         _selectedOBJ.GetComponent<BomberManPlayer>().SetisDead(_boolValue);
     }
 
+    // When button is press (local player)
     public void LocalPlayerCall_SpawnBomb()
     {  
         if(PhotonNetwork.IsConnected)
@@ -63,6 +69,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().onBombButtonDown();
         }
+    }
+
+    // Breakable Spawner
+    // Constant Spawner
+    public void ConstantBreakableSpawner()
+    {
+
     }
 
     // Bomb UI
@@ -78,6 +91,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
+    //
+
     // =============
     //    EVENTS
     // =============
@@ -86,10 +101,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
         GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+
         newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
         newBomb.transform.Translate(BombPos, Space.Self);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
+
         Debug01.text = newBomb.transform.forward.ToString();
         Debug02.text = ARMultiplayerController._GroundObject.transform.forward.ToString();
     }
