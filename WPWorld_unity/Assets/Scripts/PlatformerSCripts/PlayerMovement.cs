@@ -43,9 +43,11 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
             LocalPlayerInstance = gameObject;
         }
         
+        //Set the level as the parent
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
+        //Init the player rot
         gameObject.transform.localPosition = Vector3.zero;
-        gameObject.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        gameObject.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
     }
 
     // Use this for initialization

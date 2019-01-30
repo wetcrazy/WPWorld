@@ -102,8 +102,16 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
+<<<<<<< HEAD
         newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
         newBomb.transform.Translate(BombPos, Space.Self);
+=======
+        //Set the rotation & position of the new bomb
+        newBomb.transform.localPosition = Vector3.zero;
+        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBomb.transform.localPosition = BombPos;
+
+>>>>>>> db84609dc9548ab640582992959bcbf099907128
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
 
@@ -114,9 +122,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Spawn Bomb (Singleplayer)
     public void SpawnBomb(Vector3 BombPos, int firepower, GameObject player)
     {
-        GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
+        GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+
+        //Set the rotation & position of the new bomb
         newBomb.transform.localPosition = Vector3.zero;
-        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
         newBomb.transform.localPosition = player.transform.localPosition;
 
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);

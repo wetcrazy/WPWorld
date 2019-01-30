@@ -56,6 +56,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     //Reference to the clone of GameObjPrefab
     public static GameObject _GroundObject = null;
     public static Vector3 SpawnPoint;
+    public static GameObject LevelForwardAnchor;
 
     GameObject[] LevelSpawnPoints;
     Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
@@ -280,6 +281,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
         _GroundObject.tag = LevelObject.tag;
 
         LevelSpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+        LevelForwardAnchor = GameObject.FindGameObjectWithTag("LevelForwardAnchor");
 
         if (PhotonNetwork.IsConnected)
         {
