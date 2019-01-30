@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
         {
             LocalPlayerInstance = gameObject;
         }
-
+        
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
     }
 

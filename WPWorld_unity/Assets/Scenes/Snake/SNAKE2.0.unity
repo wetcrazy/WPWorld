@@ -113,6 +113,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &1355210488 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114210357178217374, guid: 0f0194703ee720a4e9b1df61c7202a89,
+    type: 2}
+  m_PrefabInternal: {fileID: 1637007509}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1403772866
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,13 +193,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1403772866}
-  m_LocalRotation: {x: 0.5828324, y: 0, z: 0, w: 0.81259245}
-  m_LocalPosition: {x: 0, y: 2.56, z: -1.02}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 71.3, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1622861094
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +304,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114706665155067884, guid: 0f0194703ee720a4e9b1df61c7202a89,
+        type: 2}
+      propertyPath: dispos
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114706665155067884, guid: 0f0194703ee720a4e9b1df61c7202a89,
+        type: 2}
+      propertyPath: MultiplierDisplay
+      value: 
+      objectReference: {fileID: 1355210488}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f0194703ee720a4e9b1df61c7202a89, type: 2}
   m_IsPrefabParent: 0
