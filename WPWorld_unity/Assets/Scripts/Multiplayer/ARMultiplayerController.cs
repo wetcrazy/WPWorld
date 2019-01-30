@@ -21,6 +21,11 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     }
     STATE_SCREEN ScreenState = STATE_SCREEN.SCREEN_NONE;
 
+    [SerializeField]
+    bool SinglePlayer = false;
+
+    public static bool isSinglePlayer;
+
     //----GAME OBJECTS----//
     [Header("Game Objects")]
     [SerializeField]
@@ -66,6 +71,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 
     private void Start()
     {
+        isSinglePlayer = SinglePlayer;
+
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
         photonView = PhotonView.Get(this);
@@ -291,9 +298,10 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
                 photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
             }
         }
-        else
+        else if (!PhotonNetwork.IsConnected || isSinglePlayer)
         {
-            Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity, _GroundObject.transform);
+            ReceiveSpawnPoint(LevelSpawnPoints[0].name);
+            SpawnPlayer();
         }
     }
 
@@ -352,6 +360,12 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     [PunRPC]
     void SpawnPlayer()
     {
+        if(!PhotonNetwork.IsConnected || isSinglePlayer)
+        {
+            Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity);
+            return;
+        }
+
         //Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity, _GroundObject.transform);
         PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
     }
