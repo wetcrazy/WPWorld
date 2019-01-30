@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
         }
         
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
+        gameObject.transform.localPosition = Vector3.zero;
+        gameObject.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
     }
 
     // Use this for initialization
@@ -57,10 +59,11 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
             return;
         }
 
-        //Init the player pos to spawnpoint pos
+        ////Init the player pos to spawnpoint pos
         gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
         //Init the player rot
-        gameObject.transform.localRotation = Quaternion.identity;
+        //gameObject.transform.localRotation = ARMultiplayerController._GroundObject.transform.localRotation;
+        //gameObject.transform.Translate(ARMultiplayerController.SpawnPoint, Space.Self);
         
         //Get the rigidbody component
         RigidRef = GetComponent<Rigidbody>();
@@ -262,7 +265,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
     void FixedUpdate()
     {
-        if(!photonView.IsMine && PhotonNetwork.IsConnected && !ARMultiplayerController.isSinglePlayer)
+        if(!photonView.IsMine)
         {
             return;
         }

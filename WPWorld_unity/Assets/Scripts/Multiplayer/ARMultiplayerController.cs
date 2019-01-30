@@ -362,7 +362,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     {
         if(!PhotonNetwork.IsConnected || isSinglePlayer)
         {
-            Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity);
+            Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);
             return;
         }
 

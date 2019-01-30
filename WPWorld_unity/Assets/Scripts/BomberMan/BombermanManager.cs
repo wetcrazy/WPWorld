@@ -45,7 +45,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         EnableBombUi();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
         // NewRotation = Quaternion.identity;
-        Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
+        // Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
     }
 
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
@@ -86,11 +86,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
         GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
-        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
-        //newBomb.transform.localPosition = BombPos;
+        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
         newBomb.transform.Translate(BombPos, Space.Self);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
+        Debug01.text = newBomb.transform.forward.ToString();
+        Debug02.text = ARMultiplayerController._GroundObject.transform.forward.ToString();
     }
 
     // Spawn Bomb (Singleplayer)
@@ -98,8 +99,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
         //newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newBomb.transform.Translate(BombPos, Space.Self);
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwner(player);
+        Debug01.text = newBomb.transform.forward.ToString();
+        Debug02.text = ARMultiplayerController._GroundObject.transform.forward.ToString();
     }
 
     // Spawn Power Up 
