@@ -125,7 +125,7 @@ public class BomberManPlayer : MonoBehaviourPun
 
         if (ARMultiplayerController.isSinglePlayer)
         {
-            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnBomb(this.transform.position, firePower, this.gameObject);         
+            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnBomb(this.transform.localPosition, firePower, this.gameObject);         
         }
         else
         {
