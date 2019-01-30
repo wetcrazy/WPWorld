@@ -26,6 +26,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     [Header("Breakables")]
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
+    private Queue<GameObject> Breakable_Stack;
 
     [Header("PlayerPlaySpace")]
     // For player play space
@@ -77,6 +78,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
 
     }
+    public void SendBreakableSpawn()
+    {
+
+    }
 
     // Bomb UI
     public void EnableBombUi()
@@ -102,21 +107,17 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
-<<<<<<< HEAD
-
         newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
         newBomb.transform.Translate(BombPos, Space.Self);
         newBomb.transform.localPosition = Vector3.zero;
         newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
         newBomb.transform.localPosition = BombPos;
-
-=======
         //Set the rotation & position of the new bomb
         newBomb.transform.localPosition = Vector3.zero;
         newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
         newBomb.transform.localPosition = BombPos;
        
->>>>>>> a65a0d4a1722c3a03b75f2e62d9593e90b663817
+
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
 
