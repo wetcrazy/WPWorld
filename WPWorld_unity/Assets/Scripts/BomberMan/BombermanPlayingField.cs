@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BombermanPlayingField : MonoBehaviour
 {
+    public GameObject Player { get; set; }
     public GameObject WallParent;
     public GameObject FloorParent;
     public GameObject BreakablesParent;
