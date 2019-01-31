@@ -113,57 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &41591938
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114826121459061988, guid: caba322beb074f441aaa3a5ae5720c43,
-        type: 2}
-      propertyPath: viewIdField
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1388666504172252, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &74057241
 Prefab:
   m_ObjectHideFlags: 0
@@ -696,6 +645,57 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 324430875}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1001 &713719592
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734906828190990, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114826121459061988, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914076849922070, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+      propertyPath: m_TagString
+      value: BombermanPlayingField
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &719230732
 GameObject:
   m_ObjectHideFlags: 0

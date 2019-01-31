@@ -26,7 +26,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     [Header("Breakables")]
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
-    private Queue<GameObject> Breakable_Stack;
+    private List<BombermanPlayingField> List_CurrPlayerPlayingField;
+    private GameObject[] Array_PlayerPlayingField;
 
     [Header("PlayerPlaySpace")]
     // For player play space
@@ -41,15 +42,28 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public Text Debug01;
     public Text Debug02;
 
-
+    // All object rotation
     private Quaternion NewRotation;
+    // If game needs reset
+    private bool is_Reset;
+
+    // START
+    private void Start()
+    {
+        Array_PlayerPlayingField = GameObject.FindGameObjectsWithTag("BombermanPlayingField");
+        is_Reset = true;    
+    }
 
     // UPDATE
     private void Update()
     {
         EnableBombUi();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        // NewRotation = Quaternion.identity;
+        if(is_Reset)
+        {
+
+        }
+
         // Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
     }
 
@@ -83,6 +97,47 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     }
 
+    // Reset Funtion
+    public void ResetGame()
+    {
+        if (List_CurrPlayerPlayingField.Count <= 0)
+        {
+            FindPlayers();
+        }
+    }
+    // Find players playing field
+    public void FindPlayers()
+    {
+        int playerCount = 0;
+        // Check each field
+        foreach (GameObject field in Array_PlayerPlayingField)
+        {
+            // Dont check anymore if we found all the players
+            if(playerCount == GameObject.FindGameObjectsWithTag("Player").Length)
+            {
+                break;
+            }
+
+            var Arr_Floor = field.GetComponent<BombermanPlayingField>().FloorParent.GetComponentInChildren<Transform>();
+            RaycastHit hit;
+
+            // Each floor block
+            foreach (Transform floor in Arr_Floor)
+            {
+                if(Physics.Raycast(floor.localPosition, Vector3.up, out hit, floor.localScale.x))
+                {
+                    // Player is found
+                    if(hit.transform.tag == "Player")
+                    {
+                        List_CurrPlayerPlayingField.Add(field.GetComponent<BombermanPlayingField>()); // Push into current field that is being played by the players
+                        playerCount += 1;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     // Bomb UI
     public void EnableBombUi()
     {
@@ -95,8 +150,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             SpawnBombButton.SetActive(true);        
         }
     }
-
-    //
 
     // =============
     //    EVENTS
