@@ -37,6 +37,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // For Highscore
     public static int PointsForKilling = 100;
 
+    [Header("Player stats UI")]
+    // Player Stat Ui
+    public GameObject PlayerStatBar;
+    // public Text PlayerHighScoreText;
+    public Text PlayerTotalBombCount;
+    public Text PlayerTotalFirePower;
+
     [Header("Debugging Text")]
     // For Debugging
     public Text Debug01;
@@ -51,15 +58,15 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     private void Start()
     {
         Array_PlayerPlayingField = GameObject.FindGameObjectsWithTag("BombermanPlayingField");
-        is_Reset = true;    
+        is_Reset = true;
     }
 
     // UPDATE
     private void Update()
     {
-        EnableBombUi();
+        EnableBombUi();     
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        if(is_Reset)
+        if (is_Reset)
         {
 
         }
@@ -96,7 +103,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
    
     // Reset Funtion
     public void ResetGame()
-    {
+    {   
         if (List_CurrPlayerPlayingField.Count <= 0)
         {
             FindPlayers();
@@ -138,19 +145,37 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
+    // ============ UI =================
+
     // Bomb UI
     public void EnableBombUi()
     {
         if(AnchorUIObj.activeSelf)
         {      
-            SpawnBombButton.SetActive(false);         
+            SpawnBombButton.SetActive(false);
+            PlayerStatBar.SetActive(false);
         }
         else
         {         
-            SpawnBombButton.SetActive(true);        
+            SpawnBombButton.SetActive(true);
+            PlayerStatBar.SetActive(true);
+            PlayerStats();
         }
     }
-
+    // Update Player Stats Ui
+    public void PlayerStats()
+    {
+        if (!ARMultiplayerController.isSinglePlayer)
+        {
+            PlayerTotalFirePower.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetBombPower().ToString();
+            PlayerTotalBombCount.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
+        }
+        else
+        {
+            PlayerTotalFirePower.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetBombPower().ToString();
+            PlayerTotalBombCount.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
+        }
+    }
     // =============
     //    EVENTS
     // =============
