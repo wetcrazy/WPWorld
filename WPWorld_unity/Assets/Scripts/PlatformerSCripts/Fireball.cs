@@ -10,6 +10,9 @@ public class Fireball : MonoBehaviour {
     [SerializeField]
     private float UpwardForce;
 
+    [SerializeField]
+    private Vector3 TestVelocity;
+
     [Header("Collision Settings")]
     [SerializeField]
     private GameObject ExplosionFX;
@@ -29,13 +32,16 @@ public class Fireball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        TestVelocity = RigidRef.velocity;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Killbox")
+        {
+            CreateExplosion(transform.position);
             Destroy(this.gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -52,12 +58,7 @@ public class Fireball : MonoBehaviour {
             if (CollisionRef.name.Contains("Enemy"))
                 CollisionRef.GetComponent<Enemy>().AirDeath();
             if (CollisionRef.GetComponent<Fireball>() != null)
-            {
-                if(ExplosionFX != null)
-                    Instantiate(ExplosionFX, (transform.position + CollisionRef.transform.position) / 2, Quaternion.identity);
-                if (ExplosionSFX != "")
-                    SoundSystemRef.PlaySFX(ExplosionSFX);
-            }
+                CreateExplosion((transform.position + CollisionRef.transform.position) / 2);
         }
         else
         {
@@ -73,5 +74,13 @@ public class Fireball : MonoBehaviour {
                 transform.forward = -transform.forward;
             }
         }
+    }
+
+    public void CreateExplosion(Vector3 n_Pos)
+    {
+        if (ExplosionFX != null)
+            Instantiate(ExplosionFX, n_Pos, Quaternion.identity);
+        if (ExplosionSFX != "")
+            SoundSystemRef.PlaySFX(ExplosionSFX);
     }
 }
