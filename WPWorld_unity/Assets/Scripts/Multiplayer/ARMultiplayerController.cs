@@ -95,6 +95,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             case STATE_SCREEN.SCREEN_GAME:
                 {
                     GameScreenUpdate();
+                    DebugText.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
+                    //DebugText2.text = PhotonNetwork.PlayerList.Length.ToString();   
                     break;
                 }
             default:
@@ -362,14 +364,15 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     [PunRPC]
     void SpawnPlayer()
     {
-        if(!PhotonNetwork.IsConnected || isSinglePlayer)
-        {
-            Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);
-            return;
-        }
+        //if(!PhotonNetwork.IsConnected || isSinglePlayer)
+        //{
+        //    Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);
+        //    return;
+        //}
 
         //Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity, _GroundObject.transform);
         PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+        DebugText2.text = "YES";
     }
 
     public void OnEnable()

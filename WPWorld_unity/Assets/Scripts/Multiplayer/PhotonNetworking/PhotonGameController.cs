@@ -45,7 +45,7 @@ public class PhotonGameController : MonoBehaviour {
                 }
             case "Platformer":
                 {
-                    ScoreToSubmit = TPSLogic.LocalPlayerInstance.GetComponent<TPSLogic>().CurrPointsPub;
+                    ScoreToSubmit = PlayerMovement.LocalPlayerInstance.GetComponent<TPSLogic>().CurrPointsPub;
                     EventShortCode = "SUBMIT_SCORE_PLATFORMER";
                     break;
                 }

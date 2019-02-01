@@ -63,8 +63,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
 
         }
-
-        // Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
     }
 
     // When player Dies

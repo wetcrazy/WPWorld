@@ -53,6 +53,11 @@ public class BomberManPlayer : MonoBehaviourPun
 
     private void Start()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         Reset();
         OrignScale = this.transform.localScale;
        

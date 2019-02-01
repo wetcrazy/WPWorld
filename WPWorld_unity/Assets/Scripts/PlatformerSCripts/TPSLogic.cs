@@ -73,23 +73,15 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private List<FallOnTop> ListOfFalling = new List<FallOnTop>();
     private List<MoveOnCollide> ListOfMoving = new List<MoveOnCollide>();
     private List<BounceOnHit> ListOfBouncingBlocks = new List<BounceOnHit>();
-
-    //The local player instance
-    public static GameObject LocalPlayerInstance;
-
-    private void Awake()
-    {
-        if (photonView.IsMine)
-        {
-            LocalPlayerInstance = gameObject;
-            LocalPlayerInstance.transform.parent = ARMultiplayerController._GroundObject.transform;
-            LocalPlayerInstance.transform.localPosition = ARMultiplayerController.SpawnPoint;
-        }
-    }
-
+   
     // Use this for initialization
     void Start()
     {
+        if(!photonView.IsMine)
+        {
+            return;
+        }
+
         RigidRef = GetComponent<Rigidbody>();
         MovementRef = GetComponent<PlayerMovement>();
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
@@ -113,16 +105,6 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         ListOfFalling.AddRange(FindObjectsOfType(typeof(FallOnTop)) as FallOnTop[]);
         ListOfMoving.AddRange(FindObjectsOfType(typeof(MoveOnCollide)) as MoveOnCollide[]);
         ListOfBouncingBlocks.AddRange(FindObjectsOfType(typeof(BounceOnHit)) as BounceOnHit[]);
-
-        //Setting the username text that is above the player objects
-        if (photonView.IsMine)
-        {
-            LocalPlayerInstance.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-        }
-        else
-        {
-            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-        }
     }
 
     // Update is called once per frame
