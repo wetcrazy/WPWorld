@@ -90,13 +90,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Constant Spawner
     public void ConstantBreakableSpawner()
     {
+        foreach (BombermanPlayingField currField in List_CurrPlayerPlayingField)
+        {
 
+        }
     }
-    public void SendBreakableSpawn()
-    {
-
-    }
-
+   
     // Reset Funtion
     public void ResetGame()
     {
@@ -105,9 +104,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             FindPlayers();
         }
     }
+
     // Find players playing field
     public void FindPlayers()
     {
+        // Temp player counting
         int playerCount = 0;
         // Check each field
         foreach (GameObject field in Array_PlayerPlayingField)
@@ -129,6 +130,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                     // Player is found
                     if(hit.transform.tag == "Player")
                     {
+                        field.GetComponent<BombermanPlayingField>().Player = hit.transform.gameObject;
                         List_CurrPlayerPlayingField.Add(field.GetComponent<BombermanPlayingField>()); // Push into current field that is being played by the players
                         playerCount += 1;
                         break;
@@ -219,6 +221,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             }
         }
     }
+
+    // Player Send Breakable Spawner
+    public void SendBreakableSpawn()
+    {
+
+    }
+
 
     // ==============
     //  EVENT TRIGGER
