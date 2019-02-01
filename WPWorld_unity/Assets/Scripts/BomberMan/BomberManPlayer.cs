@@ -258,7 +258,16 @@ public class BomberManPlayer : MonoBehaviourPun
         currNUMBomb -= 1;
     }
 
-   
+    // Getter
+    public int GetBombPower()
+    {
+        return firePower;
+    }
+    public int GetMaxBombCount()
+    {
+        return MAX_NUMBOMB;
+    }
+
 
     // Highscore
     [PunRPC]
