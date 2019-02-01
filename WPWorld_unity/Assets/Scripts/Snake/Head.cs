@@ -9,13 +9,21 @@ public class Head : MonoBehaviour
     Vector3 scalingoffset;
 
     public Text dispos;
-
+    bool space = false;
     bool isInput = false;
     public Text ScoreDisplay;
     public Text LifeDisplay;
     public Text WLconditionDisplay;
-    int I_score = 0;
+    public Text MultiplierDisplay;
+    float I_score = 0;
+    bool isstreak = false;
+    int streakcounter = 0;
+    float minmult = 1;
+    float multiplier = 1;
+    float addmult = 0.2f;
+    float max_mult = 5;
     int Lives = 5;
+    int HighScore = 0;
     public Button UP;
     public Button DOWN;
     public Button LEFT;
@@ -39,6 +47,7 @@ public class Head : MonoBehaviour
     private STATE_FACING facingState;
     Vector3 prev = new Vector3();
     bool once = false;
+    float starting_speed = 0.01f;
     float normalspeed;
     float timer = 5;
     bool hit = false;
@@ -72,8 +81,23 @@ public class Head : MonoBehaviour
         LifeDisplay.text = "";
         WLconditionDisplay.text = "";
         hit = false;
-        Goal = 10;
+        Goal = 100;
+
+        popmypos();
     }
+
+    public void popmypos()
+    {
+        Vector3 test = SetVectortoint(this.gameObject.transform.position);
+        //Vector3 tester = this.gameObject.transform.position;
+        //Vector3 tesetesr = tester - test;
+        //(0,0.1,0 - (0.4,0.1,0.2)
+        //(-0.4,0,-0.2)
+        this.gameObject.transform.Translate(test - this.gameObject.transform.position);
+        prev = this.gameObject.transform.position;
+    }
+
+
     public void Setspeed(float speed)
     {
         m_Speed = speed;
@@ -88,8 +112,8 @@ public class Head : MonoBehaviour
 
         if (I_score >= Goal)
         {
-            WLconditionDisplay.text = " WINNER ";
-            hit = true;
+            //WLconditionDisplay.text = " WINNER ";
+            //hit = true;
         }
         else if (Lives < 1 || hit)
         {
@@ -104,18 +128,40 @@ public class Head : MonoBehaviour
         if (timer <= 0)
         {
             m_Speed = normalspeed;
+            timer = 5;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+          
+            Stun();
+        }
+        //if (Input.GetKeyDown(KeyCode.Space)&& space == false)
+        //{
+        //    Debug.Log("SpaceDown");
+        //    space = true;
+        //}
+        //else if(space == true && Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    Debug.Log("spaceup");
+        //    space = false;
+        //}
+
         // Player movement
         if ((!hit))
         {
             PlayerControl();
-
+            //if (Vector3.Distance(prev, this.gameObject.transform.position) > 0.08f)
+            //{
+            //    popmypos();
+            //}
 
             if (once)
             {
                 this.gameObject.transform.position += this.gameObject.transform.forward * m_Speed;
             }
 
+           
 
 
             // Children Movement
@@ -158,7 +204,8 @@ public class Head : MonoBehaviour
             }
         }
         float test = Settofixnumber(this.gameObject.transform.position.x);
-        dispos.text = test.ToString();
+        // dispos.text = test.ToString();
+        MultiplierDisplay.text = multiplier.ToString();
     }
     // Inputs
     private void PlayerControl()
@@ -174,6 +221,10 @@ public class Head : MonoBehaviour
         //    this.gameObject.transform.Translate(temp - this.gameObject.transform.position);
         //    prev = this.gameObject.transform.position;
 
+        
+        //if(((Vector3.Distance(prev, this.gameObject.transform.position)>= 0.08f)&& (Vector3.Distance(prev, this.gameObject.transform.position) <= 0.12f)) || (!once))
+        //{
+
         //Rotate playerhead
             if (Input.GetKey(KeyCode.UpArrow) &&
                 facingState != STATE_FACING.STATE_BACKWARD && 
@@ -184,16 +235,18 @@ public class Head : MonoBehaviour
 
                 once = true;
                 isInput = true;
+               // popmypos();
             }
             else if (Input.GetKey(KeyCode.DownArrow) && 
                      facingState != STATE_FACING.STATE_FORWARD && 
                      facingState != STATE_FACING.STATE_BACKWARD)
             {
-                gameObject.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
+            gameObject.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
                 facingState = STATE_FACING.STATE_BACKWARD;
 
                 once = true;
                 isInput = true;
+                //popmypos();
             }
 
 
@@ -201,24 +254,27 @@ public class Head : MonoBehaviour
                 facingState != STATE_FACING.STATE_RIGHT &&
                 facingState != STATE_FACING.STATE_LEFT)
             {
-                gameObject.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
+            gameObject.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
                 facingState = STATE_FACING.STATE_LEFT;
 
                 once = true;
                 isInput = true;
+               // popmypos();
             }
             else if (Input.GetKey(KeyCode.RightArrow) &&
                      facingState != STATE_FACING.STATE_LEFT &&
                      facingState != STATE_FACING.STATE_LEFT)
             {
-                gameObject.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
+            gameObject.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
                 facingState = STATE_FACING.STATE_RIGHT;
 
                 once = true;
                 isInput = true;
+                //popmypos();
             }
 
-       
+        //    Debug.Log("hi");
+        //}
            
             if (isInput)
             {
@@ -243,21 +299,10 @@ public class Head : MonoBehaviour
     //returns a vector3 with int values
     Vector3 SetVectortoint(Vector3 vecpos)
     {
-        if (scalingoffset.x != 1)
-        {
-            specialx = (1 / scalingoffset.x);
-        }
-        if (scalingoffset.y != 1)
-        {
-            specialy = (1 / scalingoffset.y);
-        }
-        if (scalingoffset.z != 1)
-        {
-            specialz = (1 / scalingoffset.z);
-        }
-        float Vx = (Mathf.RoundToInt(vecpos.x * specialx)) % specialx;
-        float Vy = (Mathf.RoundToInt(vecpos.y * specialy)) % specialy;
-        float Vz = (Mathf.RoundToInt(vecpos.z * specialz)) % specialz;
+        float Vx = (Mathf.RoundToInt(vecpos.x*10)*0.1f);
+        float Vy = (Mathf.RoundToInt(vecpos.y*10)*0.1f);
+        float Vz = (Mathf.RoundToInt(vecpos.z*10)*0.1f);
+
         Vector3 temp = new Vector3(Vx, Vy, Vz);
         return temp;
     }
@@ -278,8 +323,32 @@ public class Head : MonoBehaviour
     //score goes up
     public void AddAppleAte()
     {
-        I_score++;
+        //default score of apple
+        float applecost = 10;
+
+        isstreak = true;
+        streakcounter++;
+
+
+        multiplier = (minmult+(streakcounter * addmult));
+
+
+
+
+
+
+
+
+
+
+
+
+
+        I_score+= (float)applecost *multiplier;
+
+
     }
+    
     // Add body parts
     public void AddBody()
     {
@@ -304,6 +373,18 @@ public class Head : MonoBehaviour
             childScript.turningDirection = new Queue<STATE_FACING>(Children[Children.Count - 2].GetComponent<Body>().turningDirection);                  
         }
 
+    }
+    //clear body parts
+    public void ClearBody()
+    {
+        if (Children.Count > 0)
+        {
+            for (int i = 0; i < Children.Count; i++)
+            {
+                Destroy(Children[i]);
+            }
+            Children.Clear();
+        }
     }
     //when button is pressed
     void TaskWithParameters(string message)
@@ -364,6 +445,29 @@ public class Head : MonoBehaviour
             isInput = true;
         }
     }
+
+
+    void Stun()
+    {
+        /*
+
+         //if hit = true
+         hit==false
+
+         children clear
+
+         speed=normal
+
+
+          */
+        Debug.Log("Stunned");
+        m_Speed = 0;
+        timer = 2;
+        ClearBody();
+
+    }
+
+   
 }
 
 

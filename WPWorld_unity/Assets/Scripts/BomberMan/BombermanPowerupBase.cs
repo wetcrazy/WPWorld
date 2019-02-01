@@ -7,9 +7,8 @@ public class BombermanPowerupBase : MonoBehaviour
     // GameObject PlayerTarget == Collector
     // Bool isCollected == Powerup is been collected by player
    
-    public bool isCollected { get; set; }
-    [HideInInspector]
-    public GameObject PlayerTarget = null; 
+    protected bool isCollected { get; set; }  
+    protected GameObject PlayerTarget = null; 
 
     // Constructor
     public BombermanPowerupBase()

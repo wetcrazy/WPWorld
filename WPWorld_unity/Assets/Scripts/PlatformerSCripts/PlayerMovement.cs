@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +13,7 @@ public enum MovementAvaliability // For use with scripted events like disabling 
     BOTH // BOTH ARE ALLOWED, DOESN"T RESTRICT PLAYER
 }
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
     [SerializeField]
     private float MovementSpeed;
@@ -27,24 +30,65 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 RespawnPoint;
     private Vector3 PermenantNorthDirection;
     private Rigidbody RigidRef;
-  
+
+    SendOptions sendOptions = new SendOptions { Reliability = true };
+    
+    // Player Local Instance
+    public static GameObject LocalPlayerInstance;
+
+    private void Awake()
+    {
+        if (photonView.IsMine || !PhotonNetwork.IsConnected || ARMultiplayerController.isSinglePlayer)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+        
+        //Set the level as the parent
+        gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
+        //Init the player rot
+        gameObject.transform.localPosition = Vector3.zero;
+        gameObject.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+    }
 
     // Use this for initialization
     void Start () {
-		RigidRef = GetComponent<Rigidbody>();
 
+        //Setting the username text that is above the player objects
+        gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
+
+        if (!photonView.IsMine && PhotonNetwork.IsConnected && !ARMultiplayerController.isSinglePlayer)
+        {
+            return;
+        }
+
+        ////Init the player pos to spawnpoint pos
+        gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
+        //Init the player rot
+        //gameObject.transform.localRotation = ARMultiplayerController._GroundObject.transform.localRotation;
+        //gameObject.transform.Translate(ARMultiplayerController.SpawnPoint, Space.Self);
+        
+        //Get the rigidbody component
+        RigidRef = GetComponent<Rigidbody>();
+
+        //Init the respawn point
         RespawnPoint = transform.position;
 
-        // JoysticControls = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
-
-        gameObject.transform.forward = Vector3.forward;
-
-        
+        if (PhotonNetwork.IsConnected || ARMultiplayerController.isSinglePlayer)
+        {
+            //Init your player transform on other clients
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!photonView.IsMine && PhotonNetwork.IsConnected && !ARMultiplayerController.isSinglePlayer)
+        {
+            return;
+        }
+
         switch (CurrAvaliability)
         {
             case (MovementAvaliability.NONE):
@@ -59,6 +103,15 @@ public class PlayerMovement : MonoBehaviour {
             case (MovementAvaliability.BOTH):
                 RigidRef.constraints = RigidbodyConstraints.FreezeRotation;
                 break;
+        }
+
+        if (PhotonNetwork.IsConnected || ARMultiplayerController.isSinglePlayer)
+        {
+            //Update position on other client
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+
+            //Update your rotation on other clients
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
         }
     }
 
@@ -214,6 +267,11 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if(!photonView.IsMine)
+        {
+            return;
+        }
+
         // Actually moves the player according to the Movement Direction, Movement speed is attached here to prevent multiple movement speed from being multiplied in Update
         RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * MovementMultiplier * Time.fixedDeltaTime);
     }
@@ -268,5 +326,10 @@ public class PlayerMovement : MonoBehaviour {
     public void Respawn()
     {
         this.transform.localPosition = RespawnPoint;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -3,45 +3,108 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class PhotonGameTest : MonoBehaviour {
-
+public class PhotonGameTest : MonoBehaviour//, IOnEventCallback
+{
     [SerializeField]
     GameObject PlayerObjectPrefab;
+    [SerializeField]
+    GameObject LevelObj;
 
-
-    private GameObject[] SpawnPoints;
+    public static GameObject _GroundObject;
     PhotonView photonView;
     public static Vector3 SpawnPoint;
+    GameObject[] LevelSpawnPoints;
+
+    Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
+
+    private void Awake()
+    {
+        _GroundObject = LevelObj;
+    }
 
     // Use this for initialization
     void Start () {
         photonView = PhotonView.Get(this);
 
+        LevelSpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+
         if (PhotonNetwork.IsMasterClient)
         {
-            //Get spawning positions of level
-            SpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-
+            //Send each player a spawnpoint
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
             {
-                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], SpawnPoints[i].transform.localPosition);
+                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
             }
         }
-       
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    [PunRPC]
+    void ReceiveSpawnPoint(string SpawnPosName)
+    {
+        foreach (GameObject spawnpoint in LevelSpawnPoints)
+        {
+            if(spawnpoint.name == SpawnPosName)
+            {
+                SpawnPoint = spawnpoint.transform.localPosition;
+                break;
+            }
+        }
+
+        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
-    [PunRPC]
-    void ReceiveSpawnPoint(Vector3 SpawnPos)
+    public void OnEnable()
     {
-        //After receiving the spawnpoint pos from host, instantiate the player
-        //PhotonNetwork.Instantiate(PlayerObjectPrefab.name, SpawnPos, Quaternion.identity, 0);
-        SpawnPoint = SpawnPos;
-        PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    public void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
+        {
+            GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (GameObject player in PlayerGoList)
+            {
+                if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
+                {
+                    PlayerGoDict.Add(photonEvent.Sender, player);
+                    break;
+                }
+            }
+        }
+
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
+        {
+            case EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE:
+                {
+                    Vector3 PlayerLocalPos = (Vector3)photonEvent.CustomData;
+                    PlayerGoDict[photonEvent.Sender].transform.localPosition = PlayerLocalPos;
+
+                    break;
+                }
+            case EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE:
+                {
+                    Quaternion PlayerLocalRot = (Quaternion)photonEvent.CustomData;
+                    PlayerGoDict[photonEvent.Sender].transform.localRotation = PlayerLocalRot;
+
+                    break;
+                }
+            default:
+                break;
+        }
     }
 }

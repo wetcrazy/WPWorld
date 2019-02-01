@@ -23,6 +23,16 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public GameObject AnchorUIObj;
     public GameObject SpawnBombButton;
 
+    [Header("Breakables")]
+    // For breakable spawning
+    public List<GameObject> List_BreakablesBlocks;
+    private List<BombermanPlayingField> List_CurrPlayerPlayingField;
+    private GameObject[] Array_PlayerPlayingField;
+
+    [Header("PlayerPlaySpace")]
+    // For player play space
+    public List<GameObject> List_PlayerPlaySpace;
+
     [Header("HighScore")]
     // For Highscore
     public static int PointsForKilling = 100;
@@ -32,33 +42,43 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public Text Debug01;
     public Text Debug02;
 
-
+    // All object rotation
     private Quaternion NewRotation;
+    // If game needs reset
+    private bool is_Reset;
+
+    // START
+    private void Start()
+    {
+        Array_PlayerPlayingField = GameObject.FindGameObjectsWithTag("BombermanPlayingField");
+        is_Reset = true;    
+    }
 
     // UPDATE
     private void Update()
     {
         EnableBombUi();
-        // NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        NewRotation = Quaternion.identity;
-        Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
+        NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
+        if(is_Reset)
+        {
 
-        //if(GameObject.FindGameObjectsWithTag("Player").Length > 0)
-        //{
-        //    Debug02.text = "I EXIST";
-        //}
+        }
+
+        // Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
     }
 
+    // When player Dies
     public void PlayerDead(GameObject _selectedOBJ, bool _boolValue)
     {
         _selectedOBJ.GetComponent<BomberManPlayer>().SetisDead(_boolValue);
     }
 
+    // When button is press (local player)
     public void LocalPlayerCall_SpawnBomb()
     {  
         if(PhotonNetwork.IsConnected)
         {
-            BomberManPlayer.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
+            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().onBombButtonDown();
         }
         else
         {
@@ -66,15 +86,69 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
+    // Breakable Spawner
+    // Constant Spawner
+    public void ConstantBreakableSpawner()
+    {
+        foreach (BombermanPlayingField currField in List_CurrPlayerPlayingField)
+        {
+
+        }
+    }
+   
+    // Reset Funtion
+    public void ResetGame()
+    {
+        if (List_CurrPlayerPlayingField.Count <= 0)
+        {
+            FindPlayers();
+        }
+    }
+
+    // Find players playing field
+    public void FindPlayers()
+    {
+        // Temp player counting
+        int playerCount = 0;
+        // Check each field
+        foreach (GameObject field in Array_PlayerPlayingField)
+        {
+            // Dont check anymore if we found all the players
+            if(playerCount == GameObject.FindGameObjectsWithTag("Player").Length)
+            {
+                break;
+            }
+
+            var Arr_Floor = field.GetComponent<BombermanPlayingField>().FloorParent.GetComponentInChildren<Transform>();
+            RaycastHit hit;
+
+            // Each floor block
+            foreach (Transform floor in Arr_Floor)
+            {
+                if(Physics.Raycast(floor.localPosition, Vector3.up, out hit, floor.localScale.x))
+                {
+                    // Player is found
+                    if(hit.transform.tag == "Player")
+                    {
+                        field.GetComponent<BombermanPlayingField>().Player = hit.transform.gameObject;
+                        List_CurrPlayerPlayingField.Add(field.GetComponent<BombermanPlayingField>()); // Push into current field that is being played by the players
+                        playerCount += 1;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     // Bomb UI
     public void EnableBombUi()
     {
         if(AnchorUIObj.activeSelf)
-        {
+        {      
             SpawnBombButton.SetActive(false);         
         }
         else
-        {
+        {         
             SpawnBombButton.SetActive(true);        
         }
     }
@@ -86,19 +160,42 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Spawn Bomb (Multiplayer)
     public void SpawnBomb(Vector3 BombPos, int firepower, int OwnerActorID)
     {
-        GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
-        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+
+        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
+        newBomb.transform.Translate(BombPos, Space.Self);
+        newBomb.transform.localPosition = Vector3.zero;
+        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBomb.transform.localPosition = BombPos;
+
+        newBomb.transform.localPosition = Vector3.zero;
+        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBomb.transform.localPosition = BombPos;
+       
+
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
+
+        Debug01.text = newBomb.transform.forward.ToString();
+        Debug02.text = ARMultiplayerController._GroundObject.transform.forward.ToString();
     }
 
     // Spawn Bomb (Singleplayer)
     public void SpawnBomb(Vector3 BombPos, int firepower, GameObject player)
     {
-        GameObject newBomb = Instantiate(BombPrefab, BombPos, NewRotation, ARMultiplayerController._GroundObject.transform);
-        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+
+        //Set the rotation & position of the new bomb
+        newBomb.transform.localPosition = Vector3.zero;
+        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBomb.transform.localPosition = player.transform.localPosition;
+
+        // Set properties
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwner(player);
+
+        Debug01.text = newBomb.transform.forward.ToString();
+        Debug02.text = ARMultiplayerController._GroundObject.transform.forward.ToString();
     }
 
     // Spawn Power Up 
@@ -124,6 +221,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             }
         }
     }
+
+    // Player Send Breakable Spawner
+    public void SendBreakableSpawn()
+    {
+
+    }
+
 
     // ==============
     //  EVENT TRIGGER

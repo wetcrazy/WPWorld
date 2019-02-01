@@ -9,33 +9,54 @@ public class BombermanBreakable : MonoBehaviourPun, IPunObservable
 {
     public bool isDestroyed { get; set; }
 
-    private void Start()
+    protected int NumHits;
+
+    public BombermanBreakable()
     {
-        isDestroyed = false;    
-    }  
+        isDestroyed = false;
+        NumHits = 1;
+    }
 
     private void Update()
     {
         if(isDestroyed)
         {
-            var randNum = Random.Range(0, GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().List_PowerUpBlocks.Count);
-
-            if (Photon.Pun.PhotonNetwork.IsConnected)
-            {
-                object[] content = new object[] { this.transform.position , randNum };
-
-                RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-
-                SendOptions sendOptions = new SendOptions { Reliability = true };
-                PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_POWERUP, content, raiseEventOptions, sendOptions);
-            }
-            else
-            {
-                GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnPowerUp(this.transform.position, randNum);
-            }
-
-            Destroy(this.gameObject);
+            BreakableHitted();
         }
+    }
+
+    private void BreakableHitted()
+    {
+        if(NumHits <= 1)
+        {
+            SendPowerupinfo();
+        }
+        else
+        {
+            NumHits -= 1;
+            isDestroyed = false;
+        }
+    }
+
+    private void SendPowerupinfo()
+    {
+        var randNum = Random.Range(0, GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().List_PowerUpBlocks.Count);
+
+        if (Photon.Pun.PhotonNetwork.IsConnected)
+        {
+            object[] content = new object[] { this.transform.position, randNum };
+
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+
+            SendOptions sendOptions = new SendOptions { Reliability = true };
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_POWERUP, content, raiseEventOptions, sendOptions);
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnPowerUp(this.transform.position, randNum);
+        }
+
+        Destroy(this.gameObject);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

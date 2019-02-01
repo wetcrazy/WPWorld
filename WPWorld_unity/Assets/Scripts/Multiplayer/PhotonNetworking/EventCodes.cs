@@ -2,8 +2,12 @@
 
     public enum EVENT_CODES
     {
+        //General Events
+        PLAYER_POSITION_UPDATE = 0,
+        PLAYER_ROTATION_UPDATE,
+
         //Bomberman Events
-        BOMBER_EVENT_DROP_BOMB = 0,
+        BOMBER_EVENT_DROP_BOMB,
         BOMBER_EVENT_PLAYER_DEATH,
         BOMBER_EVENT_SPAWN_POWERUP,
 
@@ -20,5 +24,11 @@
         PLATFORM_EVENT_BUTTON_TRIGGERED,
         PLATOFRM_EVENT_LEVER_TRIGGERED,
         PLATFORM_EVENT_CHECKPOINT_TRIGGERED,
+
+        //Snake Events
+        SNAKE_EVENT_SPEEDUP,
+        SNAKE_EVENT_STUN,
+        SNAKE_EVENT_BLOCKS_POP_UP,
+        SNAKE_EVENT_SLOWDOWN,
     }
 }

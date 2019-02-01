@@ -6,7 +6,7 @@ using Photon.Realtime;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
 
-public class BomberManPlayer : MonoBehaviourPun, IPunObservable
+public class BomberManPlayer : MonoBehaviourPun
 {
     // Player Properties
     private int firePower;
@@ -18,16 +18,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     private Vector3 respawnPt;
     private Vector3 OrignScale;
 
-
     // For Respawning Cool Down
     private float currTimer;
     private const float MAX_TIMER = 3.0f;
 
     // Lose Condition
     private bool isLose;
-
-    // Player Local Instance
-    public static GameObject LocalPlayerInstance;
 
     // Highscore
     private int Score = 0;
@@ -45,20 +41,12 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
     // Heart Container
     private GameObject HeartContainer;
-    GameObject[] PlayerObjects;
-
-    Text MyPlayerPos;
-    Text SPawnPos;
-    Text OtherPlayerPos;
+    SendOptions sendOptions = new SendOptions { Reliability = true };
 
     private void Awake()
     {
-        if (photonView.IsMine)
+        if(photonView.IsMine)
         {
-            LocalPlayerInstance = gameObject;
-            gameObject.transform.parent = GameObject.FindGameObjectWithTag("GameLevel").transform;            //gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
-            
-
             respawnPt = this.transform.position;
         }
     }
@@ -67,39 +55,16 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
     {
         Reset();
         OrignScale = this.transform.localScale;
-        MyPlayerPos = GameObject.FindGameObjectsWithTag("Debug")[0].GetComponent<Text>();
-        SPawnPos = GameObject.FindGameObjectsWithTag("Debug")[1].GetComponent<Text>();
-        OtherPlayerPos = GameObject.FindGameObjectsWithTag("Debug")[2].GetComponent<Text>();
-        this.gameObject.GetComponent<Rigidbody>().velocity.Set(0, 0, 0);
-
-        if (photonView.IsMine)
-        {
-            //Setting the username text that is above the player objects
-            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = PhotonNetwork.NickName;
-
-            
-            gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
-
-            SPawnPos.text += "My Spawn - " + ARMultiplayerController.SpawnPoint.ToString();
-
-        }
-        else
-        {
-            gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
-        }
+       
+        //this.gameObject.GetComponent<Rigidbody>().velocity.Set(0, 0, 0);
     }
 
     private void Update()
     {
         if (!photonView.IsMine)
         {
-            OtherPlayerPos.text = "\nOther Global Player - " + gameObject.transform.position.ToString();
-            OtherPlayerPos.text += "\nOther Local Player - " + gameObject.transform.localPosition.ToString();
             return;
         }
-
-        MyPlayerPos.text = "\nMy Global Player - " + gameObject.transform.position.ToString();
-        MyPlayerPos.text += "\nMy Local Player - " + gameObject.transform.localPosition.ToString();
 
         // Death Respawn
         if (isDead)
@@ -127,10 +92,6 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
         {        
             InvurnablePlayer();
         }
-
-        //GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = this.transform.localScale.x.ToString() + ", " + this.transform.localScale.y.ToString() + ", " + this.transform.localScale.z.ToString();
-
-        //DebugText.text = gameObject.transform.position.ToString();
 
     }
 
@@ -162,21 +123,20 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
             return;
         }
 
-        if (!PhotonNetwork.IsConnected)
+        if (ARMultiplayerController.isSinglePlayer)
         {
-            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnBomb(this.transform.position, firePower, this.gameObject);         
+            GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().SpawnBomb(this.transform.localPosition, firePower, this.gameObject);         
         }
         else
         {
             object[] content = new object[]
             {
-                new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z),
+                transform.localPosition,
                 firePower
             };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-
-            SendOptions sendOptions = new SendOptions { Reliability = true };
+            
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_DROP_BOMB, content, raiseEventOptions, sendOptions);
         }
 
@@ -271,8 +231,7 @@ public class BomberManPlayer : MonoBehaviourPun, IPunObservable
 
         // Ask for mourning session
         RaiseEventOptions REO = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        SendOptions SO = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_PLAYER_DEATH, null, REO, SO);
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_PLAYER_DEATH, null, REO, sendOptions);
 
         // Adding Score
         photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
