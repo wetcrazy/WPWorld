@@ -159,7 +159,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {         
             SpawnBombButton.SetActive(true);
             PlayerStatBar.SetActive(true);
-            PlayerStats();
+            //PlayerStats();
         }
     }
     // Update Player Stats Ui
