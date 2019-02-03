@@ -49,6 +49,12 @@ public class PhotonGameController : MonoBehaviour {
                     EventShortCode = "SUBMIT_SCORE_PLATFORMER";
                     break;
                 }
+            case "SNAKE2.0":
+                {
+                    //ScoreToSubmit = 
+                    EventShortCode = "SUBMIT_SCORE_SNAKE";
+                    break;
+                }
 
             default:
                 break;
@@ -103,6 +109,11 @@ public class PhotonGameController : MonoBehaviour {
                     LeaderboardShortCode = "LEADERBOARD_PLATFORMER";
                     break;
                 }
+            case "SNAKE2.0":
+                {
+                    LeaderboardShortCode = "LEADERBOARD_SNAKE";
+                    break;
+                }
             default:
                 break;
         }
@@ -117,11 +128,6 @@ public class PhotonGameController : MonoBehaviour {
                 foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData entry in response.Data)
                 {
                     CreateLeaderboardEntryUI((int)entry.Rank, entry.UserName, entry.JSONData["SCORE"].ToString());
-
-                    //string rank = entry.Rank.ToString();
-                    //string playerName = entry.UserName;
-                    //string score = entry.JSONData["SCORE"].ToString();
-                    //Debug.Log("Rank:" + rank + " Name:" + playerName + " \n Score:" + score);
                 }
             }
             else

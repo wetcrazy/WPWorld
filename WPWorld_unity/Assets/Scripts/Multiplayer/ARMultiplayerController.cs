@@ -289,9 +289,19 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0")
                 {
-                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
+                    for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                    {
+                        photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[0].name);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                    {
+                        photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
+                    }
                 }
 
                 AddNumberOfPlayerReady();
@@ -364,15 +374,13 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     [PunRPC]
     void SpawnPlayer()
     {
-        //if(!PhotonNetwork.IsConnected || isSinglePlayer)
-        //{
-        //    Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);
-        //    return;
-        //}
+        if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0")
+        {
+            Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);
+            return;
+        }
 
-        //Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity, _GroundObject.transform);
         PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
-        DebugText2.text = "YES";
     }
 
     public void OnEnable()

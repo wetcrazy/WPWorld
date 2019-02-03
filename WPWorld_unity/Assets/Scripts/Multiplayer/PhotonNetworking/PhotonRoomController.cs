@@ -162,7 +162,7 @@ public class PhotonRoomController : MonoBehaviour
             switch (CurrentGamemode)
             {
                 case GAMEMODE.GAMEMODE_SNAKE:
-                    PhotonNetwork.LoadLevel("PhotonGameTest");
+                    PhotonNetwork.LoadLevel("SNAKE2.0");
                     break;
                 case GAMEMODE.GAMEMODE_TRON:
                     break;
