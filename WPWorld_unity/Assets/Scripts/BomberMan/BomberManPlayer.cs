@@ -162,8 +162,6 @@ public class BomberManPlayer : MonoBehaviourPun
         currTimer = 0.0f;
         MAX_NUMBOMB = 1;
         currNUMBomb = 0;
-
-        Respawn();
     }
     // Player blinking
     public void InvurnablePlayer()
