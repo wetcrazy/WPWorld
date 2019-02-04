@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Head : MonoBehaviour
+public class Head : MonoBehaviourPun, IPunObservable
 {
     Vector3 scalingoffset;
 
@@ -51,7 +52,19 @@ public class Head : MonoBehaviour
     float normalspeed;
     float timer = 5;
     bool hit = false;
-   // float blinking = 2.5f;
+
+    // Player Local Instance
+    public static GameObject LocalPlayerInstance;
+
+    private void Awake()
+    {
+        //Set the level as the parent
+        gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
+
+        LocalPlayerInstance = gameObject;
+    }
+
+    // float blinking = 2.5f;
     private void Start()
     {
         scalingoffset = new Vector3(this.gameObject.transform.parent.localScale.x, this.gameObject.transform.parent.localScale.y, this.gameObject.transform.parent.localScale.z);
@@ -103,8 +116,7 @@ public class Head : MonoBehaviour
         m_Speed = speed;
     }
     private void Update()
-    {
-        
+    {   
         hit = this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided;
 
         ScoreDisplay.text = " Score : " + I_score;
@@ -160,9 +172,6 @@ public class Head : MonoBehaviour
             {
                 this.gameObject.transform.position += this.gameObject.transform.forward * m_Speed;
             }
-
-           
-
 
             // Children Movement
             foreach (GameObject child in Children)
@@ -467,7 +476,10 @@ public class Head : MonoBehaviour
 
     }
 
-   
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 

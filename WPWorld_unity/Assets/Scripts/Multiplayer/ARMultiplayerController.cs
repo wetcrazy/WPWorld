@@ -285,7 +285,9 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
         LevelSpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
         LevelForwardAnchor = GameObject.FindGameObjectWithTag("LevelForwardAnchor");
 
-        if (PhotonNetwork.IsConnected)
+
+
+        if (!isSinglePlayer)
         {
             if (PhotonNetwork.IsMasterClient)
             {
@@ -312,10 +314,11 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
                 photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
             }
         }
-        else if (!PhotonNetwork.IsConnected || isSinglePlayer)
+        else
         {
-            ReceiveSpawnPoint(LevelSpawnPoints[0].name);
-            SpawnPlayer();
+                ReceiveSpawnPoint(LevelSpawnPoints[0].name);
+                SpawnPlayer();
+
         }
     }
 
