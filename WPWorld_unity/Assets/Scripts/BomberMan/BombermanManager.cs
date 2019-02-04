@@ -91,6 +91,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         foreach (BombermanPlayingField currField in List_CurrPlayerPlayingField)
         {
             var Arr_Floor = currField.FloorParent.GetComponentInChildren<Transform>();
+         
             foreach (Transform floor in Arr_Floor)
             {
                 if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
@@ -98,9 +99,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                     continue;
                 }
 
-
-                // Spawn it
+                currField.List_Floors.Add(floor.gameObject);
             }
+
+            var RAND = Random.Range(0, currField.List_Floors.Count);
+
+
         }
     }
    
