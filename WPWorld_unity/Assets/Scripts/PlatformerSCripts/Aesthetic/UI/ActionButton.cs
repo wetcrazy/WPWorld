@@ -14,7 +14,17 @@ public class ActionButton : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        //foreach(GameObject n_Player in GameObject.FindGameObjectsWithTag("Player"))
+        //{
+        //    if (!n_Player.GetComponent<TPSLogic>().isMine())
+        //        continue;
+        //    PlayerObject = n_Player;
+        //    break;
+        //}
+        //// Remove this when testing with multiplayer
+        //PlayerObject = GameObject.FindGameObjectWithTag("Player");
+
+        PlayerObject = PlayerMovement.LocalPlayerInstance;
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem");
     }
 

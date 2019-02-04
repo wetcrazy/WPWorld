@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimerIconScript : MonoBehaviour {
 
     [SerializeField]
     private GameObject TimerTextRef;
+
+    [SerializeField]
+    private GameObject SecondHandRef;
+
+    [SerializeField]
+    private GameObject FillRef;
 
     private TimerUI TimerRef;
 
@@ -22,6 +29,18 @@ public class TimerIconScript : MonoBehaviour {
             Vector3 new_Rot = transform.localEulerAngles;
             new_Rot.z = Z_Rot;
             transform.localEulerAngles = new_Rot;
+
+            if(FillRef != null)
+            {
+                FillRef.GetComponent<Image>().fillAmount = 1 - TimerRef.StartingTime % 100 / 100;
+            }
+            if(SecondHandRef != null)
+            {
+                Z_Rot = TimerRef.StartingTime % 100 * 36;
+                new_Rot = SecondHandRef.transform.localEulerAngles;
+                new_Rot.z = Z_Rot;
+                SecondHandRef.transform.localEulerAngles = new_Rot;
+            }
         }
 	}
 }

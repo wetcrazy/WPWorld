@@ -8,18 +8,16 @@ public class JumpButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        PlayerObject = PlayerMovement.LocalPlayerInstance;
 
         if(PlayerObject.GetComponent<TPSLogic>() != null)
         {
-            GameObject[] PlayersToGet = GameObject.FindGameObjectsWithTag("Player");
-
-            foreach(GameObject n_Player in PlayersToGet)
+            foreach (GameObject n_Player in GameObject.FindGameObjectsWithTag("Player"))
             {
-                if(n_Player.GetComponent<TPSLogic>().isMine())
-                {
-                    PlayerObject = n_Player;
-                }
+                if (!n_Player.GetComponent<TPSLogic>().isMine())
+                    continue;
+                PlayerObject = n_Player;
+                break;
             }
         }
 	}

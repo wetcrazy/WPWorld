@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class PlayerController :  MonoBehaviourPun, IPunObservable{
     
@@ -23,7 +25,7 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
             LocalPlayerInstance = gameObject;
         }
 
-        gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
+        gameObject.transform.SetParent(PhotonGameTest._GroundObject.transform, true);
     }
 
     // Use this for initialization
@@ -32,7 +34,10 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
 
         if (photonView.IsMine)
         {
-            gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
+            gameObject.transform.localPosition = PhotonGameTest.SpawnPoint;
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
         }
     }
 
@@ -43,9 +48,13 @@ public class PlayerController :  MonoBehaviourPun, IPunObservable{
             return;
         }
 
-        
+
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
     }
 
+    SendOptions sendOptions = new SendOptions { Reliability = true };
     //private void LateUpdate()
     //{
     //    if(!photonView.IsMine)

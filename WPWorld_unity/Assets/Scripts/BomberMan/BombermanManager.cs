@@ -18,11 +18,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Power Ups
     public List<GameObject> List_PowerUpBlocks;
 
-    [Header("Bomberman UI")]
-    // For Bomb UI
-    public GameObject AnchorUIObj;
-    public GameObject SpawnBombButton;
-
     [Header("Breakables")]
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
@@ -36,6 +31,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     [Header("HighScore")]
     // For Highscore
     public static int PointsForKilling = 100;
+
+    [Header("Player stats UI")]
+    // public Text PlayerHighScoreText;
+    public Text PlayerTotalBombCount;
+    public Text PlayerTotalFirePower;
 
     [Header("Debugging Text")]
     // For Debugging
@@ -51,20 +51,18 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     private void Start()
     {
         Array_PlayerPlayingField = GameObject.FindGameObjectsWithTag("BombermanPlayingField");
-        is_Reset = true;    
+        is_Reset = true;
     }
 
     // UPDATE
     private void Update()
     {
-        EnableBombUi();
+        UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        if(is_Reset)
+        if (is_Reset)
         {
 
         }
-
-        // Debug02.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
     }
 
     // When player Dies
@@ -92,13 +90,23 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         foreach (BombermanPlayingField currField in List_CurrPlayerPlayingField)
         {
+            var Arr_Floor = currField.FloorParent.GetComponentInChildren<Transform>();
+            foreach (Transform floor in Arr_Floor)
+            {
+                if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
+                {
+                    continue;
+                }
 
+
+                // Spawn it
+            }
         }
     }
    
     // Reset Funtion
     public void ResetGame()
-    {
+    {   
         if (List_CurrPlayerPlayingField.Count <= 0)
         {
             FindPlayers();
@@ -125,6 +133,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             // Each floor block
             foreach (Transform floor in Arr_Floor)
             {
+                if(floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
+                {
+                    continue;
+                }
+
                 if(Physics.Raycast(floor.localPosition, Vector3.up, out hit, floor.localScale.x))
                 {
                     // Player is found
@@ -140,19 +153,22 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
-    // Bomb UI
-    public void EnableBombUi()
+    // ============ UI =================
+
+    // Update Player Stats Ui
+    public void UpdatePlayerStats()
     {
-        if(AnchorUIObj.activeSelf)
-        {      
-            SpawnBombButton.SetActive(false);         
+        if (!ARMultiplayerController.isSinglePlayer)
+        {
+            PlayerTotalFirePower.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetBombPower().ToString();
+            PlayerTotalBombCount.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
         }
         else
-        {         
-            SpawnBombButton.SetActive(true);        
+        {
+            PlayerTotalFirePower.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetBombPower().ToString();
+            PlayerTotalBombCount.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
         }
     }
-
     // =============
     //    EVENTS
     // =============
