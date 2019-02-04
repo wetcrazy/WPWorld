@@ -1,34 +1,24 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Head : MonoBehaviour
+public class Head : MonoBehaviourPun, IPunObservable
 {
-    Vector3 scalingoffset;
-
-    public Text dispos;
-    bool space = false;
-    bool isInput = false;
+    //Text
     public Text ScoreDisplay;
     public Text LifeDisplay;
     public Text WLconditionDisplay;
     public Text MultiplierDisplay;
-    float I_score = 0;
-    bool isstreak = false;
-    int streakcounter = 0;
-    float minmult = 1;
-    float multiplier = 1;
-    float addmult = 0.2f;
-    float max_mult = 5;
-    int Lives = 5;
-    int HighScore = 0;
+    //public Text dispos;
+    //Buttons
     public Button UP;
     public Button DOWN;
     public Button LEFT;
     public Button RIGHT;
-    public int Goal;
+    //Facing(for rotation of "Head" object of the snake)
     public enum STATE_FACING
     {
         STATE_FORWARD,
@@ -37,35 +27,76 @@ public class Head : MonoBehaviour
         STATE_LEFT,
         STATE_EMPTY,
     }
+    private STATE_FACING facingState;
+    private Vector3 mainDirection;// = new Vector3();
     [SerializeField]
-    private float m_Speed = 0.01f;
+    private float m_Speed;// = 0.01f;
     [SerializeField]
     private GameObject bodyPartObj;
     [SerializeField]
-    private List<GameObject> Children = new List<GameObject>();
-    private Vector3 mainDirection = new Vector3();
-    private STATE_FACING facingState;
-    Vector3 prev = new Vector3();
+    private List<GameObject> Children;//= new List<GameObject>();
+    //-----------------------------
+    bool isInput = false;
     bool once = false;
-    float starting_speed = 0.01f;
-    float normalspeed;
-    float timer = 5;
     bool hit = false;
+
+    // Player Local Instance
+    public static GameObject LocalPlayerInstance;
+
+    private void Awake()
+    {
+        //Set the level as the parent
+        gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
+
+        LocalPlayerInstance = gameObject;
+    }
+
+    // float blinking = 2.5f;
+
+    float I_score = 0;
+    float timer = 5;
+    //variables need testing------------------------------------
+    public int Goal;
+    bool space = false;
+    bool isstreak = false;
+    bool Isstunned = false;
+    bool IsSpeedup = false;
+    bool IsSpeedDown = false;
+    bool IsBlockUp = false;
+    float normalspeed;
+    float minmult;
+    float multiplier;
+    float addmult;
+    float max_mult ;
+    int streakcounter;
+    int Lives;
+    int HighScore;
+    Vector3 prev = new Vector3();
+   // Vector3 scalingoffset;
+    float starting_speed;
+    float specialx;
+    float specialy;
+    float specialz;
    // float blinking = 2.5f;
+    //-------------------------------------------------------------
+    //start***************************************************************************************************
+
     private void Start()
     {
-        scalingoffset = new Vector3(this.gameObject.transform.parent.localScale.x, this.gameObject.transform.parent.localScale.y, this.gameObject.transform.parent.localScale.z);
-
+        //scalingoffset = new Vector3(this.gameObject.transform.parent.localScale.x, this.gameObject.transform.parent.localScale.y, this.gameObject.transform.parent.localScale.z);
+       
+        //object rotation
         facingState = STATE_FACING.STATE_EMPTY;
-        mainDirection = this.gameObject.transform.forward;
-
-        // Vector3 temp = SetVectortoint(this.gameObject.transform.position);
-        ////Vector3 temp = this.gameObject.transform.position;
-        //    this.gameObject.transform.Translate(temp - this.gameObject.transform.position);
-        //    prev = temp;
-
-        normalspeed = 0.01f;
-        //button
+       // mainDirection = this.gameObject.transform.forward;
+        mainDirection = new Vector3(0, 0, 1);
+       
+        //texts
+        ScoreDisplay.text = "";
+        LifeDisplay.text = "";
+        WLconditionDisplay.text = "";
+        MultiplierDisplay.text = "";
+        //dispos.text = "";
+        //buttons
         UP.onClick.AddListener(Inputup);
         DOWN.onClick.AddListener(Inputdown);
         LEFT.onClick.AddListener(Inputleft);
@@ -74,37 +105,26 @@ public class Head : MonoBehaviour
         DOWN.onClick.AddListener(delegate { TaskWithParameters("Down"); });
         LEFT.onClick.AddListener(delegate { TaskWithParameters("Left"); });
         RIGHT.onClick.AddListener(delegate { TaskWithParameters("Right"); });
-
+        //set variables
 
         isInput = false;
-        ScoreDisplay.text = "";
-        LifeDisplay.text = "";
-        WLconditionDisplay.text = "";
         hit = false;
         Goal = 100;
-
-        popmypos();
+        normalspeed = 0.01f;
+        minmult = 1;
+        multiplier = 1;
+        addmult = 0.2f;
+        max_mult = 5;
+        streakcounter = 0;
+        Lives = 5;
+        HighScore = 0;
+        starting_speed = 0.01f;
+        //popmypos();
     }
-
-    public void popmypos()
-    {
-        Vector3 test = SetVectortoint(this.gameObject.transform.position);
-        //Vector3 tester = this.gameObject.transform.position;
-        //Vector3 tesetesr = tester - test;
-        //(0,0.1,0 - (0.4,0.1,0.2)
-        //(-0.4,0,-0.2)
-        this.gameObject.transform.Translate(test - this.gameObject.transform.position);
-        prev = this.gameObject.transform.position;
-    }
-
-
-    public void Setspeed(float speed)
-    {
-        m_Speed = speed;
-    }
+    //update*********************************************************************************************
     private void Update()
     {
-        
+        //check collision of nose
         hit = this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided;
 
         ScoreDisplay.text = " Score : " + I_score;
@@ -119,8 +139,8 @@ public class Head : MonoBehaviour
         {
             WLconditionDisplay.text = "GAME OVER";
         }
-      
-        if(m_Speed!= normalspeed)
+
+        if (m_Speed != normalspeed)
         {
             timer -= Time.deltaTime;
         }
@@ -130,22 +150,20 @@ public class Head : MonoBehaviour
             m_Speed = normalspeed;
             timer = 5;
         }
-
+        //Inputs
         if (Input.GetKeyDown(KeyCode.Space))
         {
-          
             Stun();
         }
-        //if (Input.GetKeyDown(KeyCode.Space)&& space == false)
-        //{
-        //    Debug.Log("SpaceDown");
-        //    space = true;
-        //}
-        //else if(space == true && Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    Debug.Log("spaceup");
-        //    space = false;
-        //}
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Speed_up();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Speed_down();
+        }
+
 
         // Player movement
         if ((!hit))
@@ -160,9 +178,6 @@ public class Head : MonoBehaviour
             {
                 this.gameObject.transform.position += this.gameObject.transform.forward * m_Speed;
             }
-
-           
-
 
             // Children Movement
             foreach (GameObject child in Children)
@@ -203,7 +218,7 @@ public class Head : MonoBehaviour
                 }
             }
         }
-        float test = Settofixnumber(this.gameObject.transform.position.x);
+        //float test = Settofixnumber(this.gameObject.transform.position.x);
         // dispos.text = test.ToString();
         MultiplierDisplay.text = multiplier.ToString();
     }
@@ -292,26 +307,6 @@ public class Head : MonoBehaviour
         
        // }
     }
-
-    float specialx;
-    float specialy;
-    float specialz;
-    //returns a vector3 with int values
-    Vector3 SetVectortoint(Vector3 vecpos)
-    {
-        float Vx = (Mathf.RoundToInt(vecpos.x*10)*0.1f);
-        float Vy = (Mathf.RoundToInt(vecpos.y*10)*0.1f);
-        float Vz = (Mathf.RoundToInt(vecpos.z*10)*0.1f);
-
-        Vector3 temp = new Vector3(Vx, Vy, Vz);
-        return temp;
-    }
-
-    float Settofixnumber(float num)
-    {
-        num = Mathf.RoundToInt(num) * 0.1f;
-        return num;
-    }
     // Collision
     private void OnTriggerEnter(Collider other)
     {
@@ -348,7 +343,6 @@ public class Head : MonoBehaviour
 
 
     }
-    
     // Add body parts
     public void AddBody()
     {
@@ -445,29 +439,79 @@ public class Head : MonoBehaviour
             isInput = true;
         }
     }
-
-
+    //EVENTS=======================================================================================================
+    //SNAKE_EVENT_STUN,
     void Stun()
-    {
-        /*
-
-         //if hit = true
-         hit==false
-
-         children clear
-
-         speed=normal
-
-
-          */
+    { 
         Debug.Log("Stunned");
         m_Speed = 0;
         timer = 2;
         ClearBody();
+    }
+    public void Setspeed(float speed)
+    {
+        m_Speed = speed;
+    }
+    //SNAKE_EVENT_SPEEDUP,
+    void Speed_up()
+    {
+        Debug.Log("SpeedUP");
+        Setspeed(0);
+    }
+    //SNAKE_EVENT_SLOWDOWN,
+    void Speed_down()
+    {
+        Debug.Log("SpeedDown");
+        Setspeed(0);
+    }
+    //SNAKE_EVENT_BLOCKS_POP_UP,
+   void Block_Pop_up()
+    {
 
     }
 
-   
+
+
+
+
+
+
+
+
+
+    //area need testing--------------------------------------------------------
+    public void popmypos()
+    {
+        Vector3 test = SetVectortoint(this.gameObject.transform.position);
+        //Vector3 tester = this.gameObject.transform.position;
+        //Vector3 tesetesr = tester - test;
+        //(0,0.1,0 - (0.4,0.1,0.2)
+        //(-0.4,0,-0.2)
+        this.gameObject.transform.Translate(test - this.gameObject.transform.position);
+        prev = this.gameObject.transform.position;
+    }
+
+    //returns a vector3 with int values
+    Vector3 SetVectortoint(Vector3 vecpos)
+    {
+        float Vx = (Mathf.RoundToInt(vecpos.x*10)*0.1f);
+        float Vy = (Mathf.RoundToInt(vecpos.y*10)*0.1f);
+        float Vz = (Mathf.RoundToInt(vecpos.z*10)*0.1f);
+
+        Vector3 temp = new Vector3(Vx, Vy, Vz);
+        return temp;
+    }
+
+    float Settofixnumber(float num)
+    {
+        num = Mathf.RoundToInt(num) * 0.1f;
+        return num;
+    }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 
