@@ -18,11 +18,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Power Ups
     public List<GameObject> List_PowerUpBlocks;
 
-    [Header("Bomberman UI")]
-    // For Bomb UI
-    public GameObject AnchorUIObj;
-    public GameObject SpawnBombButton;
-
     [Header("Breakables")]
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
@@ -38,8 +33,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public static int PointsForKilling = 100;
 
     [Header("Player stats UI")]
-    // Player Stat Ui
-    public GameObject PlayerStatBar;
     // public Text PlayerHighScoreText;
     public Text PlayerTotalBombCount;
     public Text PlayerTotalFirePower;
@@ -64,7 +57,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // UPDATE
     private void Update()
     {
-        EnableBombUi();     
+        UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
         if (is_Reset)
         {
@@ -97,7 +90,17 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         foreach (BombermanPlayingField currField in List_CurrPlayerPlayingField)
         {
+            var Arr_Floor = currField.FloorParent.GetComponentInChildren<Transform>();
+            foreach (Transform floor in Arr_Floor)
+            {
+                if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
+                {
+                    continue;
+                }
 
+
+                // Spawn it
+            }
         }
     }
    
@@ -130,6 +133,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             // Each floor block
             foreach (Transform floor in Arr_Floor)
             {
+                if(floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
+                {
+                    continue;
+                }
+
                 if(Physics.Raycast(floor.localPosition, Vector3.up, out hit, floor.localScale.x))
                 {
                     // Player is found
@@ -147,23 +155,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     // ============ UI =================
 
-    // Bomb UI
-    public void EnableBombUi()
-    {
-        if(AnchorUIObj.activeSelf)
-        {      
-            SpawnBombButton.SetActive(false);
-            PlayerStatBar.SetActive(false);
-        }
-        else
-        {         
-            SpawnBombButton.SetActive(true);
-            PlayerStatBar.SetActive(true);
-            //PlayerStats();
-        }
-    }
     // Update Player Stats Ui
-    public void PlayerStats()
+    public void UpdatePlayerStats()
     {
         if (!ARMultiplayerController.isSinglePlayer)
         {

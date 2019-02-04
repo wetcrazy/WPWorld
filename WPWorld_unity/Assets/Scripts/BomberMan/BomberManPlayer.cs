@@ -15,7 +15,7 @@ public class BomberManPlayer : MonoBehaviourPun
     private bool isDead;
     private int MAX_NUMBOMB;
     private int currNUMBomb;
-    private Vector3 respawnPt;
+    // private Vector3 respawnPt;
     private Vector3 OrignScale;
 
     // For Respawning Cool Down
@@ -45,10 +45,10 @@ public class BomberManPlayer : MonoBehaviourPun
 
     private void Awake()
     {
-        if(photonView.IsMine)
-        {
-            respawnPt = this.transform.position;
-        }
+        //if(photonView.IsMine)
+        //{
+        //    respawnPt = this.transform.position;
+        //}
     }
 
     private void Start()
@@ -148,10 +148,10 @@ public class BomberManPlayer : MonoBehaviourPun
         currNUMBomb += 1;
     }
     // Respawn the player
-    public void Respawn()
-    {
-        this.transform.position = respawnPt;
-    }
+    //public void Respawn()
+    //{
+    //    this.transform.position = respawnPt;
+    //}
     // Reset function
     public void Reset()
     {
