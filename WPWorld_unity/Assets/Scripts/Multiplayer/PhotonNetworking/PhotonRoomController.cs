@@ -18,6 +18,8 @@ public class PhotonRoomController : MonoBehaviour
     GameObject HostControls;
     [SerializeField]
     Image CurrentGameModeImage;
+    [SerializeField]
+    GameObject LoadingScreen;
 
     [Header("GameMode Sprites")]
     [SerializeField]
@@ -58,6 +60,8 @@ public class PhotonRoomController : MonoBehaviour
 
         RoomIDText.text += PhotonNetwork.CurrentRoom.Name;
         UpdatePlayerList();
+
+        LoadingScreen.SetActive(false);
 
         //If you are host of room
         if (PhotonNetwork.IsMasterClient)
@@ -159,6 +163,9 @@ public class PhotonRoomController : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            //Activate the loading screen while the level starts
+            photonView.RPC("ActivateLoadingScreen", RpcTarget.All);
+
             switch (CurrentGamemode)
             {
                 case GAMEMODE.GAMEMODE_SNAKE:
@@ -226,5 +233,11 @@ public class PhotonRoomController : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    [PunRPC]
+    private void ActivateLoadingScreen()
+    {
+        LoadingScreen.SetActive(true);
     }
 }
