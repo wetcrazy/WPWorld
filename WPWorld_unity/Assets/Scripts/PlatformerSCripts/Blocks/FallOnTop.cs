@@ -80,7 +80,7 @@ public class FallOnTop : MonoBehaviour {
 			|| Physics.Raycast(transform.position, transform.up + transform.right * 0.5f, out hit, transform.localScale.y)
 			|| Physics.Raycast(transform.position, transform.up - transform.right * 0.5f, out hit, transform.localScale.y))
 		{
-			if (hit.transform.tag == "Player")
+			if (hit.transform.tag == "Player" && hit.transform.GetComponent<TPSLogic>().isMine())
 			{
                 //Send event to all players that this block has fallen
                 object[] content = new object[]
