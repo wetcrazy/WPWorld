@@ -25,7 +25,12 @@ public class PhotonSceneController : MonoBehaviour {
     [SerializeField]
     GameObject RoomScreen;
     [SerializeField]
+    GameObject LoadingScreen;
+
+    [SerializeField]
     Text LoadingText;
+    [SerializeField]
+    Text RegionText;
 
     //Script Object Variables
     [Header("Script Objects")]
@@ -51,6 +56,8 @@ public class PhotonSceneController : MonoBehaviour {
         OfflineScreen.SetActive(false);
         LobbyScreen.SetActive(false);
         RoomScreen.SetActive(false);
+        LoadingScreen.SetActive(false);
+        RegionText.text = "";
     }
 
     //Check if a local player exists 

@@ -60,7 +60,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 0
+  InstantiationId: 1
   isRuntimeInstantiated: 0
 --- !u!114 &114717239392919490
 MonoBehaviour:
@@ -73,14 +73,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c63ca0571383bb4caa7a5866b37bb70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SinglePlayer: 0
   MainCamera: {fileID: 0}
-  PlayerObjectPrefab: {fileID: 1030502945735488, guid: 4bb8b0be4f6ecee4dbdee68d79369921,
-    type: 2}
+  PlayerObjectPrefab: {fileID: 0}
   DebugText: {fileID: 0}
-  MoveAnchorControlsUI: {fileID: 1428713235765364, guid: 875984784667c6b4da29577883468c33,
-    type: 2}
-  MainCameraRef: {fileID: 1238634077506798, guid: 8dd5aa9c46246264e835305ff1c53c9c,
-    type: 2}
-  AnchorRef: {fileID: 1402663269569888, guid: d32d36945e78b7640ac36030e7f5c27e, type: 2}
+  DebugText2: {fileID: 0}
+  MoveAnchorControlsUI: {fileID: 0}
+  MainCameraRef: {fileID: 0}
+  AnchorRef: {fileID: 0}
+  SpawnPlayersButton: {fileID: 0}
   LevelObject: {fileID: 0}
   isWon: 0

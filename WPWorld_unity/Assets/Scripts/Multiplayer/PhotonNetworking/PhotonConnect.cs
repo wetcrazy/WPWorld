@@ -12,6 +12,8 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     [SerializeField]
     Text LoadingText;
     [SerializeField]
+    Text RegionText;
+    [SerializeField]
     GameObject OfflineScreen;
     [SerializeField]
     GameObject RoomScreen;
@@ -80,35 +82,36 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         switch (cause)
         {
             case DisconnectCause.ExceptionOnConnect:
-                Debug.Log("Photon: Connection Exception\nPlease Check Your Internet Connection");
+                LoadingText.text = "Photon: Connection Exception\nPlease Check Your Internet Connection";
                 break;
             case DisconnectCause.ServerTimeout:
-                Debug.Log("Photon: Server Timeout");
+                LoadingText.text = "Photon: Server Timeout";
                 break;
             case DisconnectCause.ClientTimeout:
-                Debug.Log("Photon: Client Timeout");
+                LoadingText.text = "Photon: Client Timeout";
                 break;
             case DisconnectCause.InvalidAuthentication:
-                Debug.Log("Photon: Invalid AppID");
+                LoadingText.text = "Photon: Invalid AppID";
                 break;
             case DisconnectCause.MaxCcuReached:
-                Debug.Log("Photon: Server Limit Reached");
+                LoadingText.text = "Photon: Server Limit Reached";
                 break;
             case DisconnectCause.InvalidRegion:
-                Debug.Log("Photon: Invalid Region");
+                LoadingText.text = "Photon: Invalid Region";
                 break;
             case DisconnectCause.DisconnectByClientLogic:
-                Debug.Log("Photon: Client Disconnected");
+                LoadingText.text = "Photon: Client Disconnected";
                 break;
             default:
-                Debug.Log("Photon: " + cause);
+                LoadingText.text = "Photon: " + cause;
                 break;
         }
     }
 
     public override void OnJoinedLobby()
     {
-        LoadingText.text = PhotonNetwork.CloudRegion;
+        RegionText.text = "Region: " + PhotonNetwork.CloudRegion;
+        LoadingText.text = "";
         LobbyScreen.SetActive(true);
 
         //Assign the nickname after successfully joining the lobby
@@ -127,15 +130,15 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         RoomController.InitRoom();
     }
 
-    //public override void OnJoinRoomFailed(short returnCode, string message)
-    //{
-    //    Debug.Log("Failed to join room!\nError Code:" + returnCode.ToString() + "\n" + message);
-    //}
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        LoadingText.text = "Failed to join room!\nCode " + returnCode.ToString() + "\n" + message;
+    }
 
-    //public override void OnJoinRandomFailed(short returnCode, string message)
-    //{
-    //    Debug.Log("Failed to join random room!\nError Code:" + returnCode.ToString() + "\n" + message);
-    //}
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        LoadingText.text = "Failed to join random room!\nCode " + returnCode.ToString() + "\n" + message;
+    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {

@@ -8,4 +8,6 @@ public class BombermanPlayingField : MonoBehaviour
     public GameObject WallParent;
     public GameObject FloorParent;
     public GameObject BreakablesParent;
+
+    public List<GameObject> List_Floors;
 }

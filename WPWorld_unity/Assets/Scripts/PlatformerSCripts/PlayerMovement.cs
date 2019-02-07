@@ -38,16 +38,18 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
     private void Awake()
     {
-        if (photonView.IsMine || !PhotonNetwork.IsConnected || ARMultiplayerController.isSinglePlayer)
-        {
-            LocalPlayerInstance = gameObject;
-        }
-        
         //Set the level as the parent
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
-        //Init the player rot
-        gameObject.transform.localPosition = Vector3.zero;
-        gameObject.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+
+        if (photonView.IsMine || ARMultiplayerController.isSinglePlayer)
+        {
+            LocalPlayerInstance = gameObject;
+
+            //Init the player rot
+            gameObject.transform.localPosition = Vector3.zero;
+            gameObject.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        }
+
     }
 
     // Use this for initialization
@@ -56,35 +58,30 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
         //Setting the username text that is above the player objects
         gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
 
-        if (!photonView.IsMine && PhotonNetwork.IsConnected && !ARMultiplayerController.isSinglePlayer)
+        if (photonView.IsMine)
         {
-            return;
-        }
+            //Init the player pos to spawnpoint pos
+            gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
 
-        ////Init the player pos to spawnpoint pos
-        gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
-        //Init the player rot
-        //gameObject.transform.localRotation = ARMultiplayerController._GroundObject.transform.localRotation;
-        //gameObject.transform.Translate(ARMultiplayerController.SpawnPoint, Space.Self);
-        
-        //Get the rigidbody component
-        RigidRef = GetComponent<Rigidbody>();
+            //Get the rigidbody component
+            RigidRef = GetComponent<Rigidbody>();        
+            
+            //Init the respawn point (THIS IS WRONG!)
+            RespawnPoint = transform.position;
 
-        //Init the respawn point
-        RespawnPoint = transform.position;
-
-        if (PhotonNetwork.IsConnected || ARMultiplayerController.isSinglePlayer)
-        {
-            //Init your player transform on other clients
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+            if (!ARMultiplayerController.isSinglePlayer)
+            {
+                //Init your player transform on other clients
+                PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+                PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!photonView.IsMine && PhotonNetwork.IsConnected && !ARMultiplayerController.isSinglePlayer)
+        if (!photonView.IsMine)
         {
             return;
         }
@@ -105,7 +102,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
                 break;
         }
 
-        if (PhotonNetwork.IsConnected || ARMultiplayerController.isSinglePlayer)
+        if (!ARMultiplayerController.isSinglePlayer)
         {
             //Update position on other client
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
