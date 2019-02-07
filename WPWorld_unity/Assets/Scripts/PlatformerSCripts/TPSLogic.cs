@@ -76,6 +76,8 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private List<ButtonScript> ListofButtons = new List<ButtonScript>();
     private List<LeverScript> ListofLevers = new List<LeverScript>();
 
+    Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
+
     // Use this for initialization
     void Start()
     {
@@ -252,9 +254,11 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     {
         Colliding = false;
     }
-
+    SendOptions sendOptions = new SendOptions { Reliability = true };
     public void Death()
     {
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_DEATH, null, RaiseEventOptions.Default, sendOptions);
+
         DeathCounter++;
         if (DeathSFX != "")
             SoundSystemRef.PlaySFX(DeathSFX);
@@ -342,6 +346,25 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     {
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
         {
+            case EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_DEATH:
+                {
+                    if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
+                    {
+                        GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+
+                        foreach (GameObject player in PlayerGoList)
+                        {
+                            if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
+                            {
+                                PlayerGoDict.Add(photonEvent.Sender, player);
+                                break;
+                            }
+                        }
+                    }
+
+                    PlayerGoDict[photonEvent.Sender].GetComponent<TPSLogic>().Death();
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BOUNCE:
                 {
                     object[] data = (object[])photonEvent.CustomData;
@@ -447,20 +470,24 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     }
                     break;
                 }
-            case EventCodes.EVENT_CODES.PLATFORM_EVENT_COIN_PICKUP:
-                break;
-            case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:
-                break;
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BUTTON_TRIGGERED:
                 {
                     object[] data = (object[])photonEvent.CustomData;
                     int ButtonID = (int)data[0];
+                    bool isButtonOn = (bool)data[1];
 
                     foreach (var button in ListofButtons)
                     {
                         if (button.ID == ButtonID)
                         {
-                            //button.();
+                            if (isButtonOn)
+                            {
+                                button.OnButton();
+                            }
+                            else
+                            {
+                                button.OffButton();
+                            }
                             break;
                         }
                     }
@@ -468,8 +495,41 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     break;
                 }
             case EventCodes.EVENT_CODES.PLATOFRM_EVENT_LEVER_TRIGGERED:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int LeverID = (int)data[0];
+                    bool isLeverOn = (bool)data[1];
+
+                    foreach (var lever in ListofLevers)
+                    {
+                        if (lever.ID == LeverID)
+                        {
+                            if (isLeverOn)
+                            {
+                                lever.OnLever();
+                            }
+                            else
+                            {
+                                lever.OffLever();
+                            }
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+            case EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_FIREBALL:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                   
+
+                    
+
+                    break;
+                }
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_COIN_PICKUP:
                 break;
-            case EventCodes.EVENT_CODES.PLATFORM_EVENT_CHECKPOINT_TRIGGERED:
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:
                 break;
             default:
                 break;
