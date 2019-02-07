@@ -13,11 +13,7 @@ public class Head : MonoBehaviourPun, IPunObservable
     public Text WLconditionDisplay;
     public Text MultiplierDisplay;
     //public Text dispos;
-    //Buttons
-    public Button UP;
-    public Button DOWN;
-    public Button LEFT;
-    public Button RIGHT;
+   
     //Facing(for rotation of "Head" object of the snake)
     public enum STATE_FACING
     {
@@ -96,17 +92,8 @@ public class Head : MonoBehaviourPun, IPunObservable
         WLconditionDisplay.text = "";
         MultiplierDisplay.text = "";
         //dispos.text = "";
-        //buttons
-        UP.onClick.AddListener(Inputup);
-        DOWN.onClick.AddListener(Inputdown);
-        LEFT.onClick.AddListener(Inputleft);
-        RIGHT.onClick.AddListener(Inputright);
-        UP.onClick.AddListener(delegate { TaskWithParameters("Up"); });
-        DOWN.onClick.AddListener(delegate { TaskWithParameters("Down"); });
-        LEFT.onClick.AddListener(delegate { TaskWithParameters("Left"); });
-        RIGHT.onClick.AddListener(delegate { TaskWithParameters("Right"); });
+        
         //set variables
-
         isInput = false;
         hit = false;
         Goal = 100;

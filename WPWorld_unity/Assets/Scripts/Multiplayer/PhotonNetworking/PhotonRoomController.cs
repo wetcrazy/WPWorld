@@ -13,6 +13,10 @@ public class PhotonRoomController : MonoBehaviour
     [SerializeField]
     Text RoomVisibilityText;
     [SerializeField]
+    Text ChatInputText;
+    [SerializeField]
+    Text ChatPanelText;
+    [SerializeField]
     GameObject PlayerListPanel;
     [SerializeField]
     GameObject HostControls;
@@ -59,6 +63,7 @@ public class PhotonRoomController : MonoBehaviour
         PlayerTextList = PlayerListPanel.GetComponentsInChildren<Text>();
 
         RoomIDText.text += PhotonNetwork.CurrentRoom.Name;
+        ChatPanelText.text = "";
         UpdatePlayerList();
 
         LoadingScreen.SetActive(false);
@@ -104,10 +109,12 @@ public class PhotonRoomController : MonoBehaviour
         if (PhotonNetwork.CurrentRoom.IsVisible)
         {
             RoomVisibilityText.text = "Visibility: Public";
+            photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has set the room visibility to private");
         }
         else
         {
             RoomVisibilityText.text = "Visibility: Private";
+            photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has set the room visibility to public");
         }
     }
 
@@ -206,10 +213,44 @@ public class PhotonRoomController : MonoBehaviour
         UpdateCurrentGameMode(CurrentGamemode);
     }
 
+    //Send the chat message that was typed in input field
+    public void SendChatMessage()
+    {
+        if (ChatInputText.text == "")
+        {
+            return;
+        }
+
+        photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + ": " + ChatInputText.text);
+        ChatInputText.text = "";
+    }
+
+    int ChatPanelChars = 0;
+    void AddChatPanelText(string Text)
+    {
+        Text += "\n";
+        if (ChatPanelText.text.Length > 0)
+        {
+            ChatPanelChars += 10;
+
+            if (ChatPanelChars >= 250)
+            {
+                string TextToRemove = ChatPanelText.text.Substring(0, ChatPanelText.text.IndexOf("\n"));
+                ChatPanelText.text = ChatPanelText.text.Substring(ChatPanelText.text.IndexOf("\n") + 1, ChatPanelText.text.Length - TextToRemove.Length - 1);
+                //ChatPanelText.text.Remove(0);
+                ChatPanelChars -= TextToRemove.Length - 10;
+            }
+        }
+
+        ChatPanelText.text += Text;
+        ChatPanelChars += ChatPanelText.text.Length;
+    }
+
     //Remote Procedure Calls methods
     [PunRPC]
     private void BecomeHost()
     {
+        photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " is now the host");
         HostControls.SetActive(true);
     }
     
@@ -239,5 +280,11 @@ public class PhotonRoomController : MonoBehaviour
     private void ActivateLoadingScreen()
     {
         LoadingScreen.SetActive(true);
+    }
+
+    [PunRPC]
+    public void ReceiveChatMessage(string ChatMessage)
+    {
+        AddChatPanelText(ChatMessage);
     }
 }
