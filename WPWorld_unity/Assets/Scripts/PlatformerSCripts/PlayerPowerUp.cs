@@ -94,13 +94,13 @@ public class PlayerPowerUp : MonoBehaviour {
         }
     }
 
-    private void ShootFireball()
+    public void ShootFireball()
     {
         if (TimeElapsed <= 0)
         {
             Vector3 SpawnPosition = transform.position + (transform.forward * 0.1f);
 
-            GameObject n_Fireball = Instantiate(FireBallPrefab, SpawnPosition, transform.rotation);
+            GameObject n_Fireball = Instantiate(FireBallPrefab, SpawnPosition, transform.rotation, transform.parent);
 
             TimeElapsed = FireballDelay;
         }
