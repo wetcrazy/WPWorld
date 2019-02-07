@@ -46,11 +46,11 @@ public class LeverScript : MonoBehaviour {
         {
             if (!HasDoneAction)
             {
-                Action();
+                OnLever();
             }
             else
             {
-                Revert();
+                OffLever();
             }
 
             if (LeverSFX != "")
@@ -65,7 +65,7 @@ public class LeverScript : MonoBehaviour {
         transform.GetChild(0).localEulerAngles = LeverRotation;
     }
 
-    private void Action()
+    public void OnLever()
     {
         for(int i = 0; i < ObjectsToChange.Count; i++)
         {
@@ -104,7 +104,7 @@ public class LeverScript : MonoBehaviour {
         MoveToRotation = new Vector3(55, 0, 0);
     }
 
-    private void Revert()
+    public void OffLever()
     {
         for (int i = 0; i < ObjectsToChange.Count; i++)
         {

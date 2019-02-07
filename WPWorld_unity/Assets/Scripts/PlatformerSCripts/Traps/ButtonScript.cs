@@ -53,7 +53,7 @@ public class ButtonScript : MonoBehaviour {
                 case (BUTTONTYPE.ONETIME):
                     if(HasStarted)
                     {
-                        Action();
+                        OnButton();
                         AlteringScale.y = 0.5f;
                         if (ButtonSFX != "")
                             SoundSystemRef.PlaySFX(ButtonSFX);
@@ -65,14 +65,14 @@ public class ButtonScript : MonoBehaviour {
                 case (BUTTONTYPE.TOGGLE):
                     if(HasStarted)
                     {
-                        Action();
+                        OnButton();
                         HasStarted = false;
                         HasInteracted = false;
                         AlteringScale.y = 0.5f;
                     }
                     else
                     {
-                        Revert();
+                        OffButton();
                         HasStarted = true;
                         HasInteracted = false;
                         AlteringScale.y = 0.5f;
@@ -86,7 +86,7 @@ public class ButtonScript : MonoBehaviour {
                 case (BUTTONTYPE.TIMER):
                     if(HasStarted)
                     {
-                        Action();
+                        OnButton();
                         HasStarted = false;
 
                         AlteringScale.y = 0.5f;
@@ -98,7 +98,7 @@ public class ButtonScript : MonoBehaviour {
                     {
                         if(TimeToReset <= TimeElapsed)
                         {
-                            Revert();
+                            OffButton();
                             HasStarted = true;
                             HasInteracted = false;
                             TimeElapsed = 0;
@@ -123,7 +123,7 @@ public class ButtonScript : MonoBehaviour {
         }
     }
 
-    private void Action()
+    public void OnButton()
     {
         for (int i = 0; i < ObjectsToChange.Count; i++)
         {
@@ -157,7 +157,7 @@ public class ButtonScript : MonoBehaviour {
         }
     }
 
-    private void Revert()
+    public void OffButton()
     {
         for (int i = 0; i < ObjectsToChange.Count; i++)
         {

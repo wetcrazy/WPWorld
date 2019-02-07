@@ -14,6 +14,8 @@ public class BarrelScript : MonoBehaviour {
 
     [Header("Sound Settings")]
     [SerializeField]
+    private string BounceSFX;
+    [SerializeField]
     private string DestroySFX;
 
 	// Use this for initialization
@@ -29,7 +31,7 @@ public class BarrelScript : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Killbox")
-            Destroy();
+            Destroy(this.gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,9 +55,10 @@ public class BarrelScript : MonoBehaviour {
             {
                 GameObject n_Debris = Instantiate(Debris, this.transform);
                 Rigidbody RigidRef = n_Debris.GetComponent<Rigidbody>();
-                RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
-                    Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
-                    Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
+                if(RigidRef != null)
+                    RigidRef.AddForce(new Vector3(Random.Range(-50, 50) * transform.parent.parent.lossyScale.x,
+                                                Random.Range(25, 50) * transform.parent.parent.lossyScale.y,
+                                                Random.Range(-50, 50) * transform.parent.parent.lossyScale.z));
 
                 n_Debris.transform.parent = null;
             }
