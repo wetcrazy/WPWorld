@@ -31,6 +31,9 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players")]
     [SerializeField]
     byte MaximumPlayersInRoom = 2;
+
+    bool isSwitchingRegion = false;
+    string RegionCode;
    
     private void Awake()
     {
@@ -44,6 +47,16 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
     
+    public void ConnectToRegion(string RegionCode)
+    {
+        LoadingText.text = "Leaving Current Lobby...";
+
+        isSwitchingRegion = true;
+        this.RegionCode = RegionCode;
+
+        PhotonNetwork.Disconnect();
+    }
+
     public void CreateGameRoom(string RoomID)
     {
         PhotonNetwork.CreateRoom(RoomID, new RoomOptions { MaxPlayers = MaximumPlayersInRoom });
@@ -75,10 +88,18 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        if(isSwitchingRegion)
+        {
+            LoadingText.text = "Connecting To New Region...";
+            PhotonNetwork.ConnectToRegion(RegionCode);
+            isSwitchingRegion = false;
+            return;
+        }
+
         LoadingText.text = cause.ToString();
         LobbyScreen.SetActive(false);
         OfflineScreen.SetActive(true);
-
+        
         switch (cause)
         {
             case DisconnectCause.ExceptionOnConnect:

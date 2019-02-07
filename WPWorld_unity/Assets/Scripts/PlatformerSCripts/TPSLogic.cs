@@ -8,6 +8,8 @@ using UnityEngine;
 public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
 {
     [SerializeField]
+    GameObject FireBallPrefab;
+    [SerializeField]
     private float JumpForce;
     [SerializeField]
     private bool IsGrounded = false;
@@ -521,9 +523,10 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
             case EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_FIREBALL:
                 {
                     object[] data = (object[])photonEvent.CustomData;
-                   
 
-                    
+                    GameObject Fireball = Instantiate(FireBallPrefab, Vector3.zero, Quaternion.identity, transform.parent);
+                    Fireball.transform.localPosition = (Vector3)data[0];
+                    Fireball.transform.localRotation = (Quaternion)data[1];
 
                     break;
                 }

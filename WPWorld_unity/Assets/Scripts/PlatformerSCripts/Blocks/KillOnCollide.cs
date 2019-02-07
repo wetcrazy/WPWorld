@@ -16,7 +16,7 @@ public class KillOnCollide : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
             other.GetComponent<TPSLogic>().Death();
         }

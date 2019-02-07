@@ -94,6 +94,8 @@ public class PlayerPowerUp : MonoBehaviour {
         }
     }
 
+    ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+
     public void ShootFireball()
     {
         if (TimeElapsed <= 0)
@@ -101,6 +103,15 @@ public class PlayerPowerUp : MonoBehaviour {
             Vector3 SpawnPosition = transform.position + (transform.forward * 0.1f);
 
             GameObject n_Fireball = Instantiate(FireBallPrefab, SpawnPosition, transform.rotation, transform.parent);
+
+            object[] content = new object[]
+                    {
+                        n_Fireball.transform.localPosition,
+                        n_Fireball.transform.localRotation
+                    };
+
+            
+            Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_FIREBALL, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
 
             TimeElapsed = FireballDelay;
         }
