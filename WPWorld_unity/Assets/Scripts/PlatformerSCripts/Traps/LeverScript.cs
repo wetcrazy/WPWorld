@@ -132,4 +132,17 @@ public class LeverScript : MonoBehaviour {
     {
         HasInteracted = !HasInteracted;
     }
+
+    void SendLeverEvent(bool isLeverOn)
+    {
+        object[] content = new object[]
+                    {
+                        ID,
+                        isLeverOn
+                    };
+
+        ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+        Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATOFRM_EVENT_LEVER_TRIGGERED, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+    }
+
 }

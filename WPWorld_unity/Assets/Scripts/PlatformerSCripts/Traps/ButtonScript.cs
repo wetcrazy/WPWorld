@@ -53,6 +53,7 @@ public class ButtonScript : MonoBehaviour {
                 case (BUTTONTYPE.ONETIME):
                     if(HasStarted)
                     {
+                        SendButtonEvent(true);
                         OnButton();
                         AlteringScale.y = 0.5f;
                         if (ButtonSFX != "")
@@ -65,6 +66,7 @@ public class ButtonScript : MonoBehaviour {
                 case (BUTTONTYPE.TOGGLE):
                     if(HasStarted)
                     {
+                        SendButtonEvent(true);
                         OnButton();
                         HasStarted = false;
                         HasInteracted = false;
@@ -72,6 +74,7 @@ public class ButtonScript : MonoBehaviour {
                     }
                     else
                     {
+                        SendButtonEvent(false);
                         OffButton();
                         HasStarted = true;
                         HasInteracted = false;
@@ -86,6 +89,7 @@ public class ButtonScript : MonoBehaviour {
                 case (BUTTONTYPE.TIMER):
                     if(HasStarted)
                     {
+                        SendButtonEvent(true);
                         OnButton();
                         HasStarted = false;
 
@@ -98,6 +102,7 @@ public class ButtonScript : MonoBehaviour {
                     {
                         if(TimeToReset <= TimeElapsed)
                         {
+                            SendButtonEvent(false);
                             OffButton();
                             HasStarted = true;
                             HasInteracted = false;
@@ -174,6 +179,18 @@ public class ButtonScript : MonoBehaviour {
                 ObjectsToChange[i].GetComponent<ShowOnHit>().Reset();
             }
         }
+    }
+
+    void SendButtonEvent(bool isButtonOn)
+    {
+        object[] content = new object[]
+                    {
+                        ID,
+                        isButtonOn
+                    };
+
+        ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+        Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BUTTON_TRIGGERED, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
     }
 
     private void OnTriggerEnter(Collider other)
