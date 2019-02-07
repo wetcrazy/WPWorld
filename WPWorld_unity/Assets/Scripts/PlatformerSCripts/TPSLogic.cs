@@ -73,7 +73,9 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private List<FallOnTop> ListOfFalling = new List<FallOnTop>();
     private List<MoveOnCollide> ListOfMoving = new List<MoveOnCollide>();
     private List<BounceOnHit> ListOfBouncingBlocks = new List<BounceOnHit>();
-   
+    private List<ButtonScript> ListofButtons = new List<ButtonScript>();
+    private List<LeverScript> ListofLevers = new List<LeverScript>();
+
     // Use this for initialization
     void Start()
     {
@@ -450,7 +452,21 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:
                 break;
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_BUTTON_TRIGGERED:
-                break;
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int ButtonID = (int)data[0];
+
+                    foreach (var button in ListofButtons)
+                    {
+                        if (button.ID == ButtonID)
+                        {
+                            //button.();
+                            break;
+                        }
+                    }
+
+                    break;
+                }
             case EventCodes.EVENT_CODES.PLATOFRM_EVENT_LEVER_TRIGGERED:
                 break;
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_CHECKPOINT_TRIGGERED:
