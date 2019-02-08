@@ -163,6 +163,8 @@ public class PhotonRoomController : MonoBehaviour
         }
 
         RoomIDText.text = "Room ID: ";
+
+        photonView.RPC("ReceiveChatMessage", RpcTarget.Others, PhotonNetwork.NickName + " has left the room");
         PhotonNetwork.LeaveRoom();
     }
 
