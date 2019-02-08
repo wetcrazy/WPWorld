@@ -7,11 +7,7 @@ using UnityEngine.UI;
 
 public class Head : MonoBehaviourPun, IPunObservable
 {
-    //Text
-    public Text ScoreDisplay;
-    public Text LifeDisplay;
-    public Text WLconditionDisplay;
-    public Text MultiplierDisplay;
+   
     //public Text dispos;
    
     //Facing(for rotation of "Head" object of the snake)
@@ -38,12 +34,13 @@ public class Head : MonoBehaviourPun, IPunObservable
 
     // Player Local Instance
     public static GameObject LocalPlayerInstance;
+    //SceneObject
+    GameController gameController;
 
     private void Awake()
     {
         //Set the level as the parent
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
-
         LocalPlayerInstance = gameObject;
     }
 
@@ -73,26 +70,28 @@ public class Head : MonoBehaviourPun, IPunObservable
     float specialx;
     float specialy;
     float specialz;
+    
    // float blinking = 2.5f;
     //-------------------------------------------------------------
     //start***************************************************************************************************
 
     private void Start()
     {
+        //Set the pos
+        gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
+
+        gameObject.transform.localEulerAngles = Vector3.zero;
+
+        //Get the GameController
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
         //scalingoffset = new Vector3(this.gameObject.transform.parent.localScale.x, this.gameObject.transform.parent.localScale.y, this.gameObject.transform.parent.localScale.z);
-       
+
         //object rotation
         facingState = STATE_FACING.STATE_EMPTY;
-       // mainDirection = this.gameObject.transform.forward;
-        mainDirection = new Vector3(0, 0, 1);
+        //mainDirection = gameObject.transform.loc;
+        //mainDirection = new Vector3(0, 0, 1);
        
-        //texts
-        ScoreDisplay.text = "";
-        LifeDisplay.text = "";
-        WLconditionDisplay.text = "";
-        MultiplierDisplay.text = "";
-        //dispos.text = "";
-        
         //set variables
         isInput = false;
         hit = false;
@@ -107,15 +106,19 @@ public class Head : MonoBehaviourPun, IPunObservable
         HighScore = 0;
         starting_speed = 0.01f;
         //popmypos();
+
+        //Init the text
+        gameController.UpdateLivesText(Lives);
+        gameController.UpdateMultiplierText(multiplier);
+        gameController.UpdateScoreText(I_score);
     }
     //update*********************************************************************************************
+    
     private void Update()
     {
         //check collision of nose
         hit = this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided;
 
-        ScoreDisplay.text = " Score : " + I_score;
-        LifeDisplay.text = " Lives : " + Lives;
 
         if (I_score >= Goal)
         {
@@ -124,7 +127,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         }
         else if (Lives < 1 || hit)
         {
-            WLconditionDisplay.text = "GAME OVER";
+           //gameController.UpdateWLConditionText("GAME OVER");
         }
 
         if (m_Speed != normalspeed)
@@ -137,6 +140,7 @@ public class Head : MonoBehaviourPun, IPunObservable
             m_Speed = normalspeed;
             timer = 5;
         }
+
         //Inputs
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -151,20 +155,26 @@ public class Head : MonoBehaviourPun, IPunObservable
             Speed_down();
         }
 
+        
 
         // Player movement
-        if ((!hit))
+        if (!hit)
         {
             PlayerControl();
             //if (Vector3.Distance(prev, this.gameObject.transform.position) > 0.08f)
             //{
             //    popmypos();
             //}
-
             if (once)
             {
-                this.gameObject.transform.position += this.gameObject.transform.forward * m_Speed;
+                gameObject.transform.position += gameObject.transform.forward * m_Speed;
             }
+            //gameObject.transform.position += gameObject.transform.forward * m_Speed;
+
+            //if (once)
+            //{
+            //    gameObject.transform.position += gameObject.transform.forward * m_Speed;
+            //}
 
             // Children Movement
             foreach (GameObject child in Children)
@@ -207,7 +217,6 @@ public class Head : MonoBehaviourPun, IPunObservable
         }
         //float test = Settofixnumber(this.gameObject.transform.position.x);
         // dispos.text = test.ToString();
-        MultiplierDisplay.text = multiplier.ToString();
     }
     // Inputs
     private void PlayerControl()
@@ -294,6 +303,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         
        // }
     }
+
     // Collision
     private void OnTriggerEnter(Collider other)
     {
@@ -302,6 +312,7 @@ public class Head : MonoBehaviourPun, IPunObservable
             AddBody();
         }
     } 
+
     //score goes up
     public void AddAppleAte()
     {
@@ -313,6 +324,7 @@ public class Head : MonoBehaviourPun, IPunObservable
 
 
         multiplier = (minmult+(streakcounter * addmult));
+        gameController.UpdateMultiplierText(multiplier);
 
 
 
@@ -325,11 +337,11 @@ public class Head : MonoBehaviourPun, IPunObservable
 
 
 
-
-        I_score+= (float)applecost *multiplier;
-
+        I_score+= (float)applecost * multiplier;
+        gameController.UpdateScoreText(I_score);
 
     }
+
     // Add body parts
     public void AddBody()
     {
@@ -387,10 +399,10 @@ public class Head : MonoBehaviourPun, IPunObservable
     public void Inputup()
     {
         // float check = Vector3.Distance(prev, this.gameObject.transform.position);
-
+        
         if (facingState != STATE_FACING.STATE_BACKWARD && facingState != STATE_FACING.STATE_FORWARD)
         {
-            gameObject.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
+            gameObject.transform.localEulerAngles = Vector3.zero;
             facingState = STATE_FACING.STATE_FORWARD;
             once = true;
             isInput = true;
@@ -400,7 +412,7 @@ public class Head : MonoBehaviourPun, IPunObservable
     {
         if (facingState != STATE_FACING.STATE_FORWARD && facingState != STATE_FACING.STATE_BACKWARD)
         {
-            gameObject.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
+            gameObject.transform.localEulerAngles = new Vector3(0, 180, 0);
             facingState = STATE_FACING.STATE_BACKWARD;
             once = true;
             isInput = true;
@@ -410,7 +422,7 @@ public class Head : MonoBehaviourPun, IPunObservable
     {
         if (facingState != STATE_FACING.STATE_RIGHT && facingState != STATE_FACING.STATE_LEFT)
         {
-            gameObject.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
+            gameObject.transform.localEulerAngles = new Vector3(0, 270, 0);
             facingState = STATE_FACING.STATE_LEFT;
             once = true;
             isInput = true;
@@ -418,14 +430,15 @@ public class Head : MonoBehaviourPun, IPunObservable
     }
     public void Inputright()
     {
-        if (facingState != STATE_FACING.STATE_LEFT && facingState != STATE_FACING.STATE_LEFT)
+        if (facingState != STATE_FACING.STATE_LEFT && facingState != STATE_FACING.STATE_RIGHT)
         {
-            gameObject.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
+            gameObject.transform.localEulerAngles = new Vector3(0, 90, 0);
             facingState = STATE_FACING.STATE_RIGHT;
             once = true;
             isInput = true;
         }
     }
+    
     //EVENTS=======================================================================================================
     //SNAKE_EVENT_STUN,
     void Stun()

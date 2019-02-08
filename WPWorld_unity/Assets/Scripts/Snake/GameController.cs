@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    //Text
+    [Header("Canvas Text")]
+    public Text ScoreDisplay;
+    public Text LifeDisplay;
+    public Text WLconditionDisplay;
+    public Text MultiplierDisplay;
+
     [SerializeField]
     private GameObject LevelDesign;
 
@@ -20,8 +28,13 @@ public class GameController : MonoBehaviour
     private List<GameObject> arr_Blocks = new List<GameObject>();
     private List<GameObject> arr_BODY = new List<GameObject>();
 
+    Head PlayerHeadComponent;
+
     private void Start()
     {
+        //texts
+        WLconditionDisplay.text = "";
+
         var arr_ChildLvl = LevelDesign.GetComponentsInChildren<Transform>();
         foreach(Transform child in arr_ChildLvl)
         {
@@ -38,6 +51,8 @@ public class GameController : MonoBehaviour
                 arr_BODY.Add(child.gameObject);
             }
         }
+
+        PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
     }
 
     private void Update()
@@ -45,7 +60,6 @@ public class GameController : MonoBehaviour
         var arr_food = GameObject.FindGameObjectsWithTag("Food");
 
         Foodcount = arr_food.Length;
-
         FoodSpawner();
     }
 
@@ -80,4 +94,47 @@ public class GameController : MonoBehaviour
             var newFood = Instantiate(foodprefab, newPosition, Quaternion.identity, transform.parent);
         }
     }
+
+    //UI Text Updaters
+    public void UpdateMultiplierText(float amount)
+    {
+        MultiplierDisplay.text = "x" + amount;
+    }
+
+    public void UpdateScoreText(float amount)
+    {
+        ScoreDisplay.text = " Score : " + amount;
+    }
+
+    public void UpdateLivesText(float amount)
+    {
+        LifeDisplay.text = " Lives : " + amount;
+    }
+
+    public void UpdateWLConditionText(string text)
+    {
+        WLconditionDisplay.text = text;
+    }
+
+    //Player Movement
+    public void Movement_Up()
+    {
+        PlayerHeadComponent.Inputup();
+    }
+
+    public void Movement_Down()
+    {
+        PlayerHeadComponent.Inputdown();
+    }
+
+    public void Movement_Left()
+    {
+        PlayerHeadComponent.Inputleft();
+    }
+
+    public void Movement_Right()
+    {
+        PlayerHeadComponent.Inputright();
+    }
 }
+
