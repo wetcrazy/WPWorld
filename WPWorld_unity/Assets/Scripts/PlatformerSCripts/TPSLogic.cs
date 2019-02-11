@@ -415,12 +415,18 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     public void AddPowerUp(GameObject n_Powerup)
     {
-        ListOfPowerups.Add(ListOfPowerups.Count + 1, n_Powerup.GetComponent<GivePowerUpOnCollide>());
+        GivePowerUpOnCollide thePowerup = n_Powerup.GetComponent<GivePowerUpOnCollide>();
+
+        thePowerup.ID = ListOfPowerups.Count + 1;
+        ListOfPowerups.Add(thePowerup.ID, thePowerup);
     }
 
     public void AddEnemy(GameObject n_Enemy)
     {
-        ListOfEnemies.Add(ListOfEnemies.Count + 1, n_Enemy.GetComponent<Enemy>());
+        Enemy theEnemy = n_Enemy.GetComponent<Enemy>();
+
+        theEnemy.ID = ListOfEnemies.Count + 1;
+        ListOfEnemies.Add(theEnemy.ID, theEnemy);
     }
 
     /// <summary>
@@ -533,6 +539,15 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     //        break;
                     //    }
                     //}
+                    break;
+                }
+            case EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_MOVING:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int BlockID = (int)data[0];
+
+                    ListOfMoving[BlockID].Move();
+                    
                     break;
                 }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_ENEMY_DEATH_AIR:
@@ -648,10 +663,16 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     int CoinID = (int)data[0];
 
                     ListOfCoins[CoinID].Collect();
-
                     break;
                 }
             case EventCodes.EVENT_CODES.PLATFORM_EVENT_POWERUP_PICKUP:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    int PowerupID = (int)data[0];
+
+                    Destroy(ListOfPowerups[PowerupID].gameObject);
+                    ListOfPowerups.Remove(PowerupID);
+                }
                 break;
             default:
                 break;
