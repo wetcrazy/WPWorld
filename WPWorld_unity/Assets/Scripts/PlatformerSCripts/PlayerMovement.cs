@@ -103,14 +103,14 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
                 break;
         }
 
-        //if (!ARMultiplayerController.isSinglePlayer)
-        //{
-        //    //Update position on other client
-        //    PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+        if (!ARMultiplayerController.isSinglePlayer)
+        {
+            //Update position on other client
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
 
-        //    //Update your rotation on other clients
-        //    PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
-        //}
+            //Update your rotation on other clients
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+        }
     }
 
     public void GetDPadInput(Vector3 MoveDirection)
@@ -275,15 +275,6 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
         // Actually moves the player according to the Movement Direction, Movement speed is attached here to prevent multiple movement speed from being multiplied in Update
         RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * MovementMultiplier * Time.fixedDeltaTime);
-
-        if (!ARMultiplayerController.isSinglePlayer)
-        {
-            //Update position on other client
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
-
-            //Update your rotation on other clients
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
-        }
     }
 
     private void OnTriggerEnter(Collider other)

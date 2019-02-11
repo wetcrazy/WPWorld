@@ -110,12 +110,12 @@ public class PhotonRoomController : MonoBehaviour
         if (PhotonNetwork.CurrentRoom.IsVisible)
         {
             RoomVisibilityText.text = "Visibility: Public";
-            photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has set the room visibility to private");
+            photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has set the room visibility to public");
         }
         else
         {
             RoomVisibilityText.text = "Visibility: Private";
-            photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has set the room visibility to public");
+            photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has set the room visibility to private");
         }
     }
 
