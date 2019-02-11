@@ -84,10 +84,11 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
     Dictionary<int, SpawnOnHit> ListOfSpawners = new Dictionary<int, SpawnOnHit>();
     Dictionary<int, Enemy> ListOfEnemies = new Dictionary<int, Enemy>();
     Dictionary<int, FallOnTop> ListOfFalling = new Dictionary<int, FallOnTop>();
-    //Dictionary<int, MoveOnCollide> ListOfMoving = new Dictionary<int, MoveOnCollide>();
+    Dictionary<int, MoveOnCollide> ListOfMoving = new Dictionary<int, MoveOnCollide>();
     Dictionary<int, BounceOnHit> ListOfBouncingBlocks = new Dictionary<int, BounceOnHit>();
     Dictionary<int, ButtonScript> ListofButtons = new Dictionary<int, ButtonScript>();
     Dictionary<int, LeverScript> ListofLevers = new Dictionary<int, LeverScript>();
+    Dictionary<int, GivePowerUpOnCollide> ListOfPowerups = new Dictionary<int, GivePowerUpOnCollide>();
 
     Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
 
@@ -123,7 +124,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         var CoinsArray = FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[];
         foreach (var item in CoinsArray)
         {
-            //ListOfCoins.Add(item.ID, item);
+            ListOfCoins.Add(item.ID, item);
         }
 
         //Breakable Blocks List
@@ -162,11 +163,11 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         }
 
         //Moving Blocks List
-        //var MovingArray = FindObjectsOfType(typeof(MoveOnCollide)) as MoveOnCollide[];
-        //foreach (var item in MovingArray)
-        //{
-        //    ListOfMoving.Add(item.ID, item);
-        //}
+        var MovingArray = FindObjectsOfType(typeof(MoveOnCollide)) as MoveOnCollide[];
+        foreach (var item in MovingArray)
+        {
+            ListOfMoving.Add(item.ID, item);
+        }
 
         //Bouncing Blocks List
         var BouncingArray = FindObjectsOfType(typeof(BounceOnHit)) as BounceOnHit[];
@@ -412,6 +413,15 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         JumpForce = n_JumpForce;
     }
 
+    public void AddPowerUp(GameObject n_Powerup)
+    {
+        ListOfPowerups.Add(ListOfPowerups.Count + 1, n_Powerup.GetComponent<GivePowerUpOnCollide>());
+    }
+
+    public void AddEnemy(GameObject n_Enemy)
+    {
+        ListOfEnemies.Add(ListOfEnemies.Count + 1, n_Enemy.GetComponent<Enemy>());
+    }
 
     /// <summary>
     /// The network stream where data can be constantly be sent & received

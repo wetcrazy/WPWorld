@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MoveOnCollide : MonoBehaviour {
 
+    [Header("ID Settings")]
+    public int ID;
+
     [Header("Vector3 represents the relative difference.")]
     [Header("Movement Settings")]
     // Movement Variables
@@ -64,8 +67,13 @@ public class MoveOnCollide : MonoBehaviour {
     {
         if(other.tag == "Player" && other.GetComponent<TPSLogic>().isMine())
         {
-            IsMoving = true;
+            Move();
         }
+    }
+
+    public void Move()
+    {
+        IsMoving = true;
     }
 
     public void Reset()

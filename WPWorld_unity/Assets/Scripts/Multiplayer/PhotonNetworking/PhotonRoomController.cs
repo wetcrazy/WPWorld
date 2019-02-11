@@ -58,6 +58,7 @@ public class PhotonRoomController : MonoBehaviour
     public void InitRoom()
     {
         photonView = PhotonView.Get(this);
+        photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has joined the room");
 
         PlayerTextList = new Text[PlayerListPanel.transform.childCount];
         PlayerTextList = PlayerListPanel.GetComponentsInChildren<Text>();

@@ -22,11 +22,17 @@ public class ItemBoxSpawn : MonoBehaviour {
             GetComponent<Rigidbody>().useGravity = false;
         }
         if (GetComponent<Enemy>())
+        {
             GetComponent<Enemy>().enabled = false;
+            PlayerMovement.LocalPlayerInstance.GetComponent<TPSLogic>().AddEnemy(this.gameObject);
+        }
         if (GetComponent<Collider>())
             GetComponent<Collider>().enabled = false;
         if (GetComponent<GivePowerUpOnCollide>())
+        {
             GetComponent<GivePowerUpOnCollide>().enabled = false;
+            PlayerMovement.LocalPlayerInstance.GetComponent<TPSLogic>().AddPowerUp(this.gameObject);
+        }
     }
 	
 	// Update is called once per frame
