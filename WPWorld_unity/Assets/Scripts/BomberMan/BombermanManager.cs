@@ -71,10 +71,16 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         if(List_CurrPlayerPlayingField.Count <= 0)
         {
             FindPlayers();
+
+            GameObject debug = GameObject.FindGameObjectWithTag("Debug");
+            debug.GetComponent<Text>().text = "DING";
         }
         else
         {
             ConstantBreakableSpawner();
+
+            GameObject debug = GameObject.FindGameObjectWithTag("Debug");
+            debug.GetComponent<Text>().text = "MEOW MEOW";
         }
     }
 
@@ -118,7 +124,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             var RAND = Random.Range(0, currField.List_Floors.Count);
 
             var newPos = currField.List_Floors[RAND].gameObject.transform.localPosition;
-            newPos.y += List_BreakablesBlocks[0].transform.localScale.y;
+            // newPos.y = newPos.y + List_BreakablesBlocks[0].transform.localScale.y;
+            newPos.y = newPos.y + 1;
             BREAKABLE_TYPE newtype;
 
             var RANDType = Random.Range(0, (int)BREAKABLE_TYPE.BREAKABLE_COUNT);
@@ -131,7 +138,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                 newtype = BREAKABLE_TYPE.BREAKABLE_TWO;
             }
 
-            if(PhotonNetwork.IsConnected)
+            if(ARMultiplayerController.isSinglePlayer)
             {
                 object[] content = new object[]
                 {

@@ -4510,7 +4510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1360399305945472
 GameObject:
   m_ObjectHideFlags: 1
@@ -14158,7 +14158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1409425284108272}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.5, z: 1}
+  m_LocalPosition: {x: 6, y: 1.5, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -15570,7 +15570,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1145104688697914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 1.5, z: -1}
+  m_LocalPosition: {x: -6, y: 1.5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -20773,7 +20773,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1999230361798296}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 1.5, z: 1}
+  m_LocalPosition: {x: -6, y: 1.5, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -21612,7 +21612,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1352932302586140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.5, z: -1}
+  m_LocalPosition: {x: 6, y: 1.5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4734906828190990}
@@ -55443,6 +55443,8 @@ MonoBehaviour:
   WallParent: {fileID: 1742923744307936}
   FloorParent: {fileID: 1970565240313042}
   BreakablesParent: {fileID: 1198739560743580}
+  List_Floors: []
+  List_Breakables: []
 --- !u!114 &114177639614340942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56104,6 +56106,8 @@ MonoBehaviour:
   WallParent: {fileID: 1468440339436404}
   FloorParent: {fileID: 1310746327078540}
   BreakablesParent: {fileID: 1890225103178238}
+  List_Floors: []
+  List_Breakables: []
 --- !u!114 &114567047513070466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56273,6 +56277,8 @@ MonoBehaviour:
   WallParent: {fileID: 1928070632979658}
   FloorParent: {fileID: 1220419327425078}
   BreakablesParent: {fileID: 1108989663367906}
+  List_Floors: []
+  List_Breakables: []
 --- !u!114 &114671419992587658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56631,6 +56637,8 @@ MonoBehaviour:
   WallParent: {fileID: 1559105164913920}
   FloorParent: {fileID: 1678982750980762}
   BreakablesParent: {fileID: 1378602465120436}
+  List_Floors: []
+  List_Breakables: []
 --- !u!114 &114886997866773598
 MonoBehaviour:
   m_ObjectHideFlags: 1
