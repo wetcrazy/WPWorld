@@ -10,4 +10,5 @@ public class BombermanPlayingField : MonoBehaviour
     public GameObject BreakablesParent;
 
     public List<GameObject> List_Floors;
+    public List<GameObject> List_Breakables;
 }

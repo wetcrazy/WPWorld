@@ -51,8 +51,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         BREAKABLE_ONE,
         BREAKABLE_TWO,
+        BREAKABLE_COUNT,
     };
 
+
+    SendOptions sendOptions = new SendOptions { Reliability = true };
     // START
     private void Start()
     {
@@ -65,9 +68,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        if (is_Reset)
+        if(List_CurrPlayerPlayingField.Count <= 0)
         {
-
+            FindPlayers();
+        }
+        else
+        {
+            ConstantBreakableSpawner();
         }
     }
 
@@ -97,7 +104,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         foreach (BombermanPlayingField currField in List_CurrPlayerPlayingField)
         {
             var Arr_Floor = currField.FloorParent.GetComponentInChildren<Transform>();
-         
+
             foreach (Transform floor in Arr_Floor)
             {
                 if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
@@ -110,7 +117,37 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
             var RAND = Random.Range(0, currField.List_Floors.Count);
 
+            var newPos = currField.List_Floors[RAND].gameObject.transform.localPosition;
+            newPos.y += List_BreakablesBlocks[0].transform.localScale.y;
+            BREAKABLE_TYPE newtype;
 
+            var RANDType = Random.Range(0, (int)BREAKABLE_TYPE.BREAKABLE_COUNT);
+            if (RANDType == 0)
+            {
+                newtype = BREAKABLE_TYPE.BREAKABLE_ONE;
+            }
+            else
+            {
+                newtype = BREAKABLE_TYPE.BREAKABLE_TWO;
+            }
+
+            if(PhotonNetwork.IsConnected)
+            {
+                object[] content = new object[]
+                {
+                newPos,
+                newtype,
+                };
+
+                RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+
+                PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_BREAKABLE, content, raiseEventOptions, sendOptions);
+            }
+            else
+            {
+                SpawnBreakable(newPos, newtype, 0);
+            }
+          
         }
     }
    
@@ -194,9 +231,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
         newBomb.transform.localPosition = BombPos;
 
-        newBomb.transform.localPosition = Vector3.zero;
-        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
-        newBomb.transform.localPosition = BombPos;
+        //newBomb.transform.localPosition = Vector3.zero;
+        //newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        //newBomb.transform.localPosition = BombPos;
        
 
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
@@ -254,10 +291,47 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
-    // Spawn Breakable 
+    // Spawn Breakable (multiplayer)
     public void SpawnBreakable(Vector3 BreakablePos, BREAKABLE_TYPE typeValue)
     {
+        GameObject newPreab;
+        if(typeValue == BREAKABLE_TYPE.BREAKABLE_ONE)
+        {
+            newPreab = List_BreakablesBlocks[0].gameObject;
+        }
+        else
+        {
+            newPreab = List_BreakablesBlocks[1].gameObject;
+        }
 
+        GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+
+        newBreakable.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newBreakable.transform.Translate(BreakablePos, Space.Self);
+        newBreakable.transform.localPosition = Vector3.zero;
+        newBreakable.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBreakable.transform.localPosition = BreakablePos;
+    }
+    // Spawn Breakable (Singleplayer)
+    public void SpawnBreakable(Vector3 BreakablePos, BREAKABLE_TYPE typeValue, int nothing)
+    {
+        GameObject newPreab;
+        if (typeValue == BREAKABLE_TYPE.BREAKABLE_ONE)
+        {
+            newPreab = List_BreakablesBlocks[0].gameObject;
+        }
+        else
+        {
+            newPreab = List_BreakablesBlocks[1].gameObject;
+        }
+
+        GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+
+        newBreakable.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newBreakable.transform.Translate(BreakablePos, Space.Self);
+        newBreakable.transform.localPosition = Vector3.zero;
+        newBreakable.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBreakable.transform.localPosition = BreakablePos;
     }
 
 
