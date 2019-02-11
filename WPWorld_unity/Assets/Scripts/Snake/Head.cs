@@ -336,6 +336,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         I_score+= (float)applecost * multiplier;
         gameController.UpdateScoreText(I_score);
 
+        AddBody();
     }
 
     // Add body parts

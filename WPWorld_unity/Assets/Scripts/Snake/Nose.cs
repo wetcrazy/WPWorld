@@ -19,6 +19,10 @@ public class Nose : MonoBehaviour {
         {
             deathcollided = true;
         }
-        
+        else if (other.CompareTag("Food"))
+        {
+            gameObject.GetComponentInParent<Head>().AddAppleAte();
+        }
+
     }
 }
