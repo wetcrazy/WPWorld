@@ -123,7 +123,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         var CoinsArray = FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[];
         foreach (var item in CoinsArray)
         {
-            //ListOfCoins.Add(item.ID, item);
+            ListOfCoins.Add(item.ID, item);
         }
 
         //Breakable Blocks List

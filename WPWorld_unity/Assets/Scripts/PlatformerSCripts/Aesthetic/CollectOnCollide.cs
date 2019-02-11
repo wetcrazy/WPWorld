@@ -5,8 +5,7 @@ using UnityEngine;
 public class CollectOnCollide : MonoBehaviour {
 
     [Header("ID Settings")]
-    [SerializeField]
-    private int ID;
+    public int ID;
 
     // Score Variables
     [Header("Score Settings")]
