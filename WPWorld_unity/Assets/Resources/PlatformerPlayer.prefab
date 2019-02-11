@@ -151,7 +151,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1326378970454784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.004, y: 0.211, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 4469307987171858}
@@ -182,7 +182,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1678723272401002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.079998, y: -2.62, z: 0}
+  m_LocalPosition: {x: 0, y: 1.9, z: 0}
   m_LocalScale: {x: 0.13159999, y: 0.13159999, z: 0.13159999}
   m_Children: []
   m_Father: {fileID: 4378108969843836}
@@ -486,7 +486,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 3
+  InstantiationId: 2
   isRuntimeInstantiated: 0
 --- !u!114 &114944487973140892
 MonoBehaviour:
@@ -499,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a2097c56ea0bc489bb81a040f64fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FireBallPrefab: {fileID: 0}
   JumpForce: 2.1
   IsGrounded: 1
   JumpSFX: Jump
