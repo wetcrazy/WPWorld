@@ -21,9 +21,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     [Header("Breakables")]
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
-    private List<BombermanPlayingField> List_CurrPlayerPlayingField;
-    private GameObject[] Array_PlayerPlayingField;
-
+    private BombermanPlayingField CurrPlayerPlayingField;
+   
     [Header("PlayerPlaySpace")]
     // For player play space
     public List<GameObject> List_PlayerPlaySpace;
@@ -46,6 +45,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     private Quaternion NewRotation;
     // If game needs reset
     private bool is_Reset;
+    GameObject debug;
 
     public enum BREAKABLE_TYPE
     {
@@ -59,28 +59,22 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // START
     private void Start()
     {
-        Array_PlayerPlayingField = GameObject.FindGameObjectsWithTag("BombermanPlayingField");
+        debug = GameObject.FindGameObjectWithTag("Debug");
         is_Reset = true;
     }
 
     // UPDATE
     private void Update()
-    {
-        GameObject debug = GameObject.FindGameObjectWithTag("Debug");
-
+    { 
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        // debug.GetComponent<Text>().text = "DING";
-        if (List_CurrPlayerPlayingField.Count <= 0)
+        if (CurrPlayerPlayingField == null)
         {
-            debug.GetComponent<Text>().text = "MEOW MEOW";
-            FindPlayers();
-            debug.GetComponent<Text>().text = "Dings MEOW";
-
+            FindMyPlayer();        
         }
         else
-        {
-            ConstantBreakableSpawner();         
+        {          
+            ConstantBreakableSpawner();
         }
     }
 
@@ -107,102 +101,71 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Constant Spawner
     public void ConstantBreakableSpawner()
     {
-        foreach (BombermanPlayingField currField in List_CurrPlayerPlayingField)
+
+        var Arr_Floor = CurrPlayerPlayingField.FloorParent.GetComponentInChildren<Transform>();
+
+        foreach (Transform floor in Arr_Floor)
         {
-            var Arr_Floor = currField.FloorParent.GetComponentInChildren<Transform>();
-
-            foreach (Transform floor in Arr_Floor)
+            if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
             {
-                if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
-                {
-                    continue;
-                }
-
-                currField.List_Floors.Add(floor.gameObject);
+                continue;
             }
 
-            var RAND = Random.Range(0, currField.List_Floors.Count);
+            CurrPlayerPlayingField.List_Floors.Add(floor.gameObject);
+        }
 
-            var newPos = currField.List_Floors[RAND].gameObject.transform.localPosition;
-            // newPos.y = newPos.y + List_BreakablesBlocks[0].transform.localScale.y;
-            newPos.y = newPos.y + 1;
-            BREAKABLE_TYPE newtype;
+        var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
 
-            var RANDType = Random.Range(0, (int)BREAKABLE_TYPE.BREAKABLE_COUNT);
-            if (RANDType == 0)
-            {
-                newtype = BREAKABLE_TYPE.BREAKABLE_ONE;
-            }
-            else
-            {
-                newtype = BREAKABLE_TYPE.BREAKABLE_TWO;
-            }
+        var newPos = CurrPlayerPlayingField.List_Floors[RAND].gameObject.transform.localPosition;
+        // newPos.y = newPos.y + List_BreakablesBlocks[0].transform.localScale.y;
+        newPos.y = newPos.y + 10;
+        BREAKABLE_TYPE newtype;
 
-            if(ARMultiplayerController.isSinglePlayer)
+        var RANDType = Random.Range(0, 1.0f);
+        if (RANDType < 0.75f)
+        {
+            newtype = BREAKABLE_TYPE.BREAKABLE_ONE;
+        }
+        else
+        {
+            newtype = BREAKABLE_TYPE.BREAKABLE_TWO;
+        }
+
+        if (!ARMultiplayerController.isSinglePlayer)
+        {
+            object[] content = new object[]
             {
-                object[] content = new object[]
-                {
                 newPos,
                 newtype,
-                };
+            };
 
-                RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
 
-                PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_BREAKABLE, content, raiseEventOptions, sendOptions);
-            }
-            else
-            {
-                SpawnBreakable(newPos, newtype, 0);
-            }
-          
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_BREAKABLE, content, raiseEventOptions, sendOptions);
         }
+        else
+        {
+            SpawnBreakable(newPos, newtype, 0);
+        }
+
     }
+    
    
     // Reset Funtion
     public void ResetGame()
     {   
-        if (List_CurrPlayerPlayingField.Count <= 0)
-        {
-            FindPlayers();
-        }
+       
     }
 
-    // Find players playing field
-    public void FindPlayers()
+    // Find own player playing field
+    public void FindMyPlayer()
     {
-        // Temp player counting
-        int playerCount = 0;
-        // Check each field
-        foreach (GameObject field in Array_PlayerPlayingField)
-        {
-            // Dont check anymore if we found all the players
-            if(playerCount == GameObject.FindGameObjectsWithTag("Player").Length)
+        RaycastHit hit;
+        if (Physics.Raycast(PlayerMovement.LocalPlayerInstance.transform.position, -Vector3.up , out hit, 5))
+        {          
+            if (hit.transform.parent.parent.tag == "BombermanPlayingField")
             {
-                break;
-            }
-
-            var Arr_Floor = field.GetComponent<BombermanPlayingField>().FloorParent.GetComponentInChildren<Transform>();
-            RaycastHit hit;
-
-            // Each floor block
-            foreach (Transform floor in Arr_Floor)
-            {
-                if(floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
-                {
-                    continue;
-                }
-
-                if(Physics.Raycast(floor.localPosition, Vector3.up, out hit, floor.localScale.x))
-                {
-                    // Player is found
-                    if(hit.transform.tag == "Player")
-                    {
-                        field.GetComponent<BombermanPlayingField>().Player = hit.transform.gameObject;
-                        List_CurrPlayerPlayingField.Add(field.GetComponent<BombermanPlayingField>()); // Push into current field that is being played by the players
-                        playerCount += 1;
-                        break;
-                    }
-                }
+                CurrPlayerPlayingField = hit.transform.parent.parent.gameObject.GetComponent<BombermanPlayingField>();              
             }
         }
     }
@@ -382,6 +345,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                     var SpawnPos = (Vector3)data[0];
                     var type = (BREAKABLE_TYPE)data[1];
 
+                    debug.GetComponent<Text>().text = "I am here >> " + type.ToString();
                     SpawnBreakable(SpawnPos, type);
 
                     break;
