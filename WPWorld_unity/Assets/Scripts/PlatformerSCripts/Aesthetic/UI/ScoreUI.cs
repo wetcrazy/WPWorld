@@ -31,6 +31,11 @@ public class ScoreUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // ActualScore = PlayerRef.CurrPointsPub;
+        if (PlayerRef == null)
+        {
+            PlayerRef = PlayerMovement.LocalPlayerInstance.GetComponent<TPSLogic>();
+            return;
+        }
 
         TextRef.text = " : " + ScoreToShow.ToString("F0");
 

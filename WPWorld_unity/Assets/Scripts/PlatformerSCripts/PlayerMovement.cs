@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
             RigidRef = GetComponent<Rigidbody>();        
             
             //Init the respawn point (THIS IS WRONG!)
-            RespawnPoint = transform.position;
+            RespawnPoint = ARMultiplayerController.SpawnPoint;
 
             if (!ARMultiplayerController.isSinglePlayer)
             {
