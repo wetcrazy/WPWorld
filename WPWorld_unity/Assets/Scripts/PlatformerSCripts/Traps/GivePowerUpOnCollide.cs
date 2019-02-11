@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GivePowerUpOnCollide : MonoBehaviour {
 
+    [Header("ID Settings")]
+    public int ID;
+
     [SerializeField]
     private POWERUPS PowerUpToGive;
 
