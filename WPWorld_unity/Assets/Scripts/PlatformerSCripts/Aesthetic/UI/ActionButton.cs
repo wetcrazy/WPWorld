@@ -19,6 +19,14 @@ public class ActionButton : MonoBehaviour {
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem");
     }
 
+    void Update()
+    {
+        if (PlayerObject == null)
+        {
+            PlayerObject = PlayerMovement.LocalPlayerInstance;
+        }
+    }
+
     public void onActionButtonDown()
     {
         if(PlayerObject.GetComponent<TPSLogic>().LeverRef != null)

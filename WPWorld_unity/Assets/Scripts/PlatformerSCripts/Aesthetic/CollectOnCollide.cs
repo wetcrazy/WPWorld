@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CollectOnCollide : MonoBehaviour {
 
+    [Header("ID Settings")]
+    [SerializeField]
+    private int ID;
+
     // Score Variables
     [Header("Score Settings")]
     [SerializeField]
@@ -42,7 +46,7 @@ public class CollectOnCollide : MonoBehaviour {
                 Collect();
 
                 // Add points to the player who collects the coin
-                    other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
+                other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
             }
         }
     }

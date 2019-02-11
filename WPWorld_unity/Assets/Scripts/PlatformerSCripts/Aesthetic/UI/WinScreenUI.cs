@@ -27,7 +27,7 @@ public class WinScreenUI : MonoBehaviour {
     [SerializeField]
     private GameObject ScoreText;
 
-    [Header("Exit Butto Settings")]
+    [Header("Exit Button Settings")]
     [SerializeField]
     private GameObject ExitButton;
 
@@ -46,7 +46,7 @@ public class WinScreenUI : MonoBehaviour {
 
         if(!FinishedFalling)
         {
-            PosRef.localEulerAngles = Vector3.Lerp(PosRef.localEulerAngles, RotateAngle, 2 * Time.deltaTime);
+            WinText.transform.localEulerAngles = Vector3.MoveTowards(WinText.transform.localEulerAngles, RotateAngle, 15 * Time.deltaTime);
 
             // Drops the Win Text
             if (PosRef.anchoredPosition.y > DropSpot.y)
@@ -62,13 +62,14 @@ public class WinScreenUI : MonoBehaviour {
                 {
                     RigidRef.AddForce(Vector3.up * BounceSpeed * Bounces);
                     Bounces--;
+
                     if(Bounces == 1)
                     {
                         RotateAngle = Vector3.zero;
                     }
                     else
                     {
-                        if(Bounces % 2 == 0)
+                        if(Bounces % 2 == 1)
                         {
                             RotateAngle = new Vector3(0, 0, 15);
                         }
