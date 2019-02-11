@@ -42,7 +42,7 @@ public class CollectOnCollide : MonoBehaviour {
                 Collect();
 
                 // Add points to the player who collects the coin
-                    other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
+                other.GetComponent<TPSLogic>().CurrPointsPub += PointsToAdd;
             }
         }
     }

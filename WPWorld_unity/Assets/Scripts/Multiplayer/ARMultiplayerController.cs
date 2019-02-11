@@ -76,6 +76,11 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     {
         isSinglePlayer = SinglePlayer;
 
+        if(!PhotonNetwork.IsConnected)
+        {
+            isSinglePlayer = true;
+        }
+
         //Define the game object references       
         //soundSystem = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
         photonView = PhotonView.Get(this);
