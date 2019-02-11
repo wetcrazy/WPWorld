@@ -10,8 +10,6 @@ public class HealthPopup : MonoBehaviour
     private Color ColorRef;
 
     private GameObject PlayerRef;
-    [SerializeField]
-    private MovementAvaliability OrgAvaliability;
 
     //Debug Serialize
     [SerializeField]
@@ -35,7 +33,6 @@ public class HealthPopup : MonoBehaviour
         ImageRef.color = ColorRef;
 
         PlayerRef = PlayerMovement.LocalPlayerInstance;
-        OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
     }
 
     // Update is called once per frame
@@ -117,7 +114,6 @@ public class HealthPopup : MonoBehaviour
                     0);
                 if(!HasReset)
                 {
-                    PlayerRef.GetComponent<PlayerMovement>().SetRestriction(OrgAvaliability);
                     PlayerRef.GetComponent<TPSLogic>().AbleToJumpPub = true;
                     HasReset = true;
                 }
@@ -166,8 +162,6 @@ public class HealthPopup : MonoBehaviour
     {
         if (ColorRef.a != 0)
             return;
-        if(PlayerRef.GetComponent<PlayerMovement>().GetRestriction() != MovementAvaliability.NONE)
-            OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
         PlayerRef.GetComponent<PlayerMovement>().SetRestriction(MovementAvaliability.NONE);
         PlayerRef.GetComponent<TPSLogic>().AbleToJumpPub = false;
         Showing = true;
