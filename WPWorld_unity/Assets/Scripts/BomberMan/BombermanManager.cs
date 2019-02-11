@@ -165,7 +165,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {          
             if (hit.transform.parent.parent.tag == "BombermanPlayingField")
             {
-                CurrPlayerPlayingField = hit.transform.parent.parent.gameObject.GetComponent<BombermanPlayingField>();              
+                CurrPlayerPlayingField = hit.transform.parent.parent.gameObject.GetComponent<BombermanPlayingField>();
+                debug.GetComponent<Text>().text = "I am here >> " + CurrPlayerPlayingField.name.ToString();
             }
         }
     }
@@ -344,8 +345,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
                     var SpawnPos = (Vector3)data[0];
                     var type = (BREAKABLE_TYPE)data[1];
-
-                    debug.GetComponent<Text>().text = "I am here >> " + type.ToString();
+                 
                     SpawnBreakable(SpawnPos, type);
 
                     break;
