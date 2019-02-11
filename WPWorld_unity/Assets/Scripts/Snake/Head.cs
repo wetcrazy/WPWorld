@@ -362,8 +362,8 @@ public class Head : MonoBehaviourPun, IPunObservable
             var childScript = Children[Children.Count - 1].GetComponent<Body>();
 
             // Save turning points
-            childScript.turningPos = new Queue<Vector3>(Children[Children.Count - 2].GetComponent<Body>().turningPos);
-            childScript.turningDirection = new Queue<STATE_FACING>(Children[Children.Count - 2].GetComponent<Body>().turningDirection);                  
+            childScript.turningPos = new Queue<Vector3>(Children[Children.Count - 1].GetComponent<Body>().turningPos);
+            childScript.turningDirection = new Queue<STATE_FACING>(Children[Children.Count - 1].GetComponent<Body>().turningDirection);                  
         }
 
     }
