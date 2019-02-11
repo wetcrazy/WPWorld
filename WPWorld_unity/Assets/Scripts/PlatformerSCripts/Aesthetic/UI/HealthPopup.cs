@@ -41,6 +41,12 @@ public class HealthPopup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerRef == null)
+        {
+            PlayerRef = PlayerMovement.LocalPlayerInstance;
+            return;
+        }
+
         // Spawning
         if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().DeathCounterPub))
         {

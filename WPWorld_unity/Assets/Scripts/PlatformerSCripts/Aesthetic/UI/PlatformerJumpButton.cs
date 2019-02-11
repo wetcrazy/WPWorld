@@ -13,8 +13,9 @@ public class PlatformerJumpButton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+		if(PlayerObject == null)
+            PlayerObject = PlayerMovement.LocalPlayerInstance.GetComponent<TPSLogic>();
+    }
 
     public void OnJumpButtonDown()
     {
