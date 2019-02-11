@@ -42,6 +42,15 @@ public class CollectOnCollide : MonoBehaviour {
         {
             if(RenderRef.isVisible)
             {
+                //Send event to all players that this coin has been collected
+                object[] content = new object[]
+                    {
+                        ID
+                    };
+
+                ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+                Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_COIN_PICKUP, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
                 Collect();
 
                 // Add points to the player who collects the coin
