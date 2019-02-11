@@ -66,15 +66,21 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // UPDATE
     private void Update()
     {
+        GameObject debug = GameObject.FindGameObjectWithTag("Debug");
+
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        if(List_CurrPlayerPlayingField.Count <= 0)
+        debug.GetComponent<Text>().text = "DING";
+        if (List_CurrPlayerPlayingField.Count <= 0)
         {
+            debug.GetComponent<Text>().text = "MEOW MEOW";
             FindPlayers();
+            debug.GetComponent<Text>().text = "Dings MEOW";
+
         }
         else
         {
-            ConstantBreakableSpawner();
+            ConstantBreakableSpawner();         
         }
     }
 
@@ -118,7 +124,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             var RAND = Random.Range(0, currField.List_Floors.Count);
 
             var newPos = currField.List_Floors[RAND].gameObject.transform.localPosition;
-            newPos.y += List_BreakablesBlocks[0].transform.localScale.y;
+            // newPos.y = newPos.y + List_BreakablesBlocks[0].transform.localScale.y;
+            newPos.y = newPos.y + 1;
             BREAKABLE_TYPE newtype;
 
             var RANDType = Random.Range(0, (int)BREAKABLE_TYPE.BREAKABLE_COUNT);
@@ -131,7 +138,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                 newtype = BREAKABLE_TYPE.BREAKABLE_TWO;
             }
 
-            if(PhotonNetwork.IsConnected)
+            if(ARMultiplayerController.isSinglePlayer)
             {
                 object[] content = new object[]
                 {
@@ -225,10 +232,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
-        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
-        newBomb.transform.Translate(BombPos, Space.Self);
-        newBomb.transform.localPosition = Vector3.zero;
-        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newBomb.transform.localEulerAngles = Vector3.zero;
         newBomb.transform.localPosition = BombPos;
 
         //newBomb.transform.localPosition = Vector3.zero;

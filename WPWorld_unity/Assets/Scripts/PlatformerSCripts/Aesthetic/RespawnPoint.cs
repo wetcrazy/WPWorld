@@ -24,7 +24,7 @@ public class RespawnPoint : MonoBehaviour {
 	void Start () {
         SoundSystemRef = GameObject.FindGameObjectWithTag("SoundSystem").GetComponent<SoundSystem>();
 
-        PlayerRef = GameObject.FindGameObjectWithTag("Player");
+        PlayerRef = PlayerMovement.LocalPlayerInstance;
 
         OrgFlagVelocity = transform.GetChild(0).GetComponent<Cloth>().externalAcceleration;
         OrgFlagRandVelocity = transform.GetChild(0).GetComponent<Cloth>().randomAcceleration;
@@ -40,7 +40,7 @@ public class RespawnPoint : MonoBehaviour {
                 transform.GetChild(0).GetComponent<Cloth>().externalAcceleration = Vector3.Lerp(transform.GetChild(0).GetComponent<Cloth>().externalAcceleration, InteractedFlagVelocity, Time.deltaTime);
             transform.GetChild(0).GetComponent<Cloth>().randomAcceleration = Vector3.zero;
 
-            if (PlayerRef.GetComponent<PlayerMovement>().GetRespawn() != transform.position)
+            if (PlayerRef.GetComponent<PlayerMovement>().GetRespawn() != transform.localPosition)
                 Interacted = false;
         }
         else

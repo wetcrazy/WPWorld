@@ -34,7 +34,7 @@ public class HealthPopup : MonoBehaviour
         ColorRef.a = 0;
         ImageRef.color = ColorRef;
 
-        PlayerRef = GameObject.FindGameObjectWithTag("Player");
+        PlayerRef = PlayerMovement.LocalPlayerInstance;
         OrgAvaliability = PlayerRef.GetComponent<PlayerMovement>().GetRestriction();
     }
 
