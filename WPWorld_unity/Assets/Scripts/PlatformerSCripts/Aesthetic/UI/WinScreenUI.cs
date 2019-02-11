@@ -18,7 +18,6 @@ public class WinScreenUI : MonoBehaviour {
     private float BounceSpeed;
 
     private bool FinishedFalling = false;
-    [SerializeField]
     private Vector3 RotateAngle;
 
     private Rigidbody2D RigidRef;
@@ -28,7 +27,7 @@ public class WinScreenUI : MonoBehaviour {
     [SerializeField]
     private GameObject ScoreText;
 
-    [Header("Exit Butto Settings")]
+    [Header("Exit Button Settings")]
     [SerializeField]
     private GameObject ExitButton;
 
