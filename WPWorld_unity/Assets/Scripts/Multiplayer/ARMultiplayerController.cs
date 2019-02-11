@@ -376,8 +376,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     void AddNumberOfPlayerReady()
     {
         ++NumOfPlayersReady;
-
-        if(NumOfPlayersReady == PhotonNetwork.PlayerList.Length)
+        DebugText.text = "Ready Platers :" + NumOfPlayersReady.ToString();
+        if (NumOfPlayersReady == PhotonNetwork.PlayerList.Length)
         {
             SpawnPlayersButton.SetActive(true);
         }
