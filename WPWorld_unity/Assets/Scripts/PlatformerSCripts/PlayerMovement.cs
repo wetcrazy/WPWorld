@@ -46,8 +46,9 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
             LocalPlayerInstance = gameObject;
 
             //Init the player rot
-            gameObject.transform.localPosition = Vector3.zero;
-            gameObject.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+            //gameObject.transform.localPosition = Vector3.zero;
+            //gameObject.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+            gameObject.transform.localEulerAngles = Vector3.zero;
         }
 
     }
@@ -135,126 +136,121 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
         {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
-                    // Checks if the player should follow the camera forward or up
-                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
-                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
-                        n_Forward = Camera.main.transform.forward;
-                    else
-                        n_Forward = Camera.main.transform.up;
+                    //if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
+                    //    || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
+                    //    n_Forward = Camera.main.transform.forward;
+                    //else
+                    //    n_Forward = Camera.main.transform.up;
+                    //n_Forward.y = 0;
+                    //if(Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                    //{
+                    //    //Prioritize X Dir over Z dir
+                    //    if (n_Forward.x > 0)
+                    //        n_Forward.x = Mathf.Round(n_Forward.x);
+                    //    else
+                    //        n_Forward.x = Mathf.Floor(n_Forward.x);
 
-                    // Locks the Y at 0
-                    n_Forward.y = 0;
+                    //    n_Forward.z = 0;
+                    //}
+                    //else
+                    //{
+                    //    //Prioritize Z Dir over X dir
+                    //    if (n_Forward.z > 0)
+                    //        n_Forward.z = Mathf.Round(n_Forward.z);
+                    //    else
+                    //        n_Forward.z = Mathf.Floor(n_Forward.z);
 
-                    if(Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
-                    {
-                        //Prioritize X Dir over Z dir
-                        if (n_Forward.x > 0)
-                            n_Forward.x = Mathf.Round(n_Forward.x);
-                        else
-                            n_Forward.x = Mathf.Floor(n_Forward.x);
-
-                        n_Forward.z = 0;
-                    }
-                    else
-                    {
-                        //Prioritize Z Dir over X dir
-                        if (n_Forward.z > 0)
-                            n_Forward.z = Mathf.Round(n_Forward.z);
-                        else
-                            n_Forward.z = Mathf.Floor(n_Forward.z);
-
-                        n_Forward.x = 0;
-                    }
-                    gameObject.transform.forward = n_Forward;
+                    //    n_Forward.x = 0;
+                    //}
+                    gameObject.transform.localEulerAngles = Vector3.zero;
                     break;
                 }
             case Joystick.JoystickDirection.DIR_RIGHT:
                 {
-                    n_Forward = Camera.main.transform.right;
-                    n_Forward.y = 0;
-                    if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
-                    {
-                        //Prioritize X Dir over Z dir
-                        if (n_Forward.x > 0)
-                            n_Forward.x = Mathf.Round(n_Forward.x);
-                        else
-                            n_Forward.x = Mathf.Floor(n_Forward.x);
+                //    n_Forward = Camera.main.transform.right;
+                //    n_Forward.y = 0;
+                //    if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                //    {
+                //        //Prioritize X Dir over Z dir
+                //        if (n_Forward.x > 0)
+                //            n_Forward.x = Mathf.Round(n_Forward.x);
+                //        else
+                //            n_Forward.x = Mathf.Floor(n_Forward.x);
 
-                        n_Forward.z = 0;
-                    }
-                    else
-                    {
-                        //Prioritize Z Dir over X dir
-                        if (n_Forward.z > 0)
-                            n_Forward.z = Mathf.Round(n_Forward.z);
-                        else
-                            n_Forward.z = Mathf.Floor(n_Forward.z);
+                //        n_Forward.z = 0;
+                //    }
+                //    else
+                //    {
+                //        //Prioritize Z Dir over X dir
+                //        if (n_Forward.z > 0)
+                //            n_Forward.z = Mathf.Round(n_Forward.z);
+                //        else
+                //            n_Forward.z = Mathf.Floor(n_Forward.z);
 
-                        n_Forward.x = 0;
-                    }
-                    gameObject.transform.forward = n_Forward;
-                    break;
+                //        n_Forward.x = 0;
+                //    }
+                //    gameObject.transform.forward = n_Forward;
+                gameObject.transform.localEulerAngles = new Vector3(0, 90, 0);
+                break;
                 }
             case Joystick.JoystickDirection.DIR_LEFT:
                 {
-                    n_Forward = Camera.main.transform.right;
-                    n_Forward.y = 0;
-                    if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
-                    {
-                        //Prioritize X Dir over Z dir
-                        if (n_Forward.x > 0)
-                            n_Forward.x = Mathf.Round(n_Forward.x);
-                        else
-                            n_Forward.x = Mathf.Floor(n_Forward.x);
+                    //n_Forward = Camera.main.transform.right;
+                    //n_Forward.y = 0;
+                    //if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                    //{
+                    //    //Prioritize X Dir over Z dir
+                    //    if (n_Forward.x > 0)
+                    //        n_Forward.x = Mathf.Round(n_Forward.x);
+                    //    else
+                    //        n_Forward.x = Mathf.Floor(n_Forward.x);
 
-                        n_Forward.z = 0;
-                    }
-                    else
-                    {
-                        //Prioritize Z Dir over X dir
-                        if (n_Forward.z > 0)
-                            n_Forward.z = Mathf.Round(n_Forward.z);
-                        else
-                            n_Forward.z = Mathf.Floor(n_Forward.z);
+                    //    n_Forward.z = 0;
+                    //}
+                    //else
+                    //{
+                    //    //Prioritize Z Dir over X dir
+                    //    if (n_Forward.z > 0)
+                    //        n_Forward.z = Mathf.Round(n_Forward.z);
+                    //    else
+                    //        n_Forward.z = Mathf.Floor(n_Forward.z);
 
-                        n_Forward.x = 0;
-                    }
-                    gameObject.transform.forward = -n_Forward;
+                    //    n_Forward.x = 0;
+                    //}
+                    //gameObject.transform.forward = -n_Forward;
+                    gameObject.transform.localEulerAngles = new Vector3(0, 270, 0);
                     break;
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
-                    // Checks if the player should follow the camera forward or up
-                    if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
-                        || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
-                        n_Forward = Camera.main.transform.forward;
-                    else
-                        n_Forward = Camera.main.transform.up;
+                    //if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
+                    //    || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
+                    //    n_Forward = Camera.main.transform.forward;
+                    //else
+                    //    n_Forward = Camera.main.transform.up;
+                    //n_Forward.y = 0;
+                    //if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
+                    //{
+                    //    //Prioritize X Dir over Z dir
+                    //    if (n_Forward.x > 0)
+                    //        n_Forward.x = Mathf.Round(n_Forward.x);
+                    //    else
+                    //        n_Forward.x = Mathf.Floor(n_Forward.x);
 
-                    // Locks the Y at 0
-                    n_Forward.y = 0;
+                    //    n_Forward.z = 0;
+                    //}
+                    //else
+                    //{
+                    //    //Prioritize Z Dir over X dir
+                    //    if (n_Forward.z > 0)
+                    //        n_Forward.z = Mathf.Round(n_Forward.z);
+                    //    else
+                    //        n_Forward.z = Mathf.Floor(n_Forward.z);
 
-                    if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
-                    {
-                        //Prioritize X Dir over Z dir
-                        if (n_Forward.x > 0)
-                            n_Forward.x = Mathf.Round(n_Forward.x);
-                        else
-                            n_Forward.x = Mathf.Floor(n_Forward.x);
-
-                        n_Forward.z = 0;
-                    }
-                    else
-                    {
-                        //Prioritize Z Dir over X dir
-                        if (n_Forward.z > 0)
-                            n_Forward.z = Mathf.Round(n_Forward.z);
-                        else
-                            n_Forward.z = Mathf.Floor(n_Forward.z);
-
-                        n_Forward.x = 0;
-                    }
-                    gameObject.transform.forward = -n_Forward;
+                    //    n_Forward.x = 0;
+                    //}
+                    //gameObject.transform.forward = -n_Forward;
+                    gameObject.transform.localEulerAngles = new Vector3(0, 180, 0);
                     break;
                 }
             default:

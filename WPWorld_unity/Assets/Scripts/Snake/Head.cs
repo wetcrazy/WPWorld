@@ -191,25 +191,28 @@ public class Head : MonoBehaviourPun, IPunObservable
 
                     if (childScript.turningPos.Peek() == child.transform.position)
                     {
-                        childScript.turningPos.Dequeue();
 
                         if (childScript.turningDirection.Peek() == STATE_FACING.STATE_FORWARD)
                         {
-                            child.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
+                           // child.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
+                            child.transform.localEulerAngles = Vector3.zero;
                         }
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_BACKWARD)
                         {
-                            child.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
+                            //child.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
+                            child.transform.localEulerAngles = new Vector3(0, 180, 0);
                         }
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_RIGHT)
                         {
-                            child.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
+                           // child.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
+                            child.transform.localEulerAngles = new Vector3(0, 270, 0);
                         }
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_LEFT)
                         {
-                            child.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
+                            //child.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
+                            child.transform.localEulerAngles = new Vector3(0, 90, 0);
                         }
-
+                        childScript.turningPos.Dequeue();
                         childScript.turningDirection.Dequeue();
                     }
                 }

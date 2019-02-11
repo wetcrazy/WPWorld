@@ -66,21 +66,21 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // UPDATE
     private void Update()
     {
+        GameObject debug = GameObject.FindGameObjectWithTag("Debug");
+
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        if(List_CurrPlayerPlayingField.Count <= 0)
+        // debug.GetComponent<Text>().text = "DING";
+        if (List_CurrPlayerPlayingField.Count <= 0)
         {
+            debug.GetComponent<Text>().text = "MEOW MEOW";
             FindPlayers();
+            debug.GetComponent<Text>().text = "Dings MEOW";
 
-            GameObject debug = GameObject.FindGameObjectWithTag("Debug");
-            debug.GetComponent<Text>().text = "DING";
         }
         else
         {
-            ConstantBreakableSpawner();
-
-            GameObject debug = GameObject.FindGameObjectWithTag("Debug");
-            debug.GetComponent<Text>().text = "MEOW MEOW";
+            ConstantBreakableSpawner();         
         }
     }
 
@@ -232,10 +232,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         GameObject newBomb = Instantiate(BombPrefab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
-        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;   
-        newBomb.transform.Translate(BombPos, Space.Self);
-        newBomb.transform.localPosition = Vector3.zero;
-        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBomb.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newBomb.transform.localEulerAngles = Vector3.zero;
         newBomb.transform.localPosition = BombPos;
 
         //newBomb.transform.localPosition = Vector3.zero;
