@@ -141,7 +141,7 @@ public class Head : MonoBehaviourPun, IPunObservable
             timer = 5;
         }
 
-        //Inputs
+        //Inputs on keyboard
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Stun();
@@ -311,7 +311,15 @@ public class Head : MonoBehaviourPun, IPunObservable
         {
             AddBody();
         }
-    } 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Food")
+        {
+            AddBody();
+        }
+    }
 
     //score goes up
     public void AddAppleAte()
@@ -322,24 +330,13 @@ public class Head : MonoBehaviourPun, IPunObservable
         isstreak = true;
         streakcounter++;
 
-
         multiplier = (minmult+(streakcounter * addmult));
         gameController.UpdateMultiplierText(multiplier);
-
-
-
-
-
-
-
-
-
-
-
 
         I_score+= (float)applecost * multiplier;
         gameController.UpdateScoreText(I_score);
 
+        AddBody();
     }
 
     // Add body parts
@@ -395,6 +392,7 @@ public class Head : MonoBehaviourPun, IPunObservable
     //    //Output this to console when the Button3 is clicked
     //    Debug.Log("Button clicked = " + buttonNo);
     //}
+
     //used for mobile ui touches
     public void Inputup()
     {
@@ -469,13 +467,6 @@ public class Head : MonoBehaviourPun, IPunObservable
     {
 
     }
-
-
-
-
-
-
-
 
 
 
