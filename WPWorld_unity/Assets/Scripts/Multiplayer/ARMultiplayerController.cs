@@ -36,6 +36,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     Text DebugText;
     [SerializeField]
     Text DebugText2;
+    [SerializeField]
+    Text DebugText3;
 
     [Header("Move Anchor Screen Objects")]
     [SerializeField]
@@ -95,8 +97,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             case STATE_SCREEN.SCREEN_GAME:
                 {
                     GameScreenUpdate();
-                    DebugText.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
-                    //DebugText2.text = PhotonNetwork.PlayerList.Length.ToString();   
+                    DebugText2.text = Head.LocalPlayerInstance.transform.localPosition.ToString();
                     break;
                 }
             default:
@@ -284,9 +285,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 
         LevelSpawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
         LevelForwardAnchor = GameObject.FindGameObjectWithTag("LevelForwardAnchor");
-
-
-
+        
         if (!isSinglePlayer)
         {
             if (PhotonNetwork.IsMasterClient)
@@ -318,7 +317,6 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
         {
                 ReceiveSpawnPoint(LevelSpawnPoints[0].name);
                 SpawnPlayer();
-
         }
     }
 
@@ -345,6 +343,12 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     // Spawn Player button (for host)
     public void SpawnPlayerHost()
     {
+        if(isSinglePlayer)
+        {
+            SpawnPlayer();
+            return;
+        }
+
         photonView.RPC("SpawnPlayer", RpcTarget.All);
 
         SpawnPlayersButton.SetActive(false);
@@ -377,7 +381,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     [PunRPC]
     void SpawnPlayer()
     {
-        if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0")
+        if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0" || isSinglePlayer)
         {
             Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);
             return;

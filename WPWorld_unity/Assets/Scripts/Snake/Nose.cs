@@ -15,8 +15,7 @@ public class Nose : MonoBehaviour {
             Debug.Log("okay");
             deathcollided = true;
         }
-        else 
-        if(other.name == "Body(Clone)")
+        else if(other.name == "Body(Clone)")
         {
             deathcollided = true;
         }

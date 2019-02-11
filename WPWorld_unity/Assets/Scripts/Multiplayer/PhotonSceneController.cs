@@ -26,6 +26,8 @@ public class PhotonSceneController : MonoBehaviour {
     GameObject RoomScreen;
     [SerializeField]
     GameObject LoadingScreen;
+    [SerializeField]
+    GameObject RegionSelectScreen;
 
     [SerializeField]
     Text LoadingText;
@@ -57,6 +59,7 @@ public class PhotonSceneController : MonoBehaviour {
         LobbyScreen.SetActive(false);
         RoomScreen.SetActive(false);
         LoadingScreen.SetActive(false);
+        RegionSelectScreen.SetActive(false);
         RegionText.text = "";
     }
 
@@ -180,5 +183,22 @@ public class PhotonSceneController : MonoBehaviour {
         PlayerPrefs.DeleteKey("PlayerUsername");
         PlayerPrefs.DeleteKey("PlayerPassword");
         PhotonNetwork.NickName = "";
+    }
+
+    public void OpenRegionSelect()
+    {
+        RegionSelectScreen.SetActive(true);
+    }
+
+    public void SelectRegion(string RegionCode)
+    {
+        photonConnect.ConnectToRegion(RegionCode);
+        RegionSelectScreen.SetActive(false);
+        LobbyScreen.SetActive(false);
+    }
+
+    public void CloseRegionSlect()
+    {
+        RegionSelectScreen.SetActive(false);
     }
 }
