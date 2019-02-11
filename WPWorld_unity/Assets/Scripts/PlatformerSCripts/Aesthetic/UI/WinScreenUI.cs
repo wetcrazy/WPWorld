@@ -91,7 +91,8 @@ public class WinScreenUI : MonoBehaviour {
         }
         else
         {
-
+            // After Bounces
+            // Invisible buttons and text becomes visible afterwards
         }
 	}
 }

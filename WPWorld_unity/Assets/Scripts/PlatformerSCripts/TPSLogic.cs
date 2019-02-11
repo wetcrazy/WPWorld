@@ -4,6 +4,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
 {
@@ -92,6 +93,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
 
+    Text DebugText;
     // Use this for initialization
     void Start()
     {
@@ -114,14 +116,20 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             MovementRef.SetRestriction(MovementAvaliability.X_ONLY);
         }
-
+        DebugText = GameObject.Find("DebugText02").GetComponent<Text>();
         InitObjectLists();
     }
 
     void InitObjectLists()
     {
         //Coins List
+        
         var CoinsArray = FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[];
+
+        if(CoinsArray.Length <=0)
+        {
+            DebugText.text = "Coins null";
+        }
         foreach (var item in CoinsArray)
         {
             ListOfCoins.Add(item.ID, item);
@@ -672,8 +680,9 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
                     Destroy(ListOfPowerups[PowerupID].gameObject);
                     ListOfPowerups.Remove(PowerupID);
+
+                    break;
                 }
-                break;
             default:
                 break;
         }
