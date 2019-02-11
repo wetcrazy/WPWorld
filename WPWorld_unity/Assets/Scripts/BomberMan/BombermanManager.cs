@@ -70,7 +70,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
-        debug.GetComponent<Text>().text = "DING";
+        // debug.GetComponent<Text>().text = "DING";
         if (List_CurrPlayerPlayingField.Count <= 0)
         {
             debug.GetComponent<Text>().text = "MEOW MEOW";
