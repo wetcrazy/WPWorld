@@ -205,12 +205,12 @@ public class Head : MonoBehaviourPun, IPunObservable
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_RIGHT)
                         {
                            // child.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
-                            child.transform.localEulerAngles = new Vector3(0, 270, 0);
+                            child.transform.localEulerAngles = new Vector3(0, 90, 0);
                         }
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_LEFT)
                         {
                             //child.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
-                            child.transform.localEulerAngles = new Vector3(0, 90, 0);
+                            child.transform.localEulerAngles = new Vector3(0, 270, 0);
                         }
                         childScript.turningPos.Dequeue();
                         childScript.turningDirection.Dequeue();
