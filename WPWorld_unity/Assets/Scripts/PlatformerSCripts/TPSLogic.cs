@@ -117,6 +117,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
             MovementRef.SetRestriction(MovementAvaliability.X_ONLY);
         }
         DebugText = GameObject.Find("DebugText02").GetComponent<Text>();
+        DebugText.text = "";
         InitObjectLists();
     }
 
@@ -126,15 +127,15 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
         
         var CoinsArray = FindObjectsOfType(typeof(CollectOnCollide)) as CollectOnCollide[];
 
-        if(CoinsArray.Length <=0)
-        {
-            DebugText.text = "Coins null";
-        }
+        
         foreach (var item in CoinsArray)
         {
             ListOfCoins.Add(item.ID, item);
         }
-
+        if (ListOfCoins.Count <= 0)
+        {
+            DebugText.text = "Null";
+        }
         //Breakable Blocks List
         var BreakablesArray = FindObjectsOfType(typeof(DestroyOnHit)) as DestroyOnHit[];
         foreach (var item in BreakablesArray)
