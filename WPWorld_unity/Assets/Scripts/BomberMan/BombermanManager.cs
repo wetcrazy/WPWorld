@@ -47,6 +47,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // If game needs reset
     private bool is_Reset;
 
+    public enum BREAKABLE_TYPE
+    {
+        BREAKABLE_ONE,
+        BREAKABLE_TWO,
+    };
+
     // START
     private void Start()
     {
@@ -223,6 +229,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         //Debug01.text = "Spawning Power";
         var newPower = Instantiate(List_PowerUpBlocks[randNum], PowerPos, NewRotation, ARMultiplayerController._GroundObject.transform);
+
+        newPower.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
+        newPower.transform.Translate(PowerPos, Space.Self);
+        newPower.transform.localPosition = Vector3.zero;
+        newPower.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newPower.transform.localPosition = PowerPos;
         //Debug01.text = "Spawned Power";
     }
 
@@ -242,8 +254,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
-    // Player Send Breakable Spawner
-    public void SendBreakableSpawn()
+    // Spawn Breakable 
+    public void SpawnBreakable(Vector3 BreakablePos, BREAKABLE_TYPE typeValue)
     {
 
     }
@@ -281,6 +293,17 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
                     var RandNum = (int)data[1];
 
                     SpawnPowerUp(SpawnPos, RandNum);
+
+                    break;
+                }
+            case EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_BREAKABLE:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+
+                    var SpawnPos = (Vector3)data[0];
+                    var type = (BREAKABLE_TYPE)data[1];
+
+                    SpawnBreakable(SpawnPos, type);
 
                     break;
                 }
