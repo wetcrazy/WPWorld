@@ -135,12 +135,16 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
         {
             case Joystick.JoystickDirection.DIR_FORWARD:
                 {
+                    // Checks if the player should follow the camera forward or up
                     if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
                         || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
                         n_Forward = Camera.main.transform.forward;
                     else
                         n_Forward = Camera.main.transform.up;
+
+                    // Locks the Y at 0
                     n_Forward.y = 0;
+
                     if(Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
                     {
                         //Prioritize X Dir over Z dir
@@ -220,12 +224,16 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
                 }
             case Joystick.JoystickDirection.DIR_BACK:
                 {
+                    // Checks if the player should follow the camera forward or up
                     if ((-45 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 45)
                         || (135 < Camera.main.transform.eulerAngles.x && Camera.main.transform.eulerAngles.x < 225))
                         n_Forward = Camera.main.transform.forward;
                     else
                         n_Forward = Camera.main.transform.up;
+
+                    // Locks the Y at 0
                     n_Forward.y = 0;
+
                     if (Mathf.Abs(n_Forward.x) > Mathf.Abs(n_Forward.z))
                     {
                         //Prioritize X Dir over Z dir
