@@ -390,8 +390,13 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
         isPlayerSpawned = true;
 
         if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0" || isSinglePlayer)
+<<<<<<< HEAD
         {       
             Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);    
+=======
+        {
+            Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity);
+>>>>>>> a4cdb6605cb49f80d804a04a2768200d5fdeeeb2
             return;
         }
 
