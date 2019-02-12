@@ -208,12 +208,8 @@ public class PhotonRoomController : MonoBehaviour
             CurrentGamemode = 0;
         }
 
-        foreach (Player player in PhotonNetwork.PlayerListOthers)
-        {
-            photonView.RPC("UpdateCurrentGameMode", player, CurrentGamemode);
-        }
-        
-        UpdateCurrentGameMode(CurrentGamemode);
+
+        photonView.RPC("UpdateCurrentGameMode", RpcTarget.All, CurrentGamemode);
     }
 
     //Send the chat message that was typed in input field
@@ -254,6 +250,7 @@ public class PhotonRoomController : MonoBehaviour
     private void BecomeHost()
     {
         photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " is now the host");
+        photonView.RPC("UpdateCurrentGameMode", RpcTarget.All, CurrentGamemode);
         HostControls.SetActive(true);
     }
     
