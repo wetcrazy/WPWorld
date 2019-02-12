@@ -250,7 +250,6 @@ public class PhotonRoomController : MonoBehaviour
     private void BecomeHost()
     {
         photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " is now the host");
-        photonView.RPC("UpdateCurrentGameMode", RpcTarget.All, CurrentGamemode);
         HostControls.SetActive(true);
     }
     
