@@ -66,11 +66,15 @@ public class GameController : MonoBehaviour
 
         Foodcount = arr_food.Length;
         FoodSpawner();
+        if(PlayerHeadComponent.spawn_block)
+        {
 
         var arr_Block = GameObject.FindGameObjectsWithTag("Block");
 
-        //Blockcount = arr_Block.Length;
-        //BlockSpawner();
+        Blockcount = arr_Block.Length;
+        BlockSpawner();
+            PlayerHeadComponent.spawn_block = false;
+        }
     }
 
     public void FoodSpawner()
