@@ -38,12 +38,6 @@ public class HealthPopup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerRef == null)
-        {
-            PlayerRef = PlayerMovement.LocalPlayerInstance;
-            return;
-        }
-
         // Spawning
         if (transform.GetChild(0).childCount != Mathf.Abs(PlayerRef.GetComponent<TPSLogic>().DeathCounterPub))
         {
@@ -74,6 +68,12 @@ public class HealthPopup : MonoBehaviour
                 Color HeartColor = new Vector4(1, 1, 1, ColorRef.a);
                 transform.GetChild(i).GetChild(j).GetComponent<Image>().color = HeartColor;
             }
+        }
+
+        if (PlayerRef == null)
+        {
+            PlayerRef = PlayerMovement.LocalPlayerInstance;
+            return;
         }
 
         // Behaviour
