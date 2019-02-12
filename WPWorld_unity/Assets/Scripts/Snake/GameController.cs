@@ -66,13 +66,12 @@ public class GameController : MonoBehaviour
 
         Foodcount = arr_food.Length;
         FoodSpawner();
-        if(PlayerHeadComponent.spawn_block)
+        if (PlayerHeadComponent.spawn_block)
         {
+            var arr_Block = GameObject.FindGameObjectsWithTag("Block");
 
-        var arr_Block = GameObject.FindGameObjectsWithTag("Block");
-
-        Blockcount = arr_Block.Length;
-        BlockSpawner();
+            Blockcount = arr_Block.Length;
+            BlockSpawner();
             PlayerHeadComponent.spawn_block = false;
         }
     }
@@ -83,31 +82,32 @@ public class GameController : MonoBehaviour
         int RNG;
         Vector3 newPosition;
 
-       
-            if (Foodcount < MAX_Food)
-            {
-                //do
-                //{
-                //    notcolliding = false;
-                RNG = Random.Range(0, arr_Blocks.Count);
-                newPosition = arr_Blocks[RNG].transform.position;
 
-                newPosition.y += arr_Blocks[RNG].transform.lossyScale.y;
-                //for(int i =0;i<arr_BODY.Count;i++)
-                //{
-                //    if (
-                //    (newPosition.x >= arr_BODY[i].transform.lossyScale.x - 1) &&
-                //    (newPosition.x <= arr_BODY[i].transform.lossyScale.x + 1) &&
-                //    (newPosition.z >= arr_BODY[i].transform.lossyScale.z - 1) &&
-                //    (newPosition.z <= arr_BODY[i].transform.lossyScale.z + 1))
-                //    {
-                //        notcolliding = true;
-                //    }
-                //}
-                //}
-                //while (notcolliding);
-                var newFood = Instantiate(foodprefab, newPosition, Quaternion.identity, transform.parent);
-            }
+        if (Foodcount < MAX_Food)
+        {
+            //do
+            //{
+            //    notcolliding = false;
+            RNG = Random.Range(0, arr_Blocks.Count);
+            newPosition = arr_Blocks[RNG].transform.localPosition;
+
+            newPosition.y += 1;
+            //for(int i =0;i<arr_BODY.Count;i++)
+            //{
+            //    if (
+            //    (newPosition.x >= arr_BODY[i].transform.lossyScale.x - 1) &&
+            //    (newPosition.x <= arr_BODY[i].transform.lossyScale.x + 1) &&
+            //    (newPosition.z >= arr_BODY[i].transform.lossyScale.z - 1) &&
+            //    (newPosition.z <= arr_BODY[i].transform.lossyScale.z + 1))
+            //    {
+            //        notcolliding = true;
+            //    }
+            //}
+            //}
+            //while (notcolliding);
+            var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
+            newFood.transform.localPosition = newPosition;
+        }
 
     }
 
@@ -120,11 +120,12 @@ public class GameController : MonoBehaviour
         if (Blockcount < MAX_Blocks)
         {
                 RNG = Random.Range(0, arr_Blocks.Count);
-                newPosition = arr_Blocks[RNG].transform.position;
+                newPosition = arr_Blocks[RNG].transform.localPosition;
 
-                newPosition.y += arr_Blocks[RNG].transform.lossyScale.y *3;
+                newPosition.y += 1;
             
-            var newBlock = Instantiate(blockprefab, newPosition, Quaternion.identity, transform.parent);
+            var newBlock = Instantiate(blockprefab, Vector3.zero, Quaternion.identity, transform.parent);
+            newBlock.transform.position = newPosition;
         }
     }
 

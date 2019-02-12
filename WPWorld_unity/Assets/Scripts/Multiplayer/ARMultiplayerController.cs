@@ -67,6 +67,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     bool isSpawned = false;
     public bool isWon;
     int NumOfPlayersReady = 0;
+    int NumOfPlayersSpawnedLevel = 0;
 
     Vector3 FirstTouchWorldPoint = new Vector3();
     List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
@@ -296,27 +297,12 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0")
-                {
-                    for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
-                    {
-                        photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[0].name);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
-                    {
-                        photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
-                    }
-                }
-
-                AddNumberOfPlayerReady();
+                AddNumberOfPlayersSpawnedLevel();
             }
             else
             {
                 //Tell the host that you have spawned the level
-                photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
+                photonView.RPC("AddNumberOfPlayersSpawnedLevel", RpcTarget.MasterClient);
             }
         }
         else
@@ -363,6 +349,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     [PunRPC]
     void ReceiveSpawnPoint(string SpawnPosName)
     {
+        //Receive spawnpoint name from host and find in the scene
         foreach (GameObject spawnpoint in LevelSpawnPoints)
         {
             if (spawnpoint.name == SpawnPosName)
@@ -371,16 +358,58 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
                 break;
             }
         }
+
+        if(isSinglePlayer)
+        {
+            return;
+        }
+
+        //Once found, tell the host that you are ready to spawn the player
+        if (PhotonNetwork.IsMasterClient)
+        {
+            AddNumberOfPlayerReady();
+        }
+        else
+        {
+            //Tell the host that you have spawned the level
+            photonView.RPC("AddNumberOfPlayerReady", RpcTarget.MasterClient);
+        }
     }
 
     [PunRPC]
     void AddNumberOfPlayerReady()
     {
         ++NumOfPlayersReady;
-        DebugText.text = "Ready Platers :" + NumOfPlayersReady.ToString();
+
+        //HOST: If all player are ready to spawn their player, set the spawn players button as active
         if (NumOfPlayersReady == PhotonNetwork.PlayerList.Length)
         {
             SpawnPlayersButton.SetActive(true);
+        }
+    }
+
+    [PunRPC]
+    void AddNumberOfPlayersSpawnedLevel()
+    {
+        ++NumOfPlayersSpawnedLevel;
+
+        //HOST: Once everyone has spawned their level, send everyone their spawnpoints
+        if (NumOfPlayersSpawnedLevel == PhotonNetwork.PlayerList.Length)
+        {
+            if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0")
+            {
+                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                {
+                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[0].name);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+                {
+                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
+                }
+            }
         }
     }
 
