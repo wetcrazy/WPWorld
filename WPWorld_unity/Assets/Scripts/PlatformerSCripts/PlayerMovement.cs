@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public enum MovementAvaliability // For use with scripted events like disabling player movement and forcing the character to move
 {
     NONE, // ALL RESTRICTIONS, ABOSLUTELY NO MOVEMENT
@@ -36,6 +38,9 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
     // Player Local Instance
     public static GameObject LocalPlayerInstance;
 
+    // Debugger
+    private Text debug;
+
     private void Awake()
     {
         //Set the level as the parent
@@ -55,7 +60,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
     // Use this for initialization
     void Start () {
-
+        debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
         //Setting the username text that is above the player objects
         gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
 
@@ -275,6 +280,8 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
         // Actually moves the player according to the Movement Direction, Movement speed is attached here to prevent multiple movement speed from being multiplied in Update
         RigidRef.MovePosition(RigidRef.position + MovementDir * MovementSpeed * MovementMultiplier * Time.fixedDeltaTime);
+
+        debug.text = "Constrain " + RigidRef.constraints.ToString() +  "avalability " + CurrAvaliability.ToString();
     }
 
     private void OnTriggerEnter(Collider other)

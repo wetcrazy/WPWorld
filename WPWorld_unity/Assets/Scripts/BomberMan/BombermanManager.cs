@@ -58,13 +58,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     private void Start()
     {
         debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
-        is_GameOver = false;
-        debug.text = PlayerMovement.LocalPlayerInstance.GetComponent<Rigidbody>().ToString();
+        is_GameOver = false;       
     }
 
     // UPDATE
     private void Update()
-    { 
+    {
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
         if (CurrPlayerPlayingField == null)
