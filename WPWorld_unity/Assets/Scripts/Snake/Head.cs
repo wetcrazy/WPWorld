@@ -471,7 +471,11 @@ public class Head : MonoBehaviourPun, IPunObservable
 
     }
 
-
+    //Getter
+    public float GetPlayerScore()
+    {
+        return I_score;
+    }
 
     //area need testing--------------------------------------------------------
     public void popmypos()
