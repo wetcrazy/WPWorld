@@ -23,6 +23,14 @@ public class Nose : MonoBehaviour {
         {
             gameObject.GetComponentInParent<Head>().AddAppleAte();
         }
+        else if (other.CompareTag("Speedy"))
+        {
+            gameObject.GetComponentInParent<Head>().Stun();
+        }
+        else if (other.CompareTag("Food_Block"))
+        {
+            gameObject.GetComponentInParent<Head>().Block_Pop_up();
+        }
 
     }
 }

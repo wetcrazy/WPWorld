@@ -7,9 +7,10 @@ using UnityEngine.UI;
 
 public class Head : MonoBehaviourPun, IPunObservable
 {
-   
+
     //public Text dispos;
    
+
     //Facing(for rotation of "Head" object of the snake)
     public enum STATE_FACING
     {
@@ -70,7 +71,7 @@ public class Head : MonoBehaviourPun, IPunObservable
     float specialx;
     float specialy;
     float specialz;
-    
+    public bool spawn_block;
    // float blinking = 2.5f;
     //-------------------------------------------------------------
     //start***************************************************************************************************
@@ -105,6 +106,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         Lives = 5;
         HighScore = 0;
         starting_speed = 0.01f;
+        spawn_block = false;
         //popmypos();
 
         //Init the text
@@ -142,18 +144,18 @@ public class Head : MonoBehaviourPun, IPunObservable
         }
 
         //Inputs on keyboard
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Stun();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Speed_up();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Speed_down();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    Stun();
+        //}
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    Speed_up();
+        //}
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    Speed_down();
+        //}
 
         
 
@@ -194,22 +196,18 @@ public class Head : MonoBehaviourPun, IPunObservable
 
                         if (childScript.turningDirection.Peek() == STATE_FACING.STATE_FORWARD)
                         {
-                           // child.transform.forward = Quaternion.AngleAxis(0, gameObject.transform.up) * mainDirection;
                             child.transform.localEulerAngles = Vector3.zero;
                         }
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_BACKWARD)
                         {
-                            //child.transform.forward = Quaternion.AngleAxis(180, gameObject.transform.up) * mainDirection;
                             child.transform.localEulerAngles = new Vector3(0, 180, 0);
                         }
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_RIGHT)
                         {
-                           // child.transform.forward = Quaternion.AngleAxis(90, gameObject.transform.up) * mainDirection;
                             child.transform.localEulerAngles = new Vector3(0, 90, 0);
                         }
                         else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_LEFT)
                         {
-                            //child.transform.forward = Quaternion.AngleAxis(270, gameObject.transform.up) * mainDirection;
                             child.transform.localEulerAngles = new Vector3(0, 270, 0);
                         }
                         childScript.turningPos.Dequeue();
@@ -314,6 +312,10 @@ public class Head : MonoBehaviourPun, IPunObservable
         {
             AddBody();
         }
+        else if(other.gameObject.CompareTag("Food_Block"))
+        {
+            Block_Pop_up();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -321,6 +323,10 @@ public class Head : MonoBehaviourPun, IPunObservable
         if(collision.gameObject.tag == "Food")
         {
             AddBody();
+        }
+        else if (collision.gameObject.CompareTag("Food_Block"))
+        {
+            Block_Pop_up();
         }
     }
 
@@ -442,7 +448,7 @@ public class Head : MonoBehaviourPun, IPunObservable
     
     //EVENTS=======================================================================================================
     //SNAKE_EVENT_STUN,
-    void Stun()
+    public void Stun()
     { 
         Debug.Log("Stunned");
         m_Speed = 0;
@@ -466,9 +472,9 @@ public class Head : MonoBehaviourPun, IPunObservable
         Setspeed(0);
     }
     //SNAKE_EVENT_BLOCKS_POP_UP,
-   void Block_Pop_up()
+    public void Block_Pop_up()
     {
-        
+        spawn_block = true;
         //var block = Instantiate(bodyPartObj, newPosition, this.gameObject.transform.rotation, transform.parent);
     }
 

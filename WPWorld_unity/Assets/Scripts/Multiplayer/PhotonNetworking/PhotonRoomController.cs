@@ -208,12 +208,8 @@ public class PhotonRoomController : MonoBehaviour
             CurrentGamemode = 0;
         }
 
-        foreach (Player player in PhotonNetwork.PlayerListOthers)
-        {
-            photonView.RPC("UpdateCurrentGameMode", player, CurrentGamemode);
-        }
-        
-        UpdateCurrentGameMode(CurrentGamemode);
+
+        photonView.RPC("UpdateCurrentGameMode", RpcTarget.All, CurrentGamemode);
     }
 
     //Send the chat message that was typed in input field
@@ -254,6 +250,7 @@ public class PhotonRoomController : MonoBehaviour
     private void BecomeHost()
     {
         photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " is now the host");
+        photonView.RPC("UpdateCurrentGameMode", RpcTarget.All, CurrentGamemode);
         HostControls.SetActive(true);
     }
     
@@ -263,17 +260,29 @@ public class PhotonRoomController : MonoBehaviour
         switch (CurrentGamemode)
         {
             case GAMEMODE.GAMEMODE_SNAKE:
-                CurrentGameModeImage.sprite = SnakeSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = SnakeSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             case GAMEMODE.GAMEMODE_TRON:
-                CurrentGameModeImage.sprite = TronSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = TronSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             case GAMEMODE.GAMEMODE_PLATFORMER:
-                CurrentGameModeImage.sprite = PlatformerSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = PlatformerSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             case GAMEMODE.GAMEMODE_BOMBERMAN:
-                CurrentGameModeImage.sprite = BombermanSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = BombermanSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             default:
                 break;
         }
