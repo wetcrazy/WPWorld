@@ -56,6 +56,8 @@ public class GameController : MonoBehaviour
                 arr_BODY.Add(child.gameObject);
             }
         }
+
+        PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
     }
 
     private void Update()
@@ -146,41 +148,21 @@ public class GameController : MonoBehaviour
     //Player Movement
     public void Movement_Up()
     {
-        if(PlayerHeadComponent == null)
-        {
-            PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
-        }
-
         PlayerHeadComponent.Inputup();
     }
 
     public void Movement_Down()
     {
-        if (PlayerHeadComponent == null)
-        {
-            PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
-        }
-
         PlayerHeadComponent.Inputdown();
     }
 
     public void Movement_Left()
     {
-        if (PlayerHeadComponent == null)
-        {
-            PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
-        }
-
         PlayerHeadComponent.Inputleft();
     }
 
     public void Movement_Right()
     {
-        if (PlayerHeadComponent == null)
-        {
-            PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
-        }
-
         PlayerHeadComponent.Inputright();
     }
 }
