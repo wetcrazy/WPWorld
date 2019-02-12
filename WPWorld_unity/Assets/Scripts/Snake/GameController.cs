@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private int MAX_Food = 1;
     [SerializeField]
-    private int MAX_Blocks = 4;
+    private int MAX_Blocks = 6;
 
     private int Blockcount = 0;
     private int Foodcount = 0;
