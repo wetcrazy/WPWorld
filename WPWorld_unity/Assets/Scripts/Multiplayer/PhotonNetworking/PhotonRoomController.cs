@@ -260,17 +260,29 @@ public class PhotonRoomController : MonoBehaviour
         switch (CurrentGamemode)
         {
             case GAMEMODE.GAMEMODE_SNAKE:
-                CurrentGameModeImage.sprite = SnakeSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = SnakeSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             case GAMEMODE.GAMEMODE_TRON:
-                CurrentGameModeImage.sprite = TronSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = TronSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             case GAMEMODE.GAMEMODE_PLATFORMER:
-                CurrentGameModeImage.sprite = PlatformerSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = PlatformerSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             case GAMEMODE.GAMEMODE_BOMBERMAN:
-                CurrentGameModeImage.sprite = BombermanSprite;
-                break;
+                {
+                    CurrentGameModeImage.sprite = BombermanSprite;
+                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
+                    break;
+                }
             default:
                 break;
         }
