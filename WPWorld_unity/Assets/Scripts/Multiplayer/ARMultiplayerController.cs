@@ -23,8 +23,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 
     [SerializeField]
     bool SinglePlayer = false;
-
     public static bool isSinglePlayer;
+    public static bool isPlayerSpawned = false;
 
     //----GAME OBJECTS----//
     [Header("Game Objects")]
@@ -60,17 +60,18 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     public static Vector3 SpawnPoint;
     public static GameObject LevelForwardAnchor;
 
+    PhotonView photonView;
     GameObject[] LevelSpawnPoints;
-    Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
     Anchor _anchor;
-
+    
     bool isSpawned = false;
     public bool isWon;
     int NumOfPlayersReady = 0;
+
     Vector3 FirstTouchWorldPoint = new Vector3();
     List<DetectedPlane> List_AllPlanes = new List<DetectedPlane>();
-    
-    PhotonView photonView;
+    Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
+   
 
     private void Start()
     {
@@ -386,9 +387,11 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     [PunRPC]
     void SpawnPlayer()
     {
+        isPlayerSpawned = true;
+
         if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0" || isSinglePlayer)
         {
-            Instantiate(PlayerObjectPrefab, _GroundObject.transform.position, Quaternion.identity);
+            Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity);
             return;
         }
 

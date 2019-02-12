@@ -468,10 +468,15 @@ public class Head : MonoBehaviourPun, IPunObservable
     //SNAKE_EVENT_BLOCKS_POP_UP,
    void Block_Pop_up()
     {
-
+        
+        //var block = Instantiate(bodyPartObj, newPosition, this.gameObject.transform.rotation, transform.parent);
     }
 
-
+    //Getter
+    public float GetPlayerScore()
+    {
+        return I_score;
+    }
 
     //area need testing--------------------------------------------------------
     public void popmypos()

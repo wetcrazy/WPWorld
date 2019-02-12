@@ -16,8 +16,12 @@ public class Bomb : MonoBehaviour
     private float MAX_TIMER = 3.0f;
     private Collider col;
 
+    // Debugging
+    private Text debug;
+
     private void Start()
-    {    
+    {
+        debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
         col = this.transform.GetComponent<Collider>();
         col.isTrigger = true;
         currTimer = 0.0f;
@@ -55,6 +59,7 @@ public class Bomb : MonoBehaviour
                 else if(hit.transform.gameObject.tag == "BombermanBreakable")
                 {              
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                    debug.text = "Hit Right ";
                 }
             }
             else
@@ -74,6 +79,7 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                    debug.text = "Hit Left ";
                 }
             }
             else
@@ -93,6 +99,7 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                    debug.text = "Hit Infront ";
                 }
             }
             else
@@ -112,6 +119,7 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+                    debug.text = "Hit behind ";
                 }
             }
             else

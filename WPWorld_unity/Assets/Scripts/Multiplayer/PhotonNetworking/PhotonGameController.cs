@@ -14,11 +14,6 @@ public class PhotonGameController : MonoBehaviour {
     [SerializeField]
     GameObject LeaderboardEntryUI;
 
-    [Header("Debug Stuff")]
-    [SerializeField]
-    Text PlayerPoints;
-    
-
     private void Awake()
     {
         GameSparks.Api.Messages.NewHighScoreMessage.Listener += HighScoreMessageHandler;
@@ -51,7 +46,7 @@ public class PhotonGameController : MonoBehaviour {
                 }
             case "SNAKE2.0":
                 {
-                    //ScoreToSubmit = 
+                    ScoreToSubmit = (int)Head.LocalPlayerInstance.GetComponent<Head>().GetPlayerScore();
                     EventShortCode = "SUBMIT_SCORE_SNAKE";
                     break;
                 }
@@ -83,7 +78,6 @@ public class PhotonGameController : MonoBehaviour {
         }
 
         PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore += Amount;
-        PlayerPoints.text = PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore.ToString();
     }
 
     public void GetLeaderboard()

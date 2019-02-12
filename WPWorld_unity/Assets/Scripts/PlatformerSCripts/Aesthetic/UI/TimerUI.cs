@@ -12,19 +12,25 @@ public class TimerUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		TextRef = GetComponent<Text>();
-	}
+        TextRef.text = ": " + StartingTime.ToString("F0");
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if(StartingTime > 0)
-        {
-            StartingTime -= Time.deltaTime;
-        }
-        else
-        {
-            StartingTime = 0;
-        }
 
-        TextRef.text = ": " + StartingTime.ToString("F0");
+        if (ARMultiplayerController.isPlayerSpawned)
+        {
+            if (StartingTime > 0)
+            {
+                StartingTime -= Time.deltaTime;
+            }
+            else
+            {
+                StartingTime = 0;
+            }
+
+            TextRef.text = ": " + StartingTime.ToString("F0");
+        }
+        
 	}
 }

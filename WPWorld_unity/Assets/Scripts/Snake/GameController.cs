@@ -17,13 +17,18 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private GameObject foodprefab = null;
+    [SerializeField]
+    private GameObject blockprefab = null;
 
     public GameObject Level;
     //public GameObject Body;
 
     [SerializeField]
     private int MAX_Food = 1;
+    [SerializeField]
+    private int MAX_Blocks = 4;
 
+    private int Blockcount = 0;
     private int Foodcount = 0;
     private List<GameObject> arr_Blocks = new List<GameObject>();
     private List<GameObject> arr_BODY = new List<GameObject>();
@@ -61,19 +66,25 @@ public class GameController : MonoBehaviour
 
         Foodcount = arr_food.Length;
         FoodSpawner();
+
+        var arr_Block = GameObject.FindGameObjectsWithTag("Block");
+
+        //Blockcount = arr_Block.Length;
+        //BlockSpawner();
     }
 
     public void FoodSpawner()
     {
-        bool notcolliding;
+        //bool notcolliding;
         int RNG;
         Vector3 newPosition;
 
-        if (Foodcount < MAX_Food)
-        {
-            do
+       
+            if (Foodcount < MAX_Food)
             {
-                notcolliding = false;
+                //do
+                //{
+                //    notcolliding = false;
                 RNG = Random.Range(0, arr_Blocks.Count);
                 newPosition = arr_Blocks[RNG].transform.position;
 
@@ -89,9 +100,27 @@ public class GameController : MonoBehaviour
                 //        notcolliding = true;
                 //    }
                 //}
+                //}
+                //while (notcolliding);
+                var newFood = Instantiate(foodprefab, newPosition, Quaternion.identity, transform.parent);
             }
-            while (notcolliding);
-            var newFood = Instantiate(foodprefab, newPosition, Quaternion.identity, transform.parent);
+
+    }
+
+    public void BlockSpawner()
+    {
+       // bool notcolliding;
+        int RNG;
+        Vector3 newPosition;
+
+        if (Blockcount < MAX_Blocks)
+        {
+                RNG = Random.Range(0, arr_Blocks.Count);
+                newPosition = arr_Blocks[RNG].transform.position;
+
+                newPosition.y += arr_Blocks[RNG].transform.lossyScale.y *3;
+            
+            var newBlock = Instantiate(blockprefab, newPosition, Quaternion.identity, transform.parent);
         }
     }
 
