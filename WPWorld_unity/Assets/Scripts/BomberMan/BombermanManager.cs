@@ -43,9 +43,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     // All object rotation
     private Quaternion NewRotation;
-    // If game needs reset
-    private bool is_Reset;
-    GameObject debug;
+
+    // Debugger
+    // private GameObject debug;
+
+    // Gameover things
+    private bool is_GameOver;
 
     public enum BREAKABLE_TYPE
     {
@@ -59,8 +62,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // START
     private void Start()
     {
-        debug = GameObject.FindGameObjectWithTag("Debug");
-        is_Reset = true;
+        // debug = GameObject.FindGameObjectWithTag("Debug");
+        is_GameOver = false;
     }
 
     // UPDATE
@@ -73,8 +76,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             FindMyPlayer();        
         }
         else
-        {          
-            ConstantBreakableSpawner();
+        {
+            // BreakableSpawn();
         }
     }
 
@@ -99,19 +102,23 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     // Breakable Spawner
     // Constant Spawner
-    public void ConstantBreakableSpawner()
+    public void BreakableSpawn()
     {
-
-        var Arr_Floor = CurrPlayerPlayingField.FloorParent.GetComponentInChildren<Transform>();
-
-        foreach (Transform floor in Arr_Floor)
+        // For Curr field 
+        if(CurrPlayerPlayingField.List_Floors.Count <=0)
         {
-            if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
+            var Arr_Floor = CurrPlayerPlayingField.FloorParent.GetComponentInChildren<Transform>();
+
+            foreach (Transform floor in Arr_Floor)
             {
-                continue;
+                if (floor.transform.gameObject.tag != "BombermanFloor") // Check is it pointing to the correct floor
+                {
+                    continue;
+                }
+
+                CurrPlayerPlayingField.List_Floors.Add(floor.gameObject);
             }
 
-            CurrPlayerPlayingField.List_Floors.Add(floor.gameObject);
         }
 
         var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
@@ -145,7 +152,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
         else
         {
-            SpawnBreakable(newPos, newtype, 0);
+            SpawnBreakable(newPos, newtype);
         }
 
     }
@@ -166,7 +173,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             if (hit.transform.parent.parent.tag == "BombermanPlayingField")
             {
                 CurrPlayerPlayingField = hit.transform.parent.parent.gameObject.GetComponent<BombermanPlayingField>();
-                debug.GetComponent<Text>().text = "I am here >> " + CurrPlayerPlayingField.name.ToString();
+                // debug.GetComponent<Text>().text = "I am here >> " + CurrPlayerPlayingField.name.ToString();
             }
         }
     }
@@ -200,10 +207,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         newBomb.transform.localEulerAngles = Vector3.zero;
         newBomb.transform.localPosition = BombPos;
 
-        //newBomb.transform.localPosition = Vector3.zero;
-        //newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
-        //newBomb.transform.localPosition = BombPos;
-       
+        newBomb.transform.localPosition = Vector3.zero;
+        newBomb.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBomb.transform.localPosition = BombPos;
 
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
@@ -260,7 +266,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
     }
 
-    // Spawn Breakable (multiplayer)
+    // Spawn Breakable (Single and multiplayer)
     public void SpawnBreakable(Vector3 BreakablePos, BREAKABLE_TYPE typeValue)
     {
         GameObject newPreab;
@@ -280,27 +286,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         newBreakable.transform.localPosition = Vector3.zero;
         newBreakable.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
         newBreakable.transform.localPosition = BreakablePos;
-    }
-    // Spawn Breakable (Singleplayer)
-    public void SpawnBreakable(Vector3 BreakablePos, BREAKABLE_TYPE typeValue, int nothing)
-    {
-        GameObject newPreab;
-        if (typeValue == BREAKABLE_TYPE.BREAKABLE_ONE)
-        {
-            newPreab = List_BreakablesBlocks[0].gameObject;
-        }
-        else
-        {
-            newPreab = List_BreakablesBlocks[1].gameObject;
-        }
 
-        GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
-
-        newBreakable.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
-        newBreakable.transform.Translate(BreakablePos, Space.Self);
-        newBreakable.transform.localPosition = Vector3.zero;
-        newBreakable.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
-        newBreakable.transform.localPosition = BreakablePos;
+        CurrPlayerPlayingField.GetComponent<BombermanPlayingField>().List_Breakables.Add(newBreakable);
     }
 
 
@@ -339,7 +326,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
                     break;
                 }
-            case EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_BREAKABLE:
+            case EventCodes.EVENT_CODES.BOMBER_EVENT_SPAWN_BREAKABLE: // Breakables
                 {
                     object[] data = (object[])photonEvent.CustomData;
 
