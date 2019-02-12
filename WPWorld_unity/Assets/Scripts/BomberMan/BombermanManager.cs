@@ -36,16 +36,11 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     public Text PlayerTotalBombCount;
     public Text PlayerTotalFirePower;
 
-    [Header("Debugging Text")]
-    // For Debugging
-    public Text Debug01;
-    public Text Debug02;
-
     // All object rotation
     private Quaternion NewRotation;
 
     // Debugger
-    // private GameObject debug;
+    private Text debug;
 
     // Gameover things
     private bool is_GameOver;
@@ -62,8 +57,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // START
     private void Start()
     {
-        // debug = GameObject.FindGameObjectWithTag("Debug");
+        debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
         is_GameOver = false;
+        debug.text = PlayerMovement.LocalPlayerInstance.GetComponent<Rigidbody>().ToString();
     }
 
     // UPDATE
@@ -213,9 +209,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwnerPUN(PhotonNetwork.CurrentRoom.GetPlayer(OwnerActorID));
-
-        Debug01.text = newBomb.transform.forward.ToString();
-        Debug02.text = ARMultiplayerController._GroundObject.transform.forward.ToString();
     }
 
     // Spawn Bomb (Singleplayer)
@@ -231,9 +224,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         // Set properties
         newBomb.GetComponent<Bomb>().SetBombPower(firepower);
         newBomb.GetComponent<Bomb>().SetBombOwner(player);
-
-        Debug01.text = newBomb.transform.forward.ToString();
-        Debug02.text = ARMultiplayerController._GroundObject.transform.forward.ToString();
     }
 
     // Spawn Power Up 

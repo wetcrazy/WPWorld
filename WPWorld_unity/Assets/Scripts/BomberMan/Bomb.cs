@@ -17,11 +17,11 @@ public class Bomb : MonoBehaviour
     private Collider col;
 
     // Debugging
-    private GameObject debug;
+    private Text debug;
 
     private void Start()
     {
-        debug = GameObject.FindGameObjectWithTag("Debug");
+        debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
         col = this.transform.GetComponent<Collider>();
         col.isTrigger = true;
         currTimer = 0.0f;
@@ -59,7 +59,7 @@ public class Bomb : MonoBehaviour
                 else if(hit.transform.gameObject.tag == "BombermanBreakable")
                 {              
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.GetComponent<Text>().text = "Hit Right ";
+                    debug.text = "Hit Right ";
                 }
             }
             else
@@ -79,7 +79,7 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.GetComponent<Text>().text = "Hit Left ";
+                    debug.text = "Hit Left ";
                 }
             }
             else
@@ -99,7 +99,7 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.GetComponent<Text>().text = "Hit Infront ";
+                    debug.text = "Hit Infront ";
                 }
             }
             else
@@ -119,7 +119,7 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.GetComponent<Text>().text = "Hit behind ";
+                    debug.text = "Hit behind ";
                 }
             }
             else
