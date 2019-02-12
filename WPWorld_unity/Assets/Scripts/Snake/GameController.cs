@@ -69,8 +69,8 @@ public class GameController : MonoBehaviour
 
         var arr_Block = GameObject.FindGameObjectsWithTag("Block");
 
-        Blockcount = arr_Block.Length;
-        BlockSpawner();
+        //Blockcount = arr_Block.Length;
+        //BlockSpawner();
     }
 
     public void FoodSpawner()
