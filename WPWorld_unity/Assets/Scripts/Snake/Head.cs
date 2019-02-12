@@ -448,7 +448,7 @@ public class Head : MonoBehaviourPun, IPunObservable
     
     //EVENTS=======================================================================================================
     //SNAKE_EVENT_STUN,
-    void Stun()
+    public void Stun()
     { 
         Debug.Log("Stunned");
         m_Speed = 0;
@@ -472,7 +472,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         Setspeed(0);
     }
     //SNAKE_EVENT_BLOCKS_POP_UP,
-   void Block_Pop_up()
+    public void Block_Pop_up()
     {
         spawn_block = true;
         //var block = Instantiate(bodyPartObj, newPosition, this.gameObject.transform.rotation, transform.parent);
