@@ -8,8 +8,10 @@ using ExitGames.Client.Photon;
 public class BombermanBreakable : MonoBehaviour
 {
     public bool isDestroyed { get; set; }
+    public int NumHits { get; set; }
 
-    protected int NumHits;
+    protected float FallSpeed = 2.0f;
+    protected bool is_Fall = true;
 
     public BombermanBreakable()
     {
@@ -23,8 +25,11 @@ public class BombermanBreakable : MonoBehaviour
         {
             BreakableHitted();
         }
-
-        // Move Position to lower
+        if(is_Fall)
+        {
+            // Falling 
+            this.transform.Translate(-this.transform.up * FallSpeed * Time.deltaTime);
+        } 
     }
 
     private void BreakableHitted()
@@ -59,5 +64,14 @@ public class BombermanBreakable : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        is_Fall = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        is_Fall = true;
     }
 }
