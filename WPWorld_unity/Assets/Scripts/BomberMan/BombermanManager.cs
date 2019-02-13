@@ -22,10 +22,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
     private BombermanPlayingField CurrPlayerPlayingField;
-   
-    [Header("PlayerPlaySpace")]
-    // For player play space
-    public List<GameObject> List_PlayerPlaySpace;
 
     [Header("HighScore")]
     // For Highscore
@@ -131,14 +127,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
 
         var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
-<<<<<<< HEAD
         var newPos = CurrPlayerPlayingField.List_Floors[RAND].transform.localPosition;
-=======
-
-        var newPos = CurrPlayerPlayingField.List_Floors[RAND].gameObject.transform.localPosition;
-
-        // newPos.y = newPos.y + List_BreakablesBlocks[0].transform.localScale.y;
->>>>>>> 8fa32267a764692d47ee13bc216da23bffa8c687
         BREAKABLE_TYPE newtype;
 
         var RANDType = Random.Range(0, 1.0f);

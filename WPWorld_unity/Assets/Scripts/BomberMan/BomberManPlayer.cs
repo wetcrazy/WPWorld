@@ -32,8 +32,6 @@ public class BomberManPlayer : MonoBehaviourPun
         get { return Score; }
         set { Score = value; }
     }
-    public static int BreakableScore = 100;
-    public static int Breakable2Score = 200;
 
     // Invurnable Frame (Shouldn't be in reset function)
     private const float MAX_invurnTime = 2.0f;
@@ -74,15 +72,9 @@ public class BomberManPlayer : MonoBehaviourPun
         }
 
         // Send death info 
-        if (currLives <=0 )
+        if (currLives <=0 || isDead == true)
         {
             LocalPlayerDeathEvent();
-        }
-
-        // Set the player lose
-        if(isDead)
-        {
-            isLose = true;
         }
            
         // Invurnable Frame
@@ -215,8 +207,7 @@ public class BomberManPlayer : MonoBehaviourPun
     // Death Event
     private void LocalPlayerDeathEvent()
     {
-        // Set local player death
-        isDead = true;
+        isLose = true;
 
         // Singleplayer == True
         if(!PhotonNetwork.IsConnected)
@@ -230,6 +221,11 @@ public class BomberManPlayer : MonoBehaviourPun
 
         // Adding Score
         // photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
+    }
+
+    public void AddScore()
+    {
+
     }
 
     // Setter
