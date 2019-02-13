@@ -140,17 +140,19 @@ public class BomberManPlayer : MonoBehaviourPun
 
         currNUMBomb += 1;
     }
+
     // Respawn the player
     //public void Respawn()
     //{
     //    this.transform.position = respawnPt;
     //}
+
     // Reset function
     public void Reset()
     {
         isDead = false;
-        isLose = true;
-        firePower = 3; // Default 3, can be increased
+        isLose = false;
+        firePower = 1; // Default 1, can be increased
         currLives = MAX_Lives;
         currTimer = 0.0f;
         MAX_NUMBOMB = 1;
@@ -172,14 +174,12 @@ public class BomberManPlayer : MonoBehaviourPun
         }
 
         if (isBlinking)
-        {
-            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn Start";
+        {       
             this.transform.localScale = new Vector3(0, 0, 0);
             isBlinking = false;  
         }
         else
-        {
-            // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Invurn over";
+        {        
             this.transform.localScale = OrignScale;
             isBlinking = true;
         }
@@ -262,7 +262,10 @@ public class BomberManPlayer : MonoBehaviourPun
     {
         return MAX_NUMBOMB;
     }
-
+    public int GetHighScore()
+    {
+        return Score;
+    }
 
     // Highscore
     [PunRPC]
