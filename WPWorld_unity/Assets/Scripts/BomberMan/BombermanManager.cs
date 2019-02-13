@@ -150,7 +150,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             object[] content = new object[]
             {
                 newPos,
-                newtype,
+                newtype
             };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
@@ -282,10 +282,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
         GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
-        newBreakable.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
-        newBreakable.transform.Translate(BreakablePos, Space.Self);
-        newBreakable.transform.localPosition = Vector3.zero;
-        newBreakable.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBreakable.transform.localEulerAngles = Vector3.zero;
         newBreakable.transform.localPosition = BreakablePos;
 
         CurrPlayerPlayingField.GetComponent<BombermanPlayingField>().List_Breakables.Add(newBreakable);
