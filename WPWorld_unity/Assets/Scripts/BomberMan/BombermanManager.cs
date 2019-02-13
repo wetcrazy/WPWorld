@@ -128,6 +128,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
         var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
         var newPos = CurrPlayerPlayingField.List_Floors[RAND].transform.localPosition;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 14244793485ffad83cbe85fc7f908843c3a0001c
         BREAKABLE_TYPE newtype;
 
         var RANDType = Random.Range(0, 1.0f);
