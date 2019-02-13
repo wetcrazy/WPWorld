@@ -4,6 +4,28 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
+    bool fall = true;
+    private void Update()
+    {
+        if (fall)
+        {
+            gameObject.transform.position += (-(gameObject.transform.up) * 0.01f);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            fall = false;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            fall = false;
+        }
+    }
     //private void OnTriggerEnter(Collider other)
     //{
     //    if(other.tag == "Player")
@@ -17,7 +39,7 @@ public class Food : MonoBehaviour
     //            other.gameObject.GetComponent<Head>().AddAppleAte();
     //        }
     //        Destroy(this.gameObject);
-            
+
     //    }
 
     //}
