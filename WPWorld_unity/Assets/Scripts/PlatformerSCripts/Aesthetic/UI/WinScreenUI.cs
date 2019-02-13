@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,9 @@ public class WinScreenUI : MonoBehaviour {
     public Text PlayerTwoScore;
 
     [SerializeField]
+    GameObject NewHighscoreText;
+
+    [SerializeField]
     private GameObject[] Dividers;
 
     private Color A_Color;
@@ -72,8 +76,28 @@ public class WinScreenUI : MonoBehaviour {
     [SerializeField]
     private Vector3 LeaderMovePos;
 
+    [Header("Scripts")]
+    [SerializeField]
+    PhotonGameController MultiplayerController;
+
     // Use this for initialization
     void Start () {
+
+        //Post the score to database
+        MultiplayerController.SubmitScore();
+
+        //Send your data to other players
+        object[] content = new object[]
+            {
+                PhotonNetwork.NickName,
+                MultiplayerController.PlayerScore
+            };
+        ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.INFO_OTHER_PLAYER, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+        
+        PlayerOneScore.text = MultiplayerController.PlayerScore.ToString();
+        NewHighscoreText.SetActive(false);
+
         W_RigidRef = WinText.GetComponent<Rigidbody2D>();
         W_PosRef = WinText.GetComponent<RectTransform>();
 
@@ -94,7 +118,23 @@ public class WinScreenUI : MonoBehaviour {
         B_Color = PlayerTwoText.color;
         B_Color.a = 0;
 	}
-	
+
+    public void UpdateOtherPlayerData(string OtherPlayerName, int OtherPlayerScore)
+    {
+        PlayerTwoText.text = OtherPlayerName + "'s Score";
+        PlayerTwoScore.text = OtherPlayerScore.ToString();
+    }
+
+    public void HighScoreCheck()
+    {
+        NewHighscoreText.SetActive(true);
+    }
+
+    public void ExitToRoom()
+    {
+        PhotonNetwork.LoadLevel("PhotonLobbyRoom");
+    }
+
 	// Update is called once per frame
 	void Update () {
 

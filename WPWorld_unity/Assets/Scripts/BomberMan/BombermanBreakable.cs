@@ -5,16 +5,18 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class BombermanBreakable : MonoBehaviourPun, IPunObservable
+public class BombermanBreakable : MonoBehaviour
 {
     public bool isDestroyed { get; set; }
+    public int NumHits;
+    public Vector3 target { get; set; }
 
-    protected int NumHits;
+    protected float FallSpeed = 5.0f;
+    protected bool is_Fall = true;
 
-    public BombermanBreakable()
+    private void Start()
     {
         isDestroyed = false;
-        NumHits = 1;
     }
 
     private void Update()
@@ -23,8 +25,10 @@ public class BombermanBreakable : MonoBehaviourPun, IPunObservable
         {
             BreakableHitted();
         }
-
-        // Move Position to lower
+        if(is_Fall)
+        {
+            this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, target, FallSpeed * Time.deltaTime);
+        } 
     }
 
     private void BreakableHitted()
@@ -44,9 +48,9 @@ public class BombermanBreakable : MonoBehaviourPun, IPunObservable
     {
         var randNum = Random.Range(0, GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().List_PowerUpBlocks.Count);
 
-        if (Photon.Pun.PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected)
         {
-            object[] content = new object[] { this.transform.position, randNum };
+            object[] content = new object[] { this.transform.localPosition, randNum };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
 
@@ -61,16 +65,18 @@ public class BombermanBreakable : MonoBehaviourPun, IPunObservable
         Destroy(this.gameObject);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    private void OnCollisionEnter(Collision collision)
     {
-        //Send other players our data
-        if (stream.IsWriting)
+        if(collision.transform.tag == "BombermanFloor" || collision.transform.tag == "BombermanBreakable")
         {
-
-        }
-        else //Receive data from other players
+            is_Fall = false;
+        }       
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.transform.tag == "BombermanFloor" || collision.transform.tag == "BombermanBreakable")
         {
-
+            is_Fall = true;
         }
     }
 }

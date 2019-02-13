@@ -22,17 +22,15 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // For breakable spawning
     public List<GameObject> List_BreakablesBlocks;
     private BombermanPlayingField CurrPlayerPlayingField;
-   
-    [Header("PlayerPlaySpace")]
-    // For player play space
-    public List<GameObject> List_PlayerPlaySpace;
 
     [Header("HighScore")]
     // For Highscore
-    public static int PointsForKilling = 100;
+    // public static int PointsForKilling = 100;
+    public static int BreakableScore = 100;
+    public static int Breakable2Score = 200;
 
     [Header("Player stats UI")]
-    // public Text PlayerHighScoreText;
+    public Text PlayerHighScoreText;
     public Text PlayerTotalBombCount;
     public Text PlayerTotalFirePower;
 
@@ -129,10 +127,8 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
 
         var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
+        var newPos = CurrPlayerPlayingField.List_Floors[RAND].transform.localPosition;
 
-        var newPos = CurrPlayerPlayingField.List_Floors[RAND].gameObject.transform.localPosition;
-        // newPos.y = newPos.y + List_BreakablesBlocks[0].transform.localScale.y;
-        newPos.y = newPos.y + 10;
         BREAKABLE_TYPE newtype;
 
         var RANDType = Random.Range(0, 1.0f);
@@ -150,7 +146,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             object[] content = new object[]
             {
                 newPos,
-                newtype,
+                newtype
             };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
@@ -180,7 +176,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             if (hit.transform.parent.parent.tag == "BombermanPlayingField")
             {
                 CurrPlayerPlayingField = hit.transform.parent.parent.gameObject.GetComponent<BombermanPlayingField>();
-                // debug.GetComponent<Text>().text = "I am here >> " + CurrPlayerPlayingField.name.ToString();
             }
         }
     }
@@ -194,11 +189,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
             PlayerTotalFirePower.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetBombPower().ToString();
             PlayerTotalBombCount.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
+            PlayerHighScoreText.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetScore().ToString();
         }
         else
         {
             PlayerTotalFirePower.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetBombPower().ToString();
             PlayerTotalBombCount.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
+            PlayerHighScoreText.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetScore().ToString();
         }
     }
     // =============
@@ -240,15 +237,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Spawn Power Up 
     public void SpawnPowerUp(Vector3 PowerPos, int randNum)
     {
-        //Debug01.text = "Spawning Power";
-        var newPower = Instantiate(List_PowerUpBlocks[randNum], PowerPos, NewRotation, ARMultiplayerController._GroundObject.transform);
-
-        newPower.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
-        newPower.transform.Translate(PowerPos, Space.Self);
-        newPower.transform.localPosition = Vector3.zero;
-        newPower.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
-        newPower.transform.localPosition = PowerPos;
-        //Debug01.text = "Spawned Power";
+        var newPower = Instantiate(List_PowerUpBlocks[randNum], Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
+        newPower.transform.localEulerAngles = Vector3.zero;
+        newPower.transform.localPosition = PowerPos;   
     }
 
     // Player death (Multiplayer)
@@ -273,21 +264,22 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         GameObject newPreab;
         if(typeValue == BREAKABLE_TYPE.BREAKABLE_ONE)
         {
-            newPreab = List_BreakablesBlocks[0].gameObject;
+            newPreab = List_BreakablesBlocks[0].gameObject;     
         }
         else
         {
             newPreab = List_BreakablesBlocks[1].gameObject;
         }
 
+        debug.text = BreakablePos.ToString();
         GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
-        newBreakable.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
-        newBreakable.transform.Translate(BreakablePos, Space.Self);
-        newBreakable.transform.localPosition = Vector3.zero;
-        newBreakable.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        BreakablePos.y += 10;
+        newBreakable.transform.localEulerAngles = Vector3.zero;
         newBreakable.transform.localPosition = BreakablePos;
+        BreakablePos.y -= 10;
 
+        newBreakable.GetComponent<BombermanBreakable>().target = BreakablePos;
         CurrPlayerPlayingField.GetComponent<BombermanPlayingField>().List_Breakables.Add(newBreakable);
     }
 

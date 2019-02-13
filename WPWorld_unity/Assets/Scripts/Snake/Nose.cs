@@ -27,10 +27,13 @@ public class Nose : MonoBehaviour {
         else if (other.CompareTag("Speedy"))
         {
             gameObject.GetComponentInParent<Head>().Stun();
+            Destroy(other.gameObject);
         }
         else if (other.CompareTag("Food_Block"))
         {
             gameObject.GetComponentInParent<Head>().Block_Pop_up();
+            Destroy(other.gameObject);
+            
         }
 
     }

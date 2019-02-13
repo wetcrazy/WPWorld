@@ -345,6 +345,11 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 
         SpawnPlayersButton.SetActive(false);
     }
+   
+    public void EndLevel()
+    {
+        Instantiate(Resources.Load("VictoryScreen"), MoveAnchorControlsUI.transform.parent);
+    }
 
     [PunRPC]
     void ReceiveSpawnPoint(string SpawnPosName)
@@ -452,7 +457,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
                 }
             }
         }
-
+        
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
         {
             case EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE:
@@ -467,6 +472,15 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
                     Quaternion PlayerLocalRot = (Quaternion)photonEvent.CustomData;
                     PlayerGoDict[photonEvent.Sender].transform.localRotation = PlayerLocalRot;
 
+                    break;
+                }
+            case EventCodes.EVENT_CODES.INFO_OTHER_PLAYER:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    GameObject.FindGameObjectWithTag("WinScreen").GetComponent<WinScreenUI>()
+                        .UpdateOtherPlayerData((string)data[0], (int)data[1]);
+
+                    Reset_Anchor();
                     break;
                 }
             default:

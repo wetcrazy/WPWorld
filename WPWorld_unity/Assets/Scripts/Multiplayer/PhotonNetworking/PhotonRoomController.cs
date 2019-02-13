@@ -43,7 +43,6 @@ public class PhotonRoomController : MonoBehaviour
     public enum GAMEMODE
     {
         GAMEMODE_SNAKE,
-        GAMEMODE_TRON,
         GAMEMODE_PLATFORMER,
         GAMEMODE_BOMBERMAN,
 
@@ -55,10 +54,15 @@ public class PhotonRoomController : MonoBehaviour
     /// <summary>
     /// Initialise the game room
     /// </summary>
-    public void InitRoom()
+    public void InitRoom(bool isFromGame = false)
     {
         photonView = PhotonView.Get(this);
-        photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has joined the room");
+
+        //Check if the player is returning to the room from a game scene
+        if(!isFromGame)
+        {
+            photonView.RPC("ReceiveChatMessage", RpcTarget.All, PhotonNetwork.NickName + " has joined the room");
+        }
 
         PlayerTextList = new Text[PlayerListPanel.transform.childCount];
         PlayerTextList = PlayerListPanel.GetComponentsInChildren<Text>();
@@ -72,10 +76,30 @@ public class PhotonRoomController : MonoBehaviour
         //If you are host of room
         if (PhotonNetwork.IsMasterClient)
         {
-            HostControls.SetActive(true);
-            PhotonNetwork.CurrentRoom.IsVisible = true;
+            if (!isFromGame)
+            {
+                PhotonNetwork.CurrentRoom.IsVisible = true;
+                UpdateCurrentGameMode(CurrentGamemode);
+            }
+            else
+            {
+                //Init the gamemode that was selected
+                photonView.RPC("UpdateCurrentGameMode", RpcTarget.All, (GAMEMODE)PlayerPrefs.GetInt("SavedGamemode"));
+                PlayerPrefs.DeleteKey("SavedGamemode");
+                PlayerPrefs.Save();
 
-            UpdateCurrentGameMode(CurrentGamemode);
+                //Init the visibility text
+                if (PhotonNetwork.CurrentRoom.IsVisible)
+                {
+                    RoomVisibilityText.text = "Visibility: Public";
+                }
+                else
+                {
+                    RoomVisibilityText.text = "Visibility: Private";
+                }
+            }
+
+            HostControls.SetActive(true);
         }
         else
         {
@@ -176,12 +200,14 @@ public class PhotonRoomController : MonoBehaviour
             //Activate the loading screen while the level starts
             photonView.RPC("ActivateLoadingScreen", RpcTarget.All);
 
+            //Save the gamemode that was selected
+            PlayerPrefs.SetInt("SavedGamemode", (int)CurrentGamemode);
+            PlayerPrefs.Save();
+
             switch (CurrentGamemode)
             {
                 case GAMEMODE.GAMEMODE_SNAKE:
                     PhotonNetwork.LoadLevel("SNAKE2.0");
-                    break;
-                case GAMEMODE.GAMEMODE_TRON:
                     break;
                 case GAMEMODE.GAMEMODE_PLATFORMER:
                     PhotonNetwork.LoadLevel("Platformer");
@@ -261,12 +287,6 @@ public class PhotonRoomController : MonoBehaviour
             case GAMEMODE.GAMEMODE_SNAKE:
                 {
                     CurrentGameModeImage.sprite = SnakeSprite;
-                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
-                    break;
-                }
-            case GAMEMODE.GAMEMODE_TRON:
-                {
-                    CurrentGameModeImage.sprite = TronSprite;
                     PhotonRoomController.CurrentGamemode = CurrentGamemode;
                     break;
                 }
