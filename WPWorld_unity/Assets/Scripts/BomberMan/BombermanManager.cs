@@ -127,13 +127,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
 
         var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
-<<<<<<< HEAD
         var newPos = CurrPlayerPlayingField.List_Floors[RAND].transform.localPosition;
-=======
-
-        var newPos = CurrPlayerPlayingField.List_Floors[RAND].transform.localPosition;
-
->>>>>>> 3b932a29a1142f6fd45f13f88aebe4114a342d3c
         BREAKABLE_TYPE newtype;
 
         var RANDType = Random.Range(0, 1.0f);
@@ -194,13 +188,13 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
             PlayerTotalFirePower.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetBombPower().ToString();
             PlayerTotalBombCount.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
-            PlayerHighScoreText.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetHighScore().ToString();
+            PlayerHighScoreText.text = ": " + PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().GetScore().ToString();
         }
         else
         {
             PlayerTotalFirePower.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetBombPower().ToString();
             PlayerTotalBombCount.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetMaxBombCount().ToString();
-            PlayerHighScoreText.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetHighScore().ToString();
+            PlayerHighScoreText.text = ": " + GameObject.FindGameObjectWithTag("Player").GetComponent<BomberManPlayer>().GetScore().ToString();
         }
     }
     // =============
