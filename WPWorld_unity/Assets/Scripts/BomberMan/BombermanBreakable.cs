@@ -72,7 +72,7 @@ public class BombermanBreakable : MonoBehaviour
             is_Fall = false;
         }       
 
-        if(collision.transform.gameObject == PlayerMovement.LocalPlayerInstance)
+        if(collision.transform.gameObject == PlayerMovement.LocalPlayerInstance && !is_Fall)
         {
             PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().SetisDead(true);
         }
