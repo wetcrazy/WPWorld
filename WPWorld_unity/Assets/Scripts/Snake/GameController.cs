@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
 
     private float score = 0;
     Head PlayerHeadComponent;
-
+    
     private void Start()
     {
         //texts
