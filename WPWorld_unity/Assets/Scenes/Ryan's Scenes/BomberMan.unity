@@ -446,9 +446,49 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114642415646873900, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: FloorParent
+      value: 
+      objectReference: {fileID: 529520963}
+    - target: {fileID: 114642415646873900, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: WallParent
+      value: 
+      objectReference: {fileID: 529520964}
+    - target: {fileID: 114668783033759966, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: FloorParent
+      value: 
+      objectReference: {fileID: 529520961}
+    - target: {fileID: 114668783033759966, guid: caba322beb074f441aaa3a5ae5720c43,
+        type: 2}
+      propertyPath: WallParent
+      value: 
+      objectReference: {fileID: 529520962}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: caba322beb074f441aaa3a5ae5720c43, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &529520961 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1220419327425078, guid: caba322beb074f441aaa3a5ae5720c43,
+    type: 2}
+  m_PrefabInternal: {fileID: 529520960}
+--- !u!1 &529520962 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1928070632979658, guid: caba322beb074f441aaa3a5ae5720c43,
+    type: 2}
+  m_PrefabInternal: {fileID: 529520960}
+--- !u!1 &529520963 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1009865562345896, guid: caba322beb074f441aaa3a5ae5720c43,
+    type: 2}
+  m_PrefabInternal: {fileID: 529520960}
+--- !u!1 &529520964 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1457357654805426, guid: caba322beb074f441aaa3a5ae5720c43,
+    type: 2}
+  m_PrefabInternal: {fileID: 529520960}
 --- !u!1 &719230732
 GameObject:
   m_ObjectHideFlags: 0
