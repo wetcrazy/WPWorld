@@ -12,6 +12,8 @@ public class IndicatorScript : MonoBehaviour {
 
     private RectTransform RectRef;
 
+    private GameObject PlayerRef;
+
 	// Use this for initialization
 	void Start () {
         LookAtRef = new GameObject("Test");
@@ -25,7 +27,13 @@ public class IndicatorScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 ScreenPoint = Camera.main.WorldToViewportPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
+        if(PlayerRef == null)
+        {
+            PlayerRef = PlayerMovement.LocalPlayerInstance;
+            return;
+        }
+
+        Vector3 ScreenPoint = Camera.main.WorldToViewportPoint(PlayerRef.transform.position);
         LookAtRef.transform.position = new Vector3(ScreenPoint.x * Screen.width, ScreenPoint.y * Screen.height, 0);
         transform.position = Vector3.Lerp(transform.position, LookAtRef.transform.position, Speed * Time.deltaTime);
 

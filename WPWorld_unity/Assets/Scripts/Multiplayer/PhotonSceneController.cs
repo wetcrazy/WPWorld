@@ -63,6 +63,7 @@ public class PhotonSceneController : MonoBehaviour {
         if(PhotonNetwork.InRoom)
         {
             roomController.InitRoom(true);
+            LoadingText.text = "";
             return;
         }
 

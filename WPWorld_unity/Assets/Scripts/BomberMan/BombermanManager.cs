@@ -47,6 +47,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     private const float MAX_COOLDOWN = 3.0f;
     private float curr_Cooldown = 0.0f;
 
+    [Header("Ar multiplayer controller")]
+    public GameObject ArController;
+
     public enum BREAKABLE_TYPE
     {
         BREAKABLE_ONE,
@@ -68,6 +71,14 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     {
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
+
+        if(PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().isLose)
+        {
+            PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().SetMovementSpeed(0);
+            PlayerMovement.LocalPlayerInstance.transform.Rotate(Vector3.up);
+            return;
+        }
+
         if (CurrPlayerPlayingField == null)
         {
             FindMyPlayer();        
