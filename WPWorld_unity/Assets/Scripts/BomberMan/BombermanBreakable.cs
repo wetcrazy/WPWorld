@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class BombermanBreakable : MonoBehaviourPun, IPunObservable
+public class BombermanBreakable : MonoBehaviour
 {
     public bool isDestroyed { get; set; }
 
@@ -23,6 +23,8 @@ public class BombermanBreakable : MonoBehaviourPun, IPunObservable
         {
             BreakableHitted();
         }
+
+        // Move Position to lower
     }
 
     private void BreakableHitted()
@@ -42,7 +44,7 @@ public class BombermanBreakable : MonoBehaviourPun, IPunObservable
     {
         var randNum = Random.Range(0, GameObject.FindGameObjectWithTag("BombermanManager").GetComponent<BombermanManager>().List_PowerUpBlocks.Count);
 
-        if (Photon.Pun.PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected)
         {
             object[] content = new object[] { this.transform.position, randNum };
 
@@ -57,18 +59,5 @@ public class BombermanBreakable : MonoBehaviourPun, IPunObservable
         }
 
         Destroy(this.gameObject);
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //Send other players our data
-        if (stream.IsWriting)
-        {
-
-        }
-        else //Receive data from other players
-        {
-
-        }
     }
 }

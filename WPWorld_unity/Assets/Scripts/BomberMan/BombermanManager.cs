@@ -45,6 +45,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Gameover things
     private bool is_GameOver;
 
+    // Spawner Cool Down
+    private const float MAX_COOLDOWN = 3.0f;
+    private float curr_Cooldown = 0.0f;
+
     public enum BREAKABLE_TYPE
     {
         BREAKABLE_ONE,
@@ -70,9 +74,17 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
             FindMyPlayer();        
         }
-        else
+        else if (CurrPlayerPlayingField.List_Breakables.Count < 100)
         {
-            // BreakableSpawn();
+            if(curr_Cooldown > MAX_COOLDOWN)
+            {
+                BreakableSpawn();
+                curr_Cooldown = 0.0f;
+            }
+            else
+            {
+                curr_Cooldown += 1.0f * Time.deltaTime;
+            }
         }
     }
 
@@ -138,7 +150,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             object[] content = new object[]
             {
                 newPos,
-                newtype,
+                newtype
             };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
@@ -270,10 +282,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
         GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
-        newBreakable.transform.forward = ARMultiplayerController._GroundObject.transform.forward;
-        newBreakable.transform.Translate(BreakablePos, Space.Self);
-        newBreakable.transform.localPosition = Vector3.zero;
-        newBreakable.transform.LookAt(ARMultiplayerController.LevelForwardAnchor.transform);
+        newBreakable.transform.localEulerAngles = Vector3.zero;
         newBreakable.transform.localPosition = BreakablePos;
 
         CurrPlayerPlayingField.GetComponent<BombermanPlayingField>().List_Breakables.Add(newBreakable);
