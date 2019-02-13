@@ -11,7 +11,7 @@ public class BombermanBreakable : MonoBehaviour
     public int NumHits;
     public Vector3 target { get; set; }
 
-    protected float FallSpeed = 5.0f;
+    protected float FallSpeed = 6.0f;
     protected bool is_Fall = true;
 
     private void Start()
@@ -71,6 +71,11 @@ public class BombermanBreakable : MonoBehaviour
         {
             is_Fall = false;
         }       
+
+        if(collision.transform.gameObject == PlayerMovement.LocalPlayerInstance)
+        {
+            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().SetisDead(true);
+        }
     }
     private void OnCollisionExit(Collision collision)
     {

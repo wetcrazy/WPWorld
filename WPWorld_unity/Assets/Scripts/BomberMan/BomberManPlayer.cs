@@ -23,7 +23,7 @@ public class BomberManPlayer : MonoBehaviourPun
     private const float MAX_TIMER = 3.0f;
 
     // Lose Condition
-    private bool isLose;
+    public bool isLose { get; set; }
 
     // Highscore
     private int Score = 0;
@@ -72,7 +72,7 @@ public class BomberManPlayer : MonoBehaviourPun
         }
 
         // Send death info 
-        if (currLives <=0 || isDead == true)
+        if (currLives <= 0 || isDead == true)
         {
             LocalPlayerDeathEvent();
         }
@@ -177,7 +177,7 @@ public class BomberManPlayer : MonoBehaviourPun
         }
 
     }
-
+ 
     // Collision
     private void OnTriggerEnter(Collider other)
     {
