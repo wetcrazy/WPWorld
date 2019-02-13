@@ -237,7 +237,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Spawn Power Up 
     public void SpawnPowerUp(Vector3 PowerPos, int randNum)
     {
-        var newPower = Instantiate(List_PowerUpBlocks[randNum], PowerPos, NewRotation, ARMultiplayerController._GroundObject.transform);
+        var newPower = Instantiate(List_PowerUpBlocks[randNum], Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
         newPower.transform.localEulerAngles = Vector3.zero;
         newPower.transform.localPosition = PowerPos;   
     }

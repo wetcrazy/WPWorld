@@ -50,7 +50,7 @@ public class BombermanBreakable : MonoBehaviour
 
         if (PhotonNetwork.IsConnected)
         {
-            object[] content = new object[] { this.transform.position, randNum };
+            object[] content = new object[] { this.transform.localPosition, randNum };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
 
