@@ -22,6 +22,7 @@ public class Nose : MonoBehaviour {
         else if (other.CompareTag("Food"))
         {
             gameObject.GetComponentInParent<Head>().AddAppleAte();
+            Destroy(other.gameObject);
         }
         else if (other.CompareTag("Speedy"))
         {

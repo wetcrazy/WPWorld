@@ -23,6 +23,8 @@ public class BombermanBreakable : MonoBehaviour
         {
             BreakableHitted();
         }
+
+        // Move Position to lower
     }
 
     private void BreakableHitted()
