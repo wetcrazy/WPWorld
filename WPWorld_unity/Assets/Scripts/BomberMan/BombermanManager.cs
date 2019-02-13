@@ -45,6 +45,10 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Gameover things
     private bool is_GameOver;
 
+    // Spawner Cool Down
+    private const float MAX_COOLDOWN = 3.0f;
+    private float curr_Cooldown = 0.0f;
+
     public enum BREAKABLE_TYPE
     {
         BREAKABLE_ONE,
@@ -70,9 +74,17 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         {
             FindMyPlayer();        
         }
-        else
+        else if (CurrPlayerPlayingField.List_Breakables.Count < 100)
         {
-            // BreakableSpawn();
+            if(curr_Cooldown > MAX_COOLDOWN)
+            {
+                BreakableSpawn();
+                curr_Cooldown = 0.0f;
+            }
+            else
+            {
+                curr_Cooldown += 1.0f * Time.deltaTime;
+            }
         }
     }
 
