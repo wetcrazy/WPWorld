@@ -131,13 +131,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         }
 
         var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
-
-        var newPos = CurrPlayerPlayingField.List_Floors[RAND].gameObject.transform.localPosition;
-<<<<<<< HEAD
-=======
-        // newPos.y = newPos.y + List_BreakablesBlocks[0].transform.localScale.y;
-        newPos.y += 10;
->>>>>>> 187d331e73d95df577cb87cbed6fcabdd3f7e134
+        var newPos = CurrPlayerPlayingField.List_Floors[RAND].transform.localPosition;
         BREAKABLE_TYPE newtype;
 
         var RANDType = Random.Range(0, 1.0f);
