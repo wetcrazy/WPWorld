@@ -71,7 +71,7 @@ public class BombermanBreakable : MonoBehaviour
         {
             is_Fall = false;
         }
-        else
+        else if(collision.transform.tag != "Player")
         {
             is_Fall = true;
         }

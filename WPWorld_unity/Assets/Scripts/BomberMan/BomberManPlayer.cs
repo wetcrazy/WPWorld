@@ -72,7 +72,7 @@ public class BomberManPlayer : MonoBehaviourPun
         }
 
         // Send death info 
-        if (currLives <= 0 || isDead == true)
+        if (isDead)
         {
             LocalPlayerDeathEvent();
         }
@@ -185,8 +185,9 @@ public class BomberManPlayer : MonoBehaviourPun
         if (other.gameObject.tag == "BombFire")
         {
             if (!isDmgtaken)
-            {             
-                currLives -= 1;
+            {
+                // currLives -= 1;
+                isDead = true;
                 isDmgtaken = true;
             }
         }
