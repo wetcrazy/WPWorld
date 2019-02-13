@@ -18,7 +18,7 @@ public class Snake_block_event : MonoBehaviour {
         spawn_cooldown -= Time.deltaTime;
         if(spawn_cooldown<=0)
         {
-            Destroy(this.gameObject);
+        //    Destroy(this.gameObject);
         }
 	}
 
