@@ -32,9 +32,11 @@ public class Bomb : MonoBehaviourPun
 
     private void Update()
     {
+        this.transform.eulerAngles = Vector3.zero;
         if(currTimer > MAX_TIMER)
         {
             BlowUp();
+            currTimer = 0;
         }
         else
         {
@@ -69,8 +71,7 @@ public class Bomb : MonoBehaviourPun
                     else
                     {
                         photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
-                    }
-                  
+                    }                   
                 }
             }
             else
@@ -124,7 +125,7 @@ public class Bomb : MonoBehaviourPun
                     else
                     {
                         photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
-                    }
+                    }              
                 }
             }
             else
