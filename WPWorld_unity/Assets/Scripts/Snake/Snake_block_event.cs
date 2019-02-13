@@ -3,22 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Snake_block_event : MonoBehaviour {
-    float spawn_cooldown;
+    float life_cooldown;
+    bool life_decay;
 	// Use this for initialization
 	void Start () {
 
-        spawn_cooldown = 5.0f;
-		
+        life_cooldown = 5.0f;
+        life_decay = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+        
         //this.gameObject.transform.Translate()
-        spawn_cooldown -= Time.deltaTime;
-        if(spawn_cooldown<=0)
+        gameObject.transform.position += (-(gameObject.transform.up) * 0.01f);
+        if (life_decay)
         {
-        //    Destroy(this.gameObject);
+
+            life_cooldown -= Time.deltaTime;
+            if (life_cooldown <= 0)
+            {
+                    Destroy(this.gameObject);
+            }
         }
 	}
 
@@ -26,7 +32,7 @@ public class Snake_block_event : MonoBehaviour {
     {
         if (other.CompareTag("Blocks"))
         {
-
+            life_decay = true;
         }
     }
 
@@ -34,7 +40,7 @@ public class Snake_block_event : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Blocks"))
         {
-
+            life_decay = true;
         }
     }
 }
