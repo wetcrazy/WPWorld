@@ -15,17 +15,20 @@ public class Snake_block_event : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+
         //this.gameObject.transform.Translate()
-        gameObject.transform.position += (-(gameObject.transform.up) * 0.01f);
-        
-        if (life_decay)
+        if (!life_decay)
+        {
+            gameObject.transform.position += (-(gameObject.transform.up) * 0.01f);
+
+        }
+        else 
         {
 
             life_cooldown -= Time.deltaTime;
             if (life_cooldown <= 0)
             {
-                    Destroy(this.gameObject);
+                Destroy(this.gameObject);
             }
         }
 	}
