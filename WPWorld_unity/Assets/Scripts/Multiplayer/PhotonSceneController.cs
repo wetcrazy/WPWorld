@@ -38,6 +38,8 @@ public class PhotonSceneController : MonoBehaviour {
     [Header("Script Objects")]
     [SerializeField]
     PhotonConnect photonConnect;
+    [SerializeField]
+    PhotonRoomController roomController;
 
     private string RoomID;
 
@@ -50,17 +52,22 @@ public class PhotonSceneController : MonoBehaviour {
     void Start ()
     {
         InputPlayerPanel.SetActive(false);
-        
-        //Check if player already exists
-        CheckForExistingPlayer();
-        
         InputRoomIDPanel.SetActive(false);
         OfflineScreen.SetActive(false);
         LobbyScreen.SetActive(false);
-        RoomScreen.SetActive(false);
         LoadingScreen.SetActive(false);
+        RoomScreen.SetActive(PhotonNetwork.InRoom);
         RegionSelectScreen.SetActive(false);
         RegionText.text = "";
+
+        if(PhotonNetwork.InRoom)
+        {
+            roomController.InitRoom(true);
+            return;
+        }
+
+        //Check if player already exists
+        CheckForExistingPlayer();
     }
 
     //Check if a local player exists 
