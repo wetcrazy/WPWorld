@@ -128,10 +128,6 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
         var RAND = Random.Range(0, CurrPlayerPlayingField.List_Floors.Count);
         var newPos = CurrPlayerPlayingField.List_Floors[RAND].transform.localPosition;
-<<<<<<< HEAD
-=======
-
->>>>>>> 14244793485ffad83cbe85fc7f908843c3a0001c
         BREAKABLE_TYPE newtype;
 
         var RANDType = Random.Range(0, 1.0f);
@@ -240,7 +236,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // Spawn Power Up 
     public void SpawnPowerUp(Vector3 PowerPos, int randNum)
     {
-        var newPower = Instantiate(List_PowerUpBlocks[randNum], PowerPos, NewRotation, ARMultiplayerController._GroundObject.transform);
+        var newPower = Instantiate(List_PowerUpBlocks[randNum], Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
         newPower.transform.localEulerAngles = Vector3.zero;
         newPower.transform.localPosition = PowerPos;   
     }
