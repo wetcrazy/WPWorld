@@ -706,7 +706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinText: {fileID: 1774585927841778}
-  DropSpot: {x: 0, y: -300, z: 0}
+  DropSpot: {x: 0, y: -750, z: 0}
   DropSpeed: 1000
   Bounces: 4
   BounceSpeed: 8000
@@ -715,7 +715,7 @@ MonoBehaviour:
   PlayerOneScore: {fileID: 114497238957420646}
   PlayerTwoText: {fileID: 114313883415018450}
   PlayerTwoScore: {fileID: 114146474754221314}
-  NewHighscoreText: {fileID: 0}
+  NewHighscoreText: {fileID: 1921527998574446}
   Dividers:
   - {fileID: 1381435166536598}
   - {fileID: 1512979282609762}
@@ -726,7 +726,7 @@ MonoBehaviour:
   ExitMovePos: {x: 130, y: -500, z: 0}
   LeaderboardButton: {fileID: 1229501917856806}
   LeaderMovePos: {x: -130, y: -500, z: 0}
-  MultiplayerController: {fileID: 0}
+  MultiplayerController: {fileID: 114725561116992106}
 --- !u!114 &114313883415018450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1458,7 +1458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -129, y: -500}
+  m_AnchoredPosition: {x: -400, y: -500}
   m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224193138424485164
@@ -1610,7 +1610,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 522, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224607899752149806
@@ -1705,7 +1705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 128, y: -500}
+  m_AnchoredPosition: {x: 400, y: -500}
   m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224773600494443630
@@ -1716,7 +1716,7 @@ RectTransform:
   m_GameObject: {fileID: 1532369595703882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_Children:
   - {fileID: 224309230346911336}
   m_Father: {fileID: 224973647219059168}
@@ -1724,7 +1724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -79}
   m_SizeDelta: {x: 522, y: 783}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224782237293717800

@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour
     private GameObject foodprefab = null;
     [SerializeField]
     private GameObject blockprefab = null;
+    [SerializeField]
+    private GameObject Speedyprefab = null;
 
     public GameObject Level;
     //public GameObject Body;
@@ -104,7 +106,7 @@ public class GameController : MonoBehaviour
             RNG = Random.Range(0, arr_Blocks.Count);
             newPosition = arr_Blocks[RNG].transform.localPosition;
 
-            newPosition.y += 2;
+            newPosition.y += 5;
             var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
         }
@@ -142,7 +144,8 @@ public class GameController : MonoBehaviour
             newPosition = arr_Blocks[RNG].transform.localPosition;
 
             newPosition.y += 5;
-            var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
+           // newPosition.y += arr_Blocks[RNG].transform.localScale * 5;
+            var newFood = Instantiate(Speedyprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
         }
 

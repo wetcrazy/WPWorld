@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
-    bool fall = true;
+    bool fall;
+    private void Start()
+    {
+        fall = true;
+    }
     private void Update()
     {
         if (fall)
@@ -14,14 +18,14 @@ public class Food : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Blocks"))
         {
             fall = false;
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Blocks"))
         {
             fall = false;
         }

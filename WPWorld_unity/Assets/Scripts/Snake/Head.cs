@@ -224,7 +224,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         }
         if(spawntime<=0)
         {
-            this.gameObject.transform.position = SpawnPoint;
+            this.gameObject.transform.localPosition = SpawnPoint;
             this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided = false;
             Lives--;
             multiplier = minmult;
