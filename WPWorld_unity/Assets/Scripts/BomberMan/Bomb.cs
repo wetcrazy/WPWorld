@@ -32,7 +32,6 @@ public class Bomb : MonoBehaviourPun
 
     private void Update()
     {
-        this.transform.localEulerAngles = Vector3.zero;
         if(currTimer > MAX_TIMER)
         {
             BlowUp();

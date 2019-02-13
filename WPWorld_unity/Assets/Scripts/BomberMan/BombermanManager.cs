@@ -72,6 +72,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         UpdatePlayerStats();
         NewRotation = ARMultiplayerController._GroundObject.transform.rotation;
 
+        var Player_List = GameObject.FindGameObjectsWithTag("Player");
+        if(Player_List[0].GetComponent<BomberManPlayer>().isLose && Player_List[1].GetComponent<BomberManPlayer>().isLose)
+        {
+            ArController.GetComponent<ARMultiplayerController>().EndLevel();
+        }
+
         if(PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().isLose)
         {
             PlayerMovement.LocalPlayerInstance.GetComponent<PlayerMovement>().SetMovementSpeed(0);
