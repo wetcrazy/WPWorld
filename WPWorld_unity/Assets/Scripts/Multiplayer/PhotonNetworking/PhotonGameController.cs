@@ -13,6 +13,16 @@ public class PhotonGameController : MonoBehaviour {
     GameObject LeaderboardHeaderUI;
     [SerializeField]
     GameObject LeaderboardEntryUI;
+    
+    int ScoreToSubmit = 0;
+
+    public int PlayerScore
+    {
+        get
+        {
+            return ScoreToSubmit;
+        }
+    }
 
     private void Awake()
     {
@@ -27,7 +37,6 @@ public class PhotonGameController : MonoBehaviour {
 	
     public void SubmitScore()
     {
-        int ScoreToSubmit = 0;
         string EventShortCode = "";
 
         switch (SceneManagerHelper.ActiveSceneName)
@@ -59,15 +68,11 @@ public class PhotonGameController : MonoBehaviour {
             .Send((response) => {
             if (!response.HasErrors)
             {
-                Debug.Log("Score Posted Successfully...");
-            }
-            else
-            {
-                Debug.Log("Error Posting Score...");
             }
         });
     }
 
+    //FOR DEBUGGING ONLY//////
     public void EditScore(bool isAdd)
     {
         int Amount = 1000;
@@ -79,6 +84,7 @@ public class PhotonGameController : MonoBehaviour {
 
         PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().PlayerScore += Amount;
     }
+    /////////////////////
 
     public void GetLeaderboard()
     {
@@ -118,15 +124,10 @@ public class PhotonGameController : MonoBehaviour {
             .Send((response) => {
             if (!response.HasErrors)
             {
-                Debug.Log("Found Leaderboard Data...");
                 foreach (GameSparks.Api.Responses.LeaderboardDataResponse._LeaderboardData entry in response.Data)
                 {
                     CreateLeaderboardEntryUI((int)entry.Rank, entry.UserName, entry.JSONData["SCORE"].ToString());
                 }
-            }
-            else
-            {
-                Debug.Log("Error Retrieving Leaderboard Data...");
             }
         });
     }
@@ -152,6 +153,6 @@ public class PhotonGameController : MonoBehaviour {
     //<summary>Listener for when player gets a new high score</summary>
     void HighScoreMessageHandler(GameSparks.Api.Messages.NewHighScoreMessage _message)
     {
-        Debug.Log("NEW HIGH SCORE \n " + _message.LeaderboardName);
+        GameObject.FindGameObjectWithTag("WinScreen").GetComponent<WinScreenUI>().HighScoreCheck();
     }
 }
