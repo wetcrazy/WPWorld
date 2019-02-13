@@ -77,6 +77,7 @@ public class WinScreenUI : MonoBehaviour {
     private Vector3 LeaderMovePos;
 
     [Header("Scripts")]
+    [SerializeField]
     PhotonGameController MultiplayerController;
 
     // Use this for initialization

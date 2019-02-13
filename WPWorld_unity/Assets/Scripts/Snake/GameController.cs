@@ -116,7 +116,7 @@ public class GameController : MonoBehaviour
         RNG = Random.Range(0, arr_Blocks.Count);
         newPosition = arr_Blocks[RNG].transform.localPosition;
 
-        newPosition.y += 2;
+        newPosition.y += 5;
 
         var newBlock = Instantiate(blockprefab, Vector3.zero, Quaternion.identity, transform.parent);
         newBlock.transform.position = newPosition;
