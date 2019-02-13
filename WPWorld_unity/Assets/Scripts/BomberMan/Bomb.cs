@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class Bomb : MonoBehaviour
+public class Bomb : MonoBehaviourPun
 {
     public GameObject BombFirePrefab;
     public GameObject BlockPrefab;
@@ -58,8 +61,16 @@ public class Bomb : MonoBehaviour
                 }
                 else if(hit.transform.gameObject.tag == "BombermanBreakable")
                 {              
-                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.text = "Hit Right ";
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;  
+                    if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                    }
+                    else
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
+                    }
+                  
                 }
             }
             else
@@ -79,7 +90,14 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.text = "Hit Left ";
+                    if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                    }
+                    else
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
+                    }
                 }
             }
             else
@@ -99,7 +117,14 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.text = "Hit Infront ";
+                    if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                    }
+                    else
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
+                    }
                 }
             }
             else
@@ -119,7 +144,14 @@ public class Bomb : MonoBehaviour
                 else if (hit.transform.gameObject.tag == "BombermanBreakable")
                 {
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
-                    debug.text = "Hit behind ";
+                    if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                    }
+                    else
+                    {
+                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
+                    }
                 }
             }
             else

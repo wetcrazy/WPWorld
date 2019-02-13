@@ -29,7 +29,9 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
 
     [Header("HighScore")]
     // For Highscore
-    public static int PointsForKilling = 100;
+    // public static int PointsForKilling = 100;
+    public static int BreakableScore = 100;
+    public static int Breakable2Score = 200;
 
     [Header("Player stats UI")]
     // public Text PlayerHighScoreText;
@@ -274,10 +276,12 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
         if(typeValue == BREAKABLE_TYPE.BREAKABLE_ONE)
         {
             newPreab = List_BreakablesBlocks[0].gameObject;
+            newPreab.GetComponent<BombermanBreakable>().NumHits = 1;
         }
         else
         {
             newPreab = List_BreakablesBlocks[1].gameObject;
+            newPreab.GetComponent<BombermanBreakable>().NumHits = 2;
         }
 
         GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);

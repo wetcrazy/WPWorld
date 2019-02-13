@@ -11,7 +11,7 @@ public class BomberManPlayer : MonoBehaviourPun
     // Player Properties
     private int firePower;
     private int currLives;
-    private const int MAX_Lives = 3;
+    private const int MAX_Lives = 1;
     private bool isDead;
     private int MAX_NUMBOMB;
     private int currNUMBomb;
@@ -32,6 +32,8 @@ public class BomberManPlayer : MonoBehaviourPun
         get { return Score; }
         set { Score = value; }
     }
+    public static int BreakableScore = 100;
+    public static int Breakable2Score = 200;
 
     // Invurnable Frame (Shouldn't be in reset function)
     private const float MAX_invurnTime = 2.0f;
@@ -71,25 +73,16 @@ public class BomberManPlayer : MonoBehaviourPun
             return;
         }
 
-        // Death Respawn
-        if (isDead)
+        // Send death info 
+        if (currLives <=0 )
         {
-            if (currTimer > MAX_TIMER)
-            {
-                currTimer = 0.0f;
-                if (currLives <= 0)
-                {
-                    isLose = true;
-                }
-                else
-                {
-                    Reset();
-                }
-            }
-            else
-            {
-                currTimer += 1.0f * Time.deltaTime;
-            }
+            LocalPlayerDeathEvent();
+        }
+
+        // Set the player lose
+        if(isDead)
+        {
+            isLose = true;
         }
            
         // Invurnable Frame
@@ -200,9 +193,8 @@ public class BomberManPlayer : MonoBehaviourPun
         if (other.gameObject.tag == "BombFire")
         {
             if (!isDmgtaken)
-            {
-                // GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>().text = "Dmg Taken";
-                // currLives -= 1;
+            {             
+                currLives -= 1;
                 isDmgtaken = true;
             }
         }
@@ -221,7 +213,7 @@ public class BomberManPlayer : MonoBehaviourPun
     }
 
     // Death Event
-    private void LocalPlayerDeathEvent(Player Bomb_Owner)
+    private void LocalPlayerDeathEvent()
     {
         // Set local player death
         isDead = true;
@@ -237,7 +229,7 @@ public class BomberManPlayer : MonoBehaviourPun
         PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.BOMBER_EVENT_PLAYER_DEATH, null, REO, sendOptions);
 
         // Adding Score
-        photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
+        // photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
     }
 
     // Setter
