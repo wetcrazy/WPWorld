@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
     private List<GameObject> arr_Blocks = new List<GameObject>();
     private List<GameObject> arr_BODY = new List<GameObject>();
 
+    private float score = 0;
     Head PlayerHeadComponent;
 
     private void Start()
@@ -66,7 +67,11 @@ public class GameController : MonoBehaviour
 
         Foodcount = arr_food.Length;
         FoodSpawner();
-
+        var arr_Speedfood = GameObject.FindGameObjectsWithTag("Speedy");
+        if(arr_Speedfood.Length <=0)
+        {
+            Food_stunSpawner();
+        }
 
         if (PlayerHeadComponent.spawn_block)
         {
@@ -82,7 +87,7 @@ public class GameController : MonoBehaviour
 
            // Blockcount = arr_Block.Length;
             BlockSpawner();
-           // PlayerHeadComponent.spawn_block = false;
+            PlayerHeadComponent.spawn_block = false;
         }
     }
 
@@ -99,7 +104,7 @@ public class GameController : MonoBehaviour
             RNG = Random.Range(0, arr_Blocks.Count);
             newPosition = arr_Blocks[RNG].transform.localPosition;
 
-            newPosition.y += 1;
+            newPosition.y += 2;
             var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
         }
@@ -118,8 +123,28 @@ public class GameController : MonoBehaviour
 
         newPosition.y += 5;
 
-        var newBlock = Instantiate(blockprefab, Vector3.zero, Quaternion.identity, transform.parent);
+        var newBlock = Instantiate(blockprefab, Vector3.zero, Quaternion.Euler(Vector3.zero),transform.parent);
         newBlock.transform.localPosition = newPosition;
+
+    }
+
+    public void Food_stunSpawner()
+    {
+        //bool notcolliding;
+        int RNG;
+        Vector3 newPosition;
+
+
+        if (score % 100 == 0)
+        {
+
+            RNG = Random.Range(0, arr_Blocks.Count);
+            newPosition = arr_Blocks[RNG].transform.localPosition;
+
+            newPosition.y += 5;
+            var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
+            newFood.transform.localPosition = newPosition;
+        }
 
     }
 
@@ -132,6 +157,7 @@ public class GameController : MonoBehaviour
     public void UpdateScoreText(float amount)
     {
         ScoreDisplay.text = " Score : " + amount;
+        score = amount;
     }
 
     public void UpdateLivesText(float amount)

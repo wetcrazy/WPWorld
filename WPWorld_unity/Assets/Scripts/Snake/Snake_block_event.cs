@@ -10,6 +10,7 @@ public class Snake_block_event : MonoBehaviour {
 
         life_cooldown = 5.0f;
         life_decay = false;
+      
 	}
 	
 	// Update is called once per frame
@@ -17,6 +18,7 @@ public class Snake_block_event : MonoBehaviour {
         
         //this.gameObject.transform.Translate()
         gameObject.transform.position += (-(gameObject.transform.up) * 0.01f);
+        
         if (life_decay)
         {
 
