@@ -117,6 +117,11 @@ public class WinScreenUI : MonoBehaviour {
         A_Color.a = 0;
         B_Color = PlayerTwoText.color;
         B_Color.a = 0;
+
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            ExitButton.SetActive(false);
+        }
 	}
 
     public void UpdateOtherPlayerData(string OtherPlayerName, int OtherPlayerScore)
