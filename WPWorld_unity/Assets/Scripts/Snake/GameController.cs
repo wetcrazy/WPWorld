@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour
         newPosition.y += 5;
 
         var newBlock = Instantiate(blockprefab, Vector3.zero, Quaternion.identity, transform.parent);
-        newBlock.transform.position = newPosition;
+        newBlock.transform.localPosition = newPosition;
 
     }
 
