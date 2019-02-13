@@ -223,9 +223,9 @@ public class BomberManPlayer : MonoBehaviourPun
         // photonView.RPC("PlayerAddPoints", Bomb_Owner, BombermanManager.PointsForKilling);
     }
 
-    public void AddScore()
+    public void AddScore(int value)
     {
-
+        Score += value;
     }
 
     // Setter
@@ -258,7 +258,7 @@ public class BomberManPlayer : MonoBehaviourPun
     {
         return MAX_NUMBOMB;
     }
-    public int GetHighScore()
+    public int GetScore()
     {
         return Score;
     }

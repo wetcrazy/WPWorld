@@ -45,12 +45,12 @@ public class Bomb : MonoBehaviourPun
     }
 
     public virtual void BlowUp()
-    {       
+    {
         float scalableSize = BlockPrefab.transform.localScale.x * this.transform.parent.transform.localScale.x;
-        
+
         var newBomb = BombFirePrefab;
         Instantiate(newBomb, this.transform.position, Quaternion.identity, this.transform.parent);
-       
+ 
         // + X
         RaycastHit hit;
         for (int i = 1; i <= firePower; i++)
@@ -61,17 +61,24 @@ public class Bomb : MonoBehaviourPun
                 {
                     Instantiate(newBomb, this.transform.position + Vector3.right * (scalableSize * i), Quaternion.identity, this.transform.parent);
                 }
-                else if(hit.transform.gameObject.tag == "BombermanBreakable")
-                {              
-                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;  
+                else if (hit.transform.gameObject.tag == "BombermanBreakable")
+                {
+                    hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
+
                     if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.BreakableScore);
+                        }
                     }
                     else
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
-                    }                   
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.Breakable2Score);
+                        }
+                    }
                 }
             }
             else
@@ -93,11 +100,17 @@ public class Bomb : MonoBehaviourPun
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
                     if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.BreakableScore);
+                        }
                     }
                     else
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.Breakable2Score);
+                        }
                     }
                 }
             }
@@ -120,12 +133,18 @@ public class Bomb : MonoBehaviourPun
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
                     if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.BreakableScore);
+                        }
                     }
                     else
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
-                    }              
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.Breakable2Score);
+                        }
+                    }
                 }
             }
             else
@@ -147,11 +166,17 @@ public class Bomb : MonoBehaviourPun
                     hit.transform.GetComponent<BombermanBreakable>().isDestroyed = true;
                     if (hit.transform.GetComponent<BombermanBreakable>().NumHits == 1)
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.BreakableScore);
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.BreakableScore);
+                        }
                     }
                     else
                     {
-                        photonView.RPC("PlayerAddPoints", OwnerPUN, BombermanManager.Breakable2Score);
+                        if (PlayerMovement.LocalPlayerInstance.GetPhotonView().OwnerActorNr == OwnerPUN.ActorNumber)
+                        {
+                            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().AddScore(BombermanManager.Breakable2Score);
+                        }
                     }
                 }
             }
