@@ -345,6 +345,11 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 
         SpawnPlayersButton.SetActive(false);
     }
+   
+    public void EndLevel()
+    {
+        Instantiate(Resources.Load("VictoryScreen"), MoveAnchorControlsUI.transform.parent);
+    }
 
     [PunRPC]
     void ReceiveSpawnPoint(string SpawnPosName)
@@ -474,6 +479,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
                     object[] data = (object[])photonEvent.CustomData;
                     GameObject.FindGameObjectWithTag("WinScreen").GetComponent<WinScreenUI>()
                         .UpdateOtherPlayerData((string)data[0], (int)data[1]);
+
+                    Reset_Anchor();
                     break;
                 }
             default:

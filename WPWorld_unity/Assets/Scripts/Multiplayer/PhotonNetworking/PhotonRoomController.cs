@@ -43,7 +43,6 @@ public class PhotonRoomController : MonoBehaviour
     public enum GAMEMODE
     {
         GAMEMODE_SNAKE,
-        GAMEMODE_TRON,
         GAMEMODE_PLATFORMER,
         GAMEMODE_BOMBERMAN,
 
@@ -288,12 +287,6 @@ public class PhotonRoomController : MonoBehaviour
             case GAMEMODE.GAMEMODE_SNAKE:
                 {
                     CurrentGameModeImage.sprite = SnakeSprite;
-                    PhotonRoomController.CurrentGamemode = CurrentGamemode;
-                    break;
-                }
-            case GAMEMODE.GAMEMODE_TRON:
-                {
-                    CurrentGameModeImage.sprite = TronSprite;
                     PhotonRoomController.CurrentGamemode = CurrentGamemode;
                     break;
                 }
