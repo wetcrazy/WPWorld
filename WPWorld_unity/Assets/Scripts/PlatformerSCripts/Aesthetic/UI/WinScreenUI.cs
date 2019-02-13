@@ -94,7 +94,7 @@ public class WinScreenUI : MonoBehaviour {
             };
         ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
         PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.INFO_OTHER_PLAYER, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
-        
+
         PlayerOneScore.text = MultiplayerController.PlayerScore.ToString();
         NewHighscoreText.SetActive(false);
 
@@ -186,6 +186,7 @@ public class WinScreenUI : MonoBehaviour {
             }
             else
             {
+
                 M_PanelActivate = true;
                 A_TextShow = true;
                 W_PosRef.anchoredPosition = DropSpot;
@@ -222,11 +223,6 @@ public class WinScreenUI : MonoBehaviour {
                     }
                 }
             }
-        }
-        // After Bounce
-        else
-        {
-            
         }
 
         // Pointer
