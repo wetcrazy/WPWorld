@@ -70,11 +70,7 @@ public class BombermanBreakable : MonoBehaviour
         if(collision.transform.tag == "BombermanFloor" || collision.transform.tag == "BombermanBreakable")
         {
             is_Fall = false;
-        }
-        if(collision.transform.gameObject == PlayerMovement.LocalPlayerInstance && !is_Fall)
-        {
-            PlayerMovement.LocalPlayerInstance.GetComponent<BomberManPlayer>().SetisDead(true);
-        }
+        }       
     }
     private void OnCollisionExit(Collision collision)
     {

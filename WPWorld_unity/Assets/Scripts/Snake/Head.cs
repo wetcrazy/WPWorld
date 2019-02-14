@@ -146,42 +146,19 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             m_Speed = normalspeed;
             timer = 5;
         }
-
-        //Inputs on keyboard
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    Stun();
-        //}
-        //if (Input.GetKeyDown(KeyCode.I))
-        //{
-        //    Speed_up();
-        //}
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    Speed_down();
-        //}
-
+        
         
 
         // Player movement
         if (!hit)
         {
             PlayerControl();
-            //if (Vector3.Distance(prev, this.gameObject.transform.position) > 0.08f)
-            //{
-            //    popmypos();
-            //}
+        
             if (once)
             {
                 gameObject.transform.position += gameObject.transform.forward * m_Speed;
             }
-            //gameObject.transform.position += gameObject.transform.forward * m_Speed;
-
-            //if (once)
-            //{
-            //    gameObject.transform.position += gameObject.transform.forward * m_Speed;
-            //}
-
+         
             // Children Movement
             foreach (GameObject child in Children)
             {
@@ -224,15 +201,19 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             spawntime -= Time.deltaTime;
         }
+
         if(spawntime<=0)
         {
            
             gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
             this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided = false;
             Lives--;
+            once = false;
             multiplier = minmult;
             streakcounter = 0;
-
+            spawntime = 3.0f;
+            isInput = false;
+            m_Speed = normalspeed;
         }
 
         //float test = Settofixnumber(this.gameObject.transform.position.x);
@@ -315,7 +296,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 {
                     var childScript = child.GetComponent<Body>();
                     childScript.turningDirection.Enqueue(GetComponent<Head>().facingState);
-                    childScript.turningPos.Enqueue(gameObject.transform.position);
+                    childScript.turningPos.Enqueue(gameObject.transform.localPosition);
                 }
                 isInput = false;
             }
@@ -374,13 +355,13 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
         if (Children.Count == 0)
         {
-            newPosition = this.transform.position - (this.transform.forward * transform.parent.localScale.x);
+            newPosition = this.transform.localPosition- (this.transform.forward * transform.parent.localScale.x);
             var child = Instantiate(bodyPartObj, newPosition, this.gameObject.transform.rotation, transform.parent);
             Children.Add(child);
         }
         else
         {
-            newPosition = Children[Children.Count - 1].transform.position - (Children[Children.Count - 1].transform.forward * transform.parent.localScale.x);
+            newPosition = Children[Children.Count - 1].transform.localPosition - (Children[Children.Count - 1].transform.forward * transform.parent.localScale.x);
             var child = Instantiate(bodyPartObj, newPosition, Children[Children.Count - 1].transform.rotation, transform.parent);                  
             Children.Add(child);
 
