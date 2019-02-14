@@ -9,7 +9,7 @@ public class Head : MonoBehaviourPun, IPunObservable
 {
 
     //public Text dispos;
-    Vector3 SpawnPoint;
+   // Vector3 SpawnPoint;
     float spawntime = 3.0f;
 
     //Facing(for rotation of "Head" object of the snake)
@@ -44,7 +44,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         //Set the level as the parent
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
         LocalPlayerInstance = gameObject;
-        SpawnPoint = this.gameObject.transform.localPosition;
+      //  SpawnPoint = this.gameObject.transform.localPosition;
     }
 
     // float blinking = 2.5f;
@@ -171,7 +171,7 @@ public class Head : MonoBehaviourPun, IPunObservable
             //}
             if (once)
             {
-                gameObject.transform.position += gameObject.transform.forward * m_Speed;
+                gameObject.transform.localPosition += gameObject.transform.forward * m_Speed;
             }
             //gameObject.transform.position += gameObject.transform.forward * m_Speed;
 
@@ -187,11 +187,11 @@ public class Head : MonoBehaviourPun, IPunObservable
 
                 if (childScript.turningPos.Count == 0)
                 {
-                    child.gameObject.transform.position += child.gameObject.transform.forward * m_Speed;
+                    child.gameObject.transform.localPosition += child.gameObject.transform.forward * m_Speed;
                 }
                 else
                 {
-                    child.gameObject.transform.position = Vector3.MoveTowards(child.gameObject.transform.position, childScript.turningPos.Peek(), m_Speed);
+                    child.gameObject.transform.localPosition = Vector3.MoveTowards(child.gameObject.transform.localPosition, childScript.turningPos.Peek(), m_Speed);
 
                     if (childScript.turningPos.Peek() == child.transform.position)
                     {
@@ -224,7 +224,8 @@ public class Head : MonoBehaviourPun, IPunObservable
         }
         if(spawntime<=0)
         {
-            this.gameObject.transform.localPosition = SpawnPoint;
+            var spawn = GameObject.FindGameObjectsWithTag("Respawn");
+            this.gameObject.transform.localPosition = spawn[0].gameObject.transform.localPosition;
             this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided = false;
             Lives--;
             multiplier = minmult;
@@ -312,7 +313,7 @@ public class Head : MonoBehaviourPun, IPunObservable
                 {
                     var childScript = child.GetComponent<Body>();
                     childScript.turningDirection.Enqueue(GetComponent<Head>().facingState);
-                    childScript.turningPos.Enqueue(gameObject.transform.position);
+                    childScript.turningPos.Enqueue(gameObject.transform.localPosition);
                 }
                 isInput = false;
             }
