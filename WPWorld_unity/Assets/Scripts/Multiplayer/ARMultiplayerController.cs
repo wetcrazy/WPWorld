@@ -32,12 +32,12 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     Camera MainCamera;
     [SerializeField]
     GameObject PlayerObjectPrefab;
-    [SerializeField]
-    Text DebugText;
-    [SerializeField]
-    Text DebugText2;
-    [SerializeField]
-    Text DebugText3;
+    //[SerializeField]
+    //Text DebugText;
+    //[SerializeField]
+    //Text DebugText2;
+    //[SerializeField]
+    //Text DebugText3;
 
     [Header("Move Anchor Screen Objects")]
     [SerializeField]
@@ -104,7 +104,6 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             case STATE_SCREEN.SCREEN_GAME:
                 {
                     GameScreenUpdate();
-                    DebugText2.text = Head.LocalPlayerInstance.transform.localPosition.ToString();
                     break;
                 }
             default:

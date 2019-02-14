@@ -19,7 +19,6 @@ public class RotateOnCollided : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            Debug.Log("HAHA SURPRISE MOFO");
             transform.Rotate(0, 0, 90);
         }
     }
@@ -28,7 +27,6 @@ public class RotateOnCollided : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            Debug.Log("HAHA SURPRISE MOFO");
             transform.Rotate(0, 0, 90);
         }
     }

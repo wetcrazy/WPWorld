@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
     public static GameObject LocalPlayerInstance;
 
     // Debugger
-    private Text debug;
+    //private Text debug;
 
     private void Awake()
     {
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable {
 
     // Use this for initialization
     void Start () {
-        debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
+      
         //Setting the username text that is above the player objects
         gameObject.transform.GetChild(0).GetComponent<TextMesh>().text = photonView.Owner.NickName;
 

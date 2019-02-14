@@ -94,7 +94,7 @@ public class TPSLogic : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
 
-    Text DebugText;
+    //Text DebugText;
     // Use this for initialization
     void Start()
     {

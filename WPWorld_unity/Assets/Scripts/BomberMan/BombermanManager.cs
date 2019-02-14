@@ -38,7 +38,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     private Quaternion NewRotation;
 
     // Debugger
-    private Text debug;
+    //private Text debug;
 
     // Gameover things
     private bool is_GameOver;
@@ -62,7 +62,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
     // START
     private void Start()
     {
-        debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
+        //debug = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
         is_GameOver = false;       
     }
 
@@ -288,7 +288,7 @@ public class BombermanManager : MonoBehaviourPun, IOnEventCallback
             newPreab = List_BreakablesBlocks[1].gameObject;
         }
 
-        debug.text = BreakablePos.ToString();
+        //debug.text = BreakablePos.ToString();
         GameObject newBreakable = Instantiate(newPreab, Vector3.zero, Quaternion.identity, ARMultiplayerController._GroundObject.transform);
 
         BreakablePos.y += 10;
