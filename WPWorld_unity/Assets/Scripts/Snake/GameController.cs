@@ -144,7 +144,6 @@ public class GameController : MonoBehaviour
             newPosition = arr_Blocks[RNG].transform.localPosition;
 
             newPosition.y += 5;
-           // newPosition.y += arr_Blocks[RNG].transform.localScale * 5;
             var newFood = Instantiate(Speedyprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
         }

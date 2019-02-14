@@ -9,7 +9,7 @@ public class Head : MonoBehaviourPun, IPunObservable
 {
 
     //public Text dispos;
-    Vector3 SpawnPoint;
+   // Vector3 SpawnPoint;
     float spawntime = 3.0f;
 
     //Facing(for rotation of "Head" object of the snake)
@@ -44,7 +44,7 @@ public class Head : MonoBehaviourPun, IPunObservable
         //Set the level as the parent
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
         LocalPlayerInstance = gameObject;
-        SpawnPoint = this.gameObject.transform.localPosition;
+      //  SpawnPoint = this.gameObject.transform.localPosition;
     }
 
     // float blinking = 2.5f;
@@ -224,7 +224,8 @@ public class Head : MonoBehaviourPun, IPunObservable
         }
         if(spawntime<=0)
         {
-            this.gameObject.transform.localPosition = SpawnPoint;
+            var spawn = GameObject.FindGameObjectsWithTag("Respawn");
+            this.gameObject.transform.localPosition = spawn[0].gameObject.transform.localPosition;
             this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided = false;
             Lives--;
             multiplier = minmult;
