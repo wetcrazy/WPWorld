@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour
     private List<GameObject> arr_BODY = new List<GameObject>();
 
     private float score = 0;
+   // private float lives = 0;
     Head PlayerHeadComponent;
     
     private void Start()
@@ -127,7 +128,7 @@ public class GameController : MonoBehaviour
         Vector3 newPosition;
 
 
-        if (score % 100 == 0)
+        if (score % 30 == 0)
         {
 
             RNG = Random.Range(0, arr_Blocks.Count);
@@ -155,6 +156,7 @@ public class GameController : MonoBehaviour
     public void UpdateLivesText(float amount)
     {
         LifeDisplay.text = " Lives : " + amount;
+        //lives = amount;
     }
 
     public void UpdateWLConditionText(string text)

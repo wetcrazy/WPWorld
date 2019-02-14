@@ -214,6 +214,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             spawntime = 3.0f;
             isInput = false;
             m_Speed = normalspeed;
+            gameController.UpdateLivesText(Lives);
+            Stun();
         }
 
         //float test = Settofixnumber(this.gameObject.transform.position.x);
@@ -355,13 +357,13 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
         if (Children.Count == 0)
         {
-            newPosition = this.transform.localPosition- (this.transform.forward * transform.parent.localScale.x);
+            newPosition = this.transform.position- (this.transform.forward * transform.parent.localScale.x);
             var child = Instantiate(bodyPartObj, newPosition, this.gameObject.transform.rotation, transform.parent);
             Children.Add(child);
         }
         else
         {
-            newPosition = Children[Children.Count - 1].transform.localPosition - (Children[Children.Count - 1].transform.forward * transform.parent.localScale.x);
+            newPosition = Children[Children.Count - 1].transform.position - (Children[Children.Count - 1].transform.forward * transform.parent.localScale.x);
             var child = Instantiate(bodyPartObj, newPosition, Children[Children.Count - 1].transform.rotation, transform.parent);                  
             Children.Add(child);
 
