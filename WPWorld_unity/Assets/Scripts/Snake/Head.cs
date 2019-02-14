@@ -171,7 +171,7 @@ public class Head : MonoBehaviourPun, IPunObservable
             //}
             if (once)
             {
-                gameObject.transform.position += gameObject.transform.forward * m_Speed;
+                gameObject.transform.localPosition += gameObject.transform.forward * m_Speed;
             }
             //gameObject.transform.position += gameObject.transform.forward * m_Speed;
 
@@ -187,11 +187,11 @@ public class Head : MonoBehaviourPun, IPunObservable
 
                 if (childScript.turningPos.Count == 0)
                 {
-                    child.gameObject.transform.position += child.gameObject.transform.forward * m_Speed;
+                    child.gameObject.transform.localPosition += child.gameObject.transform.forward * m_Speed;
                 }
                 else
                 {
-                    child.gameObject.transform.position = Vector3.MoveTowards(child.gameObject.transform.position, childScript.turningPos.Peek(), m_Speed);
+                    child.gameObject.transform.localPosition = Vector3.MoveTowards(child.gameObject.transform.localPosition, childScript.turningPos.Peek(), m_Speed);
 
                     if (childScript.turningPos.Peek() == child.transform.position)
                     {
@@ -313,7 +313,7 @@ public class Head : MonoBehaviourPun, IPunObservable
                 {
                     var childScript = child.GetComponent<Body>();
                     childScript.turningDirection.Enqueue(GetComponent<Head>().facingState);
-                    childScript.turningPos.Enqueue(gameObject.transform.position);
+                    childScript.turningPos.Enqueue(gameObject.transform.localPosition);
                 }
                 isInput = false;
             }
