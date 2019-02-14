@@ -1,11 +1,13 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Head : MonoBehaviourPun, IPunObservable
+public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 {
 
     //public Text dispos;
@@ -171,7 +173,7 @@ public class Head : MonoBehaviourPun, IPunObservable
             //}
             if (once)
             {
-                gameObject.transform.localPosition += gameObject.transform.forward * m_Speed;
+                gameObject.transform.position += gameObject.transform.forward * m_Speed;
             }
             //gameObject.transform.position += gameObject.transform.forward * m_Speed;
 
@@ -187,11 +189,11 @@ public class Head : MonoBehaviourPun, IPunObservable
 
                 if (childScript.turningPos.Count == 0)
                 {
-                    child.gameObject.transform.localPosition += child.gameObject.transform.forward * m_Speed;
+                    child.gameObject.transform.position += child.gameObject.transform.forward * m_Speed;
                 }
                 else
                 {
-                    child.gameObject.transform.localPosition = Vector3.MoveTowards(child.gameObject.transform.localPosition, childScript.turningPos.Peek(), m_Speed);
+                    child.gameObject.transform.position = Vector3.MoveTowards(child.gameObject.transform.position, childScript.turningPos.Peek(), m_Speed);
 
                     if (childScript.turningPos.Peek() == child.transform.position)
                     {
@@ -224,8 +226,8 @@ public class Head : MonoBehaviourPun, IPunObservable
         }
         if(spawntime<=0)
         {
-            var spawn = GameObject.FindGameObjectsWithTag("Respawn");
-            this.gameObject.transform.localPosition = spawn[0].gameObject.transform.localPosition;
+           
+            gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
             this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided = false;
             Lives--;
             multiplier = minmult;
@@ -313,7 +315,7 @@ public class Head : MonoBehaviourPun, IPunObservable
                 {
                     var childScript = child.GetComponent<Body>();
                     childScript.turningDirection.Enqueue(GetComponent<Head>().facingState);
-                    childScript.turningPos.Enqueue(gameObject.transform.localPosition);
+                    childScript.turningPos.Enqueue(gameObject.transform.position);
                 }
                 isInput = false;
             }
@@ -533,6 +535,38 @@ public class Head : MonoBehaviourPun, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
+        {
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_BLOCKS_POP_UP:
+                {
+                    Block_Pop_up();
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_STUN:
+                {
+                    Stun();
+                    break;
+                }
+
+            default:
+                break;
+        }
+        
+    }
+
+    //Adds this script as one of the callback targets
+    public void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    public void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
 }
 

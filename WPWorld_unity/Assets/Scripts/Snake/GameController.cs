@@ -128,6 +128,7 @@ public class GameController : MonoBehaviour
         var newBlock = Instantiate(blockprefab, Vector3.zero, Quaternion.Euler(Vector3.zero),transform.parent);
         newBlock.transform.localPosition = newPosition;
 
+
     }
 
     public void Food_stunSpawner()
