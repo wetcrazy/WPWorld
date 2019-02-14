@@ -215,7 +215,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             isInput = false;
             m_Speed = normalspeed;
             gameController.UpdateLivesText(Lives);
-
+            Stun();
         }
 
         //float test = Settofixnumber(this.gameObject.transform.position.x);
