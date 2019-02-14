@@ -298,7 +298,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 {
                     var childScript = child.GetComponent<Body>();
                     childScript.turningDirection.Enqueue(GetComponent<Head>().facingState);
-                    childScript.turningPos.Enqueue(gameObject.transform.localPosition);
+                    childScript.turningPos.Enqueue(gameObject.transform.position);
                 }
                 isInput = false;
             }
