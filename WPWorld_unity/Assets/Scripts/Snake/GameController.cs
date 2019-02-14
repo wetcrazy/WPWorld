@@ -77,17 +77,6 @@ public class GameController : MonoBehaviour
 
         if (PlayerHeadComponent.spawn_block)
         {
-            //Vector3 newPosition;
-            //int RNG;
-            //var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
-            //RNG = Random.Range(0, arr_Blocks.Count);
-            //newPosition = arr_Blocks[RNG].transform.localPosition;
-
-            //newPosition.y += 1;
-            //newFood.transform.localPosition = newPosition;
-           // var arr_Block = GameObject.FindGameObjectsWithTag("Block");
-
-           // Blockcount = arr_Block.Length;
             BlockSpawner();
             PlayerHeadComponent.spawn_block = false;
         }
