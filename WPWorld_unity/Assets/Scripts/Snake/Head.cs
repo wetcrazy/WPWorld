@@ -363,7 +363,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         }
         else
         {
-            newPosition = Children[Children.Count - 1].transform.position - (Children[Children.Count - 1].transform.forward * transform.parent.localScale.x);
+            newPosition = Children[Children.Count - 1].transform.position - (Children[Children.Count - 1].transform.forward * (transform.parent.localScale.x)*0.5f);
             var child = Instantiate(bodyPartObj, newPosition, Children[Children.Count - 1].transform.rotation, transform.parent);                  
             Children.Add(child);
 
@@ -393,17 +393,6 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         //Output this to console when the Button2 is clicked
         Debug.Log(message);
     }
-    //void TaskOnClick()
-    //{
-    //    //Output this to console when Button1 or Button3 is clicked
-    //    Debug.Log("You have clicked the button!");
-    //}
-    //void ButtonClicked(int buttonNo)
-    //{
-    //    //Output this to console when the Button3 is clicked
-    //    Debug.Log("Button clicked = " + buttonNo);
-    //}
-
     //used for mobile ui touches
     public void Inputup()
     {
