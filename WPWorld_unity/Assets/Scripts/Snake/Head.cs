@@ -308,29 +308,29 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     }
 
     // Collision
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Food")
-        {
-            AddBody();
-        }
-        else if(other.gameObject.CompareTag("Food_Block"))
-        {
-            Block_Pop_up();
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.tag == "Food")
+    //    {
+    //        AddBody();
+    //    }
+    //    else if(other.gameObject.CompareTag("Food_Block"))
+    //    {
+    //        Block_Pop_up();
+    //    }
+    //}
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Food")
-        {
-            AddBody();
-        }
-        else if (collision.gameObject.CompareTag("Food_Block"))
-        {
-            Block_Pop_up();
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject.tag == "Food")
+    //    {
+    //        AddBody();
+    //    }
+    //    else if (collision.gameObject.CompareTag("Food_Block"))
+    //    {
+    //        Block_Pop_up();
+    //    }
+    //}
 
     //score goes up
     public void AddAppleAte()
@@ -357,7 +357,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
         if (Children.Count == 0)
         {
-            newPosition = this.transform.position- (this.transform.forward * transform.parent.localScale.x);
+            newPosition = this.transform.position - (this.transform.forward * transform.parent.localScale.x);
             var child = Instantiate(bodyPartObj, newPosition, this.gameObject.transform.rotation, transform.parent);
             Children.Add(child);
         }
@@ -370,8 +370,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             var childScript = Children[Children.Count - 1].GetComponent<Body>();
 
             // Save turning points
-            childScript.turningPos = new Queue<Vector3>(Children[Children.Count - 1].GetComponent<Body>().turningPos);
-            childScript.turningDirection = new Queue<STATE_FACING>(Children[Children.Count - 1].GetComponent<Body>().turningDirection);                  
+            childScript.turningPos = new Queue<Vector3>(Children[Children.Count - 2].GetComponent<Body>().turningPos);
+            childScript.turningDirection = new Queue<STATE_FACING>(Children[Children.Count - 2].GetComponent<Body>().turningDirection);                  
         }
 
     }
