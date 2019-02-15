@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -190,11 +190,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114446752064286390, guid: 18fccc16d0ffd19468d1291b0fe11394,
+    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
         type: 2}
-      propertyPath: viewIdField
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 1646908808}
     - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
         type: 2}
       propertyPath: MoveAnchorControlsUI
@@ -215,43 +215,11 @@ Prefab:
       propertyPath: SpawnPlayersButton
       value: 
       objectReference: {fileID: 1793914924}
-    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
+    - target: {fileID: 114446752064286390, guid: 18fccc16d0ffd19468d1291b0fe11394,
         type: 2}
-      propertyPath: LevelObject
-      value: 
-      objectReference: {fileID: 1609093623730836, guid: 9b38d4bed32090e40938566e7a06ff01,
-        type: 2}
-    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
-        type: 2}
-      propertyPath: DebugText2
-      value: 
-      objectReference: {fileID: 1759983285}
-    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
-        type: 2}
-      propertyPath: DebugText
-      value: 
-      objectReference: {fileID: 1750808535}
-    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
-        type: 2}
-      propertyPath: PlayerObjectPrefab
-      value: 
-      objectReference: {fileID: 1248230201449258, guid: dbc0437c88e41f24c99f37a00fd584af,
-        type: 2}
-    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
-        type: 2}
-      propertyPath: MainCamera
-      value: 
-      objectReference: {fileID: 1646908808}
-    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
-        type: 2}
-      propertyPath: SinglePlayer
+      propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114717239392919490, guid: 18fccc16d0ffd19468d1291b0fe11394,
-        type: 2}
-      propertyPath: DebugText3
-      value: 
-      objectReference: {fileID: 1125358794}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18fccc16d0ffd19468d1291b0fe11394, type: 2}
   m_IsPrefabParent: 0
