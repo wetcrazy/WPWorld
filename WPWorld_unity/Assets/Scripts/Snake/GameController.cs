@@ -60,12 +60,15 @@ public class GameController : MonoBehaviour
                 arr_BODY.Add(child.gameObject);
             }
         }
-
-        PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
     }
 
     private void Update()
     {
+        if (PlayerHeadComponent == null)
+        {
+            PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
+        }
+
         var arr_food = GameObject.FindGameObjectsWithTag("Food");
 
         Foodcount = arr_food.Length;
