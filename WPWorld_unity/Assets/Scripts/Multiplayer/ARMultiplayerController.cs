@@ -32,8 +32,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     Camera MainCamera;
     [SerializeField]
     GameObject PlayerObjectPrefab;
-    //[SerializeField]
-    //Text DebugText;
+    [SerializeField]
+    Text DebugText;
     //[SerializeField]
     //Text DebugText2;
     //[SerializeField]
@@ -418,10 +418,14 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+                //DebugText.text = PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0).ToString();
+                Debug.Log(PlayerObjectPrefab.name + "instantiated");
             }
             else
             {
-                PhotonNetwork.Instantiate("Player 2", Vector3.zero, Quaternion.identity, 0);
+                PhotonNetwork.Instantiate("Player 2 is instantiated", Vector3.zero, Quaternion.identity, 0);
+                Debug.Log("Player 2");
+
             }
             return;
         }
