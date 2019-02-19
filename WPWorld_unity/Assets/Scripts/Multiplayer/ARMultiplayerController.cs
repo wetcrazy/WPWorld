@@ -424,7 +424,15 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
 
         if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0" || isSinglePlayer)
         {
-            Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity);
+            //Instantiate(PlayerObjectPrefab, Vector3.zero, Quaternion.identity);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
+            }
+            else
+            {
+                PhotonNetwork.Instantiate("Player 2", Vector3.zero, Quaternion.identity, 0);
+            }
             return;
         }
 
