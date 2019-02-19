@@ -40,12 +40,18 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     public static GameObject LocalPlayerInstance;
     //SceneObject
     GameController gameController;
+    
+    SendOptions sendOptions = new SendOptions { Reliability = true };
 
     private void Awake()
     {
         //Set the level as the parent
         gameObject.transform.SetParent(ARMultiplayerController._GroundObject.transform, true);
-        LocalPlayerInstance = gameObject;
+
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
       //  SpawnPoint = this.gameObject.transform.localPosition;
     }
 
@@ -82,6 +88,11 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     private void Start()
     {
+        if(!photonView.IsMine)
+        {
+            return;
+        }
+
         //Set the pos
         gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
 
@@ -119,9 +130,31 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         gameController.UpdateScoreText(I_score);
     }
     //update*********************************************************************************************
-    
+
+    private void FixedUpdate()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
+        if (!ARMultiplayerController.isSinglePlayer)
+        {
+            //Update position on other client
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+
+            //Update your rotation on other clients
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+        }
+    }
+
     private void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         //check collision of nose
         hit = this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided;
 

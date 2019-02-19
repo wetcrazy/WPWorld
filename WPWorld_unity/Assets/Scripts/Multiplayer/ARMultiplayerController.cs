@@ -400,19 +400,9 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
         //HOST: Once everyone has spawned their level, send everyone their spawnpoints
         if (NumOfPlayersSpawnedLevel == PhotonNetwork.PlayerList.Length)
         {
-            if (SceneManagerHelper.ActiveSceneName == "SNAKE2.0")
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
             {
-                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
-                {
-                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[0].name);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
-                {
-                    photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
-                }
+                photonView.RPC("ReceiveSpawnPoint", PhotonNetwork.PlayerList[i], LevelSpawnPoints[i].name);
             }
         }
     }
