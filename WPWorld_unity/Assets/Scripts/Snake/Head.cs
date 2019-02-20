@@ -383,7 +383,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         gameController.UpdateScoreText(I_score);
 
         SendOptions sendOptions = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BOUNCE, null, RaiseEventOptions.Default, sendOptions);
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD, null, RaiseEventOptions.Default, sendOptions);
         AddBody();
     }
 
