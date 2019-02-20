@@ -431,7 +431,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             }
             else
             {
-                PhotonNetwork.Instantiate("Player2", Vector3.zero, Quaternion.identity, 0);
+                PhotonNetwork.Instantiate("Player 2", Vector3.zero, Quaternion.identity, 0);
                 Debug.Log("Player 2 is instantiated");
                 DebugText2.text = "Player 2 is instantiated";
             }
