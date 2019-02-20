@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
         var arr_food = GameObject.FindGameObjectsWithTag("Food");
 
         Foodcount = arr_food.Length;
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && ARMultiplayerController.isPlayerSpawned)
         {
             FoodSpawner();
         }
