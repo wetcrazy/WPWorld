@@ -154,6 +154,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     {
         if (!photonView.IsMine)
         {
+            UpdateBody();
             return;
         }
 
@@ -193,44 +194,9 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             {
                 gameObject.transform.position += gameObject.transform.forward * m_Speed;
             }
-         
+
             // Children Movement
-            foreach (GameObject child in Children)
-            {
-                var childScript = child.GetComponent<Body>();
-
-                if (childScript.turningPos.Count == 0)
-                {
-                    child.gameObject.transform.position += child.gameObject.transform.forward * m_Speed;
-                }
-                else
-                {
-                    child.gameObject.transform.position = Vector3.MoveTowards(child.gameObject.transform.position, childScript.turningPos.Peek(), m_Speed);
-
-                    if (childScript.turningPos.Peek() == child.transform.position)
-                    {
-
-                        if (childScript.turningDirection.Peek() == STATE_FACING.STATE_FORWARD)
-                        {
-                            child.transform.localEulerAngles = Vector3.zero;
-                        }
-                        else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_BACKWARD)
-                        {
-                            child.transform.localEulerAngles = new Vector3(0, 180, 0);
-                        }
-                        else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_RIGHT)
-                        {
-                            child.transform.localEulerAngles = new Vector3(0, 90, 0);
-                        }
-                        else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_LEFT)
-                        {
-                            child.transform.localEulerAngles = new Vector3(0, 270, 0);
-                        }
-                        childScript.turningPos.Dequeue();
-                        childScript.turningDirection.Dequeue();
-                    }
-                }
-            }
+            UpdateBody();
         }
         else
         {
@@ -256,6 +222,47 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         //float test = Settofixnumber(this.gameObject.transform.position.x);
         // dispos.text = test.ToString();
     }
+
+    void UpdateBody()
+    {
+        foreach (GameObject child in Children)
+        {
+            var childScript = child.GetComponent<Body>();
+
+            if (childScript.turningPos.Count == 0)
+            {
+                child.gameObject.transform.position += child.gameObject.transform.forward * m_Speed;
+            }
+            else
+            {
+                child.gameObject.transform.position = Vector3.MoveTowards(child.gameObject.transform.position, childScript.turningPos.Peek(), m_Speed);
+
+                if (childScript.turningPos.Peek() == child.transform.position)
+                {
+
+                    if (childScript.turningDirection.Peek() == STATE_FACING.STATE_FORWARD)
+                    {
+                        child.transform.localEulerAngles = Vector3.zero;
+                    }
+                    else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_BACKWARD)
+                    {
+                        child.transform.localEulerAngles = new Vector3(0, 180, 0);
+                    }
+                    else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_RIGHT)
+                    {
+                        child.transform.localEulerAngles = new Vector3(0, 90, 0);
+                    }
+                    else if (childScript.turningDirection.Peek() == STATE_FACING.STATE_LEFT)
+                    {
+                        child.transform.localEulerAngles = new Vector3(0, 270, 0);
+                    }
+                    childScript.turningPos.Dequeue();
+                    childScript.turningDirection.Dequeue();
+                }
+            }
+        }
+    }
+
     // Inputs
     private void PlayerControl()
     {
@@ -381,9 +388,6 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
         I_score+= (float)applecost * multiplier;
         gameController.UpdateScoreText(I_score);
-
-        SendOptions sendOptions = new SendOptions { Reliability = true };
-        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD, null, RaiseEventOptions.Default, sendOptions);
         AddBody();
     }
 
@@ -576,7 +580,13 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 }
             case EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD:
                 {
+                    Destroy(GameObject.FindGameObjectWithTag("Food"));
                     PlayerGoDict[photonEvent.Sender].GetComponent<Head>().AddBody();
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD:
+                {
+                    gameController.FoodSpawner((Vector3)photonEvent.CustomData);
                     break;
                 }
 

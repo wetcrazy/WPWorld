@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +40,8 @@ public class GameController : MonoBehaviour
    // private float lives = 0;
     Head PlayerHeadComponent;
     
+    ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+
     private void Start()
     {
         //texts
@@ -72,7 +75,10 @@ public class GameController : MonoBehaviour
         var arr_food = GameObject.FindGameObjectsWithTag("Food");
 
         Foodcount = arr_food.Length;
-        FoodSpawner();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            FoodSpawner();
+        }
         var arr_Speedfood = GameObject.FindGameObjectsWithTag("Speedy");
         if(arr_Speedfood.Length <=0)
         {
@@ -102,8 +108,15 @@ public class GameController : MonoBehaviour
             newPosition.y += 5;
             var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
-        }
 
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD, newPosition, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+        }
+    }
+
+    public void FoodSpawner(Vector3 FoodPos)
+    {
+        var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
+        newFood.transform.localPosition = FoodPos;
     }
 
     public void BlockSpawner()
