@@ -586,7 +586,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 }
             case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD:
                 {
-                    gameController.FoodSpawner((Vector3)photonEvent.CustomData);
+                    object[] data = (object[])photonEvent.CustomData;
+                    gameController.FoodSpawner((Vector3)data[0]);
                     break;
                 }
 

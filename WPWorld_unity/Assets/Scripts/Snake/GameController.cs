@@ -109,7 +109,12 @@ public class GameController : MonoBehaviour
             var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
 
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD, newPosition, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+            object[] content = new object[]
+                   {
+                        newPosition
+                   };
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+
         }
     }
 
