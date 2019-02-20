@@ -15,6 +15,10 @@ public class Nose : MonoBehaviour {
             Debug.Log("okay");
             deathcollided = true;
         }
+        else if(other.CompareTag("Player") && other.name != GetComponentInParent<GameObject>().name)
+        {
+            deathcollided = true;
+        }
         else if((other.name == "Body(Clone)") || (other.CompareTag("Body")))
         {
             deathcollided = true;

@@ -334,19 +334,13 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     // Spawn Player button (for host)
     public void SpawnPlayerHost()
     {
-        string a = "button working";
-        string b;
         if (isSinglePlayer)
         {
             SpawnPlayer();
-            b = "ifsingleplayer";
+          
             return;
         }
-        else
-        {
-            b = "singleskipped";
-        }
-        DebugText3.text = a + b;
+     
         photonView.RPC("SpawnPlayer", RpcTarget.All);
 
         SpawnPlayersButton.SetActive(false);
