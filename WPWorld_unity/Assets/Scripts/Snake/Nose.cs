@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Nose : MonoBehaviour {
     public bool deathcollided = false;
@@ -15,7 +16,7 @@ public class Nose : MonoBehaviour {
             Debug.Log("okay");
             deathcollided = true;
         }
-        else if(other.CompareTag("Player") && other.name != GetComponentInParent<GameObject>().name)
+        else if(other.CompareTag("Player") && !other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             deathcollided = true;
         }
