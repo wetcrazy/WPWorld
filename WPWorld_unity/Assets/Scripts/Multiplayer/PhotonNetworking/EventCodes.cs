@@ -33,6 +33,7 @@
         SNAKE_EVENT_STUN,
         SNAKE_EVENT_BLOCKS_POP_UP,
         SNAKE_EVENT_SLOWDOWN,
+        SNAKE_EVENT_EATFOOD,
 
         //Other
         INFO_OTHER_PLAYER,

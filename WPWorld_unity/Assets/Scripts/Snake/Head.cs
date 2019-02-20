@@ -43,6 +43,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
     SendOptions sendOptions = new SendOptions { Reliability = true };
 
+    Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
+
     private void Awake()
     {
         //Set the level as the parent
@@ -380,6 +382,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         I_score+= (float)applecost * multiplier;
         gameController.UpdateScoreText(I_score);
 
+        SendOptions sendOptions = new SendOptions { Reliability = true };
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORM_EVENT_BLOCK_BOUNCE, null, RaiseEventOptions.Default, sendOptions);
         AddBody();
     }
 
@@ -544,6 +548,20 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
+        if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
+        {
+            GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (GameObject player in PlayerGoList)
+            {
+                if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
+                {
+                    PlayerGoDict.Add(photonEvent.Sender, player);
+                    break;
+                }
+            }
+        }
+
         switch ((EventCodes.EVENT_CODES)photonEvent.Code)
         {
             case EventCodes.EVENT_CODES.SNAKE_EVENT_BLOCKS_POP_UP:
@@ -554,6 +572,11 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             case EventCodes.EVENT_CODES.SNAKE_EVENT_STUN:
                 {
                     Stun();
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD:
+                {
+                    PlayerGoDict[photonEvent.Sender].GetComponent<Head>().AddBody();
                     break;
                 }
 
