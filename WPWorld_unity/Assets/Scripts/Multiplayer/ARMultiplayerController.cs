@@ -36,8 +36,8 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     Text DebugText;
     [SerializeField]
     Text DebugText2;
-    //[SerializeField]
-    //Text DebugText3;
+    [SerializeField]
+    Text DebugText3;
 
     [Header("Move Anchor Screen Objects")]
     [SerializeField]
@@ -334,12 +334,19 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
     // Spawn Player button (for host)
     public void SpawnPlayerHost()
     {
-        if(isSinglePlayer)
+        string a = "button working";
+        string b;
+        if (isSinglePlayer)
         {
             SpawnPlayer();
+            b = "ifsingleplayer";
             return;
         }
-
+        else
+        {
+            b = "singleskipped";
+        }
+        DebugText3.text = a + b;
         photonView.RPC("SpawnPlayer", RpcTarget.All);
 
         SpawnPlayersButton.SetActive(false);
