@@ -167,7 +167,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             //WLconditionDisplay.text = " WINNER ";
             //hit = true;
         }
-        else if (Lives < 1 || hit)
+        else if (Lives <0 )//1 || hit)
         {
             //gameController.UpdateWLConditionText("GAME OVER");
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
