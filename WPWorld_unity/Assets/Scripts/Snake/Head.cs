@@ -29,8 +29,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private float m_Speed;// = 0.01f;
     [SerializeField]
     private GameObject bodyPartObj;
-    [SerializeField]
-    private List<GameObject> Children;//= new List<GameObject>();
+    public List<GameObject> Children = new List<GameObject>();
     //-----------------------------
     bool isInput = false;
     bool once = false;
@@ -149,13 +148,13 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             //Update your rotation on other clients
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
 
-            object[] contentPos = new object[Head.LocalPlayerInstance.transform.childCount];
+            object[] contentPos = new object[transform.childCount];
             object[] contentRot = new object[contentPos.Length];
 
-            for (int i = 0; i < Head.LocalPlayerInstance.transform.childCount; ++i)
+            for (int i = 0; i < transform.childCount; ++i)
             {
-                contentPos[i] = Head.LocalPlayerInstance.transform.GetChild(i).transform.localPosition;
-                contentRot[i] = Head.LocalPlayerInstance.transform.GetChild(i).transform.localEulerAngles;
+                contentPos[i] = Children[i].transform.localPosition;
+                contentRot[i] = Children[i].transform.localEulerAngles;
             }
 
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
@@ -626,11 +625,11 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS:
                 {
                     object[] data = (object[])photonEvent.CustomData;
-                    GameObject theplayer = PlayerGoDict[photonEvent.Sender];
+                    Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
 
                     for (int i = 0; i < data.Length; ++i)
                     {
-                        theplayer.transform.GetChild(i).transform.localPosition = (Vector3)data[i];
+                       theplayer.Children[i].transform.localPosition = (Vector3)data[i];
                     }
 
                     break;
@@ -638,11 +637,11 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT:
                 {
                     object[] data = (object[])photonEvent.CustomData;
-                    GameObject theplayer = PlayerGoDict[photonEvent.Sender];
+                    Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
 
                     for (int i = 0; i < data.Length; ++i)
                     {
-                        theplayer.transform.GetChild(i).transform.localEulerAngles = (Vector3)data[i];
+                        theplayer.Children[i].transform.localEulerAngles = (Vector3)data[i];
                     }
                     break;
                 }
