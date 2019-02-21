@@ -171,7 +171,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             //gameController.UpdateWLConditionText("GAME OVER");
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_EVENT_GAMEOVER, null, RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_EVENT_GAMEOVER, null, raiseEventOptions, sendOptions);
         }
 
         if (m_Speed != normalspeed)
