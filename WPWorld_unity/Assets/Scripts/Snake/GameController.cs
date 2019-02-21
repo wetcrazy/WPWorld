@@ -146,7 +146,6 @@ public class GameController : MonoBehaviour
                };
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNSTUN, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
         }
-
     }
     public void Food_stunSpawner(Vector3 StunPos)
     {

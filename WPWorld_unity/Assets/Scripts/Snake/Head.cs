@@ -418,7 +418,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         else
         {
             newPosition = Children[Children.Count - 1].transform.position - (Children[Children.Count - 1].transform.forward * (transform.parent.localScale.x)*0.5f);
-            var child = Instantiate(bodyPartObj, newPosition, Children[Children.Count - 1].transform.rotation, transform.parent);                  
+            var child = Instantiate(bodyPartObj, newPosition, Children[Children.Count - 1].transform.rotation, transform.parent);
             Children.Add(child);
 
             var childScript = Children[Children.Count - 1].GetComponent<Body>();
@@ -427,7 +427,6 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             childScript.turningPos = new Queue<Vector3>(Children[Children.Count - 2].GetComponent<Body>().turningPos);
             childScript.turningDirection = new Queue<STATE_FACING>(Children[Children.Count - 2].GetComponent<Body>().turningDirection);                  
         }
-
     }
     //clear body parts
     public void ClearBody()
