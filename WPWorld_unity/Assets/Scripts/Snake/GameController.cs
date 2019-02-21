@@ -72,21 +72,18 @@ public class GameController : MonoBehaviour
             PlayerHeadComponent = Head.LocalPlayerInstance.GetComponent<Head>();
         }
 
-        var arr_food = GameObject.FindGameObjectsWithTag("Food");
-
-
-        Foodcount = arr_food.Length;
+        
         if (PhotonNetwork.IsMasterClient && ARMultiplayerController.isPlayerSpawned && GameObject.FindGameObjectsWithTag("Player").Length == PhotonNetwork.PlayerList.Length)
         {
-            if (Foodcount < MAX_Food)
+            if (GameObject.FindGameObjectsWithTag("Food").Length < MAX_Food)
             {
                 FoodSpawner();
             }
-        }
-        var arr_Speedfood = GameObject.FindGameObjectsWithTag("Speedy");
-        if(arr_Speedfood.Length <=0)
-        {
-            Food_stunSpawner();
+
+            if (GameObject.FindGameObjectsWithTag("Speedy").Length <= 0)
+            {
+                Food_stunSpawner();
+            }
         }
 
         if (PlayerHeadComponent.spawn_block)
@@ -99,11 +96,9 @@ public class GameController : MonoBehaviour
     public void FoodSpawner()
     {
         //bool notcolliding;
-        int RNG;
         Vector3 newPosition;
         
-        RNG = Random.Range(0, arr_Blocks.Count);
-        newPosition = arr_Blocks[RNG].transform.localPosition;
+        newPosition = arr_Blocks[Random.Range(0, arr_Blocks.Count)].transform.localPosition;
 
         newPosition.y += 5;
         var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
@@ -124,40 +119,39 @@ public class GameController : MonoBehaviour
 
     public void BlockSpawner()
     {
-        // bool notcolliding;
-        int RNG;
         Vector3 newPosition;
 
-
-        RNG = Random.Range(0, arr_Blocks.Count);
-        newPosition = arr_Blocks[RNG].transform.localPosition;
+        newPosition = arr_Blocks[Random.Range(0, arr_Blocks.Count)].transform.localPosition;
 
         newPosition.y += 5;
 
         var newBlock = Instantiate(blockprefab, Vector3.zero, Quaternion.Euler(Vector3.zero),transform.parent);
         newBlock.transform.localPosition = newPosition;
-
-
     }
 
     public void Food_stunSpawner()
     {
-        //bool notcolliding;
-        int RNG;
-        Vector3 newPosition;
-
-
         if (score % 30 == 0)
         {
-
-            RNG = Random.Range(0, arr_Blocks.Count);
-            newPosition = arr_Blocks[RNG].transform.localPosition;
+            Vector3 newPosition;
+            newPosition = arr_Blocks[Random.Range(0, arr_Blocks.Count)].transform.localPosition;
 
             newPosition.y += 5;
             var newFood = Instantiate(Speedyprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
+
+            object[] content = new object[]
+               {
+                        newPosition
+               };
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNSTUN, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
         }
 
+    }
+    public void Food_stunSpawner(Vector3 StunPos)
+    {
+        var newFood = Instantiate(Speedyprefab, Vector3.zero, Quaternion.identity, transform.parent);
+        newFood.transform.localPosition = StunPos;
     }
 
     //UI Text Updaters

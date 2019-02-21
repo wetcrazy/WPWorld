@@ -5,6 +5,7 @@
         //General Events
         PLAYER_POSITION_UPDATE = 0,
         PLAYER_ROTATION_UPDATE,
+        PLAYER_EVENT_GAMEOVER,
 
         //Bomberman Events
         BOMBER_EVENT_DROP_BOMB,
@@ -33,8 +34,8 @@
         SNAKE_EVENT_STUN,
         SNAKE_EVENT_BLOCKS_POP_UP,
         SNAKE_EVENT_SLOWDOWN,
-        SNAKE_EVENT_PLAYER_SPAWNED,
         SNAKE_EVENT_SPAWNFOOD,
+        SNAKE_EVENT_SPAWNSTUN,
         SNAKE_EVENT_EATFOOD,
 
         //Other

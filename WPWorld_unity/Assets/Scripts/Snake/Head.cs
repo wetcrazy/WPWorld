@@ -130,14 +130,6 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         gameController.UpdateLivesText(Lives);
         gameController.UpdateMultiplierText(multiplier);
         gameController.UpdateScoreText(I_score);
-
-        if(!PhotonNetwork.IsMasterClient)
-        {
-            SendOptions sendOptions = new SendOptions { Reliability = true };
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_PLAYER_SPAWNED, null, raiseEventOptions, sendOptions);
-        }
     }
     //update*********************************************************************************************
 
@@ -177,7 +169,9 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         }
         else if (Lives < 1 || hit)
         {
-           //gameController.UpdateWLConditionText("GAME OVER");
+            //gameController.UpdateWLConditionText("GAME OVER");
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_EVENT_GAMEOVER, null, RaiseEventOptions.Default, sendOptions);
         }
 
         if (m_Speed != normalspeed)
@@ -190,8 +184,6 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             m_Speed = normalspeed;
             timer = 5;
         }
-        
-        
 
         // Player movement
         if (!hit)
@@ -597,7 +589,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     }
                     else
                     {
-                        AddBody();
+                        theplayer.GetComponent<Head>().AddBody();
                     }
 
                     if(PhotonNetwork.IsMasterClient)
@@ -612,7 +604,12 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     gameController.FoodSpawner((Vector3)data[0]);
                     break;
                 }
-
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNSTUN:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    gameController.Food_stunSpawner((Vector3)data[0]);
+                    break;
+                }
             default:
                 break;
         }

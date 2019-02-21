@@ -484,6 +484,11 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
                     Reset_Anchor();
                     break;
                 }
+            case EventCodes.EVENT_CODES.PLAYER_EVENT_GAMEOVER:
+                {
+                    EndLevel();
+                    break;
+                }
             default:
                 break;
         }
