@@ -606,6 +606,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
                     if(PhotonNetwork.IsMasterClient)
                     {
+                        --gameController.Foodcount;
                         gameController.FoodSpawner();
                     }
                     break;

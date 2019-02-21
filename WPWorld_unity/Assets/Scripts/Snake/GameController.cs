@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
     private int MAX_Blocks = 6;
 
     private int Blockcount = 0;
-    private int Foodcount = 0;
+    public int Foodcount = 0;
     private List<GameObject> arr_Blocks = new List<GameObject>();
     private List<GameObject> arr_BODY = new List<GameObject>();
 
@@ -75,8 +75,9 @@ public class GameController : MonoBehaviour
         
         if (PhotonNetwork.IsMasterClient && ARMultiplayerController.isPlayerSpawned && GameObject.FindGameObjectsWithTag("Player").Length == PhotonNetwork.PlayerList.Length)
         {
-            if (GameObject.FindGameObjectsWithTag("Food").Length < MAX_Food)
+            if (Foodcount < MAX_Food)
             {
+                ++Foodcount;
                 FoodSpawner();
             }
 
