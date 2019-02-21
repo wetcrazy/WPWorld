@@ -130,6 +130,11 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         gameController.UpdateLivesText(Lives);
         gameController.UpdateMultiplierText(multiplier);
         gameController.UpdateScoreText(I_score);
+        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            gameController.FoodSpawner();
+        }
     }
     //update*********************************************************************************************
 

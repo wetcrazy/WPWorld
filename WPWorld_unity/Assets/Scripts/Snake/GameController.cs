@@ -77,7 +77,10 @@ public class GameController : MonoBehaviour
         Foodcount = arr_food.Length;
         if (PhotonNetwork.IsMasterClient && ARMultiplayerController.isPlayerSpawned)
         {
-            FoodSpawner();
+            if (Foodcount < MAX_Food)
+            {
+                FoodSpawner();
+            }
         }
         var arr_Speedfood = GameObject.FindGameObjectsWithTag("Speedy");
         if(arr_Speedfood.Length <=0)
@@ -97,25 +100,19 @@ public class GameController : MonoBehaviour
         //bool notcolliding;
         int RNG;
         Vector3 newPosition;
+        
+        RNG = Random.Range(0, arr_Blocks.Count);
+        newPosition = arr_Blocks[RNG].transform.localPosition;
 
+        newPosition.y += 5;
+        var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
+        newFood.transform.localPosition = newPosition;
 
-        if (Foodcount < MAX_Food)
-        {
-            
-            RNG = Random.Range(0, arr_Blocks.Count);
-            newPosition = arr_Blocks[RNG].transform.localPosition;
-
-            newPosition.y += 5;
-            var newFood = Instantiate(foodprefab, Vector3.zero, Quaternion.identity, transform.parent);
-            newFood.transform.localPosition = newPosition;
-
-            object[] content = new object[]
-                   {
+        object[] content = new object[]
+               {
                         newPosition
-                   };
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
-
-        }
+               };
+        PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
     }
 
     public void FoodSpawner(Vector3 FoodPos)
