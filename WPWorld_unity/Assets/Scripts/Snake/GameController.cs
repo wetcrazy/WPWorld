@@ -76,7 +76,7 @@ public class GameController : MonoBehaviour
 
 
         Foodcount = arr_food.Length;
-        if (PhotonNetwork.IsMasterClient && ARMultiplayerController.isPlayerSpawned && PlayerHeadComponent.PlayerGoDict.Count == PhotonNetwork.PlayerList.Length)
+        if (PhotonNetwork.IsMasterClient && ARMultiplayerController.isPlayerSpawned && GameObject.FindGameObjectsWithTag("Player").Length == PhotonNetwork.PlayerList.Length)
         {
             if (Foodcount < MAX_Food)
             {
