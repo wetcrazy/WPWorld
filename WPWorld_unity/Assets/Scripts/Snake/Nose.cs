@@ -36,6 +36,7 @@ public class Nose : MonoBehaviour {
         }
         else if (other.CompareTag("Food"))
         {
+            Destroy(other);
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD, null, raiseEventAll, sendOptions);
         }
         else if (other.CompareTag("Speedy"))

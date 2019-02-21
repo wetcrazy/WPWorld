@@ -148,8 +148,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             //Update your rotation on other clients
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
 
-            object[] contentPos = new object[transform.childCount];
-            object[] contentRot = new object[contentPos.Length];
+            Vector3[] contentPos = new Vector3[transform.childCount];
+            Vector3[] contentRot = new Vector3[contentPos.Length];
 
             for (int i = 0; i < transform.childCount; ++i)
             {
@@ -157,8 +157,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 contentRot[i] = Children[i].transform.localEulerAngles;
             }
 
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT, contentRot, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT, contentRot, RaiseEventOptions.Default, sendOptions);
         }
     }
 
