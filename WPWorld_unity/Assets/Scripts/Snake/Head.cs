@@ -610,6 +610,29 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     gameController.Food_stunSpawner((Vector3)data[0]);
                     break;
                 }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    GameObject theplayer = PlayerGoDict[photonEvent.Sender];
+
+                    for (int i = 0; i < data.Length; ++i)
+                    {
+                        theplayer.transform.GetChild(i).transform.localPosition = (Vector3)data[i];
+                    }
+
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    GameObject theplayer = PlayerGoDict[photonEvent.Sender];
+
+                    for (int i = 0; i < data.Length; ++i)
+                    {
+                        theplayer.transform.GetChild(i).transform.localEulerAngles = (Vector3)data[i];
+                    }
+                    break;
+                }
             default:
                 break;
         }
