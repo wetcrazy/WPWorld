@@ -148,8 +148,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             //Update your rotation on other clients
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
 
-            Vector3[] contentPos = new Vector3[transform.childCount];
-            Vector3[] contentRot = new Vector3[contentPos.Length];
+            object[] contentPos = new object[transform.childCount];
+            object[] contentRot = new object[contentPos.Length];
 
             for (int i = 0; i < transform.childCount; ++i)
             {
@@ -157,6 +157,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 contentRot[i] = Children[i].transform.localEulerAngles;
             }
 
+            GameObject.Find("DebugText02").GetComponent<Text>().text = "Sent Pos Num: " + contentPos.Length + "Sent Rot Num: " + contentRot.Length;
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, RaiseEventOptions.Default, sendOptions);
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT, contentRot, RaiseEventOptions.Default, sendOptions);
         }
@@ -627,9 +628,11 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     object[] data = (object[])photonEvent.CustomData;
                     Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
 
+                    Text debugtext03 = GameObject.Find("DebugText03").GetComponent<Text>();
                     for (int i = 0; i < data.Length; ++i)
                     {
                        theplayer.Children[i].transform.localPosition = (Vector3)data[i];
+                        debugtext03.text += (Vector3)data[i] + "//";
                     }
 
                     break;

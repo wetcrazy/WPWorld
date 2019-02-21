@@ -104,6 +104,7 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             case STATE_SCREEN.SCREEN_GAME:
                 {
                     GameScreenUpdate();
+                    DebugText.text = Head.LocalPlayerInstance.GetComponent<Head>().Children.Count.ToString();
                     break;
                 }
             default:
@@ -419,13 +420,10 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0);
-                //DebugText.text = PhotonNetwork.Instantiate(PlayerObjectPrefab.name, Vector3.zero, Quaternion.identity, 0).ToString();
-                DebugText.text = PlayerObjectPrefab.name.ToString() + "instantiated";
             }
             else
             {
                 PhotonNetwork.Instantiate("Player 2", Vector3.zero, Quaternion.identity, 0);
-                DebugText2.text = "Player 2 is instantiated";
             }
             return;
         }
