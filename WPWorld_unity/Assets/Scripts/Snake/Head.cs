@@ -586,7 +586,21 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             case EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD:
                 {
                     Destroy(GameObject.FindGameObjectWithTag("Food"));
-                    PlayerGoDict[photonEvent.Sender].GetComponent<Head>().AddBody();
+                    GameObject theplayer = PlayerGoDict[photonEvent.Sender];
+
+                    if(theplayer.GetPhotonView().IsMine)
+                    {
+                        AddAppleAte();
+                    }
+                    else
+                    {
+                        AddBody();
+                    }
+
+                    if(PhotonNetwork.IsMasterClient)
+                    {
+                        gameController.FoodSpawner();
+                    }
                     break;
                 }
             case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD:

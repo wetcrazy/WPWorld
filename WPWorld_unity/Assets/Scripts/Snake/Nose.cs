@@ -8,6 +8,7 @@ public class Nose : MonoBehaviour {
     public bool deathcollided = false;
 
     ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+    RaiseEventOptions raiseEventAll = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 
     public void Restart()
     {
@@ -35,9 +36,7 @@ public class Nose : MonoBehaviour {
         }
         else if (other.CompareTag("Food"))
         {
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD, null, RaiseEventOptions.Default, sendOptions);
-            gameObject.GetComponentInParent<Head>().AddAppleAte();
-            Destroy(other.gameObject);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD, null, raiseEventAll, sendOptions);
         }
         else if (other.CompareTag("Speedy"))
         {

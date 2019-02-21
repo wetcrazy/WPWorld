@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour
         {
             if (Foodcount < MAX_Food)
             {
-                FoodSpawner();
+                //FoodSpawner();
             }
         }
         var arr_Speedfood = GameObject.FindGameObjectsWithTag("Speedy");
