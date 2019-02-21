@@ -84,6 +84,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     float specialy;
     float specialz;
     public bool spawn_block;
+    bool hasWon = false;
    // float blinking = 2.5f;
     //-------------------------------------------------------------
     //start***************************************************************************************************
@@ -167,11 +168,12 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             //WLconditionDisplay.text = " WINNER ";
             //hit = true;
         }
-        else if (Lives <0 )//1 || hit)
+        else if (Lives <= 0 && !hasWon)//1 || hit)
         {
             //gameController.UpdateWLConditionText("GAME OVER");
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_EVENT_GAMEOVER, null, raiseEventOptions, sendOptions);
+            hasWon = true;
         }
 
         if (m_Speed != normalspeed)
