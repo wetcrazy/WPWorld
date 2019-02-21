@@ -43,7 +43,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
     SendOptions sendOptions = new SendOptions { Reliability = true };
 
-    Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
 
     private void Awake()
     {
@@ -130,10 +130,13 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         gameController.UpdateLivesText(Lives);
         gameController.UpdateMultiplierText(multiplier);
         gameController.UpdateScoreText(I_score);
-        
-        if (PhotonNetwork.IsMasterClient)
+
+        if(!PhotonNetwork.IsMasterClient)
         {
-            gameController.FoodSpawner();
+            SendOptions sendOptions = new SendOptions { Reliability = true };
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_PLAYER_SPAWNED, null, raiseEventOptions, sendOptions);
         }
     }
     //update*********************************************************************************************
