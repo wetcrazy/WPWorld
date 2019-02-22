@@ -147,7 +147,7 @@ public class Head : MonoBehaviourPun
             object[] contentPos = new object[Children.Count];
             object[] contentRot = new object[contentPos.Length];
 
-            for (int i = 0; i < transform.childCount; ++i)
+            for (int i = 0; i < Children.Count; ++i)
             {
                 contentPos[i] = Children[i].transform.localPosition;
                 contentRot[i] = Children[i].transform.localEulerAngles;

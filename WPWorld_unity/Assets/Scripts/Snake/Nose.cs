@@ -20,7 +20,6 @@ public class Nose : MonoBehaviour {
 
         if (other.CompareTag("Block"))
         {
-            Debug.Log("okay");
             deathcollided = true;
         }
         else if(other.CompareTag("Player") && !other.gameObject.GetComponent<PhotonView>().IsMine)
