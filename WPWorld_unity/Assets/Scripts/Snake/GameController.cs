@@ -84,11 +84,6 @@ public class GameController : MonoBehaviour, IOnEventCallback
                 ++Foodcount;
                 FoodSpawner();
             }
-
-            if (GameObject.FindGameObjectsWithTag("Speedy").Length <= 0)
-            {
-                Food_stunSpawner();
-            }
         }
 
         if (PlayerHeadComponent.spawn_block)
@@ -144,12 +139,6 @@ public class GameController : MonoBehaviour, IOnEventCallback
             newPosition.y += 5;
             var newFood = Instantiate(Speedyprefab, Vector3.zero, Quaternion.identity, transform.parent);
             newFood.transform.localPosition = newPosition;
-
-            object[] content = new object[]
-               {
-                        newPosition
-               };
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNSTUN, content, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
         }
     }
     public void Food_stunSpawner(Vector3 StunPos)
@@ -314,12 +303,6 @@ public class GameController : MonoBehaviour, IOnEventCallback
                 {
                     object[] data = (object[])photonEvent.CustomData;
                     FoodSpawner((Vector3)data[0]);
-                    break;
-                }
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNSTUN:
-                {
-                    object[] data = (object[])photonEvent.CustomData;
-                    Food_stunSpawner((Vector3)data[0]);
                     break;
                 }
             case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS:

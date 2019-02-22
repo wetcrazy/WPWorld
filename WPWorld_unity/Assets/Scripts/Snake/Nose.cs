@@ -37,18 +37,13 @@ public class Nose : MonoBehaviour {
         }
         else if (other.CompareTag("Speedy"))
         {
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_STUN, null, RaiseEventOptions.Default, GameController.sendOptions);
-
-            //gameObject.GetComponentInParent<Head>().Stun();
             Destroy(other.gameObject);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_STUN, null, GameController.raiseEventAll, GameController.sendOptions);
         }
         else if (other.CompareTag("Food_Block"))
         {
-            //ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
-            //Photon.Pun.PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BLOCKS_POP_UP, null, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
             gameObject.GetComponentInParent<Head>().Block_Pop_up();
             Destroy(other.gameObject);
-            
         }
 
     }
