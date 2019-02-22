@@ -212,7 +212,7 @@ public class Head : MonoBehaviourPun
 
         if(spawntime<=0)
         {
-           
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_PLAYER_DEATH, null, RaiseEventOptions.Default, GameController.sendOptions);
             gameObject.transform.localPosition = ARMultiplayerController.SpawnPoint;
             this.gameObject.transform.GetChild(0).GetComponent<Nose>().deathcollided = false;
             Lives--;

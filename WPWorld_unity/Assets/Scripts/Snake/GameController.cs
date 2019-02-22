@@ -301,6 +301,7 @@ public class GameController : MonoBehaviour, IOnEventCallback
                     else
                     {
                         theplayer.GetComponent<Head>().AddBody();
+                        GameObject.Find("DebugText").GetComponent<Text>().text = theplayer.GetComponent<Head>().Children.Count.ToString();
                     }
 
                     if (PhotonNetwork.IsMasterClient)
