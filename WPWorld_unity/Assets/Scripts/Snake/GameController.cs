@@ -292,6 +292,8 @@ public class GameController : MonoBehaviour, IOnEventCallback
             case EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD:
                 {
                     Destroy(GameObject.FindGameObjectWithTag("Food"));
+                    
+                    GameObject.Find("DebugText").GetComponent<Text>().text = "My ID: " + PhotonNetwork.LocalPlayer.ActorNumber + "\nSender ID: " + photonEvent.Sender;
 
                     if (photonEvent.Sender == PhotonNetwork.LocalPlayer.ActorNumber)
                     {
@@ -300,7 +302,6 @@ public class GameController : MonoBehaviour, IOnEventCallback
                     else
                     {
                         PlayerGoDict[photonEvent.Sender].GetComponent<Head>().AddBody();
-                        GameObject.Find("DebugText").GetComponent<Text>().text = PlayerGoDict[photonEvent.Sender].GetComponent<Head>().Children.Count.ToString();
                     }
 
                     if (PhotonNetwork.IsMasterClient)
