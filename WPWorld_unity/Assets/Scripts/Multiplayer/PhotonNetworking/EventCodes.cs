@@ -39,6 +39,7 @@
         SNAKE_EVENT_EATFOOD,
         SNAKE_EVENT_BODY_POS,
         SNAKE_EVENT_BODY_ROT,
+        SNAKE_EVENT_PLAYER_DEATH,
 
         //Other
         INFO_OTHER_PLAYER,

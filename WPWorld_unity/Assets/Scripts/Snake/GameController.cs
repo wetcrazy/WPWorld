@@ -344,6 +344,16 @@ public class GameController : MonoBehaviour, IOnEventCallback
                     }
                     break;
                 }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_PLAYER_DEATH:
+                {
+                    Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
+
+                    foreach (GameObject bodypart in theplayer.Children)
+                    {
+                        Destroy(bodypart);
+                    }
+                    break;
+                }
             default:
                 break;
         }

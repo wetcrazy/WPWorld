@@ -21,14 +21,17 @@ public class Nose : MonoBehaviour {
         if (other.CompareTag("Block"))
         {
             deathcollided = true;
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_DEATH, null, RaiseEventOptions.Default, GameController.sendOptions);
         }
         else if(other.CompareTag("Player") && !other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             deathcollided = true;
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_DEATH, null, RaiseEventOptions.Default, GameController.sendOptions);
         }
         else if((other.name == "Body(Clone)") || (other.CompareTag("Body")))
         {
             deathcollided = true;
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLATFORMER_EVENT_PLAYER_DEATH, null, RaiseEventOptions.Default, GameController.sendOptions);
         }
         else if (other.CompareTag("Food"))
         {
