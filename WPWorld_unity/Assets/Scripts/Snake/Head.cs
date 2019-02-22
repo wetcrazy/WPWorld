@@ -144,7 +144,7 @@ public class Head : MonoBehaviourPun
             //Update your rotation on other clients
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, GameController.sendOptions);
 
-            object[] contentPos = new object[transform.childCount];
+            object[] contentPos = new object[Children.Count];
             object[] contentRot = new object[contentPos.Length];
 
             for (int i = 0; i < transform.childCount; ++i)
@@ -153,7 +153,6 @@ public class Head : MonoBehaviourPun
                 contentRot[i] = Children[i].transform.localEulerAngles;
             }
 
-            GameObject.Find("DebugText02").GetComponent<Text>().text = "Sent Pos Num: " + contentPos.Length + "Sent Rot Num: " + contentRot.Length;
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, RaiseEventOptions.Default, GameController.sendOptions);
             PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT, contentRot, RaiseEventOptions.Default, GameController.sendOptions);
         }
