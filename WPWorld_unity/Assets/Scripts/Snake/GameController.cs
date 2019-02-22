@@ -353,6 +353,8 @@ public class GameController : MonoBehaviour, IOnEventCallback
                     {
                         Destroy(bodypart);
                     }
+
+                    theplayer.Children.Clear();
                     break;
                 }
             default:
