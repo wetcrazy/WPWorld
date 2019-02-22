@@ -293,7 +293,7 @@ public class GameController : MonoBehaviour, IOnEventCallback
                 {
                     Destroy(GameObject.FindGameObjectWithTag("Food"));
                     
-                    GameObject.Find("DebugText").GetComponent<Text>().text = "My ID: " + PhotonNetwork.LocalPlayer.ActorNumber + "\nSender ID: " + photonEvent.Sender;
+                    GameObject.Find("DebugText2").GetComponent<Text>().text = "My ID: " + PhotonNetwork.LocalPlayer.ActorNumber + "\nSender ID: " + photonEvent.Sender;
 
                     if (photonEvent.Sender == PhotonNetwork.LocalPlayer.ActorNumber)
                     {
