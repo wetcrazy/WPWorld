@@ -293,15 +293,15 @@ public class GameController : MonoBehaviour, IOnEventCallback
                 {
                     Destroy(GameObject.FindGameObjectWithTag("Food"));
                     
-                    GameObject.Find("DebugText02").GetComponent<Text>().text = "My ID: " + PhotonNetwork.LocalPlayer.ActorNumber + "\nSender ID: " + photonEvent.Sender;
-
                     if (photonEvent.Sender == PhotonNetwork.LocalPlayer.ActorNumber)
                     {
                         PlayerHeadComponent.AddAppleAte();
                     }
                     else
                     {
+                        GameObject.Find("DebugText02").GetComponent<Text>().text = "Before Add Body";
                         PlayerGoDict[photonEvent.Sender].GetComponent<Head>().AddBody();
+                        GameObject.Find("DebugText02").GetComponent<Text>().text = "After Add Body";
                     }
 
                     if (PhotonNetwork.IsMasterClient)
