@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
+public class Head : MonoBehaviourPun
 {
 
     //public Text dispos;
@@ -39,10 +39,6 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     public static GameObject LocalPlayerInstance;
     //SceneObject
     GameController gameController;
-    
-    SendOptions sendOptions = new SendOptions { Reliability = true };
-
-    public Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
 
     private void Awake()
     {
@@ -143,10 +139,10 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         if (!ARMultiplayerController.isSinglePlayer)
         {
             //Update position on other client
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_POSITION_UPDATE, gameObject.transform.localPosition, RaiseEventOptions.Default, GameController.sendOptions);
 
             //Update your rotation on other clients
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_ROTATION_UPDATE, gameObject.transform.localRotation, RaiseEventOptions.Default, GameController.sendOptions);
 
             object[] contentPos = new object[transform.childCount];
             object[] contentRot = new object[contentPos.Length];
@@ -158,8 +154,8 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
             }
 
             GameObject.Find("DebugText02").GetComponent<Text>().text = "Sent Pos Num: " + contentPos.Length + "Sent Rot Num: " + contentRot.Length;
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, RaiseEventOptions.Default, sendOptions);
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT, contentRot, RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, RaiseEventOptions.Default, GameController.sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT, contentRot, RaiseEventOptions.Default, GameController.sendOptions);
         }
     }
 
@@ -182,8 +178,7 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
         else if (Lives <= 0 && !hasWon)//1 || hit)
         {
             //gameController.UpdateWLConditionText("GAME OVER");
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_EVENT_GAMEOVER, null, raiseEventOptions, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.PLAYER_EVENT_GAMEOVER, null, GameController.raiseEventAll, GameController.sendOptions);
             hasWon = true;
         }
 
@@ -555,114 +550,6 @@ public class Head : MonoBehaviourPun, IPunObservable, IOnEventCallback
     {
         num = Mathf.RoundToInt(num) * 0.1f;
         return num;
-    }
-    
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnEvent(EventData photonEvent)
-    {
-        if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
-        {
-            GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
-
-            foreach (GameObject player in PlayerGoList)
-            {
-                if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
-                {
-                    PlayerGoDict.Add(photonEvent.Sender, player);
-                    break;
-                }
-            }
-        }
-
-        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
-        {
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_BLOCKS_POP_UP:
-                {
-                    Block_Pop_up();
-                    break;
-                }
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_STUN:
-                {
-                    Stun();
-                    break;
-                }
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD:
-                {
-                    Destroy(GameObject.FindGameObjectWithTag("Food"));
-                    GameObject theplayer = PlayerGoDict[photonEvent.Sender];
-
-                    if(theplayer.GetPhotonView().IsMine)
-                    {
-                        AddAppleAte();
-                    }
-                    else
-                    {
-                        theplayer.GetComponent<Head>().AddBody();
-                    }
-
-                    if(PhotonNetwork.IsMasterClient)
-                    {
-                        --gameController.Foodcount;
-                        gameController.FoodSpawner();
-                    }
-                    break;
-                }
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD:
-                {
-                    object[] data = (object[])photonEvent.CustomData;
-                    gameController.FoodSpawner((Vector3)data[0]);
-                    break;
-                }
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNSTUN:
-                {
-                    object[] data = (object[])photonEvent.CustomData;
-                    gameController.Food_stunSpawner((Vector3)data[0]);
-                    break;
-                }
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS:
-                {
-                    object[] data = (object[])photonEvent.CustomData;
-                    Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
-
-                    Text debugtext03 = GameObject.Find("DebugText03").GetComponent<Text>();
-                    for (int i = 0; i < data.Length; ++i)
-                    {
-                       theplayer.Children[i].transform.localPosition = (Vector3)data[i];
-                        debugtext03.text += (Vector3)data[i] + "//";
-                    }
-
-                    break;
-                }
-            case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT:
-                {
-                    object[] data = (object[])photonEvent.CustomData;
-                    Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
-
-                    for (int i = 0; i < data.Length; ++i)
-                    {
-                        theplayer.Children[i].transform.localEulerAngles = (Vector3)data[i];
-                    }
-                    break;
-                }
-            default:
-                break;
-        }
-        
-    }
-
-    //Adds this script as one of the callback targets
-    public void OnEnable()
-    {
-        PhotonNetwork.AddCallbackTarget(this);
-    }
-
-    public void OnDisable()
-    {
-        PhotonNetwork.RemoveCallbackTarget(this);
     }
 }
 

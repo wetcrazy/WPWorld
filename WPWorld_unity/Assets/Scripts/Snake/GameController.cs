@@ -1,10 +1,12 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IOnEventCallback
 {
     //Text
     [Header("Canvas Text")]
@@ -40,7 +42,9 @@ public class GameController : MonoBehaviour
    // private float lives = 0;
     Head PlayerHeadComponent;
     
-    ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
+    public static SendOptions sendOptions = new SendOptions { Reliability = true };
+    public static RaiseEventOptions raiseEventAll = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+    public Dictionary<int, GameObject> PlayerGoDict = new Dictionary<int, GameObject>();
 
     private void Start()
     {
@@ -244,6 +248,105 @@ public class GameController : MonoBehaviour
 
         //PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS, contentPos, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
         //PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT, contentRot, Photon.Realtime.RaiseEventOptions.Default, sendOptions);
+    }
+
+    //Adds this script as one of the callback targets
+    public void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    public void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        if (!PlayerGoDict.ContainsKey(photonEvent.Sender))
+        {
+            GameObject[] PlayerGoList = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (GameObject player in PlayerGoList)
+            {
+                if (player.GetPhotonView().OwnerActorNr == photonEvent.Sender)
+                {
+                    PlayerGoDict.Add(photonEvent.Sender, player);
+                    break;
+                }
+            }
+        }
+
+        switch ((EventCodes.EVENT_CODES)photonEvent.Code)
+        {
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_BLOCKS_POP_UP:
+                {
+                    PlayerHeadComponent.Block_Pop_up();
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_STUN:
+                {
+                    PlayerHeadComponent.Stun();
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD:
+                {
+                    Destroy(GameObject.FindGameObjectWithTag("Food"));
+                    GameObject theplayer = PlayerGoDict[photonEvent.Sender];
+
+                    if (theplayer.GetPhotonView().IsMine)
+                    {
+                        PlayerHeadComponent.AddAppleAte();
+                    }
+                    else
+                    {
+                        theplayer.GetComponent<Head>().AddBody();
+                    }
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        --Foodcount;
+                    }
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNFOOD:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    FoodSpawner((Vector3)data[0]);
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_SPAWNSTUN:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    Food_stunSpawner((Vector3)data[0]);
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_POS:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
+                    
+                    for (int i = 0; i < data.Length; ++i)
+                    {
+                        theplayer.Children[i].transform.localPosition = (Vector3)data[i];
+                    }
+
+                    break;
+                }
+            case EventCodes.EVENT_CODES.SNAKE_EVENT_BODY_ROT:
+                {
+                    object[] data = (object[])photonEvent.CustomData;
+                    Head theplayer = PlayerGoDict[photonEvent.Sender].GetComponent<Head>();
+
+                    for (int i = 0; i < data.Length; ++i)
+                    {
+                        theplayer.Children[i].transform.localEulerAngles = (Vector3)data[i];
+                    }
+                    break;
+                }
+            default:
+                break;
+        }
     }
 }
 

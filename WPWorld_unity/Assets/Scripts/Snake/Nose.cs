@@ -6,10 +6,7 @@ using Photon.Realtime;
 
 public class Nose : MonoBehaviour {
     public bool deathcollided = false;
-
-    ExitGames.Client.Photon.SendOptions sendOptions = new ExitGames.Client.Photon.SendOptions { Reliability = true };
-    RaiseEventOptions raiseEventAll = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-
+    
     public void Restart()
     {
         deathcollided = false;
@@ -37,11 +34,11 @@ public class Nose : MonoBehaviour {
         else if (other.CompareTag("Food"))
         {
             Destroy(other.gameObject);
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD, null, raiseEventAll, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_EATFOOD, null, GameController.raiseEventAll, GameController.sendOptions);
         }
         else if (other.CompareTag("Speedy"))
         {
-            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_STUN, null, RaiseEventOptions.Default, sendOptions);
+            PhotonNetwork.RaiseEvent((byte)EventCodes.EVENT_CODES.SNAKE_EVENT_STUN, null, RaiseEventOptions.Default, GameController.sendOptions);
 
             //gameObject.GetComponentInParent<Head>().Stun();
             Destroy(other.gameObject);
