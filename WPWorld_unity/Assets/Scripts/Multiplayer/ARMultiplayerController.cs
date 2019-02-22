@@ -104,7 +104,6 @@ public class ARMultiplayerController : MonoBehaviour, IOnEventCallback
             case STATE_SCREEN.SCREEN_GAME:
                 {
                     GameScreenUpdate();
-                    DebugText.text = Head.LocalPlayerInstance.GetComponent<Head>().Children.Count.ToString();
                     break;
                 }
             default:
