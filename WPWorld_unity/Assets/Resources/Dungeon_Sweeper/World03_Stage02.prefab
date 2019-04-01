@@ -143,7 +143,6 @@ GameObject:
   - component: {fileID: 54657318256046760}
   - component: {fileID: 135992931096772994}
   - component: {fileID: 114120560918529228}
-  - component: {fileID: 114920632481167520}
   - component: {fileID: 114048482738008938}
   m_Layer: 0
   m_Name: Egg
@@ -1520,21 +1519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e07c329f075b5942b69e5c7bb4c0d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114920632481167520
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1232289262130412}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4edf00c3dd58666448d6e11e3f20e49e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 1
-  MovementDir: {x: 0, y: 0, z: 0}
-  MovementMultiplier: 0
-  CurrAvaliability: 3
 --- !u!114 &114941819909629540
 MonoBehaviour:
   m_ObjectHideFlags: 1

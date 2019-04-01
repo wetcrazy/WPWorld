@@ -5375,9 +5375,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4077215784844674}
-  - component: {fileID: 114255944189543096}
   - component: {fileID: 54284469227307176}
   - component: {fileID: 135147929056046904}
+  - component: {fileID: 114316102622872932}
   m_Layer: 0
   m_Name: Egg
   m_TagString: Player
@@ -85266,21 +85266,6 @@ MonoBehaviour:
   time: 0.7
   resettime: 3
   collideAI: 0
---- !u!114 &114255944189543096
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1286382603538694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4edf00c3dd58666448d6e11e3f20e49e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 1
-  MovementDir: {x: 0, y: 0, z: 0}
-  MovementMultiplier: 0
-  CurrAvaliability: 3
 --- !u!114 &114267838921746160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85349,6 +85334,19 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114316102622872932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1286382603538694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c151f8c286a34604fb607ed767c603e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementDir: {x: 0, y: 0, z: 0}
+  movementSpeed: 0.5
 --- !u!114 &114432132529322306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -86000,7 +85998,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1767546375436484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000041008785}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 224573376073028540}
@@ -86008,7 +86006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 612.005, y: -253.9885}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224439378525812990
@@ -86057,16 +86055,16 @@ RectTransform:
   m_GameObject: {fileID: 1090642629543992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.000013599}
-  m_LocalScale: {x: 0.6457696, y: 0.64576954, z: 0.64576954}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224833917193397438}
   - {fileID: 224364422645454868}
   m_Father: {fileID: 224439378525812990}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -237, y: 315}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 180}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224722292665266808
@@ -86112,7 +86110,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1068957989348160}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000041008785}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 224573376073028540}
@@ -86120,7 +86118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 612.005, y: -253.9885}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224868096095653764

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GoogleARCore;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Controls the ARCORE and Scene UI
@@ -67,6 +68,8 @@ public class ArcoreDeployer : MonoBehaviour
     GameObject WinScreen;
     [SerializeField]
     Text DebugText;
+    [SerializeField]
+    Button SplashButton;
 
     //Arrays that store the individual objects in each screen
     private GameObject[] SplashScreenObjects;
@@ -243,6 +246,13 @@ public class ArcoreDeployer : MonoBehaviour
             }
         }
 
+        //Initialise UI Gameobjects
+        //Make the splash selection button invisible
+        Image SplashButtonImage = SplashButton.GetComponent<Image>();
+        Color NewColor = SplashButtonImage.color;
+        NewColor.a = 1;
+        SplashButtonImage.color = NewColor;
+
         ScreenState = STATE_SCREEN.SCREEN_SELECTION_UNIVERSE;
     }
 
@@ -322,6 +332,13 @@ public class ArcoreDeployer : MonoBehaviour
         {
             _GroundObject.SetActive(false);
         }
+
+        //Initialise UI Gameobjects
+        //Make the splash selection button invisible
+        Image SplashButtonImage = SplashButton.GetComponent<Image>();
+        Color NewColor = SplashButtonImage.color;
+        NewColor.a = 0;
+        SplashButtonImage.color = NewColor;
     }
     //-----------------------------------------------------------------//
 
@@ -780,6 +797,11 @@ public class ArcoreDeployer : MonoBehaviour
     private void SpawnLevel(Touch _touch)
     {
         _GroundObject = Instantiate(GameObjPrefab, AnchorRef.transform.position, AnchorRef.transform.rotation, _anchor.transform);
+    }
+
+    public void ExitToSplashScreen()
+    {
+        SceneManager.LoadScene("SplashScreen");
     }
 
     // oooooooooooooooooooooooooooooooooooooooo

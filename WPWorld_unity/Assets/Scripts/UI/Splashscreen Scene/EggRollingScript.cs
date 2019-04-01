@@ -8,6 +8,7 @@ public class EggRollingScript : MonoBehaviour
     private bool isDone;
     private RectTransform rect;
     private float speed;
+    private float time = 1.0f;
     private Vector3 zRot;
 
     [SerializeField]
@@ -17,30 +18,18 @@ public class EggRollingScript : MonoBehaviour
 	void Start ()
     {
         isDone = false;
-        rect = this.gameObject.GetComponent<RectTransform>();   
-        speed = 50.0f;
-        zRot = new Vector3(0, 0, -100.0f);
+        rect = this.gameObject.GetComponent<RectTransform>();        
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
+        speed = Vector2.Distance(rect.anchoredPosition, Target.transform.localPosition) / time;
         float step = speed * Time.deltaTime;
+        zRot = new Vector3(0, 0, -speed);
         // rect.anchoredPosition = Vector2.MoveTowards(rect.anchoredPosition, newPos, step);        
         rect.anchoredPosition = Vector2.MoveTowards(rect.anchoredPosition, Target.transform.localPosition, step);
-        if (rect.anchoredPosition != new Vector2(Target.transform.localPosition.x, Target.transform.localPosition.y))
-        {
-            rect.Rotate(zRot * Time.deltaTime);              
-        }
-        else
-        {
-            isDone = true;
-        }       
-        
-        if(isDone)
-        {
-            SendMessageManager();
-        }
+        SendMessageManager();
     }
 
     public bool GetisDone()

@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 54456140782303162}
   - component: {fileID: 135680437888656996}
   - component: {fileID: 114035248964687222}
-  - component: {fileID: 114910215990504998}
   - component: {fileID: 114334558430944050}
   m_Layer: 0
   m_Name: Egg
@@ -1431,21 +1430,6 @@ MonoBehaviour:
   JoystickBackground: {fileID: 114234745923098170}
   is4Directional: 1
   JoystickBallDragLengthLimit: 70
---- !u!114 &114910215990504998
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1297097199135310}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4edf00c3dd58666448d6e11e3f20e49e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 1
-  MovementDir: {x: 0, y: 0, z: 0}
-  MovementMultiplier: 0
-  CurrAvaliability: 3
 --- !u!114 &114935086835912556
 MonoBehaviour:
   m_ObjectHideFlags: 1

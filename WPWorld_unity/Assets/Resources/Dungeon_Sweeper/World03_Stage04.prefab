@@ -295,7 +295,6 @@ GameObject:
   - component: {fileID: 54796154533675550}
   - component: {fileID: 135235577382304122}
   - component: {fileID: 114314446235150438}
-  - component: {fileID: 114774135805926876}
   - component: {fileID: 114799300338098184}
   m_Layer: 0
   m_Name: 'Egg '
@@ -1407,21 +1406,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Jump
---- !u!114 &114774135805926876
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1503962714765588}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4edf00c3dd58666448d6e11e3f20e49e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 1
-  MovementDir: {x: 0, y: 0, z: 0}
-  MovementMultiplier: 0
-  CurrAvaliability: 3
 --- !u!114 &114792762953005232
 MonoBehaviour:
   m_ObjectHideFlags: 1

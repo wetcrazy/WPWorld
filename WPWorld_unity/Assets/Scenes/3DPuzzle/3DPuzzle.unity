@@ -235,12 +235,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1335849788788636, guid: 80467e09d08985e439991754fa19b32f, type: 2}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382494447091596, guid: 80467e09d08985e439991754fa19b32f,
-        type: 2}
-      propertyPath: MovementSpeed
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80467e09d08985e439991754fa19b32f, type: 2}
@@ -349,6 +344,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1166555042226914, guid: b6640f312a7df034da37ce0801e1f751, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6640f312a7df034da37ce0801e1f751, type: 2}
   m_IsPrefabParent: 0
@@ -441,17 +440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea60f1e4e5d3b6c47b0759aeb40a555a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SFX:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   MaximumSFXPlayingAtOnce: 10
   AudioSounds: []
 --- !u!4 &2034661320
