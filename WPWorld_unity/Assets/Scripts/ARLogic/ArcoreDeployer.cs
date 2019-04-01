@@ -228,14 +228,18 @@ public class ArcoreDeployer : MonoBehaviour
         //Only show the worlds that have been unlocked
         string CurrentWorld = PlayerPrefs.GetString("CurrentWorldName");
 
-        for (int i = 0; i < UniverseObj.transform.childCount; ++i)
-        {
-            GameObject World = UniverseObj.transform.GetChild(i).gameObject;
 
-            string WorldNameText = World.transform.GetChild(0).GetComponent<TextMesh>().text;
-            if (WorldNameText[WorldNameText.Length - 1] - '0' > CurrentWorld[CurrentWorld.Length - 1] - '0')
+        if (CurrentWorld.Length > 0)
+        {
+            for (int i = 0; i < UniverseObj.transform.childCount; ++i)
             {
-                World.SetActive(false);
+                GameObject World = UniverseObj.transform.GetChild(i).gameObject;
+
+                string WorldNameText = World.transform.GetChild(0).GetComponent<TextMesh>().text;
+                if (WorldNameText[WorldNameText.Length - 1] - '0' > CurrentWorld[CurrentWorld.Length - 1] - '0')
+                {
+                    World.SetActive(false);
+                }
             }
         }
 
@@ -486,6 +490,7 @@ public class ArcoreDeployer : MonoBehaviour
                 break;
         }
 
+        
         //Set the next level to be spawned
         SetNextObject(CurrentWorldNum + '_' + StageNum);
     }
@@ -753,7 +758,6 @@ public class ArcoreDeployer : MonoBehaviour
             // Check if it the raycast is hitting the back of the plane 
             if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(MainCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
             {
-                Debug.Log("Hit at back of the current DetectedPlane");
             }
             else
             {

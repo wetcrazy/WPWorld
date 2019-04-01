@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour
@@ -52,7 +53,14 @@ public class Joystick : MonoBehaviour
         //Check if player obj exist or not
         if(PlayerObject == null)
         {
-            PlayerObject = PlayerMovement.LocalPlayerInstance;
+            if (SceneManager.GetActiveScene().name == "ARPlayground")
+            {
+                PlayerObject = GameObject.FindGameObjectWithTag("Player");
+            }
+            else
+            {
+                PlayerObject = PlayerMovement.LocalPlayerInstance;
+            }
         }
 
         Vector3 JoystickBackgroundPosition = JoystickBackground.transform.position;
