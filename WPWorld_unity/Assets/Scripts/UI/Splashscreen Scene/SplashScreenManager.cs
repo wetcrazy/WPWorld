@@ -65,6 +65,6 @@ public class SplashScreenManager : MonoBehaviour
 
     public void MultiPlayerButtonOnTouch()
     {
-        SceneManager.LoadScene("PhotonTest");
+        SceneManager.LoadScene("PhotonLobbyRoom");
     }
 }
